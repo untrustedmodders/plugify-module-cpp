@@ -11,10 +11,18 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+if(UNIX AND NOT APPLE)
+    set(LINUX TRUE)
+endif()
+
 #
 # Plugin
 #
-SET(PLUGIN_SOURCES "plugin.cpp" "simple_tests.h" "simple_tests.cpp")
+set(PLUGIN_SOURCES "plugin.cpp" "simple_tests.h" "simple_tests.cpp")
 
 add_library(${PROJECT_NAME} SHARED ${PLUGIN_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
@@ -25,8 +33,9 @@ else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wextra -Wshadow -Wconversion -Wpedantic -Werror)
 endif()
 
-if(UNIX AND NOT APPLE)
+if(LINUX)
     target_compile_definitions(${PROJECT_NAME} PRIVATE _GLIBCXX_USE_CXX11_ABI=0)
+    target_link_libraries(${PROJECT_NAME} PUBLIC -static-libstdc++ -static-libgcc)
 endif()
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE PLUGIFY_IS_DEBUG=$<STREQUAL:${CMAKE_BUILD_TYPE},Debug>)
