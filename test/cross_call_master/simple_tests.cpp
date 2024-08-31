@@ -1,5 +1,5 @@
 #include "simple_tests.h"
-#include <format>
+#include "compat_format.h"
 #include <iostream>
 #include <numeric>
 

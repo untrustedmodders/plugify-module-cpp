@@ -20,6 +20,11 @@ if(UNIX AND NOT APPLE)
 endif()
 
 #
+# Format
+#
+include(cmake/fmt.cmake)
+
+#
 # Plugin
 #
 set(PLUGIN_SOURCES "plugin.cpp" "simple_tests.h" "simple_tests.cpp")
@@ -43,3 +48,8 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE PLUGIFY_IS_DEBUG=$<STREQUAL:$
 include(GenerateExportHeader)
 generate_export_header(${PROJECT_NAME} EXPORT_MACRO_NAME PLUGIN_API EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/exports/plugin_export.h)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_BINARY_DIR}/exports)
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE COMPAT_FORMAT_SUPPORT=$<BOOL:${COMPILER_SUPPORTS_FORMAT}>)
+if(NOT COMPILER_SUPPORTS_FORMAT)
+    target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt-header-only)
+endif()
