@@ -22,7 +22,7 @@ endif()
 #
 # Format
 #
-include(cmake/fmt.cmake)
+include(cmake/compat_format.cmake)
 
 #
 # Plugin
