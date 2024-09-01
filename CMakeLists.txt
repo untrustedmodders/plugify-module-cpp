@@ -25,9 +25,6 @@ endif()
 #
 set(PLUGIFY_BUILD_SHARED_LIB ON CACHE INTERNAL "")
 set(PLUGIFY_BUILD_ASSEMBLY ON CACHE INTERNAL "")
-if(LINUX)
-    set(PLUGIFY_USE_STATIC_STDLIB ON CACHE INTERNAL "")
-endif()
 add_subdirectory(external/plugify)
 
 #

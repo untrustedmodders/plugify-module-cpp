@@ -51,8 +51,9 @@ LoadResult CppLanguageModule::OnPluginLoad(PluginRef plugin) {
 	fs::path assemblyPath(plugin.GetBaseDir() / entryPoint.parent_path() / std::format(CPPLM_LIBRARY_PREFIX "{}" CPPLM_LIBRARY_SUFFIX, entryPoint.filename().string()));
 
 	LoadFlag flags = LoadFlag::Lazy;
-	if (_provider->IsPreferOwnSymbols())
+	if (_provider->IsPreferOwnSymbols()) {
 		flags |= LoadFlag::Deepbind;
+	}
 
 	auto assembly = std::make_unique<Assembly>(assemblyPath, flags);
 	if (!assembly->IsValid()) {
