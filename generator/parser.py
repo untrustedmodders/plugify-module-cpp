@@ -10,8 +10,8 @@ from cxxheaderparser import simple
 
 def map_type(type: str):
     switch_dict = {
-        'std::string': 'string',
-        'std::vector<string>': 'string*',
+        'plg::string': 'string',
+        'std::vector<plg::string>': 'string*',
 
         # 'const char*': 'string',
         # 'char*': 'string',
