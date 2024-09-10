@@ -8,7 +8,7 @@
 #include <limits>
 #include <cstdint>
 
-class CrossCallWorker : public plugify::IPluginEntry {
+class CrossCallWorker : public plg::IPluginEntry {
 };
 
 CrossCallWorker g_plugin;
@@ -96,7 +96,7 @@ PLUGIN_API NoParamReturnFunctionFunc NoParamReturnFunction() {
 }
 
 extern "C"
-PLUGIN_API void NoParamReturnString(std::string& stringRet) {
+PLUGIN_API void NoParamReturnString(plg::string& stringRet) {
 	std::construct_at(&stringRet, "Hello World");
 }
 
@@ -171,27 +171,27 @@ PLUGIN_API void NoParamReturnArrayDouble(std::vector<double>& arrayRet) {
 }
 
 extern "C"
-PLUGIN_API void NoParamReturnArrayString(std::vector<std::string>& arrayRet) {
-	std::construct_at(&arrayRet, std::vector<std::string>{"1st string", "2nd string", "3rd element string (Should be big enough to avoid small string optimization)"});
+PLUGIN_API void NoParamReturnArrayString(std::vector<plg::string>& arrayRet) {
+	std::construct_at(&arrayRet, std::vector<plg::string>{"1st string", "2nd string", "3rd element string (Should be big enough to avoid small string optimization)"});
 }
 
 extern "C"
-PLUGIN_API plugify::Vector2 NoParamReturnVector2() {
+PLUGIN_API plg::Vector2 NoParamReturnVector2() {
 	return {1.f, 2.f};
 }
 
 extern "C"
-PLUGIN_API plugify::Vector3 NoParamReturnVector3() {
+PLUGIN_API plg::Vector3 NoParamReturnVector3() {
 	return {1.f, 2.f, 3.f};
 }
 
 extern "C"
-PLUGIN_API plugify::Vector4 NoParamReturnVector4() {
+PLUGIN_API plg::Vector4 NoParamReturnVector4() {
 	return {1.f, 2.f, 3.f, 4.f};
 }
 
 extern "C"
-PLUGIN_API plugify::Matrix4x4 NoParamReturnMatrix4x4() {
+PLUGIN_API plg::Matrix4x4 NoParamReturnMatrix4x4() {
 	return {1.f, 2.f, 3.f, 4.f, 5.f, 6.f, 7.f, 8.f, 9.f, 10.f, 11.f, 12.f, 13.f, 14.f, 15.f, 16.f};
 }
 
@@ -211,37 +211,37 @@ PLUGIN_API void Param3(int32_t a, float b, double c) {
 }
 
 extern "C"
-PLUGIN_API void Param4(int32_t a, float b, double c, const plugify::Vector4& d) {
+PLUGIN_API void Param4(int32_t a, float b, double c, const plg::Vector4& d) {
 	const auto buffer = std::format("{}{:.2f}{:.2f}{:.1f}{:.1f}", a, b, c, d.x, d.w);
 }
 
 extern "C"
-PLUGIN_API void Param5(int32_t a, float b, double c, const plugify::Vector4& d, const std::vector<int64_t>& e) {
+PLUGIN_API void Param5(int32_t a, float b, double c, const plg::Vector4& d, const std::vector<int64_t>& e) {
 	const auto buffer = std::format("{}{:.2f}{:.2f}{:.1f}{:.1f}{}{}", a, b, c, d.x, d.w, e.size(), e.size() == 3 ? e[2] : int64_t{0});
 }
 
 extern "C"
-PLUGIN_API void Param6(int32_t a, float b, double c, const plugify::Vector4& d, const std::vector<int64_t>& e, char f) {
+PLUGIN_API void Param6(int32_t a, float b, double c, const plg::Vector4& d, const std::vector<int64_t>& e, char f) {
 	const auto buffer = std::format("{}{:.2f}{:.2f}{:.1f}{:.1f}{}{}{}", a, b, c, d.x, d.w, e.size(), e.size() == 3 ? e[2] : int64_t{0}, static_cast<uint8_t>(f));
 }
 
 extern "C"
-PLUGIN_API void Param7(int32_t a, float b, double c, const plugify::Vector4& d, const std::vector<int64_t>& e, char f, const std::string& g) {
+PLUGIN_API void Param7(int32_t a, float b, double c, const plg::Vector4& d, const std::vector<int64_t>& e, char f, const plg::string& g) {
 	const auto buffer = std::format("{}{:.2f}{:.2f}{:.1f}{:.1f}{}{}{}{}", a, b, c, d.x, d.w, e.size(), e.size() == 3 ? e[2] : int64_t{0}, static_cast<uint8_t>(f), g);
 }
 
 extern "C"
-PLUGIN_API void Param8(int32_t a, float b, double c, const plugify::Vector4& d, const std::vector<int64_t>& e, char f, const std::string& g, char16_t h) {
+PLUGIN_API void Param8(int32_t a, float b, double c, const plg::Vector4& d, const std::vector<int64_t>& e, char f, const plg::string& g, char16_t h) {
 	const auto buffer = std::format("{}{:.2f}{:.2f}{:.1f}{:.1f}{}{}{}{}{}", a, b, c, d.x, d.w, e.size(), e.size() == 3 ? e[2] : int64_t{0}, static_cast<uint8_t>(f), g, static_cast<uint16_t>(h));
 }
 
 extern "C"
-PLUGIN_API void Param9(int32_t a, float b, double c, const plugify::Vector4& d, const std::vector<int64_t>& e, char f, const std::string& g, char16_t h, int16_t k) {
+PLUGIN_API void Param9(int32_t a, float b, double c, const plg::Vector4& d, const std::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k) {
 	const auto buffer = std::format("{}{:.2f}{:.2f}{:.1f}{:.1f}{}{}{}{}{}{}", a, b, c, d.x, d.w, e.size(), e.size() == 3 ? e[2] : int64_t{0}, static_cast<uint8_t>(f), g, static_cast<uint16_t>(h), k);
 }
 
 extern "C"
-PLUGIN_API void Param10(int32_t a, float b, double c, const plugify::Vector4& d, const std::vector<int64_t>& e, char f, const std::string& g, char16_t h, int16_t k, void* l) {
+PLUGIN_API void Param10(int32_t a, float b, double c, const plg::Vector4& d, const std::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k, void* l) {
 	const auto buffer = std::format("{}{:.2f}{:.2f}{:.1f}{:.1f}{}{}{}{}{}{}{}", a, b, c, d.x, d.w, e.size(), e.size() == 3 ? e[2] : int64_t{0}, static_cast<uint8_t>(f), g, static_cast<uint16_t>(h), k, l);
 }
 
@@ -264,7 +264,7 @@ PLUGIN_API void ParamRef3(int32_t& a, float& b, double& c) {
 }
 
 extern "C"
-PLUGIN_API void ParamRef4(int32_t& a, float& b, double& c, plugify::Vector4& d) {
+PLUGIN_API void ParamRef4(int32_t& a, float& b, double& c, plg::Vector4& d) {
 	a = 100;
 	b = -5.55f;
 	c = 1.618;
@@ -272,7 +272,7 @@ PLUGIN_API void ParamRef4(int32_t& a, float& b, double& c, plugify::Vector4& d) 
 }
 
 extern "C"
-PLUGIN_API void ParamRef5(int32_t& a, float& b, double& c, plugify::Vector4& d, std::vector<int64_t>& e) {
+PLUGIN_API void ParamRef5(int32_t& a, float& b, double& c, plg::Vector4& d, std::vector<int64_t>& e) {
 	a = 500;
 	b = -10.5f;
 	c = 2.71828;
@@ -281,7 +281,7 @@ PLUGIN_API void ParamRef5(int32_t& a, float& b, double& c, plugify::Vector4& d, 
 }
 
 extern "C"
-PLUGIN_API void ParamRef6(int32_t& a, float& b, double& c, plugify::Vector4& d, std::vector<int64_t>& e, char& f) {
+PLUGIN_API void ParamRef6(int32_t& a, float& b, double& c, plg::Vector4& d, std::vector<int64_t>& e, char& f) {
 	a = 750;
 	b = 20.0f;
 	c = 1.23456;
@@ -291,7 +291,7 @@ PLUGIN_API void ParamRef6(int32_t& a, float& b, double& c, plugify::Vector4& d, 
 }
 
 extern "C"
-PLUGIN_API void ParamRef7(int32_t& a, float& b, double& c, plugify::Vector4& d, std::vector<int64_t>& e, char& f, std::string& g) {
+PLUGIN_API void ParamRef7(int32_t& a, float& b, double& c, plg::Vector4& d, std::vector<int64_t>& e, char& f, plg::string& g) {
 	a = -1000;
 	b = 3.0f;
 	c = -1.0;
@@ -302,7 +302,7 @@ PLUGIN_API void ParamRef7(int32_t& a, float& b, double& c, plugify::Vector4& d, 
 }
 
 extern "C"
-PLUGIN_API void ParamRef8(int32_t& a, float& b, double& c, plugify::Vector4& d, std::vector<int64_t>& e, char& f, std::string& g, char16_t& h) {
+PLUGIN_API void ParamRef8(int32_t& a, float& b, double& c, plg::Vector4& d, std::vector<int64_t>& e, char& f, plg::string& g, char16_t& h) {
 	a = 999;
 	b = -7.5f;
 	c = 0.123456;
@@ -314,7 +314,7 @@ PLUGIN_API void ParamRef8(int32_t& a, float& b, double& c, plugify::Vector4& d, 
 }
 
 extern "C"
-PLUGIN_API void ParamRef9(int32_t& a, float& b, double& c, plugify::Vector4& d, std::vector<int64_t>& e, char& f, std::string& g, char16_t& h, int16_t& k) {
+PLUGIN_API void ParamRef9(int32_t& a, float& b, double& c, plg::Vector4& d, std::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k) {
 	a = -1234;
 	b = 123.45f;
 	c = -678.9;
@@ -327,7 +327,7 @@ PLUGIN_API void ParamRef9(int32_t& a, float& b, double& c, plugify::Vector4& d, 
 }
 
 extern "C"
-PLUGIN_API void ParamRef10(int32_t& a, float& b, double& c, plugify::Vector4& d, std::vector<int64_t>& e, char& f, std::string& g, char16_t& h, int16_t& k, void*& l) {
+PLUGIN_API void ParamRef10(int32_t& a, float& b, double& c, plg::Vector4& d, std::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k, void*& l) {
 	a = 987;
 	b = -0.123f;
 	c = 456.789;
@@ -343,7 +343,7 @@ PLUGIN_API void ParamRef10(int32_t& a, float& b, double& c, plugify::Vector4& d,
 extern "C"
 PLUGIN_API void ParamRefVectors(std::vector<bool>& p1, std::vector<char>& p2, std::vector<char16_t>& p3, std::vector<int8_t>& p4, std::vector<int16_t>& p5,
 	std::vector<int32_t>& p6, std::vector<int64_t>& p7, std::vector<uint8_t>& p8, std::vector<uint16_t>& p9, std::vector<uint32_t>& p10, std::vector<uint64_t>& p11,
-	std::vector<void*>& p12, std::vector<float>& p13, std::vector<double>& p14, std::vector<std::string>& p15
+	std::vector<void*>& p12, std::vector<float>& p13, std::vector<double>& p14, std::vector<plg::string>& p15
 ) {
 	p1 = {true};
 	p2 = {'a', 'b', 'c'};
@@ -371,7 +371,7 @@ PLUGIN_API int64_t ParamAllPrimitives(bool p1, char p2, char16_t p3, int8_t p4, 
 }
 
 extern "C"
-PLUGIN_API void ReverseCall(const std::string& test) {
+PLUGIN_API void ReverseCall(const plg::string& test) {
 	if (test == "NoParamReturnVoid") {
 		cross_call_master::NoParamReturnVoidCallback();
 	} else if (test == "NoParamReturnBool") {
@@ -424,7 +424,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(result);
 	} else if (test == "NoParamReturnArrayBool") {
 		const auto result = cross_call_master::NoParamReturnArrayBoolCallback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", static_cast<bool>(result[0]));
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -434,7 +434,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayChar8") {
 		const auto result = cross_call_master::NoParamReturnArrayChar8Callback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", static_cast<uint8_t>(result[0]));
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -444,7 +444,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayChar16") {
 		const auto result = cross_call_master::NoParamReturnArrayChar16Callback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", static_cast<uint16_t>(result[0]));
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -454,7 +454,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayInt8") {
 		const auto result = cross_call_master::NoParamReturnArrayInt8Callback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", result[0]);
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -464,7 +464,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayInt16") {
 		const auto result = cross_call_master::NoParamReturnArrayInt16Callback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", result[0]);
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -474,7 +474,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayInt32") {
 		const auto result = cross_call_master::NoParamReturnArrayInt32Callback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", result[0]);
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -484,7 +484,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayInt64") {
 		const auto result = cross_call_master::NoParamReturnArrayInt64Callback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", result[0]);
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -494,7 +494,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayUInt8") {
 		const auto result = cross_call_master::NoParamReturnArrayUInt8Callback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", result[0]);
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -504,7 +504,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayUInt16") {
 		const auto result = cross_call_master::NoParamReturnArrayUInt16Callback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", result[0]);
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -514,7 +514,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayUInt32") {
 		const auto result = cross_call_master::NoParamReturnArrayUInt32Callback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", result[0]);
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -524,7 +524,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayUInt64") {
 		const auto result = cross_call_master::NoParamReturnArrayUInt64Callback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", result[0]);
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -534,7 +534,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayPointer") {
 		const auto result = cross_call_master::NoParamReturnArrayPointerCallback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", result[0]);
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -544,7 +544,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayFloat") {
 		const auto result = cross_call_master::NoParamReturnArrayFloatCallback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", result[0]);
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -554,7 +554,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayDouble") {
 		const auto result = cross_call_master::NoParamReturnArrayDoubleCallback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("{}", result[0]);
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -564,7 +564,7 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
 	} else if (test == "NoParamReturnArrayString") {
 		const auto result = cross_call_master::NoParamReturnArrayStringCallback();
-		std::string result_formated;
+		plg::string result_formated;
 		if (!result.empty()) {
 			result_formated = std::format("'{}'", result[0]);
 			for (auto it = std::next(result.begin()); it != result.end(); ++it) {
@@ -627,17 +627,17 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		int32_t a{};
 		float b{};
 		double c{};
-		plugify::Vector4 d{};
+		plg::Vector4 d{};
 		cross_call_master::ParamRef4Callback(a, b, c, d);
 		cross_call_master::ReverseReturn(std::format("{}|{}|{}|{{{}, {}, {}, {}}}", a, b, c, d.x, d.y, d.z, d.w));
 	} else if (test == "ParamRef5") {
 		int32_t a{};
 		float b{};
 		double c{};
-		plugify::Vector4 d{};
+		plg::Vector4 d{};
 		std::vector<int64_t> e{};
 		cross_call_master::ParamRef5Callback(a, b, c, d, e);
-		std::string e_formated;
+		plg::string e_formated;
 		if (!e.empty()) {
 			e_formated = std::format("{}", e[0]);
 			for (auto it = std::next(e.begin()); it != e.end(); ++it) {
@@ -649,11 +649,11 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		int32_t a{};
 		float b{};
 		double c{};
-		plugify::Vector4 d{};
+		plg::Vector4 d{};
 		std::vector<int64_t> e{};
 		char f{};
 		cross_call_master::ParamRef6Callback(a, b, c, d, e, f);
-		std::string e_formated;
+		plg::string e_formated;
 		if (!e.empty()) {
 			e_formated = std::format("{}", e[0]);
 			for (auto it = std::next(e.begin()); it != e.end(); ++it) {
@@ -666,12 +666,12 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		int32_t a{};
 		float b{};
 		double c{};
-		plugify::Vector4 d{};
+		plg::Vector4 d{};
 		std::vector<int64_t> e{};
 		char f{};
-		std::string g{};
+		plg::string g{};
 		cross_call_master::ParamRef7Callback(a, b, c, d, e, f, g);
-		std::string e_formated;
+		plg::string e_formated;
 		if (!e.empty()) {
 			e_formated = std::format("{}", e[0]);
 			for (auto it = std::next(e.begin()); it != e.end(); ++it) {
@@ -684,13 +684,13 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		int32_t a{};
 		float b{};
 		double c{};
-		plugify::Vector4 d{};
+		plg::Vector4 d{};
 		std::vector<int64_t> e{};
 		char f{};
-		std::string g{};
+		plg::string g{};
 		char16_t h{};
 		cross_call_master::ParamRef8Callback(a, b, c, d, e, f, g, h);
-		std::string e_formated;
+		plg::string e_formated;
 		if (!e.empty()) {
 			e_formated = std::format("{}", e[0]);
 			for (auto it = std::next(e.begin()); it != e.end(); ++it) {
@@ -703,14 +703,14 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		int32_t a{};
 		float b{};
 		double c{};
-		plugify::Vector4 d{};
+		plg::Vector4 d{};
 		std::vector<int64_t> e{};
 		char f{};
-		std::string g{};
+		plg::string g{};
 		char16_t h{};
 		int16_t k{};
 		cross_call_master::ParamRef9Callback(a, b, c, d, e, f, g, h, k);
-		std::string e_formated;
+		plg::string e_formated;
 		if (!e.empty()) {
 			e_formated = std::format("{}", e[0]);
 			for (auto it = std::next(e.begin()); it != e.end(); ++it) {
@@ -723,15 +723,15 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		int32_t a{};
 		float b{};
 		double c{};
-		plugify::Vector4 d{};
+		plg::Vector4 d{};
 		std::vector<int64_t> e{};
 		char f{};
-		std::string g{};
+		plg::string g{};
 		char16_t h{};
 		int16_t k{};
 		void* l{};
 		cross_call_master::ParamRef10Callback(a, b, c, d, e, f, g, h, k, l);
-		std::string e_formated;
+		plg::string e_formated;
 		if (!e.empty()) {
 			e_formated = std::format("{}", e[0]);
 			for (auto it = std::next(e.begin()); it != e.end(); ++it) {
@@ -755,107 +755,107 @@ PLUGIN_API void ReverseCall(const std::string& test) {
 		std::vector<void*> p12{nullptr};
 		std::vector<float> p13{1.0f};
 		std::vector<double> p14{1.0};
-		std::vector<std::string> p15{"Hi"};
+		std::vector<plg::string> p15{"Hi"};
 		cross_call_master::ParamRefVectorsCallback(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15);
-		std::string p1_formated;
+		plg::string p1_formated;
 		if (!p1.empty()) {
 			p1_formated = std::format("{}", static_cast<bool>(p1[0]));
 			for (auto it = std::next(p1.begin()); it != p1.end(); ++it) {
 				std::format_to(std::back_inserter(p1_formated), ", {}", static_cast<bool>(*it));
 			}
 		}
-		std::string p2_formated;
+		plg::string p2_formated;
 		if (!p2.empty()) {
 			p2_formated = std::format("{}", static_cast<uint8_t>(p2[0]));
 			for (auto it = std::next(p2.begin()); it != p2.end(); ++it) {
 				std::format_to(std::back_inserter(p2_formated), ", {}", static_cast<uint8_t>(*it));
 			}
 		}
-		std::string p3_formated;
+		plg::string p3_formated;
 		if (!p3.empty()) {
 			p3_formated = std::format("{}", static_cast<uint16_t>(p3[0]));
 			for (auto it = std::next(p3.begin()); it != p3.end(); ++it) {
 				std::format_to(std::back_inserter(p3_formated), ", {}", static_cast<uint16_t>(*it));
 			}
 		}
-		std::string p4_formated;
+		plg::string p4_formated;
 		if (!p4.empty()) {
 			p4_formated = std::format("{}", p4[0]);
 			for (auto it = std::next(p4.begin()); it != p4.end(); ++it) {
 				std::format_to(std::back_inserter(p4_formated), ", {}", *it);
 			}
 		}
-		std::string p5_formated;
+		plg::string p5_formated;
 		if (!p5.empty()) {
 			p5_formated = std::format("{}", p5[0]);
 			for (auto it = std::next(p5.begin()); it != p5.end(); ++it) {
 				std::format_to(std::back_inserter(p5_formated), ", {}", *it);
 			}
 		}
-		std::string p6_formated;
+		plg::string p6_formated;
 		if (!p6.empty()) {
 			p6_formated = std::format("{}", p6[0]);
 			for (auto it = std::next(p6.begin()); it != p6.end(); ++it) {
 				std::format_to(std::back_inserter(p6_formated), ", {}", *it);
 			}
 		}
-		std::string p7_formated;
+		plg::string p7_formated;
 		if (!p7.empty()) {
 			p7_formated = std::format("{}", p7[0]);
 			for (auto it = std::next(p7.begin()); it != p7.end(); ++it) {
 				std::format_to(std::back_inserter(p7_formated), ", {}", *it);
 			}
 		}
-		std::string p8_formated;
+		plg::string p8_formated;
 		if (!p8.empty()) {
 			p8_formated = std::format("{}", p8[0]);
 			for (auto it = std::next(p8.begin()); it != p8.end(); ++it) {
 				std::format_to(std::back_inserter(p8_formated), ", {}", *it);
 			}
 		}
-		std::string p9_formated;
+		plg::string p9_formated;
 		if (!p9.empty()) {
 			p9_formated = std::format("{}", p9[0]);
 			for (auto it = std::next(p9.begin()); it != p9.end(); ++it) {
 				std::format_to(std::back_inserter(p9_formated), ", {}", *it);
 			}
 		}
-		std::string p10_formated;
+		plg::string p10_formated;
 		if (!p10.empty()) {
 			p10_formated = std::format("{}", p10[0]);
 			for (auto it = std::next(p10.begin()); it != p10.end(); ++it) {
 				std::format_to(std::back_inserter(p10_formated), ", {}", *it);
 			}
 		}
-		std::string p11_formated;
+		plg::string p11_formated;
 		if (!p11.empty()) {
 			p11_formated = std::format("{}", p11[0]);
 			for (auto it = std::next(p11.begin()); it != p11.end(); ++it) {
 				std::format_to(std::back_inserter(p11_formated), ", {}", *it);
 			}
 		}
-		std::string p12_formated;
+		plg::string p12_formated;
 		if (!p12.empty()) {
 			p12_formated = std::format("{}", p12[0]);
 			for (auto it = std::next(p12.begin()); it != p12.end(); ++it) {
 				std::format_to(std::back_inserter(p12_formated), ", {}", *it);
 			}
 		}
-		std::string p13_formated;
+		plg::string p13_formated;
 		if (!p13.empty()) {
 			p13_formated = std::format("{}", p13[0]);
 			for (auto it = std::next(p13.begin()); it != p13.end(); ++it) {
 				std::format_to(std::back_inserter(p13_formated), ", {}", *it);
 			}
 		}
-		std::string p14_formated;
+		plg::string p14_formated;
 		if (!p14.empty()) {
 			p14_formated = std::format("{}", p14[0]);
 			for (auto it = std::next(p14.begin()); it != p14.end(); ++it) {
 				std::format_to(std::back_inserter(p14_formated), ", {}", *it);
 			}
 		}
-		std::string p15_formated;
+		plg::string p15_formated;
 		if (!p15.empty()) {
 			p15_formated = std::format("'{}'", p15[0]);
 			for (auto it = std::next(p15.begin()); it != p15.end(); ++it) {

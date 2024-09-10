@@ -2,7 +2,7 @@
 #include <plugin_export.h>
 #include <iostream>
 
-class ExamplePlugin : public plugify::IPluginEntry {
+class ExamplePlugin : public plg::IPluginEntry {
 public:
 	void OnPluginStart() override {
 		std::cout << "Example Start!" << std::endl;
@@ -12,9 +12,9 @@ public:
 		std::cout << "Example End!" << std::endl;
 	}
 
-	void MakePrint(int count, const std::string& message) {
+	void MakePrint(int count, const plg::string& message) {
 		for (int i = 0; i < count; ++i) {
-			std::cout << message << std::endl;
+			std::cout << message.data() << std::endl;
 		}
 	}
 } g_examplePlugin;
@@ -22,6 +22,6 @@ public:
 EXPOSE_PLUGIN(PLUGIN_API, &g_examplePlugin)
 
 extern "C"
-PLUGIN_API void MakePrint(int count, const std::string& message) {
+PLUGIN_API void MakePrint(int count, const plg::string& message) {
 	g_examplePlugin.MakePrint(count, message);
 }

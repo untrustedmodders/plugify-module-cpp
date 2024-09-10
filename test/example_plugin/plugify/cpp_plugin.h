@@ -8,7 +8,9 @@
 #include <vector>
 #include <span>
 
-namespace plugify {
+#include <plugify/string.h>
+
+namespace plg {
 	constexpr int32_t kApiVersion = 1;
 
 	extern "C"
@@ -16,10 +18,6 @@ namespace plugify {
 		int32_t version;
 		bool debug;
 	};
-
-	using InitFunc = PluginResult (*)(std::span<void*>, int32_t, void*);
-	using StartFunc = void (*)();
-	using EndFunc = void (*)();
 
 	using GetMethodPtrFn = void* (*)(std::string_view);
 	using GetMethodPtr2Fn = void (*)(std::string_view, void**);
@@ -35,14 +33,14 @@ namespace plugify {
 
 	namespace plugin {
 		using GetIdFn = std::ptrdiff_t (*)(void*);
-		using GetNameFn = const std::string& (*)(void*);
-		using GetFullNameFn = const std::string& (*)(void*);
-		using GetDescriptionFn = const std::string& (*)(void*);
-		using GetVersionFn = const std::string& (*)(void*);
-		using GetAuthorFn = const std::string& (*)(void*);
-		using GetWebsiteFn = const std::string& (*)(void*);
+		using GetNameFn = std::string_view (*)(void*);
+		using GetFullNameFn = std::string_view (*)(void*);
+		using GetDescriptionFn = std::string_view (*)(void*);
+		using GetVersionFn = std::string_view (*)(void*);
+		using GetAuthorFn = std::string_view (*)(void*);
+		using GetWebsiteFn = std::string_view (*)(void*);
 		using GetBaseDirFn = const std::filesystem::path& (*)(void*);
-		using GetDependenciesFn = std::vector<std::string> (*)(void*);
+		using GetDependenciesFn = std::vector<std::string_view> (*)(void*);
 		using FindResourceFn = std::optional<std::filesystem::path> (*)(void*, const std::filesystem::path&);
 		extern void* handle;
 		extern GetIdFn GetId;
@@ -64,14 +62,14 @@ namespace plugify {
 
 	public:
 		std::ptrdiff_t GetId() const { return plugin::GetId(plugin::handle); }
-		const std::string& GetName() const { return plugin::GetName(plugin::handle); }
-		const std::string& GetFullName() const { return plugin::GetFullName(plugin::handle); }
-		const std::string& GetDescription() const { return plugin::GetDescription(plugin::handle); }
-		const std::string& GetVersion() const { return plugin::GetVersion(plugin::handle); }
-		const std::string& GetAuthor() const { return plugin::GetAuthor(plugin::handle); }
-		const std::string& GetWebsite() const { return plugin::GetWebsite(plugin::handle); }
+		std::string_view GetName() const { return plugin::GetName(plugin::handle); }
+		std::string_view GetFullName() const { return plugin::GetFullName(plugin::handle); }
+		std::string_view GetDescription() const { return plugin::GetDescription(plugin::handle); }
+		std::string_view GetVersion() const { return plugin::GetVersion(plugin::handle); }
+		std::string_view GetAuthor() const { return plugin::GetAuthor(plugin::handle); }
+		std::string_view GetWebsite() const { return plugin::GetWebsite(plugin::handle); }
 		const std::filesystem::path& GetBaseDir() const { return plugin::GetBaseDir(plugin::handle); }
-		std::vector<std::string> GetDependencies() const { return plugin::GetDependencies(plugin::handle); }
+		std::vector<std::string_view> GetDependencies() const { return plugin::GetDependencies(plugin::handle); }
 		std::optional<std::filesystem::path> FindResource(const std::filesystem::path& path) const { return plugin::FindResource(plugin::handle, path); }
 
 		virtual void OnPluginStart() {};
@@ -81,7 +79,7 @@ namespace plugify {
 	IPluginEntry* GetPluginEntry();
 }
 
-#define EXPOSE_PLUGIN(plugin_api, interface_addr) namespace plugify { \
+#define EXPOSE_PLUGIN(plugin_api, interface_addr) namespace plg { \
 	GetMethodPtrFn GetMethodPtr{ nullptr }; \
 	GetMethodPtr2Fn GetMethodPtr2{ nullptr }; \
 	GetBaseDirFn GetBaseDir{ nullptr }; \
@@ -132,12 +130,12 @@ namespace plugify {
 	plugin_api void Plugify_PluginEnd() { \
 		GetPluginEntry()->OnPluginEnd(); \
 	} \
-	plugify::IPluginEntry* GetPluginEntry() { \
+	plg::IPluginEntry* GetPluginEntry() { \
 		return interface_addr; \
 	} \
 }
 
-namespace plugify {
+namespace plg {
 	struct Vector2 {
 		float x{};
 		float y{};

@@ -39,10 +39,10 @@ VAL_TYPES_MAP = {
     'float*': 'const std::vector<float>&',
     'double*': 'const std::vector<double>&',
     'string*': 'const std::vector<std::string>&',
-    'vec2': 'const plugify::Vector2&',
-    'vec3': 'const plugify::Vector3&',
-    'vec4': 'const plugify::Vector4&',
-    'mat4x4': 'const plugify::Matrix4x4&'
+    'vec2': 'const plg::Vector2&',
+    'vec3': 'const plg::Vector3&',
+    'vec4': 'const plg::Vector4&',
+    'mat4x4': 'const plg::Matrix4x4&'
 }
 
 
@@ -79,10 +79,10 @@ REF_TYPES_MAP = {
     'float*': 'std::vector<float>&',
     'double*': 'std::vector<double>&',
     'string*': 'std::vector<std::string>&',
-    'vec2': 'plugify::Vector2&',
-    'vec3': 'plugify::Vector3&',
-    'vec4': 'plugify::Vector4&',
-    'mat4x4': 'plugify::Matrix4x4&'
+    'vec2': 'plg::Vector2&',
+    'vec3': 'plg::Vector3&',
+    'vec4': 'plg::Vector4&',
+    'mat4x4': 'plg::Matrix4x4&'
 }
 
 
@@ -119,10 +119,10 @@ RET_TYPES_MAP = {
     'float*': 'std::vector<float>',
     'double*': 'std::vector<double>',
     'string*': 'std::vector<std::string>',
-    'vec2': 'plugify::Vector2',
-    'vec3': 'plugify::Vector3',
-    'vec4': 'plugify::Vector4',
-    'mat4x4': 'plugify::Matrix4x4'
+    'vec2': 'plg::Vector2',
+    'vec3': 'plg::Vector3',
+    'vec4': 'plg::Vector4',
+    'mat4x4': 'plg::Matrix4x4'
 }
 
 
@@ -243,7 +243,7 @@ def main(manifest_path, output_dir, override):
         content += (f'\t\tusing {method["name"]}Fn = {return_type} '
                     f'(*)({gen_params_string(method["paramTypes"], ParamGen.Types)});\n')
         content += f'\t\tstatic {method['name']}Fn __func = nullptr;\n'
-        content += f'\t\tif (__func == nullptr) plugify::GetMethodPtr2("{plugin_name}.{method['name']}", reinterpret_cast<void**>(&__func));\n'
+        content += f'\t\tif (__func == nullptr) plg::GetMethodPtr2("{plugin_name}.{method['name']}", reinterpret_cast<void**>(&__func));\n'
         content += (f'\t\t{"return " if ret_type["type"] != "void" else ""}'
                     f'__func({gen_params_string(method["paramTypes"], ParamGen.Names)});\n')
         content += '\t}\n'

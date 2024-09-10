@@ -24,18 +24,22 @@ namespace cpplm {
 		}
 	};
 
+	using InitFunc = plg::PluginResult (*)(std::span<void*>, int32_t, void*);
+	using StartFunc = void (*)();
+	using EndFunc = void (*)();
+
 	class AssemblyHolder {
 	public:
-		AssemblyHolder(std::unique_ptr<plugify::Assembly> assembly, plugify::StartFunc startFunc, plugify::EndFunc endFunc) : _assembly{std::move(assembly)}, _startFunc{startFunc}, _endFunc{endFunc} {}
+		AssemblyHolder(std::unique_ptr<plugify::Assembly> assembly, StartFunc startFunc, EndFunc endFunc) : _assembly{std::move(assembly)}, _startFunc{startFunc}, _endFunc{endFunc} {}
 
 		plugify::Assembly& GetAssembly() const { return *_assembly; }
-		plugify::StartFunc GetStartFunc() const { return _startFunc; }
-		plugify::EndFunc GetEndFunc() const { return _endFunc; }
+		StartFunc GetStartFunc() const { return _startFunc; }
+		EndFunc GetEndFunc() const { return _endFunc; }
 
 	private:
 		std::unique_ptr<plugify::Assembly> _assembly;
-		plugify::StartFunc _startFunc;
-		plugify::EndFunc _endFunc;
+		StartFunc _startFunc;
+		EndFunc _endFunc;
 	};
 
 	class CppLanguageModule final : public plugify::ILanguageModule {

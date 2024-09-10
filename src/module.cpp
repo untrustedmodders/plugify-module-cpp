@@ -111,9 +111,9 @@ LoadResult CppLanguageModule::OnPluginLoad(PluginRef plugin) {
 		void* ptr;
 	} cast{plugin};
 
-	const auto [requiredVersion, pluginBuildType] = initFunc(_pluginApi, kApiVersion, cast.ptr);
+	const auto [requiredVersion, pluginBuildType] = initFunc(_pluginApi, plg::kApiVersion, cast.ptr);
 	if (requiredVersion != 0) {
-		return ErrorData{ std::format("Not supported plugin api {}, max supported {}", requiredVersion, kApiVersion) };
+		return ErrorData{ std::format("Not supported plugin api {}, max supported {}", requiredVersion, plg::kApiVersion) };
 	}
 
 #if CPPLM_PLATFORM_WINDOWS
@@ -191,27 +191,27 @@ UniqueId GetPluginId(PluginRef plugin) {
 	return plugin.GetId();
 }
 
-const std::string& GetPluginName(PluginRef plugin) {
+std::string_view GetPluginName(PluginRef plugin) {
 	return plugin.GetName();
 }
 
-const std::string& GetPluginFullName(PluginRef plugin) {
+std::string_view GetPluginFullName(PluginRef plugin) {
 	return plugin.GetFriendlyName();
 }
 
-const std::string& GetPluginDescription(PluginRef plugin) {
+std::string_view GetPluginDescription(PluginRef plugin) {
 	return plugin.GetDescriptor().GetDescription();
 }
 
-const std::string& GetPluginVersion(PluginRef plugin) {
+std::string_view GetPluginVersion(PluginRef plugin) {
 	return plugin.GetDescriptor().GetVersionName();
 }
 
-const std::string& GetPluginAuthor(PluginRef plugin) {
+std::string_view GetPluginAuthor(PluginRef plugin) {
 	return plugin.GetDescriptor().GetCreatedBy();
 }
 
-const std::string& GetPluginWebsite(PluginRef plugin) {
+std::string_view GetPluginWebsite(PluginRef plugin) {
 	return plugin.GetDescriptor().GetCreatedByURL();
 }
 
@@ -219,9 +219,9 @@ const fs::path& GetPluginBaseDir(PluginRef plugin) {
 	return plugin.GetBaseDir();
 }
 
-std::vector<std::string> GetPluginDependencies(PluginRef plugin) {
+std::vector<std::string_view> GetPluginDependencies(PluginRef plugin) {
 	std::span<const PluginReferenceDescriptorRef> dependencies = plugin.GetDescriptor().GetDependencies();
-	std::vector<std::string> deps;
+	std::vector<std::string_view> deps;
 	deps.reserve(dependencies.size());
 	for (const auto& dependency : dependencies) {
 		deps.emplace_back(dependency.GetName());
