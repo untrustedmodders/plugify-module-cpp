@@ -20,6 +20,11 @@ if(UNIX AND NOT APPLE)
 endif()
 
 #
+# Format
+#
+include(cmake/compat_format.cmake)
+
+#
 # Plugin
 #
 set(PLUGIN_SOURCES "plugin.cpp")
@@ -38,7 +43,12 @@ if(LINUX)
     target_link_libraries(${PROJECT_NAME} PRIVATE -static-libstdc++ -static-libgcc)
 endif()
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE PLUGIFY_IS_DEBUG=$<STREQUAL:${CMAKE_BUILD_TYPE},Debug>)
+target_compile_definitions(${PROJECT_NAME} PRIVATE 
+        PLUGIFY_FORMAT_SUPPORT=$<BOOL:${COMPILER_SUPPORTS_FORMAT}> 
+        PLUGIFY_IS_DEBUG=$<STREQUAL:${CMAKE_BUILD_TYPE},Debug>)
+if(NOT COMPILER_SUPPORTS_FORMAT)
+    target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt-header-only)
+endif()
 
 include(GenerateExportHeader)
 generate_export_header(${PROJECT_NAME} EXPORT_MACRO_NAME PLUGIN_API EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/exports/plugin_export.h)
