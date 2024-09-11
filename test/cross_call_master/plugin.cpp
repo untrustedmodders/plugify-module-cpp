@@ -2,7 +2,6 @@
 #include <plugify/cpp_plugin.h>
 #include <plugin_export.h>
 #include "simple_tests.h"
-#include "compat_format.h"
 #include <limits>
 #include <cstdint>
 
