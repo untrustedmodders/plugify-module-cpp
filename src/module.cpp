@@ -215,8 +215,8 @@ std::string_view GetPluginWebsite(PluginRef plugin) {
 	return plugin.GetDescriptor().GetCreatedByURL();
 }
 
-const fs::path& GetPluginBaseDir(PluginRef plugin) {
-	return plugin.GetBaseDir();
+fs::path_view GetPluginBaseDir(PluginRef plugin) {
+	return plugin.GetBaseDir().c_str();
 }
 
 std::vector<std::string_view> GetPluginDependencies(PluginRef plugin) {
@@ -229,8 +229,12 @@ std::vector<std::string_view> GetPluginDependencies(PluginRef plugin) {
 	return deps;
 }
 
-std::optional<fs::path> FindPluginResource(PluginRef plugin, const fs::path& path) {
-	return plugin.FindResource(path);
+std::optional<fs::path_view> FindPluginResource(PluginRef plugin, fs::path_view path) {
+	auto opt = plugin.FindResource(path);
+	if (opt.has_value()) {
+		return opt->c_str();
+	}
+	return {};
 }
 
 std::array<void*, 15> CppLanguageModule::_pluginApi = {
