@@ -175,7 +175,7 @@ void GetMethodPtr2(std::string_view methodName, MemAddr* addressDest) {
 	g_cpplm.GetNativeMethod(methodName, addressDest);
 }
 
-const fs::path& GetBaseDir() {
+fs::path_view GetBaseDir() {
 	return g_cpplm.GetProvider()->GetBaseDir();
 }
 
