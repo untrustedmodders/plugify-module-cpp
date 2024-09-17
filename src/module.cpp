@@ -216,7 +216,7 @@ std::string_view GetPluginWebsite(PluginRef plugin) {
 }
 
 fs::path_view GetPluginBaseDir(PluginRef plugin) {
-	return plugin.GetBaseDir().c_str();
+	return plugin.GetBaseDir();
 }
 
 std::vector<std::string_view> GetPluginDependencies(PluginRef plugin) {
@@ -230,11 +230,7 @@ std::vector<std::string_view> GetPluginDependencies(PluginRef plugin) {
 }
 
 std::optional<fs::path_view> FindPluginResource(PluginRef plugin, fs::path_view path) {
-	auto opt = plugin.FindResource(path);
-	if (opt.has_value()) {
-		return opt->c_str();
-	}
-	return {};
+	return plugin.FindResource(path);
 }
 
 std::array<void*, 15> CppLanguageModule::_pluginApi = {
