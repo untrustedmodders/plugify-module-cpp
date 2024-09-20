@@ -74,7 +74,7 @@ jobs:
           cp build/${{env.BUILD_TYPE}}/cpp-lang-module.dll build/output/bin
           cp build/cpp-lang-module.pmodule build/output
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: cpplm-build-windows-${{ env.GITHUB_SHA_SHORT }}
           path: build/output/
@@ -114,7 +114,7 @@ jobs:
           mv build/libcpp-lang-module.so build/output/bin
           mv build/cpp-lang-module.pmodule build/output
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: cpplm-build-linux-${{ env.GITHUB_SHA_SHORT }}
           path: build/output/
