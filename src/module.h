@@ -24,7 +24,7 @@ namespace cpplm {
 		}
 	};
 
-	using InitFunc = plg::PluginResult (*)(std::span<void*>, int32_t, void*);
+	using InitFunc = plg::PluginResult (*)(void**, int32_t, void*);
 	using StartFunc = void (*)();
 	using EndFunc = void (*)();
 

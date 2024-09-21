@@ -111,7 +111,7 @@ LoadResult CppLanguageModule::OnPluginLoad(PluginRef plugin) {
 		void* ptr;
 	} cast{plugin};
 
-	const auto [requiredVersion, pluginBuildType] = initFunc(_pluginApi, plg::kApiVersion, cast.ptr);
+	const auto [requiredVersion, pluginBuildType] = initFunc(_pluginApi.data(), plg::kApiVersion, cast.ptr);
 	if (requiredVersion != 0) {
 		return ErrorData{ std::format("Not supported plugin api {}, max supported {}", requiredVersion, plg::kApiVersion) };
 	}
