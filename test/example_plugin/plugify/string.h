@@ -21,6 +21,7 @@
 
 #include <cstdint>
 #include <cstddef>
+#include <cstdarg>
 
 #ifndef PLUGIFY_STRING_STD_HASH
 #  define PLUGIFY_STRING_STD_HASH 1
@@ -230,7 +231,7 @@ namespace plg {
 
 		template <typename CharT, size_t = sizeof(CharT)>
 		struct padding {
-			char padding[sizeof(CharT) - sizeof(char)];
+			[[maybe_unused]] char padding[sizeof(CharT) - sizeof(char)];
 		};
 
 		template <typename CharT>
@@ -238,8 +239,6 @@ namespace plg {
 			// template specialization to remove the padding structure to avoid warnings on zero length arrays
 			// also, this allows us to take advantage of the empty-base-class optimization.
 		};
-
-		//static constexpr size_type SSO_CAPACITY = (sizeof(HeapLayout) - sizeof(char)) / sizeof(value_type);
 
 		// size must correspond to the last byte of long_data.cap, so we don't want the compiler to insert
 		// padding after size if sizeof(value_type) != 1; Also ensures both layouts are the same size.
@@ -263,7 +262,8 @@ namespace plg {
 			});
 		};
 
-		enum { min_cap = (sizeof(long_data) - 1) / sizeof(value_type) > 2 ? (sizeof(long_data) - 1) / sizeof(value_type) : 2 };
+		static constexpr size_type min_cap = (sizeof(long_data) - sizeof(char)) / sizeof(value_type) > 2 ? (sizeof(long_data) - sizeof(char)) / sizeof(value_type) : 2;
+
 		struct short_data {
 			value_type data[min_cap];
 			sso_size size;
@@ -271,7 +271,7 @@ namespace plg {
 
 		_PLUGIFY_STRING_DIAG_POP()
 
-		static_assert(sizeof(short_data) == (sizeof(value_type) * (min_cap + 1)), "short has an unexpected size.");
+		static_assert(sizeof(short_data) == (sizeof(value_type) * (min_cap + sizeof(char))), "short has an unexpected size.");
 		static_assert(sizeof(short_data) == sizeof(long_data), "short and long layout structures must be the same size");
 
 		union storage_t {

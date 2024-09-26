@@ -240,8 +240,6 @@ namespace plg {
 			// also, this allows us to take advantage of the empty-base-class optimization.
 		};
 
-		//static constexpr size_type SSO_CAPACITY = (sizeof(HeapLayout) - sizeof(char)) / sizeof(value_type);
-
 		// size must correspond to the last byte of long_data.cap, so we don't want the compiler to insert
 		// padding after size if sizeof(value_type) != 1; Also ensures both layouts are the same size.
 		struct sso_size : padding<value_type> {
@@ -264,7 +262,8 @@ namespace plg {
 			});
 		};
 
-		enum { min_cap = (sizeof(long_data) - 1) / sizeof(value_type) > 2 ? (sizeof(long_data) - 1) / sizeof(value_type) : 2 };
+		static constexpr size_type min_cap = (sizeof(long_data) - sizeof(char)) / sizeof(value_type) > 2 ? (sizeof(long_data) - sizeof(char)) / sizeof(value_type) : 2;
+
 		struct short_data {
 			value_type data[min_cap];
 			sso_size size;
@@ -272,7 +271,7 @@ namespace plg {
 
 		_PLUGIFY_STRING_DIAG_POP()
 
-		static_assert(sizeof(short_data) == (sizeof(value_type) * (min_cap + 1)), "short has an unexpected size.");
+		static_assert(sizeof(short_data) == (sizeof(value_type) * (min_cap + sizeof(char))), "short has an unexpected size.");
 		static_assert(sizeof(short_data) == sizeof(long_data), "short and long layout structures must be the same size");
 
 		union storage_t {
