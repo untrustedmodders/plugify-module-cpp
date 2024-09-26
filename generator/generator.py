@@ -215,7 +215,7 @@ def main(manifest_path, output_dir, override):
 
     content = ''
     
-    link = 'https://github.com/untrustedmodders/cpp-lang-module/blob/main/generator/generator.py'
+    link = 'https://github.com/untrustedmodders/plugify-module-cpp/blob/main/generator/generator.py'
 
     content += '#pragma once\n'
     content += '\n'

@@ -21,8 +21,8 @@ The C++ Language Module for Plugify enables developers to write plugins in C++ f
 1. Clone this repository:
 
     ```bash
-    git clone https://github.com/untrustedmodders/cpp-lang-module.git
-    cd cpp-lang-module
+    git clone https://github.com/untrustedmodders/plugify-module-cpp.git
+    cd plugify-module-cpp
     git submodule update --init --recursive
     ```
 

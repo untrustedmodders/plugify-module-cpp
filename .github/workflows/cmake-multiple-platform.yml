@@ -66,13 +66,13 @@ jobs:
           mkdir -p build
           cd build
           cmake -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCPPLM_VERSION="${{ needs.setup.outputs.buildnumber }}" -DCPPLM_PACKAGE="cpplm-build-${{ needs.setup.outputs.buildnumber }}-windows-${{ env.GITHUB_SHA_SHORT }}" ..
-          cmake --build . --target cpp-lang-module --config ${{ env.BUILD_TYPE }} -- /m
+          cmake --build . --target plugify-module-cpp --config ${{ env.BUILD_TYPE }} -- /m
 
       - name: Clean build directory
         run: |
           mkdir -p build/output/bin
-          cp build/${{env.BUILD_TYPE}}/cpp-lang-module.dll build/output/bin
-          cp build/cpp-lang-module.pmodule build/output
+          cp build/${{env.BUILD_TYPE}}/plugify-module-cpp.dll build/output/bin
+          cp build/plugify-module-cpp.pmodule build/output
 
       - uses: actions/upload-artifact@v4
         with:
@@ -106,13 +106,13 @@ jobs:
           mkdir -p build
           cd build
           cmake -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCPPLM_VERSION="${{ needs.setup.outputs.buildnumber }}" -DCPPLM_PACKAGE="cpplm-build-${{ needs.setup.outputs.buildnumber }}-linux-${{ env.GITHUB_SHA_SHORT }}" ..
-          cmake --build . --target cpp-lang-module --config ${{ env.BUILD_TYPE }} -- -j
+          cmake --build . --target plugify-module-cpp --config ${{ env.BUILD_TYPE }} -- -j
 
       - name: Clean build directory
         run: |
           mkdir -p build/output/bin
-          mv build/libcpp-lang-module.so build/output/bin
-          mv build/cpp-lang-module.pmodule build/output
+          mv build/libplugify-module-cpp.so build/output/bin
+          mv build/plugify-module-cpp.pmodule build/output
 
       - uses: actions/upload-artifact@v4
         with:
@@ -212,7 +212,7 @@ jobs:
             package_name = 'cpplm-build-${{ needs.setup.outputs.buildnumber }}-{}-${{ env.GITHUB_SHA_SHORT }}'
             checksum_linux = '${{ needs.publish.outputs.checksum_linux }}'
             checksum_windows = '${{ needs.publish.outputs.checksum_windows }}'
-            json_url = 'https://untrustedmodders.github.io/cpp-lang-module/cpp-lang-module.json'
+            json_url = 'https://untrustedmodders.github.io/plugify-module-cpp/plugify-module-cpp.json'
             
             def load_json_from_url(url):
                 try:
@@ -222,8 +222,8 @@ jobs:
                 except requests.RequestException:
                     return {
                         "content": {
-                            "cpp-lang-module": {
-                                "name": "cpp-lang-module",
+                            "plugify-module-cpp": {
+                                "name": "plugify-module-cpp",
                                 "type": "cpp",
                                 "author": "untrustedmodders",
                                 "description": "Adds support for C++ plugins",
@@ -240,11 +240,11 @@ jobs:
                 new_version = {
                     "version": version,
                     "checksum": f"{checksum}",
-                    "download": f"https://github.com/untrustedmodders/cpp-lang-module/releases/download/v{version}/{package.format(platform)}.zip",
+                    "download": f"https://github.com/untrustedmodders/plugify-module-cpp/releases/download/v{version}/{package.format(platform)}.zip",
                     "platforms": [f"{platform}"]
                 }
             
-                versions = data["content"]["cpp-lang-module"]["versions"]
+                versions = data["content"]["plugify-module-cpp"]["versions"]
                 versions.append(new_version)
             
                 if len(versions) > 10:
@@ -255,7 +255,7 @@ jobs:
             data = load_json_from_url(json_url)
             data = append_new_version(data, version_number, checksum_windows, package_name, "windows")
             data = append_new_version(data, version_number, checksum_linux, package_name, "linux")
-            save_json('build/repo/cpp-lang-module.json', data)
+            save_json('build/repo/plugify-module-cpp.json', data)
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2

@@ -5,7 +5,7 @@ if(POLICY CMP0092)
 endif()
 
 
-project(cpp-lang-module VERSION 1.0.0.0 DESCRIPTION "C++ Language Module" HOMEPAGE_URL "https://github.com/untrustedmodders/cpp-lang-module" LANGUAGES CXX)
+project(plugify-module-cpp VERSION 1.0.0.0 DESCRIPTION "C++ Language Module" HOMEPAGE_URL "https://github.com/untrustedmodders/plugify-module-cpp" LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

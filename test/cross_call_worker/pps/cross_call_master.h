@@ -5,7 +5,7 @@
 #include <string>
 #include <cstdint>
 
-// Generated from cross_call_master.pplugin by https://github.com/untrustedmodders/cpp-lang-module/blob/main/generator/generator.py 
+// Generated from cross_call_master.pplugin by https://github.com/untrustedmodders/plugify-module-cpp/blob/main/generator/generator.py 
 
 namespace cross_call_master {
 	inline void ReverseReturn(const plg::string& returnString) {
