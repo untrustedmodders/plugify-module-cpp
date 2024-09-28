@@ -608,16 +608,16 @@ namespace plg {
 		}
 		constexpr basic_string(const basic_string& str) : basic_string(str, allocator_type()) {}
 
-		constexpr basic_string(basic_string&& str, const allocator_type& a) requires(detail::is_allocator_v<Allocator>) : _allocator(a), storage(std::move(str.storage)) {
+		constexpr basic_string(basic_string&& str, const allocator_type& a) requires(detail::is_allocator_v<Allocator>) : _allocator(a) {
 			if (str.is_long() && a != str._allocator) {
 				auto len = str.get_long_size();
 				this->internal_assign(str.get_long_data(), len);
 			} else {
-				this->storage = str.storage;
+				this->storage = std::move(str.storage);
 				str.short_init();
 			}
 		}
-		constexpr basic_string(basic_string&& str) noexcept(std::is_nothrow_move_constructible<allocator_type>::value) : basic_string(str, std::move(str._allocator)) {}
+		constexpr basic_string(basic_string&& str) noexcept(std::is_nothrow_move_constructible<allocator_type>::value) : basic_string(str, str._allocator) {}
 
 		constexpr basic_string(std::initializer_list<value_type> ilist, const allocator_type& a = allocator_type()) requires(detail::is_allocator_v<Allocator>) : _allocator(a) {
 			auto len = ilist.size();
