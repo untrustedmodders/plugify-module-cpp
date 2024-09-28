@@ -23,7 +23,7 @@ VAL_TYPES_MAP = {
     'float': 'float',
     'double': 'double',
     'function': 'delegate',
-    'string': 'const std::string&',
+    'string': 'const plg::string&',
     'bool*': 'const std::vector<bool>&',
     'char8*': 'const std::vector<char>&',
     'char16*': 'const std::vector<char16_t>&',
@@ -38,11 +38,11 @@ VAL_TYPES_MAP = {
     'ptr64*': 'const std::vector<void*>&',
     'float*': 'const std::vector<float>&',
     'double*': 'const std::vector<double>&',
-    'string*': 'const std::vector<std::string>&',
-    'vec2': 'const plg::Vector2&',
-    'vec3': 'const plg::Vector3&',
-    'vec4': 'const plg::Vector4&',
-    'mat4x4': 'const plg::Matrix4x4&'
+    'string*': 'const std::vector<plg::string>&',
+    'vec2': 'const plg::vec2&',
+    'vec3': 'const plg::vec3&',
+    'vec4': 'const plg::vec4&',
+    'mat4x4': 'const plg::mat4x4&'
 }
 
 
@@ -63,7 +63,7 @@ REF_TYPES_MAP = {
     'float': 'float&',
     'double': 'double&',
     'function': 'delegate',
-    'string': 'std::string&',
+    'string': 'plg::string&',
     'bool*': 'std::vector<bool>&',
     'char8*': 'std::vector<char>&',
     'char16*': 'std::vector<char16_t>&',
@@ -78,11 +78,11 @@ REF_TYPES_MAP = {
     'ptr64*': 'std::vector<void*>&',
     'float*': 'std::vector<float>&',
     'double*': 'std::vector<double>&',
-    'string*': 'std::vector<std::string>&',
-    'vec2': 'plg::Vector2&',
-    'vec3': 'plg::Vector3&',
-    'vec4': 'plg::Vector4&',
-    'mat4x4': 'plg::Matrix4x4&'
+    'string*': 'std::vector<plg::string>&',
+    'vec2': 'plg::vec2&',
+    'vec3': 'plg::vec3&',
+    'vec4': 'plg::vec4&',
+    'mat4x4': 'plg::mat4x4&'
 }
 
 
@@ -103,7 +103,7 @@ RET_TYPES_MAP = {
     'float': 'float',
     'double': 'double',
     'function': 'delegate',
-    'string': 'std::string',
+    'string': 'plg::string',
     'bool*': 'std::vector<bool>',
     'char8*': 'std::vector<char>',
     'char16*': 'std::vector<char16_t>',
@@ -118,11 +118,11 @@ RET_TYPES_MAP = {
     'ptr64*': 'std::vector<void*>',
     'float*': 'std::vector<float>',
     'double*': 'std::vector<double>',
-    'string*': 'std::vector<std::string>',
-    'vec2': 'plg::Vector2',
-    'vec3': 'plg::Vector3',
-    'vec4': 'plg::Vector4',
-    'mat4x4': 'plg::Matrix4x4'
+    'string*': 'std::vector<plg::string>',
+    'vec2': 'plg::vec2',
+    'vec3': 'plg::vec3',
+    'vec4': 'plg::vec4',
+    'mat4x4': 'plg::mat4x4'
 }
 
 
@@ -181,9 +181,9 @@ def gen_params_string(params, param_gen: ParamGen):
 
 def gen_delegate(prototype):
     ret_type = prototype['retType']
-    return_type = convert_type(ret_type['type'], 'ref' in ret_type and ret_type['ref'] is True, False)
+    return_type = convert_type(ret_type['type'], 'ref' in ret_type and ret_type['ref'] is True, True)
     return (f'\tusing {prototype["name"]} = {return_type} (*)' 
-            f'({gen_params_string(prototype["paramTypes"], ParamGen.TypesNames)});\n')
+            f'({gen_params_string(prototype["paramTypes"], ParamGen.Types)});\n')
 
 
 def main(manifest_path, output_dir, override):
