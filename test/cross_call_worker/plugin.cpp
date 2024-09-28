@@ -853,14 +853,27 @@ namespace {
         return std::format("{{{}}}", result);
     }
 
+    // Overload for char to convert to string
+    template<>
+    std::string VectorToString(const std::vector<char>& vec) {
+        std::string result;
+        if (!vec.empty()) {
+            result = std::format("{}", static_cast<uint8_t>(vec[0]));
+            for (auto it = std::next(vec.begin()); it != vec.end(); ++it) {
+                std::format_to(std::back_inserter(result), ", {}", static_cast<uint8_t>(*it));
+            }
+        }
+        return std::format("{{{}}}", result);
+    }
+
     // Overload for char16_t to convert to string
     template<>
     std::string VectorToString(const std::vector<char16_t>& vec) {
         std::string result;
         if (!vec.empty()) {
-            result = std::format("'{}'", static_cast<uint16_t>(vec[0]));
+            result = std::format("{}", static_cast<uint16_t>(vec[0]));
             for (auto it = std::next(vec.begin()); it != vec.end(); ++it) {
-                std::format_to(std::back_inserter(result), ", '{}'", static_cast<uint16_t>(*it));
+                std::format_to(std::back_inserter(result), ", {}", static_cast<uint16_t>(*it));
             }
         }
         return std::format("{{{}}}", result);
@@ -1123,7 +1136,7 @@ PLUGIN_API void CallFunc31(plg::string* output, cross_call_master::Func31 func) 
     std::vector<double> vecD{4.0, 5.0, 6.0}; // Changed values
 
     plg::vec3 ret = func(ch, u32, vecU64, vec4, str, b, i64, vec2, i8, u16, vecI16, mat, vec3, f, vecD);
-    std::construct_at(output, std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ch, u32, VectorToString(vecU64), PodToString(vec4), str, b ? "true" : "false", i64, PodToString(vec2), i8, u16, VectorToString(vecI16), PodToString(mat), PodToString(vec3), f, VectorToString(vecD)));
+    std::construct_at(output, std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", PodToString(ret), ch, u32, VectorToString(vecU64), PodToString(vec4), str, b ? "true" : "false", i64, PodToString(vec2), i8, u16, VectorToString(vecI16), PodToString(mat), PodToString(vec3), f, VectorToString(vecD)));
 }
 
 // 16 parameters
@@ -1638,188 +1651,79 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             }},
             {"NoParamReturnArrayBool", []() {
                 const auto result = cross_call_master::NoParamReturnArrayBoolCallback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", static_cast<bool>(result[0]));
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", static_cast<bool>(*it));
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayChar8", []() {
                 const auto result = cross_call_master::NoParamReturnArrayChar8Callback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", static_cast<uint8_t>(result[0]));
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", static_cast<uint8_t>(*it));
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayChar16", []() {
                 const auto result = cross_call_master::NoParamReturnArrayChar16Callback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", static_cast<uint16_t>(result[0]));
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", static_cast<uint16_t>(*it));
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayInt8", []() {
                 const auto result = cross_call_master::NoParamReturnArrayInt8Callback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayInt16", []() {
                 const auto result = cross_call_master::NoParamReturnArrayInt16Callback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayInt32", []() {
                 const auto result = cross_call_master::NoParamReturnArrayInt32Callback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayInt64", []() {
                 const auto result = cross_call_master::NoParamReturnArrayInt64Callback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayUInt8", []() {
                 const auto result = cross_call_master::NoParamReturnArrayUInt8Callback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayUInt16", []() {
                 const auto result = cross_call_master::NoParamReturnArrayUInt16Callback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayUInt32", []() {
                 const auto result = cross_call_master::NoParamReturnArrayUInt32Callback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayUInt64", []() {
                 const auto result = cross_call_master::NoParamReturnArrayUInt64Callback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayPointer", []() {
                 const auto result = cross_call_master::NoParamReturnArrayPointerCallback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayFloat", []() {
                 const auto result = cross_call_master::NoParamReturnArrayFloatCallback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayDouble", []() {
                 const auto result = cross_call_master::NoParamReturnArrayDoubleCallback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnArrayString", []() {
                 const auto result = cross_call_master::NoParamReturnArrayStringCallback();
-                plg::string result_formated;
-                if (!result.empty()) {
-                    result_formated = std::format("'{}'", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(result_formated), ", '{}'", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", result_formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"NoParamReturnVector2", []() {
                 const auto result = cross_call_master::NoParamReturnVector2Callback();
-                cross_call_master::ReverseReturn(std::format("{{{}, {}}}", result.x, result.y));
+                cross_call_master::ReverseReturn(PodToString(result));
             }},
             {"NoParamReturnVector3", []() {
                 const auto result = cross_call_master::NoParamReturnVector3Callback();
-                cross_call_master::ReverseReturn(std::format("{{{}, {}, {}}}", result.x, result.y, result.z));
+                cross_call_master::ReverseReturn(PodToString(result));
             }},
             {"NoParamReturnVector4", []() {
                 const auto result = cross_call_master::NoParamReturnVector4Callback();
-                cross_call_master::ReverseReturn(std::format("{{{}, {}, {}, {}}}", result.x, result.y, result.z, result.w));
+                cross_call_master::ReverseReturn(PodToString(result));
             }},
             {"NoParamReturnMatrix4x4", []() {
                 const auto result = cross_call_master::NoParamReturnMatrix4x4Callback();
-                cross_call_master::ReverseReturn(std::format("{{{{{}, {}, {}, {}}}, {{{}, {}, {}, {}}}, {{{}, {}, {}, {}}}, {{{}, {}, {}, {}}}}}",
-                                                             result.m[0][0], result.m[0][1], result.m[0][2], result.m[0][3],
-                                                             result.m[1][0], result.m[1][1], result.m[1][2], result.m[1][3],
-                                                             result.m[2][0], result.m[2][1], result.m[2][2], result.m[2][3],
-                                                             result.m[3][0], result.m[3][1], result.m[3][2], result.m[3][3]));
+                cross_call_master::ReverseReturn(PodToString(result));
             }},
             {"Param1", []() {
                 cross_call_master::Param1Callback(999);
@@ -1875,7 +1779,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
                 double c{};
                 plg::vec4 d{};
                 cross_call_master::ParamRef4Callback(a, b, c, d);
-                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{{{}, {}, {}, {}}}", a, b, c, d.x, d.y, d.z, d.w));
+                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{}", a, b, c, PodToString(d)));
             }},
             {"ParamRef5", []() {
                 int32_t a{};
@@ -1884,14 +1788,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
                 plg::vec4 d{};
                 std::vector<int64_t> e{};
                 cross_call_master::ParamRef5Callback(a, b, c, d, e);
-                plg::string e_formated;
-                if (!e.empty()) {
-                    e_formated = std::format("{}", e[0]);
-                    for (auto it = std::next(e.begin()); it != e.end(); ++it) {
-                        std::format_to(std::back_inserter(e_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{{{}, {}, {}, {}}}|{{{}}}", a, b, c, d.x, d.y, d.z, d.w, e_formated));
+                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{}|{}", a, b, c, PodToString(d), VectorToString(e)));
             }},
             {"ParamRef6", []() {
                 int32_t a{};
@@ -1901,14 +1798,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
                 std::vector<int64_t> e{};
                 char f{};
                 cross_call_master::ParamRef6Callback(a, b, c, d, e, f);
-                plg::string e_formated;
-                if (!e.empty()) {
-                    e_formated = std::format("{}", e[0]);
-                    for (auto it = std::next(e.begin()); it != e.end(); ++it) {
-                        std::format_to(std::back_inserter(e_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{{{}, {}, {}, {}}}|{{{}}}|{}", a, b, c, d.x, d.y, d.z, d.w, e_formated,
+                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{}|{}|{}", a, b, c, PodToString(d), VectorToString(e),
                                                                  static_cast<uint8_t>(f)));
             }},
             {"ParamRef7", []() {
@@ -1920,14 +1810,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
                 char f{};
                 plg::string g{};
                 cross_call_master::ParamRef7Callback(a, b, c, d, e, f, g);
-                plg::string e_formated;
-                if (!e.empty()) {
-                    e_formated = std::format("{}", e[0]);
-                    for (auto it = std::next(e.begin()); it != e.end(); ++it) {
-                        std::format_to(std::back_inserter(e_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{{{}, {}, {}, {}}}|{{{}}}|{}|{}", a, b, c, d.x, d.y, d.z, d.w, e_formated,
+                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{}|{}|{}|{}", a, b, c, PodToString(d), VectorToString(e),
                                                                  static_cast<uint8_t>(f), g));
             }},
             {"ParamRef8", []() {
@@ -1940,14 +1823,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
                 plg::string g{};
                 char16_t h{};
                 cross_call_master::ParamRef8Callback(a, b, c, d, e, f, g, h);
-                plg::string e_formated;
-                if (!e.empty()) {
-                    e_formated = std::format("{}", e[0]);
-                    for (auto it = std::next(e.begin()); it != e.end(); ++it) {
-                        std::format_to(std::back_inserter(e_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{{{}, {}, {}, {}}}|{{{}}}|{}|{}|{}", a, b, c, d.x, d.y, d.z, d.w, e_formated,
+                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{}|{}|{}|{}|{}", a, b, c, PodToString(d), VectorToString(e),
                                                                  static_cast<uint8_t>(f), g, static_cast<uint16_t>(h)));
             }},
             {"ParamRef9", []() {
@@ -1961,14 +1837,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
                 char16_t h{};
                 int16_t k{};
                 cross_call_master::ParamRef9Callback(a, b, c, d, e, f, g, h, k);
-                plg::string e_formated;
-                if (!e.empty()) {
-                    e_formated = std::format("{}", e[0]);
-                    for (auto it = std::next(e.begin()); it != e.end(); ++it) {
-                        std::format_to(std::back_inserter(e_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{{{}, {}, {}, {}}}|{{{}}}|{}|{}|{}|{}", a, b, c, d.x, d.y, d.z, d.w, e_formated,
+                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}", a, b, c, PodToString(d), VectorToString(e),
                                                                  static_cast<uint8_t>(f), g, static_cast<uint16_t>(h), k));
             }},
             {"ParamRef10", []() {
@@ -1983,14 +1852,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
                 int16_t k{};
                 void* l{};
                 cross_call_master::ParamRef10Callback(a, b, c, d, e, f, g, h, k, l);
-                plg::string e_formated;
-                if (!e.empty()) {
-                    e_formated = std::format("{}", e[0]);
-                    for (auto it = std::next(e.begin()); it != e.end(); ++it) {
-                        std::format_to(std::back_inserter(e_formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{{{}, {}, {}, {}}}|{{{}}}|{}|{}|{}|{}|{}", a, b, c, d.x, d.y, d.z, d.w, e_formated,
+                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", a, b, c, PodToString(d), VectorToString(e),
                                                                  static_cast<uint8_t>(f), g, static_cast<uint16_t>(h), k, l));
             }},
             {"ParamRefArrays", []() {
@@ -2010,114 +1872,9 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
                 std::vector<double> p14{1.0};
                 std::vector<plg::string> p15{"Hi"};
                 cross_call_master::ParamRefVectorsCallback(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15);
-                plg::string p1_formated;
-                if (!p1.empty()) {
-                    p1_formated = std::format("{}", static_cast<bool>(p1[0]));
-                    for (auto it = std::next(p1.begin()); it != p1.end(); ++it) {
-                        std::format_to(std::back_inserter(p1_formated), ", {}", static_cast<bool>(*it));
-                    }
-                }
-                plg::string p2_formated;
-                if (!p2.empty()) {
-                    p2_formated = std::format("{}", static_cast<uint8_t>(p2[0]));
-                    for (auto it = std::next(p2.begin()); it != p2.end(); ++it) {
-                        std::format_to(std::back_inserter(p2_formated), ", {}", static_cast<uint8_t>(*it));
-                    }
-                }
-                plg::string p3_formated;
-                if (!p3.empty()) {
-                    p3_formated = std::format("{}", static_cast<uint16_t>(p3[0]));
-                    for (auto it = std::next(p3.begin()); it != p3.end(); ++it) {
-                        std::format_to(std::back_inserter(p3_formated), ", {}", static_cast<uint16_t>(*it));
-                    }
-                }
-                plg::string p4_formated;
-                if (!p4.empty()) {
-                    p4_formated = std::format("{}", p4[0]);
-                    for (auto it = std::next(p4.begin()); it != p4.end(); ++it) {
-                        std::format_to(std::back_inserter(p4_formated), ", {}", *it);
-                    }
-                }
-                plg::string p5_formated;
-                if (!p5.empty()) {
-                    p5_formated = std::format("{}", p5[0]);
-                    for (auto it = std::next(p5.begin()); it != p5.end(); ++it) {
-                        std::format_to(std::back_inserter(p5_formated), ", {}", *it);
-                    }
-                }
-                plg::string p6_formated;
-                if (!p6.empty()) {
-                    p6_formated = std::format("{}", p6[0]);
-                    for (auto it = std::next(p6.begin()); it != p6.end(); ++it) {
-                        std::format_to(std::back_inserter(p6_formated), ", {}", *it);
-                    }
-                }
-                plg::string p7_formated;
-                if (!p7.empty()) {
-                    p7_formated = std::format("{}", p7[0]);
-                    for (auto it = std::next(p7.begin()); it != p7.end(); ++it) {
-                        std::format_to(std::back_inserter(p7_formated), ", {}", *it);
-                    }
-                }
-                plg::string p8_formated;
-                if (!p8.empty()) {
-                    p8_formated = std::format("{}", p8[0]);
-                    for (auto it = std::next(p8.begin()); it != p8.end(); ++it) {
-                        std::format_to(std::back_inserter(p8_formated), ", {}", *it);
-                    }
-                }
-                plg::string p9_formated;
-                if (!p9.empty()) {
-                    p9_formated = std::format("{}", p9[0]);
-                    for (auto it = std::next(p9.begin()); it != p9.end(); ++it) {
-                        std::format_to(std::back_inserter(p9_formated), ", {}", *it);
-                    }
-                }
-                plg::string p10_formated;
-                if (!p10.empty()) {
-                    p10_formated = std::format("{}", p10[0]);
-                    for (auto it = std::next(p10.begin()); it != p10.end(); ++it) {
-                        std::format_to(std::back_inserter(p10_formated), ", {}", *it);
-                    }
-                }
-                plg::string p11_formated;
-                if (!p11.empty()) {
-                    p11_formated = std::format("{}", p11[0]);
-                    for (auto it = std::next(p11.begin()); it != p11.end(); ++it) {
-                        std::format_to(std::back_inserter(p11_formated), ", {}", *it);
-                    }
-                }
-                plg::string p12_formated;
-                if (!p12.empty()) {
-                    p12_formated = std::format("{}", p12[0]);
-                    for (auto it = std::next(p12.begin()); it != p12.end(); ++it) {
-                        std::format_to(std::back_inserter(p12_formated), ", {}", *it);
-                    }
-                }
-                plg::string p13_formated;
-                if (!p13.empty()) {
-                    p13_formated = std::format("{}", p13[0]);
-                    for (auto it = std::next(p13.begin()); it != p13.end(); ++it) {
-                        std::format_to(std::back_inserter(p13_formated), ", {}", *it);
-                    }
-                }
-                plg::string p14_formated;
-                if (!p14.empty()) {
-                    p14_formated = std::format("{}", p14[0]);
-                    for (auto it = std::next(p14.begin()); it != p14.end(); ++it) {
-                        std::format_to(std::back_inserter(p14_formated), ", {}", *it);
-                    }
-                }
-                plg::string p15_formated;
-                if (!p15.empty()) {
-                    p15_formated = std::format("'{}'", p15[0]);
-                    for (auto it = std::next(p15.begin()); it != p15.end(); ++it) {
-                        std::format_to(std::back_inserter(p15_formated), ", '{}'", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}|{{{}}}|{{{}}}|{{{}}}|{{{}}}|{{{}}}|{{{}}}|{{{}}}|{{{}}}|{{{}}}|{{{}}}|{{{}}}|{{{}}}|{{{}}}|{{{}}}",
-                                                                 p1_formated, p2_formated, p3_formated, p4_formated, p5_formated, p6_formated, p7_formated, p8_formated,
-                                                                 p9_formated, p10_formated, p11_formated, p12_formated, p13_formated, p14_formated, p15_formated));
+                cross_call_master::ReverseReturn(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}",
+                                                             VectorToString(p1), VectorToString(p2), VectorToString(p3), VectorToString(p4), VectorToString(p5), VectorToString(p6), VectorToString(p7), VectorToString(p8),
+                                                             VectorToString(p9), VectorToString(p10), VectorToString(p11), VectorToString(p12), VectorToString(p13), VectorToString(p14), VectorToString(p15)));
             }},
             {"ParamAllPrimitives", []() {
                 const auto result = cross_call_master::ParamAllPrimitivesCallback(true, '%', u'☢', -1, -1000, -1000000, -1000000000000LL, 200, 50000, 3000000000LL, 9999999999LL,
@@ -2185,192 +1942,83 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             }},
             {"CallFuncString", []() {
                 const auto result = cross_call_master::CallFuncStringCallback(&MockString);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFuncBoolVector", []() {
                 const auto result = cross_call_master::CallFuncBoolVectorCallback(&MockBoolVector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncChar8Vector", []() {
                 const auto result = cross_call_master::CallFuncChar8VectorCallback(&MockChar8Vector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncChar16Vector", []() {
                 const auto result = cross_call_master::CallFuncChar16VectorCallback(&MockChar16Vector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", static_cast<uint16_t>(result[0]));
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", static_cast<uint16_t>(*it));
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncInt8Vector", []() {
                 const auto result = cross_call_master::CallFuncInt8VectorCallback(&MockInt8Vector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncInt16Vector", []() {
                 const auto result = cross_call_master::CallFuncInt16VectorCallback(&MockInt16Vector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncInt32Vector", []() {
                 const auto result = cross_call_master::CallFuncInt32VectorCallback(&MockInt32Vector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncInt64Vector", []() {
                 const auto result = cross_call_master::CallFuncInt64VectorCallback(&MockInt64Vector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncUInt8Vector", []() {
                 const auto result = cross_call_master::CallFuncUInt8VectorCallback(&MockUInt8Vector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncUInt16Vector", []() {
                 const auto result = cross_call_master::CallFuncUInt16VectorCallback(&MockUInt16Vector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncUInt32Vector", []() {
                 const auto result = cross_call_master::CallFuncUInt32VectorCallback(&MockUInt32Vector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncUInt64Vector", []() {
                 const auto result = cross_call_master::CallFuncUInt64VectorCallback(&MockUInt64Vector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncPtrVector", []() {
                 const auto result = cross_call_master::CallFuncPtrVectorCallback(&MockPtrVector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncFloatVector", []() {
                 const auto result = cross_call_master::CallFuncFloatVectorCallback(&MockFloatVector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncDoubleVector", []() {
                 const auto result = cross_call_master::CallFuncDoubleVectorCallback(&MockDoubleVector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("{}", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", {}", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncStringVector", []() {
                 const auto result = cross_call_master::CallFuncStringVectorCallback(&MockStringVector);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("'{}'", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", '{}'", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFuncVec2", []() {
                 const auto result = cross_call_master::CallFuncVec2Callback(&MockVec2);
-                cross_call_master::ReverseReturn(std::format("{{{}, {}}}", result.x, result.y));
+                cross_call_master::ReverseReturn(PodToString(result));
             }},
             {"CallFuncVec3", []() {
                 const auto result = cross_call_master::CallFuncVec3Callback(&MockVec3);
-                cross_call_master::ReverseReturn(std::format("{{{}, {}, {}}}", result.x, result.y, result.z));
+                cross_call_master::ReverseReturn(PodToString(result));
             }},
             {"CallFuncVec4", []() {
                 const auto result = cross_call_master::CallFuncVec4Callback(&MockVec4);
-                cross_call_master::ReverseReturn(std::format("{{{}, {}, {}, {}}}", result.x, result.y, result.z, result.w));
+                cross_call_master::ReverseReturn(PodToString(result));
             }},
             {"CallFuncMat4x4", []() {
                 const auto result = cross_call_master::CallFuncMat4x4Callback(&MockMat4x4);
-                cross_call_master::ReverseReturn(std::format("{{{{{}, {}, {}, {}}}, {{{}, {}, {}, {}}}, {{{}, {}, {}, {}}}, {{{}, {}, {}, {}}}}}",
-                                                             result.m[0][0], result.m[0][1], result.m[0][2], result.m[0][3],
-                                                             result.m[1][0], result.m[1][1], result.m[1][2], result.m[1][3],
-                                                             result.m[2][0], result.m[2][1], result.m[2][2], result.m[2][3],
-                                                             result.m[3][0], result.m[3][1], result.m[3][2], result.m[3][3]));
+                cross_call_master::ReverseReturn(PodToString(result));
             }},
             {"CallFunc1", []() {
                 const auto result = cross_call_master::CallFunc1Callback(&MockFunc1);
@@ -2385,7 +2033,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             }},
             {"CallFunc4", []() {
                 const auto result = cross_call_master::CallFunc4Callback(&MockFunc4);
-                cross_call_master::ReverseReturn(std::format("{{{}, {}, {}, {}}}", result.x, result.y, result.z, result.w));
+                cross_call_master::ReverseReturn(PodToString(result));
             }},
             {"CallFunc5", []() {
                 const auto result = cross_call_master::CallFunc5Callback(&MockFunc5);
@@ -2401,11 +2049,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             }},
             {"CallFunc8", []() {
                 const auto result = cross_call_master::CallFunc8Callback(&MockFunc8);
-                cross_call_master::ReverseReturn(std::format("{{{{{}, {}, {}, {}}}, {{{}, {}, {}, {}}}, {{{}, {}, {}, {}}}, {{{}, {}, {}, {}}}}}",
-                                                             result.m[0][0], result.m[0][1], result.m[0][2], result.m[0][3],
-                                                             result.m[1][0], result.m[1][1], result.m[1][2], result.m[1][3],
-                                                             result.m[2][0], result.m[2][1], result.m[2][2], result.m[2][3],
-                                                             result.m[3][0], result.m[3][1], result.m[3][2], result.m[3][3]));
+                cross_call_master::ReverseReturn(PodToString(result));
             }},
             {"CallFunc9", []() {
                 cross_call_master::CallFunc9Callback(&MockFunc9);
@@ -2428,14 +2072,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             }},
             {"CallFunc14", []() {
                 const auto result = cross_call_master::CallFunc14Callback(&MockFunc14);
-                plg::string formated;
-                if (!result.empty()) {
-                    formated = std::format("'{}'", result[0]);
-                    for (auto it = std::next(result.begin()); it != result.end(); ++it) {
-                        std::format_to(std::back_inserter(formated), ", '{}'", *it);
-                    }
-                }
-                cross_call_master::ReverseReturn(std::format("{{{}}}", formated));
+                cross_call_master::ReverseReturn(VectorToString(result));
             }},
             {"CallFunc15", []() {
                 const auto result = cross_call_master::CallFunc15Callback(&MockFunc15);
@@ -2447,67 +2084,67 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             }},
             {"CallFunc17", []() {
                 const auto result = cross_call_master::CallFunc17Callback(&MockFunc17);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc18", []() {
                 const auto result = cross_call_master::CallFunc18Callback(&MockFunc18);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc19", []() {
                 const auto result = cross_call_master::CallFunc19Callback(&MockFunc19);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc20", []() {
                 const auto result = cross_call_master::CallFunc20Callback(&MockFunc20);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc21", []() {
                 const auto result = cross_call_master::CallFunc21Callback(&MockFunc21);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc22", []() {
                 const auto result = cross_call_master::CallFunc22Callback(&MockFunc22);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc23", []() {
                 const auto result = cross_call_master::CallFunc23Callback(&MockFunc23);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc24", []() {
                 const auto result = cross_call_master::CallFunc24Callback(&MockFunc24);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc25", []() {
                 const auto result = cross_call_master::CallFunc25Callback(&MockFunc25);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc26", []() {
                 const auto result = cross_call_master::CallFunc26Callback(&MockFunc26);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc27", []() {
                 const auto result = cross_call_master::CallFunc27Callback(&MockFunc27);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc28", []() {
                 const auto result = cross_call_master::CallFunc28Callback(&MockFunc28);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc29", []() {
                 const auto result = cross_call_master::CallFunc29Callback(&MockFunc29);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc30", []() {
                 const auto result = cross_call_master::CallFunc30Callback(&MockFunc30);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc31", []() {
                 const auto result = cross_call_master::CallFunc31Callback(&MockFunc31);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }},
             {"CallFunc32", []() {
                 const auto result = cross_call_master::CallFunc32Callback(&MockFunc32);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(result);
             }}
     };
     auto it = tests.find(test);
