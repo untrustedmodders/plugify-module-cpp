@@ -1050,7 +1050,7 @@ PLUGIN_API void CallFunc27(plg::string* output, cross_call_master::Func27 func) 
     int32_t i32 = 40; // Changed from 20 to 40
     std::vector<uint8_t> vecU8{3, 4, 5}; // Changed values
     uint8_t ret = func(f, vec3, ptr, vec2, vecI16, mat, b, vec4, i8, i32, vecU8);
-    std::construct_at(output, std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, f, PodToString(vec3), ptr, PodToString(vec2), VectorToString(vecI16), PodToString(mat), b, PodToString(vec4), i8, i32, VectorToString(vecU8)));
+    std::construct_at(output, std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, f, PodToString(vec3), ptr, PodToString(vec2), VectorToString(vecI16), PodToString(mat), b, PodToString(vec4), i8, i32, VectorToString(vecU8)));
 }
 
 // 12 parameters
@@ -1070,7 +1070,7 @@ PLUGIN_API void CallFunc28(plg::string* output, cross_call_master::Func28 func) 
     std::vector<float> vecF{4.0f, 5.0f, 6.0f}; // Changed values
 
     plg::string ret = func(ptr, u16, vecU32, mat, f, vec4, str, vecU64, i64, b, vec3, vecF);
-    std::construct_at(output, std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, ptr, u16, VectorToString(vecU32), PodToString(mat), f, PodToString(vec4), str, VectorToString(vecU64), i64, b, PodToString(vec3), VectorToString(vecF)));
+    std::construct_at(output, std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, ptr, u16, VectorToString(vecU32), PodToString(mat), f, PodToString(vec4), str, VectorToString(vecU64), i64, b, PodToString(vec3), VectorToString(vecF)));
 }
 
 // 13 parameters
@@ -1091,7 +1091,7 @@ PLUGIN_API void CallFunc29(plg::string* output, cross_call_master::Func29 func) 
     std::vector<int64_t> vecI64{2000, 3000, 4000}; // Changed values
 
     std::vector<plg::string> ret = func(vec4, i32, vecI8, d, b, i8, vecU16, f, str, mat, u64, vec3, vecI64);
-    std::construct_at(output, std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", VectorToString(ret), PodToString(vec4), i32, VectorToString(vecI8), d, b ? "true" : "false", i8, VectorToString(vecU16), f, str, PodToString(mat), u64, PodToString(vec3), VectorToString(vecI64)));
+    std::construct_at(output, std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", VectorToString(ret), PodToString(vec4), i32, VectorToString(vecI8), d, b ? "true" : "false", i8, VectorToString(vecU16), f, str, PodToString(mat), u64, PodToString(vec3), VectorToString(vecI64)));
 }
 
 // 14 parameters
@@ -1113,7 +1113,7 @@ PLUGIN_API void CallFunc30(plg::string* output, cross_call_master::Func30 func) 
     double d = 8.90; // Changed from 7.89
 
     int32_t ret = func(ptr, vec4, i64, vecU32, b, str, vec3, vecU8, f, vec2, mat, i8, vecF, d);
-    std::construct_at(output, std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, ptr, PodToString(vec4), i64, VectorToString(vecU32), b ? "true" : "false", str, PodToString(vec3), VectorToString(vecU8), f, PodToString(vec2), PodToString(mat), i8, VectorToString(vecF), d));
+    std::construct_at(output, std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, ptr, PodToString(vec4), i64, VectorToString(vecU32), b ? "true" : "false", str, PodToString(vec3), VectorToString(vecU8), f, PodToString(vec2), PodToString(mat), i8, VectorToString(vecF), d));
 }
 
 // 15 parameters
@@ -1136,7 +1136,7 @@ PLUGIN_API void CallFunc31(plg::string* output, cross_call_master::Func31 func) 
     std::vector<double> vecD{4.0, 5.0, 6.0}; // Changed values
 
     plg::vec3 ret = func(ch, u32, vecU64, vec4, str, b, i64, vec2, i8, u16, vecI16, mat, vec3, f, vecD);
-    std::construct_at(output, std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", PodToString(ret), ch, u32, VectorToString(vecU64), PodToString(vec4), str, b ? "true" : "false", i64, PodToString(vec2), i8, u16, VectorToString(vecI16), PodToString(mat), PodToString(vec3), f, VectorToString(vecD)));
+    std::construct_at(output, std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", PodToString(ret), ch, u32, VectorToString(vecU64), PodToString(vec4), str, b ? "true" : "false", i64, PodToString(vec2), i8, u16, VectorToString(vecI16), PodToString(mat), PodToString(vec3), f, VectorToString(vecD)));
 }
 
 // 16 parameters
@@ -1213,7 +1213,7 @@ int32_t MockFunc1(const plg::vec3& v) {
 // Mock implementations for 2 parameter functions
 char MockFunc2(float a, int64_t b) {
     const auto buffer = std::format("{}{}", a, b);
-	return static_cast<char>(a + b);
+	return '&';
 }
 
 // Mock implementations for 3 parameter functions
@@ -1890,7 +1890,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             }},
             {"CallFuncChar8", []() {
                 const auto result = cross_call_master::CallFuncChar8Callback(&MockChar8);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(std::format("{}", static_cast<uint8_t>(result)));
             }},
             {"CallFuncChar16", []() {
                 const auto result = cross_call_master::CallFuncChar16Callback(&MockChar16);
@@ -2026,7 +2026,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             }},
             {"CallFunc2", []() {
                 const auto result = cross_call_master::CallFunc2Callback(&MockFunc2);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(std::format("{}", static_cast<uint8_t>(result)));
             }},
             {"CallFunc3", []() {
                 cross_call_master::CallFunc3Callback(&MockFunc3);
