@@ -25,13 +25,13 @@
 #define TEST_REVERSE_PARAMS_FUNCTIONS (1 << 24)
 #define TEST_ALL 0xFFFFFFFF
 #ifndef TEST_CASES
-#define TEST_CASES 0xFFFFFFFF
+#define TEST_CASES TEST_ALL
 #endif // !def TEST_CASE
 
 namespace {
     // Helper function to convert a vector of integers to a string
     template<typename T>
-    constexpr std::string VectorToString(const std::vector<T>& vec) {
+    std::string VectorToString(const std::vector<T>& vec) {
         std::string result;
         if (!vec.empty()) {
             result = std::format("{}", vec[0]);
@@ -154,7 +154,7 @@ int32_t MockFunc1(const plg::vec3& v) {
 // Mock implementations for 2 parameter functions
 char MockFunc2(float a, int64_t b) {
     const auto buffer = std::format("{}{}", a, b);
-    return static_cast<char>(a * 2 + b * 2);
+    return '%';
 }
 
 // Mock implementations for 3 parameter functions
@@ -1271,6 +1271,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
+
 #endif// TEST_CASES & TEST_PARAMS_ALL_PRIMITIVES
 	}
 
@@ -1384,7 +1385,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
-        /*_tests.Add("CallFuncFunction", [this](SimpleTests::Test& test) {
+        /*_tests.Add("CallFuncFunction", [&](SimpleTests::Test& test) {
             const plg::string expected = "0x0"; // Adjust this if needed
             const auto result = cross_call_worker::CallFuncFunction();
             if (result != expected) {
@@ -1613,7 +1614,7 @@ class CrossCallMaster : public plg::IPluginEntry {
         _tests.Add("CallFunc9", [](SimpleTests::Test&) {
             cross_call_worker::CallFunc9(&MockFunc9);
         });
-        _tests.Add("CallFunc10", [this](SimpleTests::Test& test) {
+        _tests.Add("CallFunc10", [](SimpleTests::Test& test) {
             plg::vec4 vec4{5.6f, 7.8f, 8.9f, 9.0f}; // Changed to random values
             plg::mat4x4 mat; // Assume it's initialized properly
             std::vector<uint32_t> vecU32{4, 5, 6}; // Changed to random values
@@ -1803,7 +1804,7 @@ class CrossCallMaster : public plg::IPluginEntry {
             }
         });
         _tests.Add("CallFunc24", [](SimpleTests::Test& test) {
-            const plg::string expected = "{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}|{d, e, f}|128|{7, 8, 9}|{5, 6, 7, 8}|1099511627775|{0xffffddddffffdddd}|3.14|{0x3, 0x4}";
+            const plg::string expected = "{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}|{100, 101, 102}|128|{7, 8, 9}|{5, 6, 7, 8}|1099511627775|{0xffffddddffffdddd}|3.14|{0x3, 0x4}";
             const auto result = cross_call_worker::CallFunc24(&MockFunc24);
             if (result != expected) {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
@@ -1824,42 +1825,42 @@ class CrossCallMaster : public plg::IPluginEntry {
             }
         });
         _tests.Add("CallFunc27", [](SimpleTests::Test& test) {
-            const plg::string expected = "27|9|{7, 8, 9}|0xdeadbeefdeadbeef|{5, 6}|{3, 6, 9}|{{1.5, 2.5, 3.5, 4.5}, {5.5, 6.5, 7.5, 8.5}, {9.5, 10.5, 11.5, 12.5}, {13.5, 14.5, 15.5, 16.5}}|true|{2, 3, 4, 5}|10|20";
+            const plg::string expected = "27|9|{7, 8, 9}|0xdeadbeefdeadbeef|{5, 6}|{3, 6, 9}|{{1.5, 2.5, 3.5, 4.5}, {5.5, 6.5, 7.5, 8.5}, {9.5, 10.5, 11.5, 12.5}, {13.5, 14.5, 15.5, 16.5}}|true|{2, 3, 4, 5}|10|20|{1, 55, 66, 87, 99, 23, 123}";
             const auto result = cross_call_worker::CallFunc27(&MockFunc27);
             if (result != expected) {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFunc28", [](SimpleTests::Test& test) {
-            const plg::string expected = "Updated MockFunc28|0x7fffffffffff|60000|{10, 20, 30, 40, 50, 60}|{{2.1, 0.9, 0.4, 0.8}, {0.5, 1.2, 0.7, 0.4}, {1, 0.6, 1.5, 0.2}, {0.8, 0.3, 0.9, 1.1}}|7.5|{2, 3, 4, 5}|Updated MockFunc28|{10, 20, 30}|900000000000|false|{40, 50, 60}";
+            const plg::string expected = "Updated MockFunc28|0x7fffffffffff|60000|{10, 20, 30, 40, 50, 60}|{{2.1, 0.9, 0.4, 0.8}, {0.5, 1.2, 0.7, 0.4}, {1, 0.6, 1.5, 0.2}, {0.8, 0.3, 0.9, 1.1}}|7.5|{2, 3, 4, 5}|Updated MockFunc28|{10, 20, 30}|900000000000|false|{40, 50, 60}|{10, -500, 1000}";
             const auto result = cross_call_worker::CallFunc28(&MockFunc28);
             if (result != expected) {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFunc29", [](SimpleTests::Test& test) {
-            const plg::string expected = "{'Updated Example', 'Updated MockFunc29'}|{2.5, 3.5, 4.5, 5.5}|50|{100, 99, 98}|6.28|false|10|{150, 250}|2.5|Updated MockFunc29|{{0.6, 1.1, 0.7, 0.2}, {1.3, 0.9, 0.5, 1}, {0.8, 0.4, 1.6, 0.7}, {0.2, 1, 0.9, 1.5}}|128";
+            const plg::string expected = "{'Updated Example', 'Updated MockFunc29'}|{2.5, 3.5, 4.5, 5.5}|50|{100, 99, 98}|6.28|false|10|{150, 250}|2.5|Updated MockFunc29|{{0.6, 1.1, 0.7, 0.2}, {1.3, 0.9, 0.5, 1}, {0.8, 0.4, 1.6, 0.7}, {0.2, 1, 0.9, 1.5}}|128|{4, 5, 6}|{4, 5, 6}";
             const auto result = cross_call_worker::CallFunc29(&MockFunc29);
             if (result != expected) {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFunc30", [](SimpleTests::Test& test) {
-            const plg::string expected = "77|0x7fffffffffff|{2, 4, 6, 8}|2000|{300, 400}|true|Updated MockFunc30|{4, 5, 6}|{128, 64, 255, 0, 100, 50}|3.3|{4, 5}|{{0.6, 0.2, 1.5, 0.9}, {1.2, 0.4, 0.7, 0.8}, {0.5, 0.1, 1.7, 0.4}, {0.8, 0.6, 1.2, 1.3}}|10|{3, 3, 4, 4}";
+            const plg::string expected = "77|0x7fffffffffff|{2, 4, 6, 8}|2000|{300, 400}|true|Updated MockFunc30|{4, 5, 6}|{128, 64, 255, 0, 100, 50}|3.3|{4, 5}|{{0.6, 0.2, 1.5, 0.9}, {1.2, 0.4, 0.7, 0.8}, {0.5, 0.1, 1.7, 0.4}, {0.8, 0.6, 1.2, 1.3}}|10|{3, 3, 4, 4}|3.14159";
             const auto result = cross_call_worker::CallFunc30(&MockFunc30);
             if (result != expected) {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFunc31", [](SimpleTests::Test& test) {
-            const plg::string expected = "D|54321|{18446744073709551615, 18446744073709551614, 18446744073709551613}|{5, 6, 7, 8}|Updated MockFunc31|false|987654321|{6, 7}|9|500|{5, 10}|{{1, 0.2, 1.1, 0.4}, {1.1, 0.8, 0.3, 0.9}, {0.5, 0.7, 1.8, 0.6}, {0.3, 0.6, 1.4, 0.8}}|{10, 20, 30}";
+            const plg::string expected = "{1, 2, 3}|D|54321|{18446744073709551615, 18446744073709551614, 18446744073709551613}|{5, 6, 7, 8}|Updated MockFunc31|false|987654321|{6, 7}|9|500|{5, 10}|{{1, 0.2, 1.1, 0.4}, {1.1, 0.8, 0.3, 0.9}, {0.5, 0.7, 1.8, 0.6}, {0.3, 0.6, 1.4, 0.8}}|{10, 20, 30}|8.8|{0.2, 0.4, 0.6}";
             const auto result = cross_call_worker::CallFunc31(&MockFunc31);
             if (result != expected) {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFunc32", [](SimpleTests::Test& test) {
-            const plg::string expected = "100|512|{5, 10}|{8, 9, 10, 11}|0xdeadbeafdeadbeaf|{400, 500}|{{0.5, 0.3, 0.2, 0.1}, {0.8, 0.9, 0.4, 0.6}, {0.1, 0.7, 1, 0.5}, {0.4, 0.2, 0.3, 1.2}}|987654321|Updated MockFunc32|2000|{5.5, 6.5}|{6, 7, 8, 9}|true|{1, 2, 3}|15|{'120', '121', '122'}";
+            const plg::string expected = "100|512|{5, 10}|{8, 9, 10, 11}|0xdeadbeafdeadbeaf|{400, 500}|{{0.5, 0.3, 0.2, 0.1}, {0.8, 0.9, 0.4, 0.6}, {0.1, 0.7, 1, 0.5}, {0.4, 0.2, 0.3, 1.2}}|987654321|Updated MockFunc32|2000|{5.5, 6.5}|{6, 7, 8, 9}|true|{1, 2, 3}|15|{120, 121, 122}";
             const auto result = cross_call_worker::CallFunc32(&MockFunc32);
             if (result != expected) {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
@@ -1873,7 +1874,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 		_tests.Add("ReverseNoParamReturnVoid", [](SimpleTests::Test& /*test*/) {
 			cross_call_worker::ReverseCall("NoParamReturnVoid");
 		});
-		_tests.Add("ReverseNoParamReturnBool", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnBool", [&](SimpleTests::Test& test) {
 			const plg::string expected = "true";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnBool");
@@ -1883,7 +1884,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnChar8", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnChar8", [&](SimpleTests::Test& test) {
 			const plg::string expected = "80"; // P
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnChar8");
@@ -1893,7 +1894,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnChar16", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnChar16", [&](SimpleTests::Test& test) {
 			const plg::string expected = "1060"; // Ф
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnChar16");
@@ -1903,7 +1904,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnInt8", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnInt8", [&](SimpleTests::Test& test) {
 			const plg::string expected = "123";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnInt8");
@@ -1913,7 +1914,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnInt16", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnInt16", [&](SimpleTests::Test& test) {
 			const plg::string expected = "32765";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnInt16");
@@ -1923,7 +1924,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnInt32", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnInt32", [&](SimpleTests::Test& test) {
 			const plg::string expected = "2112211221";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnInt32");
@@ -1933,7 +1934,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnInt64", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnInt64", [&](SimpleTests::Test& test) {
 			const plg::string expected = "8526495038839145831";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnInt64");
@@ -1943,7 +1944,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnUInt8", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnUInt8", [&](SimpleTests::Test& test) {
 			const plg::string expected = "205";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnUInt8");
@@ -1953,7 +1954,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnUInt16", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnUInt16", [&](SimpleTests::Test& test) {
 			const plg::string expected = "52685";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnUInt16");
@@ -1963,7 +1964,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnUInt32", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnUInt32", [&](SimpleTests::Test& test) {
 			const plg::string expected = "3452816845";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnUInt32");
@@ -1973,7 +1974,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnUInt64", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnUInt64", [&](SimpleTests::Test& test) {
 			const plg::string expected = "14829735431805717965";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnUInt64");
@@ -1983,7 +1984,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnPointer", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnPointer", [&](SimpleTests::Test& test) {
 			const plg::string expected = "0xaabbccdd87655678";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnPointer");
@@ -1993,7 +1994,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnFloat", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnFloat", [&](SimpleTests::Test& test) {
 			const plg::string expected = "0.123";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnFloat");
@@ -2003,7 +2004,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnDouble", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnDouble", [&](SimpleTests::Test& test) {
 			const plg::string expected = "987.321";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnDouble");
@@ -2016,7 +2017,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 #endif// TEST_CASES & TEST_REVERSE_NO_PARAM_ONLY_RETURN_PRIMITIVES
 
 #if TEST_CASES & TEST_REVERSE_NO_PARAM_ONLY_RETURN_OBJECTS
-		_tests.Add("ReverseNoParamReturnFunction", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnFunction", [&](SimpleTests::Test& test) {
 			const plg::string expected = "365";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnFunction");
@@ -2026,7 +2027,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnString", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnString", [&](SimpleTests::Test& test) {
 			const plg::string expected = "Convertiplane";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnString");
@@ -2039,7 +2040,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 #endif// TEST_CASES & TEST_REVERSE_NO_PARAM_ONLY_RETURN_OBJECTS
 
 #if TEST_CASES & TEST_REVERSE_NO_PARAM_ONLY_RETURN_ARRAYS
-		_tests.Add("ReverseNoParamReturnArrayBool", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayBool", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{false, true, true}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayBool");
@@ -2049,7 +2050,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnArrayChar8", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayChar8", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{112, 108, 117, 103}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayChar8");
@@ -2060,7 +2061,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 			}
 
 		});
-		_tests.Add("ReverseNoParamReturnArrayChar16", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayChar16", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{1095, 1072, 1088, 33}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayChar16");
@@ -2070,7 +2071,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnArrayInt8", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayInt8", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{10, -15, 20}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayInt8");
@@ -2080,7 +2081,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnArrayInt16", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayInt16", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{10, -15, 20, -25}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayInt16");
@@ -2090,7 +2091,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnArrayInt32", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayInt32", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{10, -15, 20, -25, 30}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayInt32");
@@ -2100,7 +2101,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnArrayInt64", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayInt64", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{10, -15, 20, -25, 30, -35}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayInt64");
@@ -2110,7 +2111,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnArrayUInt8", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayUInt8", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{1, 2, 3, 200}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayUInt8");
@@ -2120,7 +2121,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnArrayUInt16", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayUInt16", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{1, 2, 3, 200, 60000}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayUInt16");
@@ -2130,7 +2131,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnArrayUInt32", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayUInt32", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{1, 2, 3, 200, 60000, 4000000000}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayUInt32");
@@ -2140,7 +2141,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnArrayUInt64", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayUInt64", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{1, 2, 3, 200, 60000, 4000000000, 12223334445556667778}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayUInt64");
@@ -2150,7 +2151,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnArrayPointer", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayPointer", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{0x0, 0xdeadbeaf, 0xcdccddcccdddcccc}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayPointer");
@@ -2160,7 +2161,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnArrayFloat", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayFloat", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{1.1, -10.82, 555.555}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayFloat");
@@ -2170,7 +2171,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnArrayDouble", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayDouble", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{1.1, -10.82, 555.555, 55555.55555, 123456789.98765}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayDouble");
@@ -2180,7 +2181,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnArrayString", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnArrayString", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{'5', 'true', '0.0', 'Hello', 'And Goodbay', 'Another long string to test. Pi equal 3,1415926535 8979323846 2643383279 5028841971 6939937510'}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayString");
@@ -2193,7 +2194,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 #endif// TEST_CASES & TEST_REVERSE_NO_PARAM_ONLY_RETURN_ARRAYS
 
 #if TEST_CASES & TEST_REVERSE_NO_PARAM_ONLY_RETURN_VECTORS
-		_tests.Add("ReverseNoParamReturnVector2", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnVector2", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{100.9, 200.8}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnVector2");
@@ -2203,7 +2204,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnVector3", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnVector3", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{100.9, 200.8, 300.7}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnVector3");
@@ -2213,7 +2214,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnVector4", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnVector4", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{100.9, 200.8, 300.7, 400.6}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnVector4");
@@ -2223,7 +2224,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseNoParamReturnMatrix4x4", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseNoParamReturnMatrix4x4", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{{1.1, 2.2, 3.3, 4.4}, {9.9, 1.1, 2.2, 3.3}, {8.8, 9.9, 1.1, 2.2}, {7.7, 8.8, 9.9, 1.1}}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnMatrix4x4");
@@ -2238,7 +2239,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 
 	void ReverseParamsNoRefs() {
 #if TEST_CASES & TEST_REVERSE_PARAMS_NO_REFS
-		_tests.Add("ReverseParam1", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParam1", [&](SimpleTests::Test& test) {
 			const plg::string expected = "999";
 			_reverseParams.reset();
 			cross_call_worker::ReverseCall("Param1");
@@ -2248,7 +2249,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong param values {}, expected {}", *_reverseParams, expected));
 			}
 		});
-		_tests.Add("ReverseParam2", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParam2", [&](SimpleTests::Test& test) {
 			const plg::string expected = "888|9.9";
 			_reverseParams.reset();
 			cross_call_worker::ReverseCall("Param2");
@@ -2258,7 +2259,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong param values {}, expected {}", *_reverseParams, expected));
 			}
 		});
-		_tests.Add("ReverseParam3", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParam3", [&](SimpleTests::Test& test) {
 			const plg::string expected = "777|8.8|9.8765";
 			_reverseParams.reset();
 			cross_call_worker::ReverseCall("Param3");
@@ -2268,7 +2269,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong param values {}, expected {}", *_reverseParams, expected));
 			}
 		});
-		_tests.Add("ReverseParam4", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParam4", [&](SimpleTests::Test& test) {
 			const plg::string expected = "666|7.7|8.7659|{100.1, 200.2, 300.3, 400.4}";
 			_reverseParams.reset();
 			cross_call_worker::ReverseCall("Param4");
@@ -2278,7 +2279,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong param values {}, expected {}", *_reverseParams, expected));
 			}
 		});
-		_tests.Add("ReverseParam5", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParam5", [&](SimpleTests::Test& test) {
 			const plg::string expected = "555|6.6|7.6598|{-105.1, -205.2, -305.3, -405.4}|{}";
 			_reverseParams.reset();
 			cross_call_worker::ReverseCall("Param5");
@@ -2288,7 +2289,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong param values {}, expected {}", *_reverseParams, expected));
 			}
 		});
-		_tests.Add("ReverseParam6", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParam6", [&](SimpleTests::Test& test) {
 			const plg::string expected = "444|5.5|6.5987|{110.1, 210.2, 310.3, 410.4}|{90000, -100, 20000}|65";
 			_reverseParams.reset();
 			cross_call_worker::ReverseCall("Param6");
@@ -2298,7 +2299,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong param values {}, expected {}", *_reverseParams, expected));
 			}
 		});
-		_tests.Add("ReverseParam7", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParam7", [&](SimpleTests::Test& test) {
 			const plg::string expected = "333|4.4|5.9876|{-115.1, -215.2, -315.3, -415.4}|{800000, 30000, -4000000}|66|red gold";
 			_reverseParams.reset();
 			cross_call_worker::ReverseCall("Param7");
@@ -2308,7 +2309,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong param values {}, expected {}", *_reverseParams, expected));
 			}
 		});
-		_tests.Add("ReverseParam8", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParam8", [&](SimpleTests::Test& test) {
 			const plg::string expected = "222|3.3|1.2345|{120.1, 220.2, 320.3, 420.4}|{7000000, 5000000, -600000000}|67|blue ice|90";
 			_reverseParams.reset();
 			cross_call_worker::ReverseCall("Param8");
@@ -2318,7 +2319,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong param values {}, expected {}", *_reverseParams, expected));
 			}
 		});
-		_tests.Add("ReverseParam9", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParam9", [&](SimpleTests::Test& test) {
 			const plg::string expected = "111|2.2|5.1234|{-125.1, -225.2, -325.3, -425.4}|{60000000, -700000000, 80000000000}|68|pink metal|89|-100";
 			_reverseParams.reset();
 			cross_call_worker::ReverseCall("Param9");
@@ -2328,7 +2329,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong param values {}, expected {}", *_reverseParams, expected));
 			}
 		});
-		_tests.Add("ReverseParam10", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParam10", [&](SimpleTests::Test& test) {
 			const plg::string expected = "1234|1.1|4.5123|{130.1, 230.2, 330.3, 430.4}|{500000000, 90000000000, 1000000000000}|69|green wood|88|-200|0xabeba";
 			_reverseParams.reset();
 			cross_call_worker::ReverseCall("Param10");
@@ -2343,7 +2344,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 
 	void ReverseParamsWithRefs() {
 #if TEST_CASES & TEST_REVERSE_PARAMS_WITH_REFS
-		_tests.Add("ReverseParamRef1", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParamRef1", [&](SimpleTests::Test& test) {
 			const plg::string expected = "147";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("ParamRef1");
@@ -2353,7 +2354,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseParamRef2", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParamRef2", [&](SimpleTests::Test& test) {
 			const plg::string expected = "852|0.1";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("ParamRef2");
@@ -2363,7 +2364,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseParamRef3", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParamRef3", [&](SimpleTests::Test& test) {
 			const plg::string expected = "369|0.2|11111.11111";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("ParamRef3");
@@ -2373,7 +2374,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseParamRef4", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParamRef4", [&](SimpleTests::Test& test) {
 			const plg::string expected = "987|0.3|22222.22222|{4.4, 3.3, 2.2, 1.1}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("ParamRef4");
@@ -2383,7 +2384,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseParamRef5", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParamRef5", [&](SimpleTests::Test& test) {
 			const plg::string expected = "456|0.4|33333.33333|{1.4, 4.3, 3.2, 2.1}|{}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("ParamRef5");
@@ -2393,7 +2394,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseParamRef6", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParamRef6", [&](SimpleTests::Test& test) {
 			const plg::string expected = "321|0.5|44444.44444|{1.1, 4.4, 3.3, 2.2}|{99}|122";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("ParamRef6");
@@ -2403,7 +2404,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseParamRef7", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParamRef7", [&](SimpleTests::Test& test) {
 			const plg::string expected = "157|0.6|55555.55555|{2.1, 1.4, 4.3, 3.2}|{99, 8888}|121|my string";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("ParamRef7");
@@ -2413,7 +2414,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseParamRef8", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParamRef8", [&](SimpleTests::Test& test) {
 			const plg::string expected = "759|0.7|66666.66666|{2.2, 1.1, 4.4, 3.3}|{99, 8888, 777777}|120|his string|1098";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("ParamRef8");
@@ -2423,7 +2424,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseParamRef9", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParamRef9", [&](SimpleTests::Test& test) {
 			const plg::string expected = "953|0.8|77777.77777|{3.2, 2.1, 1.4, 4.3}|{99, 8888, 777777, 66666666}|119|her string|1099|-30003";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("ParamRef9");
@@ -2433,7 +2434,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
 			}
 		});
-		_tests.Add("ReverseParamRef10", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParamRef10", [&](SimpleTests::Test& test) {
 			const plg::string expected = "351|0.9|88888.88888|{3.3, 2.2, 1.1, 4.4}|{99, 8888, 777777, 66666666, 5555555555}|118|they string|1100|30003|0xabcdef";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("ParamRef10");
@@ -2448,7 +2449,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 
 	void ReverseParamsRefVectors() {
 #if TEST_CASES & TEST_REVERSE_PARAMS_REF_ARRAYS
-		_tests.Add("ReverseParamRefArrays", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParamRefArrays", [&](SimpleTests::Test& test) {
 			const plg::string expected = "{true, false}|{94}|{1103, 1094}|{-4, -3, -2, -1}|{-555, -444, -333}|{-66666, -77777}|{-7666555444}|"
 				"{0, 1, 1, 2, 3, 5}|{32999}|{3000000000, 1}|{1, 22, 333, 4444, 55555, 999999999999}|{0xd, 0x9, 0x5, 0x1}|"
 				"{91.23, 12.34, 23.45, 8.08}|{777.777777}|{'one', '1 two', '1 2 three'}";
@@ -2465,7 +2466,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 
 	void ReverseParamsAllPrimitives() {
 #if TEST_CASES & TEST_REVERSE_PARAMS_ALL_PRIMITIVES
-		_tests.Add("ReverseParamAllPrimitives", [this](SimpleTests::Test& test) {
+		_tests.Add("ReverseParamAllPrimitives", [&](SimpleTests::Test& test) {
 			const plg::string returnExpected = "65";
 			const plg::string paramsExpected = "true|37|9762|-1|-1000|-1000000|-1000000000000|200|50000|3000000000|9999999999|0xfedcbaabcdef|0.001|987654.456789";
 			_reverseReturn.reset();
@@ -2487,10 +2488,10 @@ class CrossCallMaster : public plg::IPluginEntry {
 
 	void ReverseParamsFunctions() {
 #if TEST_CASES & TEST_REVERSE_PARAMS_FUNCTIONS
-        _tests.Add("ReverseCallFuncVoid", [this](SimpleTests::Test&) {
+        _tests.Add("ReverseCallFuncVoid", [](SimpleTests::Test&) {
             cross_call_worker::ReverseCall("CallFuncVoid");
         });
-        _tests.Add("ReverseCallFuncBool", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncBool", [&](SimpleTests::Test& test) {
             const plg::string expected = "true"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncBool");
@@ -2500,8 +2501,8 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncChar8", [this](SimpleTests::Test& test) {
-            const plg::string expected = "A"; // Adjust this if needed
+        _tests.Add("ReverseCallFuncChar8", [&](SimpleTests::Test& test) {
+            const plg::string expected = "65"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncChar8");
             if (!_reverseReturn) {
@@ -2510,7 +2511,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncChar16", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncChar16", [&](SimpleTests::Test& test) {
             const plg::string expected = "90"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncChar16");
@@ -2520,7 +2521,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncInt8", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncInt8", [&](SimpleTests::Test& test) {
             const plg::string expected = "10"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncInt8");
@@ -2530,7 +2531,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncInt16", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncInt16", [&](SimpleTests::Test& test) {
             const plg::string expected = "100"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncInt16");
@@ -2540,7 +2541,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncInt32", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncInt32", [&](SimpleTests::Test& test) {
             const plg::string expected = "1000"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncInt32");
@@ -2550,7 +2551,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncInt64", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncInt64", [&](SimpleTests::Test& test) {
             const plg::string expected = "10000"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncInt64");
@@ -2560,7 +2561,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncUInt8", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncUInt8", [&](SimpleTests::Test& test) {
             const plg::string expected = "20"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncUInt8");
@@ -2570,7 +2571,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncUInt16", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncUInt16", [&](SimpleTests::Test& test) {
             const plg::string expected = "200"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncUInt16");
@@ -2580,7 +2581,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncUInt32", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncUInt32", [&](SimpleTests::Test& test) {
             const plg::string expected = "2000"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncUInt32");
@@ -2590,7 +2591,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncUInt64", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncUInt64", [&](SimpleTests::Test& test) {
             const plg::string expected = "20000"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncUInt64");
@@ -2600,7 +2601,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncPtr", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncPtr", [&](SimpleTests::Test& test) {
             const plg::string expected = "0x0"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncPtr");
@@ -2610,7 +2611,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncFloat", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncFloat", [&](SimpleTests::Test& test) {
             const plg::string expected = "3.14"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncFloat");
@@ -2620,7 +2621,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncDouble", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncDouble", [&](SimpleTests::Test& test) {
             const plg::string expected = "6.28"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncDouble");
@@ -2630,7 +2631,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncString", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncString", [&](SimpleTests::Test& test) {
             const plg::string expected = "Test string"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncString");
@@ -2640,7 +2641,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        /*_tests.Add("ReverseCallFuncFunction", [this](SimpleTests::Test& test) {
+        /*_tests.Add("ReverseCallFuncFunction", [&](SimpleTests::Test& test) {
             const plg::string expected = "0x0"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncFunction");
@@ -2650,7 +2651,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });*/
-        _tests.Add("ReverseCallFuncBoolVector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncBoolVector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{true, false}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncBoolVector");
@@ -2660,8 +2661,8 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncChar8Vector", [this](SimpleTests::Test& test) {
-            const plg::string expected = "{A, B}"; // Adjust this if needed
+        _tests.Add("ReverseCallFuncChar8Vector", [&](SimpleTests::Test& test) {
+            const plg::string expected = "{65, 66}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncChar8Vector");
             if (!_reverseReturn) {
@@ -2670,7 +2671,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncChar16Vector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncChar16Vector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{65, 66}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncChar16Vector");
@@ -2680,7 +2681,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncInt8Vector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncInt8Vector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{10, 20}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncInt8Vector");
@@ -2690,7 +2691,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncInt16Vector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncInt16Vector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{100, 200}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncInt16Vector");
@@ -2700,7 +2701,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncInt32Vector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncInt32Vector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{1000, 2000}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncInt32Vector");
@@ -2710,7 +2711,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncInt64Vector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncInt64Vector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{10000, 20000}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncInt64Vector");
@@ -2720,7 +2721,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncUInt8Vector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncUInt8Vector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{20, 30}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncUInt8Vector");
@@ -2730,7 +2731,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncUInt16Vector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncUInt16Vector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{200, 300}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncUInt16Vector");
@@ -2740,7 +2741,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncUInt32Vector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncUInt32Vector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{2000, 3000}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncUInt32Vector");
@@ -2750,7 +2751,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncUInt64Vector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncUInt64Vector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{20000, 30000}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncUInt64Vector");
@@ -2760,7 +2761,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncPtrVector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncPtrVector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{0x0, 0x1}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncPtrVector");
@@ -2770,7 +2771,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncFloatVector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncFloatVector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{1.1, 2.2}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncFloatVector");
@@ -2780,7 +2781,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncStringVector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncStringVector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{'Hello', 'World'}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncStringVector");
@@ -2790,7 +2791,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncDoubleVector", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncDoubleVector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{3.3, 4.4}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncDoubleVector");
@@ -2800,7 +2801,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncVec2", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncVec2", [&](SimpleTests::Test& test) {
             const plg::string expected = "{1, 2}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncVec2");
@@ -2810,7 +2811,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncVec3", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncVec3", [&](SimpleTests::Test& test) {
             const plg::string expected = "{1, 2, 3}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncVec3");
@@ -2820,7 +2821,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncVec4", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncVec4", [&](SimpleTests::Test& test) {
             const plg::string expected = "{1, 2, 3, 4}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncVec4");
@@ -2830,7 +2831,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncMat4x4", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFuncMat4x4", [&](SimpleTests::Test& test) {
             const plg::string expected = "{{1, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncMat4x4");
@@ -2841,7 +2842,7 @@ class CrossCallMaster : public plg::IPluginEntry {
             }
         });
 
-        _tests.Add("ReverseCallFunc1", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc1", [&](SimpleTests::Test& test) {
             const plg::string expected = "6";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc1");
@@ -2851,8 +2852,8 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc2", [this](SimpleTests::Test& test) {
-            const plg::string expected = "g";
+        _tests.Add("ReverseCallFunc2", [&](SimpleTests::Test& test) {
+            const plg::string expected = "38";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc2");
             if (!_reverseReturn) {
@@ -2861,10 +2862,10 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc3", [this](SimpleTests::Test&) {
+        _tests.Add("ReverseCallFunc3", [](SimpleTests::Test&) {
             cross_call_worker::ReverseCall("CallFunc3");
         });
-        _tests.Add("ReverseCallFunc4", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc4", [&](SimpleTests::Test& test) {
             const plg::string expected = "{1, 2, 3, 4}";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc4");
@@ -2874,7 +2875,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc5", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc5", [&](SimpleTests::Test& test) {
             const plg::string expected = "true";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc5");
@@ -2884,7 +2885,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc6", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc6", [&](SimpleTests::Test& test) {
             const plg::string expected = "11";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc6");
@@ -2894,7 +2895,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc7", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc7", [&](SimpleTests::Test& test) {
             const plg::string expected = "3.14";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc7");
@@ -2904,7 +2905,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc8", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc8", [&](SimpleTests::Test& test) {
             const plg::string expected = "{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc8");
@@ -2914,10 +2915,10 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc9", [this](SimpleTests::Test&) {
+        _tests.Add("ReverseCallFunc9", [](SimpleTests::Test&) {
             cross_call_worker::ReverseCall("CallFunc9");
         });
-        _tests.Add("ReverseCallFunc10", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc10", [&](SimpleTests::Test& test) {
             const plg::string expected = "42";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc10");
@@ -2927,7 +2928,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc11", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc11", [&](SimpleTests::Test& test) {
             const plg::string expected = "0x0";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc11");
@@ -2937,7 +2938,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc12", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc12", [&](SimpleTests::Test& test) {
             const plg::string expected = "false";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc12");
@@ -2947,7 +2948,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc13", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc13", [&](SimpleTests::Test& test) {
             const plg::string expected = "Dummy String";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc13");
@@ -2957,7 +2958,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc14", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc14", [&](SimpleTests::Test& test) {
             const plg::string expected = "{'String1', 'String2'}";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc14");
@@ -2967,7 +2968,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc15", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc15", [&](SimpleTests::Test& test) {
             const plg::string expected = "257";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc15");
@@ -2977,7 +2978,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc16", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc16", [&](SimpleTests::Test& test) {
             const plg::string expected = "0x0";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc16");
@@ -2987,7 +2988,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc17", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc17", [&](SimpleTests::Test& test) {
             const plg::string expected = "30";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc17");
@@ -2997,7 +2998,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc18", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc18", [&](SimpleTests::Test& test) {
             const plg::string expected = "{5, 10}|5|10";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc18");
@@ -3007,7 +3008,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc19", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc19", [&](SimpleTests::Test& test) {
             const plg::string expected = "42|{1, 2, 3}|{1, 2, 3}";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc19");
@@ -3017,7 +3018,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc20", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc20", [&](SimpleTests::Test& test) {
             const plg::string expected = "0|116|{1, 2, 3, 4}|{100, 200}|F";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc20");
@@ -3027,7 +3028,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc21", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc21", [&](SimpleTests::Test& test) {
             const plg::string expected = "0|{{1.3, 0.6, 0.8, 0.5}, {0.7, 1.1, 0.2, 0.4}, {0.9, 0.3, 1.2, 0.7}, {0.2, 0.8, 0.5, 1}}|{1, 2, 3}|{1, 2}|true|3.14";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc21");
@@ -3037,7 +3038,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc22", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc22", [&](SimpleTests::Test& test) {
             const plg::string expected = "0|0x0|99|{1.1, 2.2, 3.3}|123|Hello|{1, 2, 3, 4}";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc22");
@@ -3047,7 +3048,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc23", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc23", [&](SimpleTests::Test& test) {
             const plg::string expected = "50|{3, 4}|{1, 2, 3, 4}|8548|1.5|-1|{1, 2, 3}";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc23");
@@ -3057,7 +3058,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc24", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc24", [&](SimpleTests::Test& test) {
             const plg::string expected = "{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}|{a, b, c}|64|{5, 6, 7}|{1, 2, 3, 4}|4294967295|{0x0}|2.71|{0x1, 0x1, 0x2, 0x2}";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc24");
@@ -3067,7 +3068,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc25", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc25", [&](SimpleTests::Test& test) {
             const plg::string expected = "0|100|{0x0}|false|250|MockFunc25|{1, 2, 3}|1337|{4, 5, 6, 7}|64222";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc25");
@@ -3077,7 +3078,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc26", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc26", [&](SimpleTests::Test& test) {
             const plg::string expected = "A|90|{2, 3}|{{0.9, 0.2, 0.4, 0.8}, {0.1, 1, 0.6, 0.3}, {0.7, 0.5, 0.2, 0.9}, {0.3, 0.4, 1.5, 0.1}}|{1.1, 2.2}|64|32|{100, 200}|0xdeadbeafdeadbeaf|true";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc26");
@@ -3087,7 +3088,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc27", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc27", [&](SimpleTests::Test& test) {
             const plg::string expected = "0|1|{-1, -2, -3}|0xdeadbeafdeadbeaf|{-111, 111}|{1, 2, 3, 4}|{{1, 0.5, 0.3, 0.7}, {0.8, 1.2, 0.6, 0.9}, {1.5, 1.1, 0.4, 0.2}, {0.3, 0.9, 0.7, 1}}|true|{1, 2, 3, 4}|111|30";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc27");
@@ -3097,7 +3098,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc28", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc28", [&](SimpleTests::Test& test) {
             const plg::string expected = "MockFunc28|0x0|65500|{1, 2, 3, 4, 5, 7}|{{1.4, 0.7, 0.2, 0.5}, {0.3, 1.1, 0.6, 0.8}, {0.9, 0.4, 1.3, 0.1}, {0.6, 0.2, 0.7, 1}}|5.5|{1, 2, 3, 4}|MockFunc28|{1, 2}|834748377834|true|{10, 20, 30}";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc28");
@@ -3107,7 +3108,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc29", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc29", [&](SimpleTests::Test& test) {
             const plg::string expected = "{'Example', 'MockFunc29'}|{1, 2, 3, 4}|30|{127, 126, 125}|3.14|true|8|{100, 200}|1.5|MockFunc29|{{0.4, 1, 0.6, 0.3}, {1.2, 0.8, 0.5, 0.9}, {0.7, 0.3, 1.4, 0.6}, {0.1, 0.9, 0.8, 1.3}}|64";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc29");
@@ -3117,7 +3118,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc30", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc30", [&](SimpleTests::Test& test) {
             const plg::string expected = "42|0x0|{1, 2, 3, 4}|1000|{100, 200}|false|MockFunc30|{1, 2, 3}|{255, 0, 255, 200, 100, 200}|1.1|{3, 4}|{{0.5, 0.3, 1, 0.7}, {1.1, 0.9, 0.6, 0.4}, {0.2, 0.8, 1.5, 0.3}, {0.7, 0.4, 0.9, 1}}|8|{1, 1, 2, 2}";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc30");
@@ -3127,7 +3128,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc31", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc31", [&](SimpleTests::Test& test) {
             const plg::string expected = "C|12345|{1, 2, 3, 4, 5}|{1, 2, 3, 4}|MockFunc31|true|123456789|{5, 6}|7|255|{1, 2}|{{0.8, 0.5, 1.2, 0.3}, {1, 0.7, 0.4, 0.6}, {0.9, 0.2, 0.5, 1.4}, {0.6, 0.8, 1.1, 0.7}}|{1, 2, 3}";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc31");
@@ -3137,7 +3138,7 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFunc32", [this](SimpleTests::Test& test) {
+        _tests.Add("ReverseCallFunc32", [&](SimpleTests::Test& test) {
             const plg::string expected = "42|255|{0, 1}|{4, 5, 6, 7}|0x0|{100, 200}|{{1, 0.4, 0.3, 0.9}, {0.7, 1.2, 0.5, 0.8}, {0.2, 0.6, 1.1, 0.4}, {0.9, 0.3, 0.8, 1.5}}|123456789|MockFunc32|1000|{2.5, 3.5}|{1, 2, 3, 4, 5, 9}|false|{0, 0, 0}|8|{'97', '98', '99'}";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc32");
@@ -3547,8 +3548,8 @@ PLUGIN_API bool CallFuncBoolCallback(cross_call_worker::FuncBool func) {
 }
 
 extern "C"
-PLUGIN_API char8_t CallFuncChar8Callback(cross_call_worker::FuncChar8 func) {
-    char8_t result = func();
+PLUGIN_API char CallFuncChar8Callback(cross_call_worker::FuncChar8 func) {
+    char result = func();
     return result;
 }
 
@@ -3780,7 +3781,7 @@ PLUGIN_API void CallFunc3Callback(cross_call_worker::Func3 func) {
 extern "C"
 PLUGIN_API plg::vec4 CallFunc4Callback(cross_call_worker::Func4 func) {
     bool b = true;
-    uint32_t u32 = 10;
+    int32_t u32 = 10;
     char16_t ch16 = 'A';
     plg::mat4x4 mat; // Assume it's initialized properly
     return func(b, u32, ch16, mat);
