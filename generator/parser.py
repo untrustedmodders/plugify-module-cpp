@@ -123,6 +123,7 @@ def map_type(type: str):
         'std::vector<unsigned __int64>': 'uint64*',
         'std::vector<unsigned long long>': 'uint64*',
 
+        'plg::vec3': 'vec3',
         'vec3': 'vec3',
         'Vector': 'vec3',
         'QAngle': 'vec3',
@@ -130,13 +131,16 @@ def map_type(type: str):
         'Vector3': 'vec3',
         'Vector3f': 'vec3',
         'Vector2D': 'vec2',
+        'plg::vec2': 'vec2',
         'vec2': 'vec2',
         'Vector2': 'vec2',
         'Vector2f': 'vec2',
         'Vector4D': 'vec4',
+        'plg::vec4': 'vec4',
         'vec4': 'vec4',
         'Vector4': 'vec4',
         'Vector4f': 'vec4',
+        'plg::mat4x4': 'mat4x4',
         'Matrix': 'mat4x4',
         'Matrix4x4': 'mat4x4',
         'mat4x4': 'mat4x4',
@@ -164,7 +168,7 @@ def main(folder_dir, output_file):
             print(f'Folder with headers not exists {folder_dir}')
             return 1
     exported_methods = []
-    search_pattern = os.path.join(folder_dir, f"*.h")
+    search_pattern = os.path.join(folder_dir, f"*.cpp")
     file_list = glob.glob(search_pattern)
     for file_path in file_list:
         with open(file_path, 'r') as file:
@@ -173,12 +177,12 @@ def main(folder_dir, output_file):
             parsed = simple.parse_string(contents, options=None)
             for function in parsed.namespace.functions:
                 ret_type = convert_type(function.return_type.format())[0]
-                string_ret = ret_type == "void"
+                obj_ret = ret_type == "void"
                 param_types = []
                 first_param = True
                 for param in function.parameters:
                     type = convert_type(param.type.format())
-                    if string_ret and first_param and type[0] == "string" and type[1] is True:
+                    if obj_ret and first_param and (type[0] == "string" or "*" in type[0]) and type[1] is True:
                         ret_type = type[0]
                         first_param = False
                         continue
@@ -208,8 +212,8 @@ def main(folder_dir, output_file):
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--folder')
-    parser.add_argument('--output')
+    parser.add_argument('folder')
+    parser.add_argument('output')
     return parser.parse_args()
 
 
