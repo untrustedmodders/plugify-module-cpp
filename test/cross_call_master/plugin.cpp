@@ -42,7 +42,20 @@ namespace {
         return std::format("{{{}}}", result);
     }
 
-    // Overload for char to convert to string
+	// Overload for bool to convert to string
+	template<>
+	std::string VectorToString(const std::vector<bool>& vec) {
+		std::string result;
+		if (!vec.empty()) {
+			result = std::format("'{}'", vec[0] ? "true" : "false");
+			for (auto it = std::next(vec.begin()); it != vec.end(); ++it) {
+				std::format_to(std::back_inserter(result), ", '{}'", *it ? "true" : "false");
+			}
+		}
+		return std::format("{{{}}}", result);
+	}
+
+	// Overload for string to convert to string
     template<>
     std::string VectorToString(const std::vector<plg::string>& vec) {
         std::string result;
@@ -72,7 +85,7 @@ namespace {
     inline constexpr bool always_false_v = std::is_same_v<std::decay_t<T>, std::add_cv_t<std::decay_t<T>>>;
 
     template<typename T>
-    std::string PodToString(const T& t) {
+    std::string PodToString(const T&) {
         static_assert(always_false_v<T>, "PodToString specialization required");
         return "";
     }
@@ -1550,7 +1563,7 @@ class CrossCallMaster : public plg::IPluginEntry {
             bool b = false; // Changed to random bool
             int32_t u32 = 42; // Changed to random uint32_t
             char16_t ch16 = 'B'; // Changed to random character
-            plg::mat4x4 mat; // Assume it's initialized properly
+            plg::mat4x4 mat{}; // Assume it's initialized properly
             const plg::vec4 expected = MockFunc4(b, u32, ch16, mat);
             const auto result = cross_call_worker::CallFunc4(&MockFunc4);
             if (result != expected) {
@@ -3783,7 +3796,7 @@ PLUGIN_API plg::vec4 CallFunc4Callback(cross_call_worker::Func4 func) {
     bool b = true;
     int32_t u32 = 10;
     char16_t ch16 = 'A';
-    plg::mat4x4 mat; // Assume it's initialized properly
+    plg::mat4x4 mat{}; // Assume it's initialized properly
     return func(b, u32, ch16, mat);
 }
 

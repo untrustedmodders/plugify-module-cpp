@@ -386,8 +386,8 @@ PLUGIN_API bool CallFuncBool(cross_call_master::FuncBool func) {
 }
 
 extern "C"
-PLUGIN_API char8_t CallFuncChar8(cross_call_master::FuncChar8 func) {
-    char8_t result = func();
+PLUGIN_API char CallFuncChar8(cross_call_master::FuncChar8 func) {
+	char result = func();
     return result;
 }
 
@@ -840,7 +840,20 @@ namespace {
         return std::format("{{{}}}", result);
     }
 
-    // Overload for char to convert to string
+    // Overload for bool to convert to string
+    template<>
+    std::string VectorToString(const std::vector<bool>& vec) {
+        std::string result;
+        if (!vec.empty()) {
+            result = std::format("'{}'", vec[0] ? "true" : "false");
+            for (auto it = std::next(vec.begin()); it != vec.end(); ++it) {
+                std::format_to(std::back_inserter(result), ", '{}'", *it ? "true" : "false");
+            }
+        }
+        return std::format("{{{}}}", result);
+    }
+
+    // Overload for string to convert to string
     template<>
     std::string VectorToString(const std::vector<plg::string>& vec) {
         std::string result;
@@ -879,9 +892,13 @@ namespace {
         return std::format("{{{}}}", result);
     }
 
+	template<class T>
+	inline constexpr bool always_false_v = std::is_same_v<std::decay_t<T>, std::add_cv_t<std::decay_t<T>>>;
+
     template<typename T>
-    std::string PodToString(const T& t) {
-        static_assert("Unknown");
+    std::string PodToString(const T&) {
+		static_assert(always_false_v<T>, "PodToString specialization required");
+		return "";
     }
 
     template<>
@@ -1218,7 +1235,7 @@ char MockFunc2(float a, int64_t b) {
 
 // Mock implementations for 3 parameter functions
 void MockFunc3(void* p, const plg::vec4& v, const plg::string& s) {
-    const auto buffer = std::format("{}{}", p, v.x, v.y, v.z, v.w, s);
+    const auto buffer = std::format("{}{}{}{}{}{}", p, v.x, v.y, v.z, v.w, s);
 }
 
 // Mock implementations for 4 parameter functions

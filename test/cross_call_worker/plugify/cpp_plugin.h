@@ -20,8 +20,7 @@ namespace std::filesystem {
 namespace plg {
 	constexpr int32_t kApiVersion = 1;
 
-	extern "C"
-	struct PluginResult {
+	extern "C" struct PluginResult {
 		int32_t version;
 		bool debug;
 	};
@@ -145,33 +144,47 @@ namespace plg {
 namespace plg {
 	extern "C" {
 		struct vec2 {
-			float x{};
-			float y{};
-
-			bool operator==(const vec2&) const = default;
+			float x;
+			float y;
 		};
 
 		struct vec3 {
-			float x{};
-			float y{};
-			float z{};
-
-			bool operator==(const vec3&) const = default;
+			float x;
+			float y;
+			float z;
 		};
 
 		struct vec4 {
-			float x{};
-			float y{};
-			float z{};
-			float w{};
-
-			bool operator==(const vec4&) const = default;
+			float x;
+			float y;
+			float z;
+			float w;
 		};
 
 		struct mat4x4 {
-			float m[4][4]{};
-
-			bool operator==(const mat4x4&) const = default;
+			float m[4][4];
 		};
+	}
+
+	bool operator==(const vec2& lhs, const vec2& rhs) {
+		return lhs.x == rhs.x && lhs.y == rhs.y;
+	}
+
+	bool operator==(const vec3& lhs, const vec3& rhs) {
+		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
+	}
+
+	bool operator==(const vec4& lhs, const vec4& rhs) {
+		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.w == rhs.w;
+	}
+
+	bool operator==(const mat4x4& lhs, const mat4x4& rhs) {
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 4; ++j) {
+				if (lhs.m[i][j] != rhs.m[i][j])
+					return false;
+			}
+		}
+		return true;
 	}
 }

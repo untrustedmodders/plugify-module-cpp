@@ -608,16 +608,16 @@ namespace plg {
 		}
 		constexpr basic_string(const basic_string& str) : basic_string(str, allocator_type()) {}
 
-		constexpr basic_string(basic_string&& str, const allocator_type& a) requires(detail::is_allocator_v<Allocator>) : _allocator(a) {
+		constexpr basic_string(basic_string&& str, const allocator_type& a) requires(detail::is_allocator_v<Allocator>) : _allocator(a), storage(std::move(str.storage)) {
 			if (str.is_long() && a != str._allocator) {
 				auto len = str.get_long_size();
 				this->internal_assign(str.get_long_data(), len);
 			} else {
-				this->storage = std::move(str.storage);
+				this->storage = str.storage;
 				str.short_init();
 			}
 		}
-		constexpr basic_string(basic_string&& str) noexcept(std::is_nothrow_move_constructible<allocator_type>::value) : basic_string(str, str._allocator) {}
+		constexpr basic_string(basic_string&& str) noexcept(std::is_nothrow_move_constructible<allocator_type>::value) : basic_string(str, std::move(str._allocator)) {}
 
 		constexpr basic_string(std::initializer_list<value_type> ilist, const allocator_type& a = allocator_type()) requires(detail::is_allocator_v<Allocator>) : _allocator(a) {
 			auto len = ilist.size();
@@ -1896,7 +1896,7 @@ namespace plg {
 		template<typename Char, typename Allocator, typename String = basic_string<Char, std::char_traits<Char>, Allocator>>
 		struct string_hash_base {
 			[[nodiscard]] constexpr std::size_t operator()(const String& str) const noexcept {
-				return std::hash<typename String::sview_type>{}(String::sview_type(str));
+				return std::hash<typename String::sview_type>{}(typename String::sview_type(str));
 			}
 		};
 	}// namespace detail
@@ -1923,7 +1923,8 @@ namespace plg {
 				return ctx.begin();
 			}
 
-			auto format(const String& str, std::format_context& ctx) const {
+			template<class FormatContext>
+			auto format(const String& str, FormatContext& ctx) const {
 				return std::format_to(ctx.out(), format_string<Char>(), str.c_str());
 			}
 		};
