@@ -163,13 +163,13 @@ namespace plg {
 			float m[4][4];
 		};
 
-		struct vector {
+		struct vec {
 			std::size_t size;
 			std::size_t cap;
 			void* ptr;
 		};
 
-		struct string {
+		struct str {
 			char* data;
 			std::size_t size;
 			std::size_t cap;
