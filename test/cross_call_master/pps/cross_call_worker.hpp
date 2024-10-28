@@ -1,8 +1,8 @@
 #pragma once
 
-#include <plugify/cpp_plugin.h>
-#include <vector>
-#include <string>
+#include <plugify/cpp_plugin.hpp>
+#include <plugify/string.hpp>
+#include <plugify/vector.hpp>
 #include <cstdint>
 
 // Generated from cross_call_worker.pplugin by https://github.com/untrustedmodders/plugify-module-cpp/blob/main/generator/generator.py 
@@ -111,92 +111,92 @@ namespace cross_call_worker {
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnString", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<bool> NoParamReturnArrayBool() {
-		using NoParamReturnArrayBoolFn = std::vector<bool> (*)();
+	inline plg::vector<bool> NoParamReturnArrayBool() {
+		using NoParamReturnArrayBoolFn = plg::vector<bool> (*)();
 		static NoParamReturnArrayBoolFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayBool", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<char> NoParamReturnArrayChar8() {
-		using NoParamReturnArrayChar8Fn = std::vector<char> (*)();
+	inline plg::vector<char> NoParamReturnArrayChar8() {
+		using NoParamReturnArrayChar8Fn = plg::vector<char> (*)();
 		static NoParamReturnArrayChar8Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayChar8", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<char16_t> NoParamReturnArrayChar16() {
-		using NoParamReturnArrayChar16Fn = std::vector<char16_t> (*)();
+	inline plg::vector<char16_t> NoParamReturnArrayChar16() {
+		using NoParamReturnArrayChar16Fn = plg::vector<char16_t> (*)();
 		static NoParamReturnArrayChar16Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayChar16", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<int8_t> NoParamReturnArrayInt8() {
-		using NoParamReturnArrayInt8Fn = std::vector<int8_t> (*)();
+	inline plg::vector<int8_t> NoParamReturnArrayInt8() {
+		using NoParamReturnArrayInt8Fn = plg::vector<int8_t> (*)();
 		static NoParamReturnArrayInt8Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayInt8", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<int16_t> NoParamReturnArrayInt16() {
-		using NoParamReturnArrayInt16Fn = std::vector<int16_t> (*)();
+	inline plg::vector<int16_t> NoParamReturnArrayInt16() {
+		using NoParamReturnArrayInt16Fn = plg::vector<int16_t> (*)();
 		static NoParamReturnArrayInt16Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayInt16", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<int32_t> NoParamReturnArrayInt32() {
-		using NoParamReturnArrayInt32Fn = std::vector<int32_t> (*)();
+	inline plg::vector<int32_t> NoParamReturnArrayInt32() {
+		using NoParamReturnArrayInt32Fn = plg::vector<int32_t> (*)();
 		static NoParamReturnArrayInt32Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayInt32", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<int64_t> NoParamReturnArrayInt64() {
-		using NoParamReturnArrayInt64Fn = std::vector<int64_t> (*)();
+	inline plg::vector<int64_t> NoParamReturnArrayInt64() {
+		using NoParamReturnArrayInt64Fn = plg::vector<int64_t> (*)();
 		static NoParamReturnArrayInt64Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayInt64", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<uint8_t> NoParamReturnArrayUInt8() {
-		using NoParamReturnArrayUInt8Fn = std::vector<uint8_t> (*)();
+	inline plg::vector<uint8_t> NoParamReturnArrayUInt8() {
+		using NoParamReturnArrayUInt8Fn = plg::vector<uint8_t> (*)();
 		static NoParamReturnArrayUInt8Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayUInt8", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<uint16_t> NoParamReturnArrayUInt16() {
-		using NoParamReturnArrayUInt16Fn = std::vector<uint16_t> (*)();
+	inline plg::vector<uint16_t> NoParamReturnArrayUInt16() {
+		using NoParamReturnArrayUInt16Fn = plg::vector<uint16_t> (*)();
 		static NoParamReturnArrayUInt16Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayUInt16", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<uint32_t> NoParamReturnArrayUInt32() {
-		using NoParamReturnArrayUInt32Fn = std::vector<uint32_t> (*)();
+	inline plg::vector<uint32_t> NoParamReturnArrayUInt32() {
+		using NoParamReturnArrayUInt32Fn = plg::vector<uint32_t> (*)();
 		static NoParamReturnArrayUInt32Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayUInt32", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<uint64_t> NoParamReturnArrayUInt64() {
-		using NoParamReturnArrayUInt64Fn = std::vector<uint64_t> (*)();
+	inline plg::vector<uint64_t> NoParamReturnArrayUInt64() {
+		using NoParamReturnArrayUInt64Fn = plg::vector<uint64_t> (*)();
 		static NoParamReturnArrayUInt64Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayUInt64", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<void*> NoParamReturnArrayPointer() {
-		using NoParamReturnArrayPointerFn = std::vector<void*> (*)();
+	inline plg::vector<void*> NoParamReturnArrayPointer() {
+		using NoParamReturnArrayPointerFn = plg::vector<void*> (*)();
 		static NoParamReturnArrayPointerFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayPointer", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<float> NoParamReturnArrayFloat() {
-		using NoParamReturnArrayFloatFn = std::vector<float> (*)();
+	inline plg::vector<float> NoParamReturnArrayFloat() {
+		using NoParamReturnArrayFloatFn = plg::vector<float> (*)();
 		static NoParamReturnArrayFloatFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayFloat", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<double> NoParamReturnArrayDouble() {
-		using NoParamReturnArrayDoubleFn = std::vector<double> (*)();
+	inline plg::vector<double> NoParamReturnArrayDouble() {
+		using NoParamReturnArrayDoubleFn = plg::vector<double> (*)();
 		static NoParamReturnArrayDoubleFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayDouble", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline std::vector<plg::string> NoParamReturnArrayString() {
-		using NoParamReturnArrayStringFn = std::vector<plg::string> (*)();
+	inline plg::vector<plg::string> NoParamReturnArrayString() {
+		using NoParamReturnArrayStringFn = plg::vector<plg::string> (*)();
 		static NoParamReturnArrayStringFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayString", reinterpret_cast<void**>(&__func));
 		return __func();
@@ -249,38 +249,38 @@ namespace cross_call_worker {
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.Param4", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d);
 	}
-	inline void Param5(int32_t a, float b, double c, const plg::vec4& d, const std::vector<int64_t>& e) {
-		using Param5Fn = void (*)(int32_t, float, double, const plg::vec4&, const std::vector<int64_t>&);
+	inline void Param5(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e) {
+		using Param5Fn = void (*)(int32_t, float, double, const plg::vec4&, const plg::vector<int64_t>&);
 		static Param5Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.Param5", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d, e);
 	}
-	inline void Param6(int32_t a, float b, double c, const plg::vec4& d, const std::vector<int64_t>& e, char f) {
-		using Param6Fn = void (*)(int32_t, float, double, const plg::vec4&, const std::vector<int64_t>&, char);
+	inline void Param6(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f) {
+		using Param6Fn = void (*)(int32_t, float, double, const plg::vec4&, const plg::vector<int64_t>&, char);
 		static Param6Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.Param6", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d, e, f);
 	}
-	inline void Param7(int32_t a, float b, double c, const plg::vec4& d, const std::vector<int64_t>& e, char f, const plg::string& g) {
-		using Param7Fn = void (*)(int32_t, float, double, const plg::vec4&, const std::vector<int64_t>&, char, const plg::string&);
+	inline void Param7(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g) {
+		using Param7Fn = void (*)(int32_t, float, double, const plg::vec4&, const plg::vector<int64_t>&, char, const plg::string&);
 		static Param7Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.Param7", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d, e, f, g);
 	}
-	inline void Param8(int32_t a, float b, double c, const plg::vec4& d, const std::vector<int64_t>& e, char f, const plg::string& g, char16_t h) {
-		using Param8Fn = void (*)(int32_t, float, double, const plg::vec4&, const std::vector<int64_t>&, char, const plg::string&, char16_t);
+	inline void Param8(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h) {
+		using Param8Fn = void (*)(int32_t, float, double, const plg::vec4&, const plg::vector<int64_t>&, char, const plg::string&, char16_t);
 		static Param8Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.Param8", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d, e, f, g, h);
 	}
-	inline void Param9(int32_t a, float b, double c, const plg::vec4& d, const std::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k) {
-		using Param9Fn = void (*)(int32_t, float, double, const plg::vec4&, const std::vector<int64_t>&, char, const plg::string&, char16_t, int16_t);
+	inline void Param9(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k) {
+		using Param9Fn = void (*)(int32_t, float, double, const plg::vec4&, const plg::vector<int64_t>&, char, const plg::string&, char16_t, int16_t);
 		static Param9Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.Param9", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d, e, f, g, h, k);
 	}
-	inline void Param10(int32_t a, float b, double c, const plg::vec4& d, const std::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k, void* l) {
-		using Param10Fn = void (*)(int32_t, float, double, const plg::vec4&, const std::vector<int64_t>&, char, const plg::string&, char16_t, int16_t, void*);
+	inline void Param10(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k, void* l) {
+		using Param10Fn = void (*)(int32_t, float, double, const plg::vec4&, const plg::vector<int64_t>&, char, const plg::string&, char16_t, int16_t, void*);
 		static Param10Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.Param10", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d, e, f, g, h, k, l);
@@ -309,44 +309,44 @@ namespace cross_call_worker {
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.ParamRef4", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d);
 	}
-	inline void ParamRef5(int32_t& a, float& b, double& c, plg::vec4& d, std::vector<int64_t>& e) {
-		using ParamRef5Fn = void (*)(int32_t&, float&, double&, plg::vec4&, std::vector<int64_t>&);
+	inline void ParamRef5(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e) {
+		using ParamRef5Fn = void (*)(int32_t&, float&, double&, plg::vec4&, plg::vector<int64_t>&);
 		static ParamRef5Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.ParamRef5", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d, e);
 	}
-	inline void ParamRef6(int32_t& a, float& b, double& c, plg::vec4& d, std::vector<int64_t>& e, char& f) {
-		using ParamRef6Fn = void (*)(int32_t&, float&, double&, plg::vec4&, std::vector<int64_t>&, char&);
+	inline void ParamRef6(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f) {
+		using ParamRef6Fn = void (*)(int32_t&, float&, double&, plg::vec4&, plg::vector<int64_t>&, char&);
 		static ParamRef6Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.ParamRef6", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d, e, f);
 	}
-	inline void ParamRef7(int32_t& a, float& b, double& c, plg::vec4& d, std::vector<int64_t>& e, char& f, plg::string& g) {
-		using ParamRef7Fn = void (*)(int32_t&, float&, double&, plg::vec4&, std::vector<int64_t>&, char&, plg::string&);
+	inline void ParamRef7(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g) {
+		using ParamRef7Fn = void (*)(int32_t&, float&, double&, plg::vec4&, plg::vector<int64_t>&, char&, plg::string&);
 		static ParamRef7Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.ParamRef7", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d, e, f, g);
 	}
-	inline void ParamRef8(int32_t& a, float& b, double& c, plg::vec4& d, std::vector<int64_t>& e, char& f, plg::string& g, char16_t& h) {
-		using ParamRef8Fn = void (*)(int32_t&, float&, double&, plg::vec4&, std::vector<int64_t>&, char&, plg::string&, char16_t&);
+	inline void ParamRef8(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h) {
+		using ParamRef8Fn = void (*)(int32_t&, float&, double&, plg::vec4&, plg::vector<int64_t>&, char&, plg::string&, char16_t&);
 		static ParamRef8Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.ParamRef8", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d, e, f, g, h);
 	}
-	inline void ParamRef9(int32_t& a, float& b, double& c, plg::vec4& d, std::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k) {
-		using ParamRef9Fn = void (*)(int32_t&, float&, double&, plg::vec4&, std::vector<int64_t>&, char&, plg::string&, char16_t&, int16_t&);
+	inline void ParamRef9(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k) {
+		using ParamRef9Fn = void (*)(int32_t&, float&, double&, plg::vec4&, plg::vector<int64_t>&, char&, plg::string&, char16_t&, int16_t&);
 		static ParamRef9Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.ParamRef9", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d, e, f, g, h, k);
 	}
-	inline void ParamRef10(int32_t& a, float& b, double& c, plg::vec4& d, std::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k, void*& l) {
-		using ParamRef10Fn = void (*)(int32_t&, float&, double&, plg::vec4&, std::vector<int64_t>&, char&, plg::string&, char16_t&, int16_t&, void*&);
+	inline void ParamRef10(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k, void*& l) {
+		using ParamRef10Fn = void (*)(int32_t&, float&, double&, plg::vec4&, plg::vector<int64_t>&, char&, plg::string&, char16_t&, int16_t&, void*&);
 		static ParamRef10Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.ParamRef10", reinterpret_cast<void**>(&__func));
 		__func(a, b, c, d, e, f, g, h, k, l);
 	}
-	inline void ParamRefVectors(std::vector<bool>& p1, std::vector<char>& p2, std::vector<char16_t>& p3, std::vector<int8_t>& p4, std::vector<int16_t>& p5, std::vector<int32_t>& p6, std::vector<int64_t>& p7, std::vector<uint8_t>& p8, std::vector<uint16_t>& p9, std::vector<uint32_t>& p10, std::vector<uint64_t>& p11, std::vector<void*>& p12, std::vector<float>& p13, std::vector<double>& p14, std::vector<plg::string>& p15) {
-		using ParamRefVectorsFn = void (*)(std::vector<bool>&, std::vector<char>&, std::vector<char16_t>&, std::vector<int8_t>&, std::vector<int16_t>&, std::vector<int32_t>&, std::vector<int64_t>&, std::vector<uint8_t>&, std::vector<uint16_t>&, std::vector<uint32_t>&, std::vector<uint64_t>&, std::vector<void*>&, std::vector<float>&, std::vector<double>&, std::vector<plg::string>&);
+	inline void ParamRefVectors(plg::vector<bool>& p1, plg::vector<char>& p2, plg::vector<char16_t>& p3, plg::vector<int8_t>& p4, plg::vector<int16_t>& p5, plg::vector<int32_t>& p6, plg::vector<int64_t>& p7, plg::vector<uint8_t>& p8, plg::vector<uint16_t>& p9, plg::vector<uint32_t>& p10, plg::vector<uint64_t>& p11, plg::vector<void*>& p12, plg::vector<float>& p13, plg::vector<double>& p14, plg::vector<plg::string>& p15) {
+		using ParamRefVectorsFn = void (*)(plg::vector<bool>&, plg::vector<char>&, plg::vector<char16_t>&, plg::vector<int8_t>&, plg::vector<int16_t>&, plg::vector<int32_t>&, plg::vector<int64_t>&, plg::vector<uint8_t>&, plg::vector<uint16_t>&, plg::vector<uint32_t>&, plg::vector<uint64_t>&, plg::vector<void*>&, plg::vector<float>&, plg::vector<double>&, plg::vector<plg::string>&);
 		static ParamRefVectorsFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.ParamRefVectors", reinterpret_cast<void**>(&__func));
 		__func(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15);
@@ -476,107 +476,107 @@ namespace cross_call_worker {
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncFunction", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncBoolVector = std::vector<bool> (*)();
-	inline std::vector<bool> CallFuncBoolVector(FuncBoolVector func) {
-		using CallFuncBoolVectorFn = std::vector<bool> (*)(FuncBoolVector);
+	using FuncBoolVector = plg::vector<bool> (*)();
+	inline plg::vector<bool> CallFuncBoolVector(FuncBoolVector func) {
+		using CallFuncBoolVectorFn = plg::vector<bool> (*)(FuncBoolVector);
 		static CallFuncBoolVectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncBoolVector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncChar8Vector = std::vector<char> (*)();
-	inline std::vector<char> CallFuncChar8Vector(FuncChar8Vector func) {
-		using CallFuncChar8VectorFn = std::vector<char> (*)(FuncChar8Vector);
+	using FuncChar8Vector = plg::vector<char> (*)();
+	inline plg::vector<char> CallFuncChar8Vector(FuncChar8Vector func) {
+		using CallFuncChar8VectorFn = plg::vector<char> (*)(FuncChar8Vector);
 		static CallFuncChar8VectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncChar8Vector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncChar16Vector = std::vector<char16_t> (*)();
-	inline std::vector<char16_t> CallFuncChar16Vector(FuncChar16Vector func) {
-		using CallFuncChar16VectorFn = std::vector<char16_t> (*)(FuncChar16Vector);
+	using FuncChar16Vector = plg::vector<char16_t> (*)();
+	inline plg::vector<char16_t> CallFuncChar16Vector(FuncChar16Vector func) {
+		using CallFuncChar16VectorFn = plg::vector<char16_t> (*)(FuncChar16Vector);
 		static CallFuncChar16VectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncChar16Vector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncInt8Vector = std::vector<int8_t> (*)();
-	inline std::vector<int8_t> CallFuncInt8Vector(FuncInt8Vector func) {
-		using CallFuncInt8VectorFn = std::vector<int8_t> (*)(FuncInt8Vector);
+	using FuncInt8Vector = plg::vector<int8_t> (*)();
+	inline plg::vector<int8_t> CallFuncInt8Vector(FuncInt8Vector func) {
+		using CallFuncInt8VectorFn = plg::vector<int8_t> (*)(FuncInt8Vector);
 		static CallFuncInt8VectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncInt8Vector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncInt16Vector = std::vector<int16_t> (*)();
-	inline std::vector<int16_t> CallFuncInt16Vector(FuncInt16Vector func) {
-		using CallFuncInt16VectorFn = std::vector<int16_t> (*)(FuncInt16Vector);
+	using FuncInt16Vector = plg::vector<int16_t> (*)();
+	inline plg::vector<int16_t> CallFuncInt16Vector(FuncInt16Vector func) {
+		using CallFuncInt16VectorFn = plg::vector<int16_t> (*)(FuncInt16Vector);
 		static CallFuncInt16VectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncInt16Vector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncInt32Vector = std::vector<int32_t> (*)();
-	inline std::vector<int32_t> CallFuncInt32Vector(FuncInt32Vector func) {
-		using CallFuncInt32VectorFn = std::vector<int32_t> (*)(FuncInt32Vector);
+	using FuncInt32Vector = plg::vector<int32_t> (*)();
+	inline plg::vector<int32_t> CallFuncInt32Vector(FuncInt32Vector func) {
+		using CallFuncInt32VectorFn = plg::vector<int32_t> (*)(FuncInt32Vector);
 		static CallFuncInt32VectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncInt32Vector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncInt64Vector = std::vector<int64_t> (*)();
-	inline std::vector<int64_t> CallFuncInt64Vector(FuncInt64Vector func) {
-		using CallFuncInt64VectorFn = std::vector<int64_t> (*)(FuncInt64Vector);
+	using FuncInt64Vector = plg::vector<int64_t> (*)();
+	inline plg::vector<int64_t> CallFuncInt64Vector(FuncInt64Vector func) {
+		using CallFuncInt64VectorFn = plg::vector<int64_t> (*)(FuncInt64Vector);
 		static CallFuncInt64VectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncInt64Vector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncUInt8Vector = std::vector<uint8_t> (*)();
-	inline std::vector<uint8_t> CallFuncUInt8Vector(FuncUInt8Vector func) {
-		using CallFuncUInt8VectorFn = std::vector<uint8_t> (*)(FuncUInt8Vector);
+	using FuncUInt8Vector = plg::vector<uint8_t> (*)();
+	inline plg::vector<uint8_t> CallFuncUInt8Vector(FuncUInt8Vector func) {
+		using CallFuncUInt8VectorFn = plg::vector<uint8_t> (*)(FuncUInt8Vector);
 		static CallFuncUInt8VectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncUInt8Vector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncUInt16Vector = std::vector<uint16_t> (*)();
-	inline std::vector<uint16_t> CallFuncUInt16Vector(FuncUInt16Vector func) {
-		using CallFuncUInt16VectorFn = std::vector<uint16_t> (*)(FuncUInt16Vector);
+	using FuncUInt16Vector = plg::vector<uint16_t> (*)();
+	inline plg::vector<uint16_t> CallFuncUInt16Vector(FuncUInt16Vector func) {
+		using CallFuncUInt16VectorFn = plg::vector<uint16_t> (*)(FuncUInt16Vector);
 		static CallFuncUInt16VectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncUInt16Vector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncUInt32Vector = std::vector<uint32_t> (*)();
-	inline std::vector<uint32_t> CallFuncUInt32Vector(FuncUInt32Vector func) {
-		using CallFuncUInt32VectorFn = std::vector<uint32_t> (*)(FuncUInt32Vector);
+	using FuncUInt32Vector = plg::vector<uint32_t> (*)();
+	inline plg::vector<uint32_t> CallFuncUInt32Vector(FuncUInt32Vector func) {
+		using CallFuncUInt32VectorFn = plg::vector<uint32_t> (*)(FuncUInt32Vector);
 		static CallFuncUInt32VectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncUInt32Vector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncUInt64Vector = std::vector<uint64_t> (*)();
-	inline std::vector<uint64_t> CallFuncUInt64Vector(FuncUInt64Vector func) {
-		using CallFuncUInt64VectorFn = std::vector<uint64_t> (*)(FuncUInt64Vector);
+	using FuncUInt64Vector = plg::vector<uint64_t> (*)();
+	inline plg::vector<uint64_t> CallFuncUInt64Vector(FuncUInt64Vector func) {
+		using CallFuncUInt64VectorFn = plg::vector<uint64_t> (*)(FuncUInt64Vector);
 		static CallFuncUInt64VectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncUInt64Vector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncPtrVector = std::vector<void*> (*)();
-	inline std::vector<void*> CallFuncPtrVector(FuncPtrVector func) {
-		using CallFuncPtrVectorFn = std::vector<void*> (*)(FuncPtrVector);
+	using FuncPtrVector = plg::vector<void*> (*)();
+	inline plg::vector<void*> CallFuncPtrVector(FuncPtrVector func) {
+		using CallFuncPtrVectorFn = plg::vector<void*> (*)(FuncPtrVector);
 		static CallFuncPtrVectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncPtrVector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncFloatVector = std::vector<float> (*)();
-	inline std::vector<float> CallFuncFloatVector(FuncFloatVector func) {
-		using CallFuncFloatVectorFn = std::vector<float> (*)(FuncFloatVector);
+	using FuncFloatVector = plg::vector<float> (*)();
+	inline plg::vector<float> CallFuncFloatVector(FuncFloatVector func) {
+		using CallFuncFloatVectorFn = plg::vector<float> (*)(FuncFloatVector);
 		static CallFuncFloatVectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncFloatVector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncStringVector = std::vector<plg::string> (*)();
-	inline std::vector<plg::string> CallFuncStringVector(FuncStringVector func) {
-		using CallFuncStringVectorFn = std::vector<plg::string> (*)(FuncStringVector);
+	using FuncStringVector = plg::vector<plg::string> (*)();
+	inline plg::vector<plg::string> CallFuncStringVector(FuncStringVector func) {
+		using CallFuncStringVectorFn = plg::vector<plg::string> (*)(FuncStringVector);
 		static CallFuncStringVectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncStringVector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using FuncDoubleVector = std::vector<double> (*)();
-	inline std::vector<double> CallFuncDoubleVector(FuncDoubleVector func) {
-		using CallFuncDoubleVectorFn = std::vector<double> (*)(FuncDoubleVector);
+	using FuncDoubleVector = plg::vector<double> (*)();
+	inline plg::vector<double> CallFuncDoubleVector(FuncDoubleVector func) {
+		using CallFuncDoubleVectorFn = plg::vector<double> (*)(FuncDoubleVector);
 		static CallFuncDoubleVectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncDoubleVector", reinterpret_cast<void**>(&__func));
 		return __func(func);
@@ -637,84 +637,84 @@ namespace cross_call_worker {
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc4", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func5 = bool (*)(int8_t, const plg::vec2&, void*, double, const std::vector<uint64_t>&);
+	using Func5 = bool (*)(int8_t, const plg::vec2&, void*, double, const plg::vector<uint64_t>&);
 	inline bool CallFunc5(Func5 func) {
 		using CallFunc5Fn = bool (*)(Func5);
 		static CallFunc5Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc5", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func6 = int64_t (*)(const plg::string&, float, const std::vector<float>&, int16_t, const std::vector<uint8_t>&, void*);
+	using Func6 = int64_t (*)(const plg::string&, float, const plg::vector<float>&, int16_t, const plg::vector<uint8_t>&, void*);
 	inline int64_t CallFunc6(Func6 func) {
 		using CallFunc6Fn = int64_t (*)(Func6);
 		static CallFunc6Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc6", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func7 = double (*)(const std::vector<char>&, uint16_t, char16_t, const std::vector<uint32_t>&, const plg::vec4&, bool, uint64_t);
+	using Func7 = double (*)(const plg::vector<char>&, uint16_t, char16_t, const plg::vector<uint32_t>&, const plg::vec4&, bool, uint64_t);
 	inline double CallFunc7(Func7 func) {
 		using CallFunc7Fn = double (*)(Func7);
 		static CallFunc7Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc7", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func8 = plg::mat4x4 (*)(const plg::vec3&, const std::vector<uint32_t>&, int16_t, bool, const plg::vec4&, const std::vector<char16_t>&, char16_t, int32_t);
+	using Func8 = plg::mat4x4 (*)(const plg::vec3&, const plg::vector<uint32_t>&, int16_t, bool, const plg::vec4&, const plg::vector<char16_t>&, char16_t, int32_t);
 	inline plg::mat4x4 CallFunc8(Func8 func) {
 		using CallFunc8Fn = plg::mat4x4 (*)(Func8);
 		static CallFunc8Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc8", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func9 = void (*)(float, const plg::vec2&, const std::vector<int8_t>&, uint64_t, bool, const plg::string&, const plg::vec4&, int16_t, void*);
+	using Func9 = void (*)(float, const plg::vec2&, const plg::vector<int8_t>&, uint64_t, bool, const plg::string&, const plg::vec4&, int16_t, void*);
 	inline void CallFunc9(Func9 func) {
 		using CallFunc9Fn = void (*)(Func9);
 		static CallFunc9Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc9", reinterpret_cast<void**>(&__func));
 		__func(func);
 	}
-	using Func10 = uint32_t (*)(const plg::vec4&, const plg::mat4x4&, const std::vector<uint32_t>&, uint64_t, const std::vector<char>&, int32_t, bool, const plg::vec2&, int64_t, double);
+	using Func10 = uint32_t (*)(const plg::vec4&, const plg::mat4x4&, const plg::vector<uint32_t>&, uint64_t, const plg::vector<char>&, int32_t, bool, const plg::vec2&, int64_t, double);
 	inline uint32_t CallFunc10(Func10 func) {
 		using CallFunc10Fn = uint32_t (*)(Func10);
 		static CallFunc10Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc10", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func11 = void* (*)(const std::vector<bool>&, char16_t, uint8_t, double, const plg::vec3&, const std::vector<int8_t>&, int64_t, uint16_t, float, const plg::vec2&, uint32_t);
+	using Func11 = void* (*)(const plg::vector<bool>&, char16_t, uint8_t, double, const plg::vec3&, const plg::vector<int8_t>&, int64_t, uint16_t, float, const plg::vec2&, uint32_t);
 	inline void* CallFunc11(Func11 func) {
 		using CallFunc11Fn = void* (*)(Func11);
 		static CallFunc11Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc11", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func12 = bool (*)(void*, const std::vector<double>&, uint32_t, double, bool, int32_t, int8_t, uint64_t, float, const std::vector<void*>&, int64_t, char);
+	using Func12 = bool (*)(void*, const plg::vector<double>&, uint32_t, double, bool, int32_t, int8_t, uint64_t, float, const plg::vector<void*>&, int64_t, char);
 	inline bool CallFunc12(Func12 func) {
 		using CallFunc12Fn = bool (*)(Func12);
 		static CallFunc12Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc12", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func13 = plg::string (*)(int64_t, const std::vector<char>&, uint16_t, float, const std::vector<bool>&, const plg::vec4&, const plg::string&, int32_t, const plg::vec3&, void*, const plg::vec2&, const std::vector<uint8_t>&, int16_t);
+	using Func13 = plg::string (*)(int64_t, const plg::vector<char>&, uint16_t, float, const plg::vector<bool>&, const plg::vec4&, const plg::string&, int32_t, const plg::vec3&, void*, const plg::vec2&, const plg::vector<uint8_t>&, int16_t);
 	inline plg::string CallFunc13(Func13 func) {
 		using CallFunc13Fn = plg::string (*)(Func13);
 		static CallFunc13Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc13", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func14 = std::vector<plg::string> (*)(const std::vector<char>&, const std::vector<uint32_t>&, const plg::mat4x4&, bool, char16_t, int32_t, const std::vector<float>&, uint16_t, const std::vector<uint8_t>&, int8_t, const plg::vec3&, const plg::vec4&, double, void*);
-	inline std::vector<plg::string> CallFunc14(Func14 func) {
-		using CallFunc14Fn = std::vector<plg::string> (*)(Func14);
+	using Func14 = plg::vector<plg::string> (*)(const plg::vector<char>&, const plg::vector<uint32_t>&, const plg::mat4x4&, bool, char16_t, int32_t, const plg::vector<float>&, uint16_t, const plg::vector<uint8_t>&, int8_t, const plg::vec3&, const plg::vec4&, double, void*);
+	inline plg::vector<plg::string> CallFunc14(Func14 func) {
+		using CallFunc14Fn = plg::vector<plg::string> (*)(Func14);
 		static CallFunc14Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc14", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func15 = int16_t (*)(const std::vector<int16_t>&, const plg::mat4x4&, const plg::vec4&, void*, uint64_t, const std::vector<uint32_t>&, bool, float, const std::vector<char16_t>&, uint8_t, int32_t, const plg::vec2&, uint16_t, double, const std::vector<uint8_t>&);
+	using Func15 = int16_t (*)(const plg::vector<int16_t>&, const plg::mat4x4&, const plg::vec4&, void*, uint64_t, const plg::vector<uint32_t>&, bool, float, const plg::vector<char16_t>&, uint8_t, int32_t, const plg::vec2&, uint16_t, double, const plg::vector<uint8_t>&);
 	inline int16_t CallFunc15(Func15 func) {
 		using CallFunc15Fn = int16_t (*)(Func15);
 		static CallFunc15Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc15", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func16 = void* (*)(const std::vector<bool>&, int16_t, const std::vector<int8_t>&, const plg::vec4&, const plg::mat4x4&, const plg::vec2&, const std::vector<uint64_t>&, const std::vector<char>&, const plg::string&, int64_t, const std::vector<uint32_t>&, const plg::vec3&, float, double, int8_t, uint16_t);
+	using Func16 = void* (*)(const plg::vector<bool>&, int16_t, const plg::vector<int8_t>&, const plg::vec4&, const plg::mat4x4&, const plg::vec2&, const plg::vector<uint64_t>&, const plg::vector<char>&, const plg::string&, int64_t, const plg::vector<uint32_t>&, const plg::vec3&, float, double, int8_t, uint16_t);
 	inline void* CallFunc16(Func16 func) {
 		using CallFunc16Fn = void* (*)(Func16);
 		static CallFunc16Fn __func = nullptr;
@@ -735,98 +735,98 @@ namespace cross_call_worker {
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc18", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func19 = void (*)(uint32_t&, plg::vec3&, std::vector<uint32_t>&);
+	using Func19 = void (*)(uint32_t&, plg::vec3&, plg::vector<uint32_t>&);
 	inline plg::string CallFunc19(Func19 func) {
 		using CallFunc19Fn = plg::string (*)(Func19);
 		static CallFunc19Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc19", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func20 = int32_t (*)(char16_t&, plg::vec4&, std::vector<uint64_t>&, char&);
+	using Func20 = int32_t (*)(char16_t&, plg::vec4&, plg::vector<uint64_t>&, char&);
 	inline plg::string CallFunc20(Func20 func) {
 		using CallFunc20Fn = plg::string (*)(Func20);
 		static CallFunc20Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc20", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func21 = float (*)(plg::mat4x4&, std::vector<int32_t>&, plg::vec2&, bool&, double&);
+	using Func21 = float (*)(plg::mat4x4&, plg::vector<int32_t>&, plg::vec2&, bool&, double&);
 	inline plg::string CallFunc21(Func21 func) {
 		using CallFunc21Fn = plg::string (*)(Func21);
 		static CallFunc21Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc21", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func22 = uint64_t (*)(void*&, uint32_t&, std::vector<double>&, int16_t&, plg::string&, plg::vec4&);
+	using Func22 = uint64_t (*)(void*&, uint32_t&, plg::vector<double>&, int16_t&, plg::string&, plg::vec4&);
 	inline plg::string CallFunc22(Func22 func) {
 		using CallFunc22Fn = plg::string (*)(Func22);
 		static CallFunc22Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc22", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func23 = void (*)(uint64_t&, plg::vec2&, std::vector<int16_t>&, char16_t&, float&, int8_t&, std::vector<uint8_t>&);
+	using Func23 = void (*)(uint64_t&, plg::vec2&, plg::vector<int16_t>&, char16_t&, float&, int8_t&, plg::vector<uint8_t>&);
 	inline plg::string CallFunc23(Func23 func) {
 		using CallFunc23Fn = plg::string (*)(Func23);
 		static CallFunc23Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc23", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func24 = plg::mat4x4 (*)(std::vector<char>&, int64_t&, std::vector<uint8_t>&, plg::vec4&, uint64_t&, std::vector<void*>&, double&, std::vector<void*>&);
+	using Func24 = plg::mat4x4 (*)(plg::vector<char>&, int64_t&, plg::vector<uint8_t>&, plg::vec4&, uint64_t&, plg::vector<void*>&, double&, plg::vector<void*>&);
 	inline plg::string CallFunc24(Func24 func) {
 		using CallFunc24Fn = plg::string (*)(Func24);
 		static CallFunc24Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc24", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func25 = double (*)(int32_t&, std::vector<void*>&, bool&, uint8_t&, plg::string&, plg::vec3&, int64_t&, plg::vec4&, uint16_t&);
+	using Func25 = double (*)(int32_t&, plg::vector<void*>&, bool&, uint8_t&, plg::string&, plg::vec3&, int64_t&, plg::vec4&, uint16_t&);
 	inline plg::string CallFunc25(Func25 func) {
 		using CallFunc25Fn = plg::string (*)(Func25);
 		static CallFunc25Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc25", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func26 = char (*)(char16_t&, plg::vec2&, plg::mat4x4&, std::vector<float>&, int16_t&, uint64_t&, uint32_t&, std::vector<uint16_t>&, void*&, bool&);
+	using Func26 = char (*)(char16_t&, plg::vec2&, plg::mat4x4&, plg::vector<float>&, int16_t&, uint64_t&, uint32_t&, plg::vector<uint16_t>&, void*&, bool&);
 	inline plg::string CallFunc26(Func26 func) {
 		using CallFunc26Fn = plg::string (*)(Func26);
 		static CallFunc26Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc26", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func27 = uint8_t (*)(float&, plg::vec3&, void*&, plg::vec2&, std::vector<int16_t>&, plg::mat4x4&, bool&, plg::vec4&, int8_t&, int32_t&, std::vector<uint8_t>&);
+	using Func27 = uint8_t (*)(float&, plg::vec3&, void*&, plg::vec2&, plg::vector<int16_t>&, plg::mat4x4&, bool&, plg::vec4&, int8_t&, int32_t&, plg::vector<uint8_t>&);
 	inline plg::string CallFunc27(Func27 func) {
 		using CallFunc27Fn = plg::string (*)(Func27);
 		static CallFunc27Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc27", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func28 = plg::string (*)(void*&, uint16_t&, std::vector<uint32_t>&, plg::mat4x4&, float&, plg::vec4&, plg::string&, std::vector<uint64_t>&, int64_t&, bool&, plg::vec3&, std::vector<float>&);
+	using Func28 = plg::string (*)(void*&, uint16_t&, plg::vector<uint32_t>&, plg::mat4x4&, float&, plg::vec4&, plg::string&, plg::vector<uint64_t>&, int64_t&, bool&, plg::vec3&, plg::vector<float>&);
 	inline plg::string CallFunc28(Func28 func) {
 		using CallFunc28Fn = plg::string (*)(Func28);
 		static CallFunc28Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc28", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func29 = std::vector<plg::string> (*)(plg::vec4&, int32_t&, std::vector<int8_t>&, double&, bool&, int8_t&, std::vector<uint16_t>&, float&, plg::string&, plg::mat4x4&, uint64_t&, plg::vec3&, std::vector<int64_t>&);
+	using Func29 = plg::vector<plg::string> (*)(plg::vec4&, int32_t&, plg::vector<int8_t>&, double&, bool&, int8_t&, plg::vector<uint16_t>&, float&, plg::string&, plg::mat4x4&, uint64_t&, plg::vec3&, plg::vector<int64_t>&);
 	inline plg::string CallFunc29(Func29 func) {
 		using CallFunc29Fn = plg::string (*)(Func29);
 		static CallFunc29Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc29", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func30 = int32_t (*)(void*&, plg::vec4&, int64_t&, std::vector<uint32_t>&, bool&, plg::string&, plg::vec3&, std::vector<uint8_t>&, float&, plg::vec2&, plg::mat4x4&, int8_t&, std::vector<float>&, double&);
+	using Func30 = int32_t (*)(void*&, plg::vec4&, int64_t&, plg::vector<uint32_t>&, bool&, plg::string&, plg::vec3&, plg::vector<uint8_t>&, float&, plg::vec2&, plg::mat4x4&, int8_t&, plg::vector<float>&, double&);
 	inline plg::string CallFunc30(Func30 func) {
 		using CallFunc30Fn = plg::string (*)(Func30);
 		static CallFunc30Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc30", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func31 = plg::vec3 (*)(char&, uint32_t&, std::vector<uint64_t>&, plg::vec4&, plg::string&, bool&, int64_t&, plg::vec2&, int8_t&, uint16_t&, std::vector<int16_t>&, plg::mat4x4&, plg::vec3&, float&, std::vector<double>&);
+	using Func31 = plg::vec3 (*)(char&, uint32_t&, plg::vector<uint64_t>&, plg::vec4&, plg::string&, bool&, int64_t&, plg::vec2&, int8_t&, uint16_t&, plg::vector<int16_t>&, plg::mat4x4&, plg::vec3&, float&, plg::vector<double>&);
 	inline plg::string CallFunc31(Func31 func) {
 		using CallFunc31Fn = plg::string (*)(Func31);
 		static CallFunc31Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc31", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
-	using Func32 = double (*)(int32_t&, uint16_t&, std::vector<int8_t>&, plg::vec4&, void*&, std::vector<uint32_t>&, plg::mat4x4&, uint64_t&, plg::string&, int64_t&, plg::vec2&, std::vector<int8_t>&, bool&, plg::vec3&, uint8_t&, std::vector<char16_t>&);
+	using Func32 = double (*)(int32_t&, uint16_t&, plg::vector<int8_t>&, plg::vec4&, void*&, plg::vector<uint32_t>&, plg::mat4x4&, uint64_t&, plg::string&, int64_t&, plg::vec2&, plg::vector<int8_t>&, bool&, plg::vec3&, uint8_t&, plg::vector<char16_t>&);
 	inline plg::string CallFunc32(Func32 func) {
 		using CallFunc32Fn = plg::string (*)(Func32);
 		static CallFunc32Fn __func = nullptr;

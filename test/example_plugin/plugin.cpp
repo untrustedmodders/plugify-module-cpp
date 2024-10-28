@@ -1,6 +1,7 @@
-#include <plugify/cpp_plugin.h>
-#include <plugin_export.h>
 #include <iostream>
+#include <plugify/cpp_plugin.hpp>
+#include <plugify/string.hpp>
+#include <plugin_export.h>
 
 class ExamplePlugin : public plg::IPluginEntry {
 public:

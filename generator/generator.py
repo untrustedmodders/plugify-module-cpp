@@ -24,21 +24,21 @@ VAL_TYPES_MAP = {
     'double': 'double',
     'function': 'delegate',
     'string': 'const plg::string&',
-    'bool*': 'const std::vector<bool>&',
-    'char8*': 'const std::vector<char>&',
-    'char16*': 'const std::vector<char16_t>&',
-    'int8*': 'const std::vector<int8_t>&',
-    'int16*': 'const std::vector<int16_t>&',
-    'int32*': 'const std::vector<int32_t>&',
-    'int64*': 'const std::vector<int64_t>&',
-    'uint8*': 'const std::vector<uint8_t>&',
-    'uint16*': 'const std::vector<uint16_t>&',
-    'uint32*': 'const std::vector<uint32_t>&',
-    'uint64*': 'const std::vector<uint64_t>&',
-    'ptr64*': 'const std::vector<void*>&',
-    'float*': 'const std::vector<float>&',
-    'double*': 'const std::vector<double>&',
-    'string*': 'const std::vector<plg::string>&',
+    'bool*': 'const plg::vector<bool>&',
+    'char8*': 'const plg::vector<char>&',
+    'char16*': 'const plg::vector<char16_t>&',
+    'int8*': 'const plg::vector<int8_t>&',
+    'int16*': 'const plg::vector<int16_t>&',
+    'int32*': 'const plg::vector<int32_t>&',
+    'int64*': 'const plg::vector<int64_t>&',
+    'uint8*': 'const plg::vector<uint8_t>&',
+    'uint16*': 'const plg::vector<uint16_t>&',
+    'uint32*': 'const plg::vector<uint32_t>&',
+    'uint64*': 'const plg::vector<uint64_t>&',
+    'ptr64*': 'const plg::vector<void*>&',
+    'float*': 'const plg::vector<float>&',
+    'double*': 'const plg::vector<double>&',
+    'string*': 'const plg::vector<plg::string>&',
     'vec2': 'const plg::vec2&',
     'vec3': 'const plg::vec3&',
     'vec4': 'const plg::vec4&',
@@ -64,21 +64,21 @@ REF_TYPES_MAP = {
     'double': 'double&',
     'function': 'delegate',
     'string': 'plg::string&',
-    'bool*': 'std::vector<bool>&',
-    'char8*': 'std::vector<char>&',
-    'char16*': 'std::vector<char16_t>&',
-    'int8*': 'std::vector<int8_t>&',
-    'int16*': 'std::vector<int16_t>&',
-    'int32*': 'std::vector<int32_t>&',
-    'int64*': 'std::vector<int64_t>&',
-    'uint8*': 'std::vector<uint8_t>&',
-    'uint16*': 'std::vector<uint16_t>&',
-    'uint32*': 'std::vector<uint32_t>&',
-    'uint64*': 'std::vector<uint64_t>&',
-    'ptr64*': 'std::vector<void*>&',
-    'float*': 'std::vector<float>&',
-    'double*': 'std::vector<double>&',
-    'string*': 'std::vector<plg::string>&',
+    'bool*': 'plg::vector<bool>&',
+    'char8*': 'plg::vector<char>&',
+    'char16*': 'plg::vector<char16_t>&',
+    'int8*': 'plg::vector<int8_t>&',
+    'int16*': 'plg::vector<int16_t>&',
+    'int32*': 'plg::vector<int32_t>&',
+    'int64*': 'plg::vector<int64_t>&',
+    'uint8*': 'plg::vector<uint8_t>&',
+    'uint16*': 'plg::vector<uint16_t>&',
+    'uint32*': 'plg::vector<uint32_t>&',
+    'uint64*': 'plg::vector<uint64_t>&',
+    'ptr64*': 'plg::vector<void*>&',
+    'float*': 'plg::vector<float>&',
+    'double*': 'plg::vector<double>&',
+    'string*': 'plg::vector<plg::string>&',
     'vec2': 'plg::vec2&',
     'vec3': 'plg::vec3&',
     'vec4': 'plg::vec4&',
@@ -104,21 +104,21 @@ RET_TYPES_MAP = {
     'double': 'double',
     'function': 'delegate',
     'string': 'plg::string',
-    'bool*': 'std::vector<bool>',
-    'char8*': 'std::vector<char>',
-    'char16*': 'std::vector<char16_t>',
-    'int8*': 'std::vector<int8_t>',
-    'int16*': 'std::vector<int16_t>',
-    'int32*': 'std::vector<int32_t>',
-    'int64*': 'std::vector<int64_t>',
-    'uint8*': 'std::vector<uint8_t>',
-    'uint16*': 'std::vector<uint16_t>',
-    'uint32*': 'std::vector<uint32_t>',
-    'uint64*': 'std::vector<uint64_t>',
-    'ptr64*': 'std::vector<void*>',
-    'float*': 'std::vector<float>',
-    'double*': 'std::vector<double>',
-    'string*': 'std::vector<plg::string>',
+    'bool*': 'plg::vector<bool>',
+    'char8*': 'plg::vector<char>',
+    'char16*': 'plg::vector<char16_t>',
+    'int8*': 'plg::vector<int8_t>',
+    'int16*': 'plg::vector<int16_t>',
+    'int32*': 'plg::vector<int32_t>',
+    'int64*': 'plg::vector<int64_t>',
+    'uint8*': 'plg::vector<uint8_t>',
+    'uint16*': 'plg::vector<uint16_t>',
+    'uint32*': 'plg::vector<uint32_t>',
+    'uint64*': 'plg::vector<uint64_t>',
+    'ptr64*': 'plg::vector<void*>',
+    'float*': 'plg::vector<float>',
+    'double*': 'plg::vector<double>',
+    'string*': 'plg::vector<plg::string>',
     'vec2': 'plg::vec2',
     'vec3': 'plg::vec3',
     'vec4': 'plg::vec4',
@@ -156,7 +156,7 @@ class ParamGen(Enum):
     TypesNames = 3
 
 
-def gen_params_string(params, param_gen: ParamGen):
+def gen_params(params, param_gen: ParamGen):
     def gen_param(param):
         if param_gen == ParamGen.Types:
             type = convert_type(param['type'], 'ref' in param and param['ref'] is True, False)
@@ -183,7 +183,7 @@ def gen_delegate(prototype):
     ret_type = prototype['retType']
     return_type = convert_type(ret_type['type'], 'ref' in ret_type and ret_type['ref'] is True, True)
     return (f'\tusing {prototype["name"]} = {return_type} (*)' 
-            f'({gen_params_string(prototype["paramTypes"], ParamGen.Types)});\n')
+            f'({gen_params(prototype["paramTypes"], ParamGen.Types)});\n')
 
 
 def main(manifest_path, output_dir, override):
@@ -198,7 +198,7 @@ def main(manifest_path, output_dir, override):
     header_dir = os.path.join(output_dir, 'pps')
     if not os.path.exists(header_dir):
         os.makedirs(header_dir, exist_ok=True)
-    header_file = os.path.join(header_dir, f'{plugin_name}.h')
+    header_file = os.path.join(header_dir, f'{plugin_name}.hpp')
     if os.path.isfile(header_file) and not override:
         print(f'Already exists {header_file}. Can use --override option')
         return 1
@@ -219,9 +219,9 @@ def main(manifest_path, output_dir, override):
 
     content += '#pragma once\n'
     content += '\n'
-    content += '#include <plugify/cpp_plugin.h>\n'
-    content += '#include <vector>\n'
-    content += '#include <string>\n'
+    content += '#include <plugify/cpp_plugin.hpp>\n'
+    content += '#include <plugify/string.hpp>\n'
+    content += '#include <plugify/vector.hpp>\n'
     content += '#include <cstdint>\n'
     content += '\n'
     content += f'// Generated from {plugin_name}.pplugin by {link} \n'
@@ -239,13 +239,13 @@ def main(manifest_path, output_dir, override):
                 content += gen_delegate(attribute['prototype'])
 
         content += (f'\tinline {return_type} '
-                    f'{method["name"]}({gen_params_string(method["paramTypes"], ParamGen.TypesNames)}) {{\n')
+                    f'{method["name"]}({gen_params(method["paramTypes"], ParamGen.TypesNames)}) {{\n')
         content += (f'\t\tusing {method["name"]}Fn = {return_type} '
-                    f'(*)({gen_params_string(method["paramTypes"], ParamGen.Types)});\n')
+                    f'(*)({gen_params(method["paramTypes"], ParamGen.Types)});\n')
         content += f'\t\tstatic {method['name']}Fn __func = nullptr;\n'
         content += f'\t\tif (__func == nullptr) plg::GetMethodPtr2("{plugin_name}.{method['name']}", reinterpret_cast<void**>(&__func));\n'
         content += (f'\t\t{"return " if ret_type["type"] != "void" else ""}'
-                    f'__func({gen_params_string(method["paramTypes"], ParamGen.Names)});\n')
+                    f'__func({gen_params(method["paramTypes"], ParamGen.Names)});\n')
         content += '\t}\n'
     content += '}\n'
 

@@ -1,7 +1,7 @@
-#include "simple_tests.h"
+#include "simple_tests.hpp"
 #include <iostream>
 #include <numeric>
-#include <plugify/compat_format.h>
+#include <plugify/compat_format.hpp>
 
 void SimpleTests::Test::Fail(std::string error) {
 	_errors.push_back(std::move(error));
@@ -44,7 +44,7 @@ void SimpleTests::Run() {
 	size_t success = 0, failed = 0;
 
 	for (size_t i = 0; i < count; ++i) {
-		Test& test = *(_tests[i].get());
+		Test& test = *_tests[i];
 		const auto n = i + 1;
 		const auto number = std::vformat(number_template, std::make_format_args(n, count));
 		const auto name = test.GetName();

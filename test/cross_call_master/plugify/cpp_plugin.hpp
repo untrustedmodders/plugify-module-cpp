@@ -7,8 +7,6 @@
 #include <utility>
 #include <vector>
 
-#include <plugify/string.h>
-
 namespace std::filesystem {
 #if _WIN32
 	using path_view = std::wstring_view;
@@ -109,7 +107,7 @@ namespace plg {
 		if (version < kApiVersion) { \
 			return { kApiVersion, PLUGIFY_IS_DEBUG }; \
 		} \
-		size_t i = 0; \
+		std::size_t i = 0; \
 		GetMethodPtr = reinterpret_cast<GetMethodPtrFn>(api[i++]); \
 		GetMethodPtr2 = reinterpret_cast<GetMethodPtr2Fn>(api[i++]); \
 		GetBaseDir = reinterpret_cast<GetBaseDirFn>(api[i++]); \
@@ -163,6 +161,18 @@ namespace plg {
 
 		struct mat4x4 {
 			float m[4][4];
+		};
+
+		struct vector {
+			std::size_t size;
+			std::size_t cap;
+			void* ptr;
+		};
+
+		struct string {
+			char* data;
+			std::size_t size;
+			std::size_t cap;
 		};
 	}
 

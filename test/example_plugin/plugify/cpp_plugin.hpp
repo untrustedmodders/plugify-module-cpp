@@ -7,8 +7,6 @@
 #include <utility>
 #include <vector>
 
-#include <plugify/string.h>
-
 namespace std::filesystem {
 #if _WIN32
 	using path_view = std::wstring_view;
@@ -20,8 +18,7 @@ namespace std::filesystem {
 namespace plg {
 	constexpr int32_t kApiVersion = 1;
 
-	extern "C"
-	struct PluginResult {
+	extern "C" struct PluginResult {
 		int32_t version;
 		bool debug;
 	};
@@ -110,7 +107,7 @@ namespace plg {
 		if (version < kApiVersion) { \
 			return { kApiVersion, PLUGIFY_IS_DEBUG }; \
 		} \
-		size_t i = 0; \
+		std::size_t i = 0; \
 		GetMethodPtr = reinterpret_cast<GetMethodPtrFn>(api[i++]); \
 		GetMethodPtr2 = reinterpret_cast<GetMethodPtr2Fn>(api[i++]); \
 		GetBaseDir = reinterpret_cast<GetBaseDirFn>(api[i++]); \
@@ -143,33 +140,61 @@ namespace plg {
 }
 
 namespace plg {
-	struct vec2 {
-		float x{};
-		float y{};
+	extern "C" {
+		struct vec2 {
+			float x;
+			float y;
+		};
 
-		bool operator==(const vec2&) const = default;
-	};
+		struct vec3 {
+			float x;
+			float y;
+			float z;
+		};
 
-	struct vec3 {
-		float x{};
-		float y{};
-		float z{};
+		struct vec4 {
+			float x;
+			float y;
+			float z;
+			float w;
+		};
 
-		bool operator==(const vec3&) const = default;
-	};
+		struct mat4x4 {
+			float m[4][4];
+		};
 
-	struct vec4 {
-		float x{};
-		float y{};
-		float z{};
-		float w{};
+		struct vector {
+			std::size_t size;
+			std::size_t cap;
+			void* ptr;
+		};
 
-		bool operator==(const vec4&) const = default;
-	};
+		struct string {
+			char* data;
+			std::size_t size;
+			std::size_t cap;
+		};
+	}
 
-	struct mat4x4 {
-		float m[4][4]{};
+	bool operator==(const vec2& lhs, const vec2& rhs) {
+		return lhs.x == rhs.x && lhs.y == rhs.y;
+	}
 
-		bool operator==(const mat4x4&) const = default;
-	};
+	bool operator==(const vec3& lhs, const vec3& rhs) {
+		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
+	}
+
+	bool operator==(const vec4& lhs, const vec4& rhs) {
+		return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.w == rhs.w;
+	}
+
+	bool operator==(const mat4x4& lhs, const mat4x4& rhs) {
+		for (int i = 0; i < 4; ++i) {
+			for (int j = 0; j < 4; ++j) {
+				if (lhs.m[i][j] != rhs.m[i][j])
+					return false;
+			}
+		}
+		return true;
+	}
 }

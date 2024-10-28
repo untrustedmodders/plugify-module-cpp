@@ -1,13 +1,13 @@
-#include "module.h"
+#include "module.hpp"
 
-#include <plugify/mem_addr.h>
-#include <plugify/mem_accessor.h>
-#include <plugify/mem_protector.h>
-#include <plugify/compat_format.h>
-#include <plugify/plugin_reference_descriptor.h>
-#include <plugify/plugin_descriptor.h>
-#include <plugify/plugin.h>
-#include <plugify/log.h>
+#include <plugify/mem_addr.hpp>
+#include <plugify/mem_accessor.hpp>
+#include <plugify/mem_protector.hpp>
+#include <plugify/compat_format.hpp>
+#include <plugify/plugin_reference_descriptor.hpp>
+#include <plugify/plugin_descriptor.hpp>
+#include <plugify/plugin.hpp>
+#include <plugify/log.hpp>
 
 using namespace plugify;
 using namespace cpplm;

@@ -27,7 +27,7 @@ include(cmake/compat_format.cmake)
 #
 # Plugin
 #
-set(PLUGIN_SOURCES "plugin.cpp" "simple_tests.h" "simple_tests.cpp")
+set(PLUGIN_SOURCES "plugin.cpp" "simple_tests.hpp" "simple_tests.cpp")
 
 add_library(${PROJECT_NAME} SHARED ${PLUGIN_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

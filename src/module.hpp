@@ -1,9 +1,9 @@
-#include <plugify/assembly.h>
-#include <plugify/module.h>
-#include <plugify/plugin.h>
-#include <plugify/plugify_provider.h>
-#include <plugify/language_module.h>
-#include <plugify/cpp_plugin.h>
+#include <plugify/assembly.hpp>
+#include <plugify/cpp_plugin.hpp>
+#include <plugify/language_module.hpp>
+#include <plugify/module.hpp>
+#include <plugify/plugify_provider.hpp>
+#include <plugify/plugin.hpp>
 
 #include <module_export.h>
 #include <unordered_map>
