@@ -116,14 +116,14 @@ namespace {
         );
     }
 
-    plg::str ReturnStr(plg::string str) {
+    plg::str ReturnStr(plg::string&& str) {
         plg::str ret{};
         std::construct_at(reinterpret_cast<plg::string*>(&ret), std::move(str));
         return ret;
     }
 
     template<typename T>
-    plg::vec ReturnVec(plg::vector<T> vec) {
+    plg::vec ReturnVec(plg::vector<T>&& vec) {
         plg::vec ret{};
         std::construct_at(reinterpret_cast<plg::vector<T>*>(&ret), std::move(vec));
         return ret;

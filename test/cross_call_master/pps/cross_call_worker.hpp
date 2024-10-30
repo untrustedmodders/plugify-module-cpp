@@ -1,8 +1,6 @@
 #pragma once
 
 #include <plugify/cpp_plugin.hpp>
-#include <plugify/string.hpp>
-#include <plugify/vector.hpp>
 #include <cstdint>
 
 // Generated from cross_call_worker.pplugin by https://github.com/untrustedmodders/plugify-module-cpp/blob/main/generator/generator.py 

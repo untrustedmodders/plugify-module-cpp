@@ -7,6 +7,9 @@
 #include <utility>
 #include <vector>
 
+#include <plugify/string.hpp>
+#include <plugify/vector.hpp>
+
 namespace std::filesystem {
 #if _WIN32
 	using path_view = std::wstring_view;
@@ -164,15 +167,11 @@ namespace plg {
 		};
 
 		struct vec {
-			std::size_t size;
-			std::size_t cap;
-			void* ptr;
+			[[maybe_unused]] char padding[sizeof(plg::vector<int>)];
 		};
 
 		struct str {
-			char* data;
-			std::size_t size;
-			std::size_t cap;
+			[[maybe_unused]] char padding[sizeof(plg::string)];
 		};
 	}
 
