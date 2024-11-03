@@ -3660,98 +3660,98 @@ PLUGIN_API void* CallFuncFunctionCallback(cross_call_worker::FuncFunction func) 
 extern "C"
 PLUGIN_API plg::str CallFuncStringCallback(cross_call_worker::FuncString func) {
     plg::string result = func();
-    return ReturnStr(result);
+    return ReturnStr(std::move(result));
 }
 
 // Call functions for vector return types
 extern "C"
 PLUGIN_API plg::vec CallFuncBoolVectorCallback(cross_call_worker::FuncBoolVector func) {
     plg::vector<bool> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncChar8VectorCallback(cross_call_worker::FuncChar8Vector func) {
     plg::vector<char> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncChar16VectorCallback(cross_call_worker::FuncChar16Vector func) {
     plg::vector<char16_t> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncInt8VectorCallback(cross_call_worker::FuncInt8Vector func) {
     plg::vector<int8_t> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncInt16VectorCallback(cross_call_worker::FuncInt16Vector func) {
     plg::vector<int16_t> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncInt32VectorCallback(cross_call_worker::FuncInt32Vector func) {
     plg::vector<int32_t> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncInt64VectorCallback(cross_call_worker::FuncInt64Vector func) {
     plg::vector<int64_t> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncUInt8VectorCallback(cross_call_worker::FuncUInt8Vector func) {
     plg::vector<uint8_t> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncUInt16VectorCallback(cross_call_worker::FuncUInt16Vector func) {
     plg::vector<uint16_t> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncUInt32VectorCallback(cross_call_worker::FuncUInt32Vector func) {
     plg::vector<uint32_t> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncUInt64VectorCallback(cross_call_worker::FuncUInt64Vector func) {
     plg::vector<uint64_t> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncPtrVectorCallback(cross_call_worker::FuncPtrVector func) {
     plg::vector<void*> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncFloatVectorCallback(cross_call_worker::FuncFloatVector func) {
     plg::vector<float> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncDoubleVectorCallback(cross_call_worker::FuncDoubleVector func) {
     plg::vector<double> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncStringVectorCallback(cross_call_worker::FuncStringVector func) {
     plg::vector<plg::string> result = func();
-    return ReturnVec(result);
+    return ReturnVec(std::move(result));
 }
 
 // Call functions for vector return types

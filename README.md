@@ -65,7 +65,7 @@ plugify install plugify-module-cpp
 ## Example
 
 ```c++
-#include <plugify/cpp_plugin.h>
+#include <plugify/cpp_plugin.hpp>
 #include <plugin_export.h>
 #include <iostream>
 

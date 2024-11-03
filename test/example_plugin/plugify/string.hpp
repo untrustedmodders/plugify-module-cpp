@@ -10,9 +10,9 @@
 #include <initializer_list>  // for std::initializer_list
 #include <string_view>       // for std::basic_string_view
 #include <type_traits>       // for std::is_constant_evaluated, std::declval, std::false_type
-#include <algorithm>         // for std::ranges::min, std::max
+#include <algorithm>         // for std::min, std::max
 #include <concepts>          // for std::unsigned_integral, std::signed_integral
-#include <iterator>          // for std::ranges::distance, std::ranges::next, std::iterator_traits, std::input_iterator
+#include <iterator>          // for std::distance, std::next, std::iterator_traits, std::input_iterator
 #include <utility>           // for std::move, std::hash
 #include <compare>           // for std::strong_ordering
 #include <memory>            // for std::allocator, std::swap, std::allocator_traits
@@ -138,13 +138,13 @@
 #endif
 
 #if defined(__GNUC__) || defined(__clang__)
-#  define _PLUGIFY_STRING_DIAG_PUSH() _PLUGIFY_STRING_PRAGMA(_PLUGIFY_STRING_PRAGMA_DIAG_PREFIX diagnostic push)
-#  define _PLUGIFY_STRING_DIAG_IGN(wrn) _PLUGIFY_STRING_PRAGMA(_PLUGIFY_STRING_PRAGMA_DIAG_PREFIX diagnostic ignored wrn)
-#  define _PLUGIFY_STRING_DIAG_POP() _PLUGIFY_STRING_PRAGMA(_PLUGIFY_STRING_PRAGMA_DIAG_PREFIX diagnostic pop)
+#  define _PLUGIFY_STRING_WARN_PUSH() _PLUGIFY_STRING_PRAGMA(_PLUGIFY_STRING_PRAGMA_DIAG_PREFIX diagnostic push)
+#  define _PLUGIFY_STRING_WARN_IGNORE(wrn) _PLUGIFY_STRING_PRAGMA(_PLUGIFY_STRING_PRAGMA_DIAG_PREFIX diagnostic ignored wrn)
+#  define _PLUGIFY_STRING_WARN_POP() _PLUGIFY_STRING_PRAGMA(_PLUGIFY_STRING_PRAGMA_DIAG_PREFIX diagnostic pop)
 #elif defined(_MSC_VER)
-#  define _PLUGIFY_STRING_DIAG_PUSH()	__pragma(warning(push))
-#  define _PLUGIFY_STRING_DIAG_IGN(wrn) __pragma(warning(disable: wrn))
-#  define _PLUGIFY_STRING_DIAG_POP() __pragma(warning(pop))
+#  define _PLUGIFY_STRING_WARN_PUSH()	__pragma(warning(push))
+#  define _PLUGIFY_STRING_WARN_IGNORE(wrn) __pragma(warning(disable: wrn))
+#  define _PLUGIFY_STRING_WARN_POP() __pragma(warning(pop))
 #endif
 
 #if defined(__GNUC__) || defined(__clang__)
@@ -225,16 +225,16 @@ namespace plg {
 		_PLUGIFY_STRING_NO_UNIQUE_ADDRESS
 		allocator_type _allocator;
 
-		_PLUGIFY_STRING_DIAG_PUSH()
+		_PLUGIFY_STRING_WARN_PUSH()
 
 #if defined(__clang__)
-		_PLUGIFY_STRING_DIAG_IGN("-Wgnu-anonymous-struct")
-		_PLUGIFY_STRING_DIAG_IGN("-Wzero-length-array")
+		_PLUGIFY_STRING_WARN_IGNORE("-Wgnu-anonymous-struct")
+		_PLUGIFY_STRING_WARN_IGNORE("-Wzero-length-array")
 #elif defined(__GNUC__)
-		_PLUGIFY_STRING_DIAG_IGN("-Wpedantic")// this doesn't work
+		_PLUGIFY_STRING_WARN_IGNORE("-Wpedantic")// this doesn't work
 #elif defined(_MSC_VER)
-		_PLUGIFY_STRING_DIAG_IGN(4201)
-		_PLUGIFY_STRING_DIAG_IGN(4200)
+		_PLUGIFY_STRING_WARN_IGNORE(4201)
+		_PLUGIFY_STRING_WARN_IGNORE(4200)
 #endif
 
 		template<typename CharT, size_t = sizeof(CharT)>
@@ -277,7 +277,7 @@ namespace plg {
 			sso_size size;
 		};
 
-		_PLUGIFY_STRING_DIAG_POP()
+		_PLUGIFY_STRING_WARN_POP()
 
 		static_assert(sizeof(short_data) == (sizeof(value_type) * (min_cap + sizeof(uint8_t))), "short has an unexpected size.");
 		static_assert(sizeof(short_data) == sizeof(long_data), "short and long layout structures must be the same size");
@@ -422,7 +422,7 @@ namespace plg {
 			auto old_cap = get_long_cap();
 			auto& old_buffer = get_long_data();
 
-			auto new_len = std::ranges::min(new_cap, old_len);
+			auto new_len = std::min(new_cap, old_len);
 			auto new_data = _allocator.allocate(new_cap + 1);
 
 			if (old_buffer != nullptr) {
@@ -649,7 +649,7 @@ namespace plg {
 			: _allocator(alloc)
 		{
 			_PLUGIFY_STRING_ASSERT(pos >= 0 && pos <= str.get_size(), "plg::basic_string::basic_string(): pos out of range", std::out_of_range);
-			auto len = std::ranges::min(count, str.get_size() - pos);
+			auto len = std::min(count, str.get_size() - pos);
 			_PLUGIFY_STRING_ASSERT(len <= max_size(), "plg::basic_string::basic_string(): constructed string size would exceed max_size()", std::length_error);
 			internal_assign(str.data() + pos, len);
 		}
@@ -672,7 +672,7 @@ namespace plg {
 		constexpr basic_string(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
 			: _allocator(alloc)
 		{
-			auto len = static_cast<size_type>(std::ranges::distance(first, last));
+			auto len = static_cast<size_type>(std::distance(first, last));
 			_PLUGIFY_STRING_ASSERT(len <= max_size(), "plg::basic_string::basic_string(): constructed string size would exceed max_size()", std::length_error);
 			internal_assign(const_pointer(first), len);
 		}
@@ -694,7 +694,7 @@ namespace plg {
 			assign(std::move(str));
 		}
 		constexpr basic_string(basic_string&& str) noexcept(std::is_nothrow_move_constructible<allocator_type>::value)
-			: _storage(std::move(str._storage)), _allocator(std::move(str._allocator))
+			: _allocator(std::move(str._allocator)), _storage(std::move(str._storage))
 		{
 			str.short_init();
 		}
@@ -748,7 +748,8 @@ namespace plg {
 
 #if PLUGIFY_STRING_CONTAINERS_RANGES
 		template<detail::container_compatible_range<Char> Range>
-		constexpr basic_string(std::from_range_t, Range&& range, const Allocator& a = Allocator()) : basic_string(std::ranges::begin(range), std::ranges::end(range), a)
+		constexpr basic_string(std::from_range_t, Range&& range, const allocator_type& alloc = allocator_type())
+			: basic_string(std::ranges::begin(range), std::ranges::end(range), alloc)
 		{}
 #endif
 
@@ -815,7 +816,7 @@ namespace plg {
 		constexpr basic_string& assign(const basic_string& str, size_type pos, size_type count = npos) 
 		{
 			_PLUGIFY_STRING_ASSERT(pos >= 0 && pos <= str.get_size(), "plg::basic_string::assign(): pos out of range", std::out_of_range);
-			internal_assign(str.data(), std::ranges::min(count, str.size() - pos));
+			internal_assign(str.data(), std::min(count, str.size() - pos));
 			return *this;
 		}
 
@@ -829,7 +830,7 @@ namespace plg {
 				auto len = str.get_long_size();
 				internal_assign(str.get_long_data(), len);
 			} else {
-				std::ranges::swap(_storage , str._storage);
+				std::swap(_storage , str._storage);
 				str.deallocate();
 				str.short_init();
 			}
@@ -851,7 +852,7 @@ namespace plg {
 		template<std::input_iterator InputIterator>
 		constexpr basic_string& assign(InputIterator first, InputIterator last)
 		{
-			auto len = static_cast<size_type>(std::ranges::distance(first, last));
+			auto len = static_cast<size_type>(std::distance(first, last));
 			_PLUGIFY_STRING_ASSERT(len <= max_size(), "plg::basic_string::assign(): resulted string size would exceed max_size()", std::length_error);
 			internal_assign(const_pointer(first), len);
 			return *this;
@@ -891,7 +892,7 @@ namespace plg {
 		{
 			auto str = basic_string(std::from_range, std::forward<Range>(range), _allocator);
 			_PLUGIFY_STRING_ASSERT(str.get_size() <= max_size(), "plg::basic_string::assign_range(): resulted string size would exceed max_size()", std::length_error);
-			return assign();
+			return assign(std::move(str));
 		}
 #endif
 		[[nodiscard]] constexpr allocator_type get_allocator() const noexcept 
@@ -923,21 +924,25 @@ namespace plg {
 
 		[[nodiscard]] constexpr reference front() 
 		{
+			_PLUGIFY_STRING_ASSERT(!empty(), "plg::basic_string::front(): vector is empty", std::length_error);
 			return get_data()[0];
 		}
 
 		[[nodiscard]] constexpr const_reference front() const 
 		{
+			_PLUGIFY_STRING_ASSERT(!empty(), "plg::basic_string::front(): vector is empty", std::length_error);
 			return get_data()[0];
 		}
 
 		[[nodiscard]] constexpr reference back() 
 		{
+			_PLUGIFY_STRING_ASSERT(!empty(), "plg::basic_string::back(): vector is empty", std::length_error);
 			return get_data()[get_size() - 1];
 		}
 
 		[[nodiscard]] constexpr const_reference back() const 
 		{
+			_PLUGIFY_STRING_ASSERT(!empty(), "plg::basic_string::back(): vector is empty", std::length_error);
 			return get_data()[get_size() - 1];
 		}
 
@@ -1038,12 +1043,6 @@ namespace plg {
 
 		[[nodiscard]] constexpr size_type max_size() const noexcept 
 		{
-			// size_type m = allocator_traits::max_size(_allocator);
-
-			// if (m <= numeric_limits<size_type>::max() / 2)
-			//     return m - alignment;
-			// else
-			//     return (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__) ? m - alignment : (m / 2) - alignment;
 			return (allocator_traits::max_size(allocator_type()) - 1) / 2;
 		}
 
@@ -1058,7 +1057,7 @@ namespace plg {
 			if (cap <= get_cap()) [[unlikely]]
 				return;
 
-			auto new_cap = std::ranges::max(cap, get_size());
+			auto new_cap = std::max(cap, get_size());
 			if (new_cap == get_cap()) [[unlikely]]
 				return;
 
@@ -1087,7 +1086,7 @@ namespace plg {
 		{
 			_PLUGIFY_STRING_ASSERT(get_size() + count <= max_size(), "plg::basic_string::insert(): resulted string size would exceed max_size()", std::length_error);
 			_PLUGIFY_STRING_ASSERT(pos >= 0 && pos <= get_size(), "plg::basic_string::insert(): pos out of range", std::out_of_range);
-			insert(std::ranges::next(cbegin(), pos), count, ch);
+			insert(std::next(cbegin(), pos), count, ch);
 			return *this;
 		}
 
@@ -1119,7 +1118,7 @@ namespace plg {
 		constexpr basic_string& insert(size_type pos, const basic_string& str, size_type pos_str, size_type count = npos) 
 		{
 			_PLUGIFY_STRING_ASSERT(pos <= get_size() && pos_str <= str.get_size(), "plg::basic_string::insert(): pos or pos_str out of range", std::out_of_range);
-			count = std::ranges::min(count, str.length() - pos_str);
+			count = std::min(count, str.length() - pos_str);
 			_PLUGIFY_STRING_ASSERT(get_size() + count <= max_size(), "plg::basic_string::insert(): resulted string size would exceed max_size()", std::length_error);
 			return insert(pos, str.data() + pos_str, count);
 		}
@@ -1132,27 +1131,27 @@ namespace plg {
 		constexpr iterator insert(const_iterator pos, size_type count, value_type ch) 
 		{
 			_PLUGIFY_STRING_ASSERT(get_size() + count <= max_size(), "plg::basic_string::insert(): resulted string size would exceed max_size()", std::length_error);
-			auto spos = std::ranges::distance(cbegin(), pos);
+			auto spos = std::distance(cbegin(), pos);
 			internal_insert(spos, ch, count);
-			return std::ranges::next(begin(), spos);
+			return std::next(begin(), spos);
 		}
 
 		template<std::input_iterator InputIterator>
 		constexpr iterator insert(const_iterator pos, InputIterator first, InputIterator last) 
 		{
-			auto spos = std::ranges::distance(cbegin(), pos);
-			auto len = static_cast<size_type>(std::ranges::distance(first, last));
+			auto spos = std::distance(cbegin(), pos);
+			auto len = static_cast<size_type>(std::distance(first, last));
 			_PLUGIFY_STRING_ASSERT(get_size() + len <= max_size(), "plg::basic_string::insert(): resulted string size would exceed max_size()", std::length_error);
 			internal_insert(spos, const_pointer(first), len);
-			return std::ranges::next(begin(), spos);
+			return std::next(begin(), spos);
 		}
 
 		constexpr iterator insert(const_iterator pos, std::initializer_list<value_type> list)
 		{
 			_PLUGIFY_STRING_ASSERT(get_size() + list.size() <= max_size(), "plg::basic_string::insert(): resulted string size would exceed max_size()", std::length_error);
-			auto spos = std::ranges::distance(cbegin(), pos);
+			auto spos = std::distance(cbegin(), pos);
 			internal_insert(spos, const_pointer(list.begin()), list.size());
-			return std::ranges::next(begin(), spos);
+			return std::next(begin(), spos);
 		}
 
 		template<typename Type>
@@ -1197,7 +1196,7 @@ namespace plg {
 
 			_PLUGIFY_STRING_ASSERT(pos >= 0 && pos <= sz, "plg::basic_string::erase(): pos out of range", std::out_of_range);
 
-			count = std::ranges::min(count, sz - pos);
+			count = std::min(count, sz - pos);
 
 			auto left = sz - (pos + count);
 			if (left != 0)
@@ -1212,15 +1211,15 @@ namespace plg {
 
 		constexpr iterator erase(const_iterator position) 
 		{
-			auto pos = std::ranges::distance(cbegin(), position);
+			auto pos = std::distance(cbegin(), position);
 			erase(pos, 1);
 			return begin() + pos;
 		}
 
 		constexpr iterator erase(const_iterator first, const_iterator last) 
 		{
-			auto pos = std::ranges::distance(cbegin(), first);
-			auto len = std::ranges::distance(first, last);
+			auto pos = std::distance(cbegin(), first);
+			auto len = std::distance(first, last);
 			erase(pos, len);
 			return begin() + pos;
 		}
@@ -1276,7 +1275,7 @@ namespace plg {
 		template<std::input_iterator InputIterator>
 		constexpr basic_string& append(InputIterator first, InputIterator last) 
 		{
-			auto len = static_cast<size_type>(std::ranges::distance(first, last));
+			auto len = static_cast<size_type>(std::distance(first, last));
 			_PLUGIFY_STRING_ASSERT(get_size() + len <= max_size(), "plg::basic_string::append(): resulted string size would exceed max_size()", std::length_error);
 			internal_append(const_pointer(first), len);
 			return *this;
@@ -1459,15 +1458,15 @@ namespace plg {
 
 		constexpr basic_string& replace(const_iterator first, const_iterator last, const basic_string& str)
 		{
-			auto pos = std::ranges::distance(cbegin(), first);
-			auto count = std::ranges::distance(first, last);
+			auto pos = std::distance(cbegin(), first);
+			auto count = std::distance(first, last);
 			return replace(pos, count, str, 0, str.length());
 		}
 
 		constexpr basic_string& replace(size_type pos, size_type count, const basic_string& str, size_type pos2, size_type count2 = npos) 
 		{
 			_PLUGIFY_STRING_ASSERT(pos <= get_size() && pos2 <= str.get_size(), "plg::basic_string::replace(): pos or pos_str out of range", std::out_of_range);
-			count2 = std::ranges::min(count2, str.length() - pos2);
+			count2 = std::min(count2, str.length() - pos2);
 			auto ssv = sview_type(str).substr(pos2, count2);
 			return replace(pos, count, ssv.data(), ssv.length());
 		}
@@ -1475,13 +1474,13 @@ namespace plg {
 		template<std::input_iterator InputIterator>
 		constexpr basic_string& replace(const_iterator first, const_iterator last, InputIterator first2, InputIterator last2) 
 		{
-			return replace(first, last, const_pointer(first2), std::ranges::distance(first2, last2));
+			return replace(first, last, const_pointer(first2), std::distance(first2, last2));
 		}
 
 		constexpr basic_string& replace(size_type pos, size_type count, const value_type* str, size_type count2) 
 		{
 			_PLUGIFY_STRING_ASSERT(pos >= 0 && pos <= get_size(), "plg::basic_string::replace(): pos out of range", std::out_of_range);
-			count = std::ranges::min(count, length() - pos);
+			count = std::min(count, length() - pos);
 			_PLUGIFY_STRING_ASSERT(get_size() - count + count2 <= max_size(), "plg::basic_string::replace(): resulted string size would exceed max_size()", std::length_error);
 			internal_replace(pos, const_pointer(str), count, count2);
 			return *this;
@@ -1489,8 +1488,8 @@ namespace plg {
 
 		constexpr basic_string& replace(const_iterator first, const_iterator last, const value_type* str, size_type count2) 
 		{
-			size_type pos = std::ranges::distance(cbegin(), first);
-			size_type count = std::ranges::distance(first, last);
+			size_type pos = std::distance(cbegin(), first);
+			size_type count = std::distance(first, last);
 
 			return replace(pos, count, str, count2);
 		}
@@ -1508,7 +1507,7 @@ namespace plg {
 		constexpr basic_string& replace(size_type pos, size_type count, size_type count2, value_type ch) 
 		{
 			_PLUGIFY_STRING_ASSERT(pos >= 0 && pos <= get_size(), "plg::basic_string::replace(): pos out of range", std::out_of_range);
-			count = std::ranges::min(count, length() - pos);
+			count = std::min(count, length() - pos);
 			_PLUGIFY_STRING_ASSERT(get_size() - count + count2 <= max_size(), "plg::basic_string::replace(): resulted string size would exceed max_size()", std::length_error);
 			internal_replace(pos, ch, count, count2);
 			return *this;
@@ -1516,8 +1515,8 @@ namespace plg {
 
 		constexpr basic_string& replace(const_iterator first, const_iterator last, size_type count2, value_type ch) 
 		{
-			auto pos = std::ranges::distance(cbegin(), first);
-			auto count = std::ranges::distance(first, last);
+			auto pos = std::distance(cbegin(), first);
+			auto count = std::distance(first, last);
 
 			_PLUGIFY_STRING_ASSERT(get_size() - count + count2 <= max_size(), "plg::basic_string::replace(): resulted string size would exceed max_size()", std::length_error);
 			_PLUGIFY_STRING_ASSERT(pos >= 0 && pos <= get_size(), "plg::basic_string::replace(): pos out of range", std::out_of_range);
@@ -1564,7 +1563,7 @@ namespace plg {
 		constexpr iterator replace_with_range(const_iterator first, const_iterator last, Range&& range) 
 		{
 			auto str = basic_string(std::from_range, std::forward<Range>(range), _allocator);
-			return replace(first, last, str);// replace checks for max_size()
+			return replace(first, last, str); // replace checks for max_size()
 		}
 #endif
 
@@ -1609,7 +1608,7 @@ namespace plg {
 
 		constexpr void swap(basic_string& other) noexcept(allocator_traits::propagate_on_container_swap::value || allocator_traits::is_always_equal::value) 
 		{
-			using std::ranges::swap;
+			using std::swap;
 			if constexpr (allocator_traits::propagate_on_container_swap::value) {
 				swap(_allocator, other._allocator);
 			}
@@ -2195,14 +2194,14 @@ namespace plg {
 
 	inline namespace literals {
 		inline namespace string_literals {
-			_PLUGIFY_STRING_DIAG_PUSH()
+			_PLUGIFY_STRING_WARN_PUSH()
 
 #if defined(__clang__)
-			_PLUGIFY_STRING_DIAG_IGN("-Wuser-defined-literals")
+			_PLUGIFY_STRING_WARN_IGNORE("-Wuser-defined-literals")
 #elif defined(__GNUC__)
-			_PLUGIFY_STRING_DIAG_IGN("-Wliteral-suffix")
+			_PLUGIFY_STRING_WARN_IGNORE("-Wliteral-suffix")
 #elif defined(_MSC_VER)
-			_PLUGIFY_STRING_DIAG_IGN(4455)
+			_PLUGIFY_STRING_WARN_IGNORE(4455)
 #endif
 			// suffix for basic_string literals
 			[[nodiscard]] constexpr string operator""s(const char* str, std::size_t len) { return string{str, len}; }
@@ -2211,7 +2210,7 @@ namespace plg {
 			[[nodiscard]] constexpr u32string operator""s(const char32_t* str, std::size_t len) { return u32string{str, len}; }
 			[[nodiscard]] constexpr wstring operator""s(const wchar_t* str, std::size_t len) { return wstring{str, len}; }
 
-			_PLUGIFY_STRING_DIAG_POP()
+			_PLUGIFY_STRING_WARN_POP()
 		}// namespace string_literals
 	}// namespace literals
 }// namespace plg
