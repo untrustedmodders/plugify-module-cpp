@@ -115,19 +115,6 @@ namespace {
                 t.m[3][0], t.m[3][1], t.m[3][2], t.m[3][3]
         );
     }
-
-    plg::str ReturnStr(plg::string&& str) {
-        plg::str ret{};
-        std::construct_at(reinterpret_cast<plg::string*>(&ret), std::move(str));
-        return ret;
-    }
-
-    template<typename T>
-    plg::vec ReturnVec(plg::vector<T>&& vec) {
-        plg::vec ret{};
-        std::construct_at(reinterpret_cast<plg::vector<T>*>(&ret), std::move(vec));
-        return ret;
-    }
 }
 
 // Mock Functions for the typedefs
@@ -3288,82 +3275,82 @@ PLUGIN_API NoParamReturnFunctionCallbackFunc NoParamReturnFunctionCallback() {
 
 extern "C"
 PLUGIN_API plg::str NoParamReturnStringCallback() {
-	return ReturnStr("Convertiplane");
+	return plg::ReturnStr("Convertiplane");
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayBoolCallback() {
-	return ReturnVec(plg::vector<bool>{false, true, true});
+	return plg::ReturnVec(plg::vector<bool>{false, true, true});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayChar8Callback() {
-	return ReturnVec(plg::vector<char>{'p', 'l', 'u', 'g'});
+	return plg::ReturnVec(plg::vector<char>{'p', 'l', 'u', 'g'});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayChar16Callback() {
-	return ReturnVec(plg::vector<char16_t>{u'ч', u'а', u'р', u'!'});
+	return plg::ReturnVec(plg::vector<char16_t>{u'ч', u'а', u'р', u'!'});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayInt8Callback() {
-	return ReturnVec(plg::vector<int8_t>{10, -15, 20});
+	return plg::ReturnVec(plg::vector<int8_t>{10, -15, 20});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayInt16Callback() {
-	return ReturnVec(plg::vector<int16_t>{10, -15, 20, -25});
+	return plg::ReturnVec(plg::vector<int16_t>{10, -15, 20, -25});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayInt32Callback() {
-	return ReturnVec(plg::vector<int32_t>{10, -15, 20, -25, 30});
+	return plg::ReturnVec(plg::vector<int32_t>{10, -15, 20, -25, 30});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayInt64Callback() {
-	return ReturnVec(plg::vector<int64_t>{10, -15, 20, -25, 30, -35});
+	return plg::ReturnVec(plg::vector<int64_t>{10, -15, 20, -25, 30, -35});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayUInt8Callback() {
-	return ReturnVec( plg::vector<uint8_t>{1, 2, 3, 200});
+	return plg::ReturnVec( plg::vector<uint8_t>{1, 2, 3, 200});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayUInt16Callback() {
-	return ReturnVec(plg::vector<uint16_t>{1, 2, 3, 200, 60000});
+	return plg::ReturnVec(plg::vector<uint16_t>{1, 2, 3, 200, 60000});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayUInt32Callback() {
-	return ReturnVec(plg::vector<uint32_t>{1, 2, 3, 200, 60000, 4000000000});
+	return plg::ReturnVec(plg::vector<uint32_t>{1, 2, 3, 200, 60000, 4000000000});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayUInt64Callback() {
-	return ReturnVec(plg::vector<uint64_t>{1, 2, 3, 200, 60000, 4000000000, 12223334445556667778ULL});
+	return plg::ReturnVec(plg::vector<uint64_t>{1, 2, 3, 200, 60000, 4000000000, 12223334445556667778ULL});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayPointerCallback() {
-	return ReturnVec(plg::vector<void*>{reinterpret_cast<void*>(0x0), reinterpret_cast<void*>(0xdeadbeafLL), reinterpret_cast<void*>(0xcdccddcccdddcccc)});
+	return plg::ReturnVec(plg::vector<void*>{reinterpret_cast<void*>(0x0), reinterpret_cast<void*>(0xdeadbeafLL), reinterpret_cast<void*>(0xcdccddcccdddcccc)});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayFloatCallback() {
-	return ReturnVec(plg::vector<float>{1.1f, -10.82f, 555.555f});
+	return plg::ReturnVec(plg::vector<float>{1.1f, -10.82f, 555.555f});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayDoubleCallback() {
-	return ReturnVec(plg::vector<double>{1.1, -10.82, 555.555, 55555.55555, 123456789.98765});
+	return plg::ReturnVec(plg::vector<double>{1.1, -10.82, 555.555, 55555.55555, 123456789.98765});
 }
 
 extern "C"
 PLUGIN_API plg::vec NoParamReturnArrayStringCallback() {
-	return ReturnVec(plg::vector<plg::string>{"5", "true", "0.0", "Hello", "And Goodbay", "Another long string to test. Pi equal 3,1415926535 8979323846 2643383279 5028841971 6939937510"});
+	return plg::ReturnVec(plg::vector<plg::string>{"5", "true", "0.0", "Hello", "And Goodbay", "Another long string to test. Pi equal 3,1415926535 8979323846 2643383279 5028841971 6939937510"});
 }
 
 extern "C"
@@ -3660,98 +3647,98 @@ PLUGIN_API void* CallFuncFunctionCallback(cross_call_worker::FuncFunction func) 
 extern "C"
 PLUGIN_API plg::str CallFuncStringCallback(cross_call_worker::FuncString func) {
     plg::string result = func();
-    return ReturnStr(std::move(result));
+    return plg::ReturnStr(std::move(result));
 }
 
 // Call functions for vector return types
 extern "C"
 PLUGIN_API plg::vec CallFuncBoolVectorCallback(cross_call_worker::FuncBoolVector func) {
     plg::vector<bool> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncChar8VectorCallback(cross_call_worker::FuncChar8Vector func) {
     plg::vector<char> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncChar16VectorCallback(cross_call_worker::FuncChar16Vector func) {
     plg::vector<char16_t> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncInt8VectorCallback(cross_call_worker::FuncInt8Vector func) {
     plg::vector<int8_t> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncInt16VectorCallback(cross_call_worker::FuncInt16Vector func) {
     plg::vector<int16_t> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncInt32VectorCallback(cross_call_worker::FuncInt32Vector func) {
     plg::vector<int32_t> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncInt64VectorCallback(cross_call_worker::FuncInt64Vector func) {
     plg::vector<int64_t> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncUInt8VectorCallback(cross_call_worker::FuncUInt8Vector func) {
     plg::vector<uint8_t> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncUInt16VectorCallback(cross_call_worker::FuncUInt16Vector func) {
     plg::vector<uint16_t> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncUInt32VectorCallback(cross_call_worker::FuncUInt32Vector func) {
     plg::vector<uint32_t> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncUInt64VectorCallback(cross_call_worker::FuncUInt64Vector func) {
     plg::vector<uint64_t> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncPtrVectorCallback(cross_call_worker::FuncPtrVector func) {
     plg::vector<void*> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncFloatVectorCallback(cross_call_worker::FuncFloatVector func) {
     plg::vector<float> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncDoubleVectorCallback(cross_call_worker::FuncDoubleVector func) {
     plg::vector<double> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 extern "C"
 PLUGIN_API plg::vec CallFuncStringVectorCallback(cross_call_worker::FuncStringVector func) {
     plg::vector<plg::string> result = func();
-    return ReturnVec(std::move(result));
+    return plg::ReturnVec(std::move(result));
 }
 
 // Call functions for vector return types
@@ -3946,7 +3933,7 @@ PLUGIN_API plg::str CallFunc13Callback(cross_call_worker::Func13 func) {
     plg::vector<uint8_t> vecU8{0, 1, 2};
     int16_t i16 = 10;
     auto ret = func(i64, vecC, u16, f, vecB, vec4, str, i32, vec3, ptr, vec2, vecU8, i16);
-    return ReturnStr(std::move(ret));
+    return plg::ReturnStr(std::move(ret));
 }
 
 // 14 parameters
@@ -3967,7 +3954,7 @@ PLUGIN_API plg::vec CallFunc14Callback(cross_call_worker::Func14 func) {
     double d = 3.14;
     void* ptr = nullptr; // Example pointer
     auto ret = func(vecC, vecU32, mat, b, ch16, i32, vecF, u16, vecU8, i8, vec3, vec4, d, ptr);
-    return ReturnVec(std::move(ret));
+    return plg::ReturnVec(std::move(ret));
 }
 
 // 15 parameters
@@ -4020,7 +4007,7 @@ extern "C"
 PLUGIN_API plg::str CallFunc17Callback(cross_call_worker::Func17 func) {
     int32_t i32 = 20;
     func(i32);
-    return ReturnStr(std::format("{}", i32));
+    return plg::ReturnStr(std::format("{}", i32));
 }
 
 // 2 parameters
@@ -4029,7 +4016,7 @@ PLUGIN_API plg::str CallFunc18Callback(cross_call_worker::Func18 func) {
     int8_t i8 = 5;
     int16_t i16 = 10;
     plg::vec2 ret = func(i8, i16);
-    return ReturnStr(std::format("{}|{}|{}", PodToString(ret), i8, i16));
+    return plg::ReturnStr(std::format("{}|{}|{}", PodToString(ret), i8, i16));
 }
 
 // 3 parameters
@@ -4039,7 +4026,7 @@ PLUGIN_API plg::str CallFunc19Callback(cross_call_worker::Func19 func) {
     plg::vec3 vec3{1.0f, 2.0f, 3.0f};
     plg::vector<uint32_t> vecU32{1, 2, 3};
     func(u32, vec3, vecU32);
-    return ReturnStr(std::format("{}|{}|{}", u32, PodToString(vec3), VectorToString(vecU32)));
+    return plg::ReturnStr(std::format("{}|{}|{}", u32, PodToString(vec3), VectorToString(vecU32)));
 }
 
 // 4 parameters
@@ -4050,7 +4037,7 @@ PLUGIN_API plg::str CallFunc20Callback(cross_call_worker::Func20 func) {
     plg::vector<uint64_t> vecU64{1, 2, 3};
     char ch = 'B';
     int32_t ret = func(ch16, vec4, vecU64, ch);
-    return ReturnStr(std::format("{}|{}|{}|{}|{}", ret, static_cast<uint16_t>(ch16), PodToString(vec4), VectorToString(vecU64), ch));
+    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}", ret, static_cast<uint16_t>(ch16), PodToString(vec4), VectorToString(vecU64), ch));
 }
 
 // 5 parameters
@@ -4062,7 +4049,7 @@ PLUGIN_API plg::str CallFunc21Callback(cross_call_worker::Func21 func) {
     bool b = true;
     double d = 3.14;
     float ret = func(mat, vecI32, vec2, b, d);
-    return ReturnStr(std::format("{}|{}|{}|{}|{}|{}", ret, PodToString(mat), VectorToString(vecI32), PodToString(vec2), b ? "true" : "false", d));
+    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}", ret, PodToString(mat), VectorToString(vecI32), PodToString(vec2), b ? "true" : "false", d));
 }
 
 // 6 parameters
@@ -4075,7 +4062,7 @@ PLUGIN_API plg::str CallFunc22Callback(cross_call_worker::Func22 func) {
     plg::string str = "Test";
     plg::vec4 vec4{1.0f, 2.0f, 3.0f, 4.0f};
     uint64_t ret = func(ptr, u32, vecD, i16, str, vec4);
-    return ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}", ret, ptr, u32, VectorToString(vecD), i16, str.c_str(), PodToString(vec4)));
+    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}", ret, ptr, u32, VectorToString(vecD), i16, str.c_str(), PodToString(vec4)));
 }
 
 // 7 parameters
@@ -4089,7 +4076,7 @@ PLUGIN_API plg::str CallFunc23Callback(cross_call_worker::Func23 func) {
     int8_t i8 = 5;
     plg::vector<uint8_t> vecU8{0, 1, 2};
     func(u64, vec2, vecI16, ch16, f, i8, vecU8);
-    return ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}", u64, PodToString(vec2), VectorToString(vecI16), static_cast<uint16_t>(ch16), f, i8, VectorToString(vecU8)));
+    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}", u64, PodToString(vec2), VectorToString(vecI16), static_cast<uint16_t>(ch16), f, i8, VectorToString(vecU8)));
 }
 
 // 8 parameters
@@ -4104,7 +4091,7 @@ PLUGIN_API plg::str CallFunc24Callback(cross_call_worker::Func24 func) {
     double d = 3.14;
     plg::vector<void*> vecV2{ reinterpret_cast<void*>(1), reinterpret_cast<void*>(2), reinterpret_cast<void*>(3), reinterpret_cast<void*>(4) };
     plg::mat4x4 ret = func(vecC, i64, vecU8, vec4, u64, vecPtr, d, vecV2);
-    return ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}", PodToString(ret), VectorToString(vecC), i64, VectorToString(vecU8), PodToString(vec4), u64, VectorToString(vecPtr), d, VectorToString(vecV2)));
+    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}", PodToString(ret), VectorToString(vecC), i64, VectorToString(vecU8), PodToString(vec4), u64, VectorToString(vecPtr), d, VectorToString(vecV2)));
 }
 
 // 9 parameters
@@ -4120,7 +4107,7 @@ PLUGIN_API plg::str CallFunc25Callback(cross_call_worker::Func25 func) {
     plg::vec4 vec4{1.0f, 2.0f, 3.0f, 4.0f};
     uint16_t u16 = 10;
     double ret = func(i32, vecPtr, b, u8, str, vec3, i64, vec4, u16);
-    return ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, i32, VectorToString(vecPtr), b ? "true" : "false", u8, str.c_str(), PodToString(vec3), i64, PodToString(vec4), u16));
+    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, i32, VectorToString(vecPtr), b ? "true" : "false", u8, str.c_str(), PodToString(vec3), i64, PodToString(vec4), u16));
 }
 
 // 10 parameters
@@ -4137,7 +4124,7 @@ PLUGIN_API plg::str CallFunc26Callback(cross_call_worker::Func26 func) {
     void* ptr = nullptr; // Example pointer
     bool b = true;
     char ret = func(ch16, vec2, mat, vecF, i16, u64, u32, vecU16, ptr, b);
-    return ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, static_cast<uint16_t>(ch16), PodToString(vec2), PodToString(mat), VectorToString(vecF), u64, u32, VectorToString(vecU16), ptr, b ? "true" : "false"));
+    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, static_cast<uint16_t>(ch16), PodToString(vec2), PodToString(mat), VectorToString(vecF), u64, u32, VectorToString(vecU16), ptr, b ? "true" : "false"));
 }
 
 // 11 parameters
@@ -4155,7 +4142,7 @@ PLUGIN_API plg::str CallFunc27Callback(cross_call_worker::Func27 func) {
     int32_t i32 = 20;
     plg::vector<uint8_t> vecU8{0, 1, 2};
     uint8_t ret = func(f, vec3, ptr, vec2, vecI16, mat, b, vec4, i8, i32, vecU8);
-    return ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, f, PodToString(vec3), ptr, PodToString(vec2), VectorToString(vecI16), PodToString(mat), b, PodToString(vec4), i8, i32, VectorToString(vecU8)));
+    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, f, PodToString(vec3), ptr, PodToString(vec2), VectorToString(vecI16), PodToString(mat), b, PodToString(vec4), i8, i32, VectorToString(vecU8)));
 }
 
 // 12 parameters
@@ -4175,7 +4162,7 @@ PLUGIN_API plg::str CallFunc28Callback(cross_call_worker::Func28 func) {
     plg::vector<float> vecF{1.0f, 2.0f, 3.0f}; // Sample vector of floats
 
     plg::string ret = func(ptr, u16, vecU32, mat, f, vec4, str, vecU64, i64, b, vec3, vecF);
-    return ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, ptr, u16, VectorToString(vecU32), PodToString(mat), f, PodToString(vec4), str, VectorToString(vecU64), i64, b, PodToString(vec3), VectorToString(vecF)));
+    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, ptr, u16, VectorToString(vecU32), PodToString(mat), f, PodToString(vec4), str, VectorToString(vecU64), i64, b, PodToString(vec3), VectorToString(vecF)));
 }
 
 // 13 parameters
@@ -4196,7 +4183,7 @@ PLUGIN_API plg::str CallFunc29Callback(cross_call_worker::Func29 func) {
     plg::vector<int64_t> vecI64{1000, 2000, 3000}; // Sample vector of int64
 
     plg::vector<plg::string> ret = func(vec4, i32, vecI8, d, b, i8, vecU16, f, str, mat, u64, vec3, vecI64);
-    return ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", VectorToString(ret), PodToString(vec4), i32, VectorToString(vecI8), d, b ? "true" : "false", i8, VectorToString(vecU16), f, str, PodToString(mat), u64, PodToString(vec3), VectorToString(vecI64)));
+    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", VectorToString(ret), PodToString(vec4), i32, VectorToString(vecI8), d, b ? "true" : "false", i8, VectorToString(vecU16), f, str, PodToString(mat), u64, PodToString(vec3), VectorToString(vecI64)));
 }
 
 // 14 parameters
@@ -4218,7 +4205,7 @@ PLUGIN_API plg::str CallFunc30Callback(cross_call_worker::Func30 func) {
     double d = 7.89; // Example double
 
     int32_t ret = func(ptr, vec4, i64, vecU32, b, str, vec3, vecU8, f, vec2, mat, i8, vecF, d);
-    return ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, ptr, PodToString(vec4), i64, VectorToString(vecU32), b ? "true" : "false", str, PodToString(vec3), VectorToString(vecU8), f, PodToString(vec2), PodToString(mat), i8, VectorToString(vecF), d));
+    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, ptr, PodToString(vec4), i64, VectorToString(vecU32), b ? "true" : "false", str, PodToString(vec3), VectorToString(vecU8), f, PodToString(vec2), PodToString(mat), i8, VectorToString(vecF), d));
 }
 
 // 15 parameters
@@ -4241,7 +4228,7 @@ PLUGIN_API plg::str CallFunc31Callback(cross_call_worker::Func31 func) {
     plg::vector<double> vecD{1.0, 2.0, 3.0}; // Sample vector of doubles
 
     plg::vec3 ret = func(ch, u32, vecU64, vec4, str, b, i64, vec2, i8, u16, vecI16, mat, vec3, f, vecD);
-    return ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ch, u32, VectorToString(vecU64), PodToString(vec4), str, b ? "true" : "false", i64, PodToString(vec2), i8, u16, VectorToString(vecI16), PodToString(mat), PodToString(vec3), f, VectorToString(vecD)));
+    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ch, u32, VectorToString(vecU64), PodToString(vec4), str, b ? "true" : "false", i64, PodToString(vec2), i8, u16, VectorToString(vecI16), PodToString(mat), PodToString(vec3), f, VectorToString(vecD)));
 }
 
 // 16 parameters
@@ -4265,5 +4252,5 @@ PLUGIN_API plg::str CallFunc32Callback(cross_call_worker::Func32 func) {
     plg::vector<char16_t> vecC16{u'A', u'B', u'C'}; // Sample vector of char16
 
     func(i32, u16, vecI8, vec4, ptr, vecU32, mat, u64, str, i64, vec2, vecI8_2, b, vec3, u8, vecC16);
-    return ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", i32, u16, VectorToString(vecI8), PodToString(vec4), ptr, VectorToString(vecU32), PodToString(mat), u64, str, i64, PodToString(vec2), VectorToString(vecI8_2), b ? "true" : "false", PodToString(vec3), u8, VectorToString(vecC16)));
+    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", i32, u16, VectorToString(vecI8), PodToString(vec4), ptr, VectorToString(vecU32), PodToString(mat), u64, str, i64, PodToString(vec2), VectorToString(vecI8_2), b ? "true" : "false", PodToString(vec3), u8, VectorToString(vecC16)));
 }
