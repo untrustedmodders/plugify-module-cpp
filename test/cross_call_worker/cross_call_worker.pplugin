@@ -164,7 +164,7 @@
 			"funcName": "NoParamReturnArrayBool",
 			"paramTypes": [],
 			"retType": {
-				"type": "bool*"
+				"type": "bool[]"
 			}
 		},
 		{
@@ -172,7 +172,7 @@
 			"funcName": "NoParamReturnArrayChar8",
 			"paramTypes": [],
 			"retType": {
-				"type": "char8*"
+				"type": "char8[]"
 			}
 		},
 		{
@@ -180,7 +180,7 @@
 			"funcName": "NoParamReturnArrayChar16",
 			"paramTypes": [],
 			"retType": {
-				"type": "char16*"
+				"type": "char16[]"
 			}
 		},
 		{
@@ -188,7 +188,7 @@
 			"funcName": "NoParamReturnArrayInt8",
 			"paramTypes": [],
 			"retType": {
-				"type": "int8*"
+				"type": "int8[]"
 			}
 		},
 		{
@@ -196,7 +196,7 @@
 			"funcName": "NoParamReturnArrayInt16",
 			"paramTypes": [],
 			"retType": {
-				"type": "int16*"
+				"type": "int16[]"
 			}
 		},
 		{
@@ -204,7 +204,7 @@
 			"funcName": "NoParamReturnArrayInt32",
 			"paramTypes": [],
 			"retType": {
-				"type": "int32*"
+				"type": "int32[]"
 			}
 		},
 		{
@@ -212,7 +212,7 @@
 			"funcName": "NoParamReturnArrayInt64",
 			"paramTypes": [],
 			"retType": {
-				"type": "int64*"
+				"type": "int64[]"
 			}
 		},
 		{
@@ -220,7 +220,7 @@
 			"funcName": "NoParamReturnArrayUInt8",
 			"paramTypes": [],
 			"retType": {
-				"type": "uint8*"
+				"type": "uint8[]"
 			}
 		},
 		{
@@ -228,7 +228,7 @@
 			"funcName": "NoParamReturnArrayUInt16",
 			"paramTypes": [],
 			"retType": {
-				"type": "uint16*"
+				"type": "uint16[]"
 			}
 		},
 		{
@@ -236,7 +236,7 @@
 			"funcName": "NoParamReturnArrayUInt32",
 			"paramTypes": [],
 			"retType": {
-				"type": "uint32*"
+				"type": "uint32[]"
 			}
 		},
 		{
@@ -244,7 +244,7 @@
 			"funcName": "NoParamReturnArrayUInt64",
 			"paramTypes": [],
 			"retType": {
-				"type": "uint64*"
+				"type": "uint64[]"
 			}
 		},
 		{
@@ -252,7 +252,7 @@
 			"funcName": "NoParamReturnArrayPointer",
 			"paramTypes": [],
 			"retType": {
-				"type": "ptr64*"
+				"type": "ptr64[]"
 			}
 		},
 		{
@@ -260,7 +260,7 @@
 			"funcName": "NoParamReturnArrayFloat",
 			"paramTypes": [],
 			"retType": {
-				"type": "float*"
+				"type": "float[]"
 			}
 		},
 		{
@@ -268,7 +268,7 @@
 			"funcName": "NoParamReturnArrayDouble",
 			"paramTypes": [],
 			"retType": {
-				"type": "double*"
+				"type": "double[]"
 			}
 		},
 		{
@@ -276,7 +276,7 @@
 			"funcName": "NoParamReturnArrayString",
 			"paramTypes": [],
 			"retType": {
-				"type": "string*"
+				"type": "string[]"
 			}
 		},
 		{
@@ -423,7 +423,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": false
 				}
 			],
@@ -457,7 +457,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": false
 				},
 				{
@@ -496,7 +496,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": false
 				},
 				{
@@ -540,7 +540,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": false
 				},
 				{
@@ -589,7 +589,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": false
 				},
 				{
@@ -643,7 +643,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": false
 				},
 				{
@@ -788,7 +788,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				}
 			],
@@ -822,7 +822,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				},
 				{
@@ -861,7 +861,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				},
 				{
@@ -905,7 +905,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				},
 				{
@@ -954,7 +954,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				},
 				{
@@ -1008,7 +1008,7 @@
 				},
 				{
 					"name": "e",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				},
 				{
@@ -1047,77 +1047,77 @@
 			"paramTypes": [
 				{
 					"name": "p1",
-					"type": "bool*",
+					"type": "bool[]",
 					"ref": true
 				},
 				{
 					"name": "p2",
-					"type": "char8*",
+					"type": "char8[]",
 					"ref": true
 				},
 				{
 					"name": "p3",
-					"type": "char16*",
+					"type": "char16[]",
 					"ref": true
 				},
 				{
 					"name": "p4",
-					"type": "int8*",
+					"type": "int8[]",
 					"ref": true
 				},
 				{
 					"name": "p5",
-					"type": "int16*",
+					"type": "int16[]",
 					"ref": true
 				},
 				{
 					"name": "p6",
-					"type": "int32*",
+					"type": "int32[]",
 					"ref": true
 				},
 				{
 					"name": "p7",
-					"type": "int64*",
+					"type": "int64[]",
 					"ref": true
 				},
 				{
 					"name": "p8",
-					"type": "uint8*",
+					"type": "uint8[]",
 					"ref": true
 				},
 				{
 					"name": "p9",
-					"type": "uint16*",
+					"type": "uint16[]",
 					"ref": true
 				},
 				{
 					"name": "p10",
-					"type": "uint32*",
+					"type": "uint32[]",
 					"ref": true
 				},
 				{
 					"name": "p11",
-					"type": "uint64*",
+					"type": "uint64[]",
 					"ref": true
 				},
 				{
 					"name": "p12",
-					"type": "ptr64*",
+					"type": "ptr64[]",
 					"ref": true
 				},
 				{
 					"name": "p13",
-					"type": "float*",
+					"type": "float[]",
 					"ref": true
 				},
 				{
 					"name": "p14",
-					"type": "double*",
+					"type": "double[]",
 					"ref": true
 				},
 				{
 					"name": "p15",
-					"type": "string*",
+					"type": "string[]",
 					"ref": true
 				}
 			],
@@ -1591,13 +1591,13 @@
 						"paramTypes": [
 						],
 						"retType": {
-							"type": "bool*"
+							"type": "bool[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "bool*"
+				"type": "bool[]"
 			}
 		},
 		{
@@ -1612,13 +1612,13 @@
 						"name": "FuncChar8Vector",
 						"paramTypes": [],
 						"retType": {
-							"type": "char8*"
+							"type": "char8[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "char8*"
+				"type": "char8[]"
 			}
 		},
 		{
@@ -1633,13 +1633,13 @@
 						"name": "FuncChar16Vector",
 						"paramTypes": [],
 						"retType": {
-							"type": "char16*"
+							"type": "char16[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "char16*"
+				"type": "char16[]"
 			}
 		},
 		{
@@ -1654,13 +1654,13 @@
 						"name": "FuncInt8Vector",
 						"paramTypes": [],
 						"retType": {
-							"type": "int8*"
+							"type": "int8[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "int8*"
+				"type": "int8[]"
 			}
 		},
 		{
@@ -1675,13 +1675,13 @@
 						"name": "FuncInt16Vector",
 						"paramTypes": [],
 						"retType": {
-							"type": "int16*"
+							"type": "int16[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "int16*"
+				"type": "int16[]"
 			}
 		},
 		{
@@ -1696,13 +1696,13 @@
 						"name": "FuncInt32Vector",
 						"paramTypes": [],
 						"retType": {
-							"type": "int32*"
+							"type": "int32[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "int32*"
+				"type": "int32[]"
 			}
 		},
 		{
@@ -1717,13 +1717,13 @@
 						"name": "FuncInt64Vector",
 						"paramTypes": [],
 						"retType": {
-							"type": "int64*"
+							"type": "int64[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "int64*"
+				"type": "int64[]"
 			}
 		},
 		{
@@ -1738,13 +1738,13 @@
 						"name": "FuncUInt8Vector",
 						"paramTypes": [],
 						"retType": {
-							"type": "uint8*"
+							"type": "uint8[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "uint8*"
+				"type": "uint8[]"
 			}
 		},
 		{
@@ -1759,13 +1759,13 @@
 						"name": "FuncUInt16Vector",
 						"paramTypes": [],
 						"retType": {
-							"type": "uint16*"
+							"type": "uint16[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "uint16*"
+				"type": "uint16[]"
 			}
 		},
 		{
@@ -1780,13 +1780,13 @@
 						"name": "FuncUInt32Vector",
 						"paramTypes": [],
 						"retType": {
-							"type": "uint32*"
+							"type": "uint32[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "uint32*"
+				"type": "uint32[]"
 			}
 		},
 		{
@@ -1801,13 +1801,13 @@
 						"name": "FuncUInt64Vector",
 						"paramTypes": [],
 						"retType": {
-							"type": "uint64*"
+							"type": "uint64[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "uint64*"
+				"type": "uint64[]"
 			}
 		},
 		{
@@ -1822,13 +1822,13 @@
 						"name": "FuncPtrVector",
 						"paramTypes": [],
 						"retType": {
-							"type": "ptr64*"
+							"type": "ptr64[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "ptr64*"
+				"type": "ptr64[]"
 			}
 		},
 		{
@@ -1843,13 +1843,13 @@
 						"name": "FuncFloatVector",
 						"paramTypes": [],
 						"retType": {
-							"type": "float*"
+							"type": "float[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "float*"
+				"type": "float[]"
 			}
 		},
 		{
@@ -1864,13 +1864,13 @@
 						"name": "FuncStringVector",
 						"paramTypes": [],
 						"retType": {
-							"type": "string*"
+							"type": "string[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "string*"
+				"type": "string[]"
 			}
 		},
 		{
@@ -1885,13 +1885,13 @@
 						"name": "FuncDoubleVector",
 						"paramTypes": [],
 						"retType": {
-							"type": "double*"
+							"type": "double[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "double*"
+				"type": "double[]"
 			}
 		},
 		{
@@ -2149,7 +2149,7 @@
 							},
 							{
 								"name": "e",
-								"type": "uint64*",
+								"type": "uint64[]",
 								"ref": false
 							}
 						],
@@ -2186,7 +2186,7 @@
 							},
 							{
 								"name": "c",
-								"type": "float*",
+								"type": "float[]",
 								"ref": false
 							},
 							{
@@ -2196,7 +2196,7 @@
 							},
 							{
 								"name": "e",
-								"type": "uint8*",
+								"type": "uint8[]",
 								"ref": false
 							},
 							{
@@ -2228,7 +2228,7 @@
 						"paramTypes": [
 							{
 								"name": "vecC",
-								"type": "char8*",
+								"type": "char8[]",
 								"ref": false
 							},
 							{
@@ -2243,7 +2243,7 @@
 							},
 							{
 								"name": "vecU32",
-								"type": "uint32*",
+								"type": "uint32[]",
 								"ref": false
 							},
 							{
@@ -2290,7 +2290,7 @@
 							},
 							{
 								"name": "vecU32",
-								"type": "uint32*",
+								"type": "uint32[]",
 								"ref": false
 							},
 							{
@@ -2310,7 +2310,7 @@
 							},
 							{
 								"name": "vecC16",
-								"type": "char16*",
+								"type": "char16[]",
 								"ref": false
 							},
 							{
@@ -2357,7 +2357,7 @@
 							},
 							{
 								"name": "vecI8",
-								"type": "int8*",
+								"type": "int8[]",
 								"ref": false
 							},
 							{
@@ -2424,7 +2424,7 @@
 							},
 							{
 								"name": "vecU32",
-								"type": "uint32*",
+								"type": "uint32[]",
 								"ref": false
 							},
 							{
@@ -2434,7 +2434,7 @@
 							},
 							{
 								"name": "vecC",
-								"type": "char8*",
+								"type": "char8[]",
 								"ref": false
 							},
 							{
@@ -2486,7 +2486,7 @@
 						"paramTypes": [
 							{
 								"name": "vecB",
-								"type": "bool*",
+								"type": "bool[]",
 								"ref": false
 							},
 							{
@@ -2511,7 +2511,7 @@
 							},
 							{
 								"name": "vecI8",
-								"type": "int8*",
+								"type": "int8[]",
 								"ref": false
 							},
 							{
@@ -2568,7 +2568,7 @@
 							},
 							{
 								"name": "vecD",
-								"type": "double*",
+								"type": "double[]",
 								"ref": false
 							},
 							{
@@ -2608,7 +2608,7 @@
 							},
 							{
 								"name": "vecPtr",
-								"type": "ptr64*",
+								"type": "ptr64[]",
 								"ref": false
 							},
 							{
@@ -2650,7 +2650,7 @@
 							},
 							{
 								"name": "vecC",
-								"type": "char8*",
+								"type": "char8[]",
 								"ref": false
 							},
 							{
@@ -2665,7 +2665,7 @@
 							},
 							{
 								"name": "b",
-								"type": "bool*",
+								"type": "bool[]",
 								"ref": false
 							},
 							{
@@ -2700,7 +2700,7 @@
 							},
 							{
 								"name": "arr",
-								"type": "uint8*",
+								"type": "uint8[]",
 								"ref": false
 							},
 							{
@@ -2732,12 +2732,12 @@
 						"paramTypes": [
 							{
 								"name": "vecC",
-								"type": "char8*",
+								"type": "char8[]",
 								"ref": false
 							},
 							{
 								"name": "vecU32",
-								"type": "uint32*",
+								"type": "uint32[]",
 								"ref": false
 							},
 							{
@@ -2762,7 +2762,7 @@
 							},
 							{
 								"name": "vecF",
-								"type": "float*",
+								"type": "float[]",
 								"ref": false
 							},
 							{
@@ -2772,7 +2772,7 @@
 							},
 							{
 								"name": "vecU8",
-								"type": "uint8*",
+								"type": "uint8[]",
 								"ref": false
 							},
 							{
@@ -2802,13 +2802,13 @@
 							}
 						],
 						"retType": {
-							"type": "string*"
+							"type": "string[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "string*"
+				"type": "string[]"
 			}
 		},
 		{
@@ -2824,7 +2824,7 @@
 						"paramTypes": [
 							{
 								"name": "vecI16",
-								"type": "int16*",
+								"type": "int16[]",
 								"ref": false
 							},
 							{
@@ -2849,7 +2849,7 @@
 							},
 							{
 								"name": "vecU32",
-								"type": "uint32*",
+								"type": "uint32[]",
 								"ref": false
 							},
 							{
@@ -2864,7 +2864,7 @@
 							},
 							{
 								"name": "vecC16",
-								"type": "char16*",
+								"type": "char16[]",
 								"ref": false
 							},
 							{
@@ -2894,7 +2894,7 @@
 							},
 							{
 								"name": "vecU8",
-								"type": "uint8*",
+								"type": "uint8[]",
 								"ref": false
 							}
 						],
@@ -2921,7 +2921,7 @@
 						"paramTypes": [
 							{
 								"name": "vecB",
-								"type": "bool*",
+								"type": "bool[]",
 								"ref": false
 							},
 							{
@@ -2931,7 +2931,7 @@
 							},
 							{
 								"name": "vecI8",
-								"type": "int8*",
+								"type": "int8[]",
 								"ref": false
 							},
 							{
@@ -2951,12 +2951,12 @@
 							},
 							{
 								"name": "vecU64",
-								"type": "uint64*",
+								"type": "uint64[]",
 								"ref": false
 							},
 							{
 								"name": "vecC",
-								"type": "char8*",
+								"type": "char8[]",
 								"ref": false
 							},
 							{
@@ -2971,7 +2971,7 @@
 							},
 							{
 								"name": "vecU32",
-								"type": "uint32*",
+								"type": "uint32[]",
 								"ref": false
 							},
 							{
@@ -3092,7 +3092,7 @@
 							},
 							{
 								"name": "vecU32",
-								"type": "uint32*",
+								"type": "uint32[]",
 								"ref": true
 							}
 						],
@@ -3129,7 +3129,7 @@
 							},
 							{
 								"name": "vecU64",
-								"type": "uint64*",
+								"type": "uint64[]",
 								"ref": true
 							},
 							{
@@ -3166,7 +3166,7 @@
 							},
 							{
 								"name": "vecI32",
-								"type": "int32*",
+								"type": "int32[]",
 								"ref": true
 							},
 							{
@@ -3218,7 +3218,7 @@
 							},
 							{
 								"name": "vectorDoubleRef",
-								"type": "double*",
+								"type": "double[]",
 								"ref": true
 							},
 							{
@@ -3270,7 +3270,7 @@
 							},
 							{
 								"name": "vectorInt16Ref",
-								"type": "int16*",
+								"type": "int16[]",
 								"ref": true
 							},
 							{
@@ -3290,7 +3290,7 @@
 							},
 							{
 								"name": "vectorUInt8Ref",
-								"type": "uint8*",
+								"type": "uint8[]",
 								"ref": true
 							}
 						],
@@ -3317,7 +3317,7 @@
 						"paramTypes": [
 							{
 								"name": "vectorCharRef",
-								"type": "char8*",
+								"type": "char8[]",
 								"ref": true
 							},
 							{
@@ -3327,7 +3327,7 @@
 							},
 							{
 								"name": "vectorUInt8Ref",
-								"type": "uint8*",
+								"type": "uint8[]",
 								"ref": true
 							},
 							{
@@ -3342,7 +3342,7 @@
 							},
 							{
 								"name": "vectorptr64Ref",
-								"type": "ptr64*",
+								"type": "ptr64[]",
 								"ref": true
 							},
 							{
@@ -3352,7 +3352,7 @@
 							},
 							{
 								"name": "vectorptr64Ref",
-								"type": "ptr64*",
+								"type": "ptr64[]",
 								"ref": true
 							}
 						],
@@ -3384,7 +3384,7 @@
 							},
 							{
 								"name": "vectorptr64Ref",
-								"type": "ptr64*",
+								"type": "ptr64[]",
 								"ref": true
 							},
 							{
@@ -3461,7 +3461,7 @@
 							},
 							{
 								"name": "vectorFloatRef",
-								"type": "float*",
+								"type": "float[]",
 								"ref": true
 							},
 							{
@@ -3481,7 +3481,7 @@
 							},
 							{
 								"name": "vectorUInt16Ref",
-								"type": "uint16*",
+								"type": "uint16[]",
 								"ref": true
 							},
 							{
@@ -3538,7 +3538,7 @@
 							},
 							{
 								"name": "vectorInt16Ref",
-								"type": "int16*",
+								"type": "int16[]",
 								"ref": true
 							},
 							{
@@ -3568,7 +3568,7 @@
 							},
 							{
 								"name": "vectorUInt8Ref",
-								"type": "uint8*",
+								"type": "uint8[]",
 								"ref": true
 							}
 						],
@@ -3605,7 +3605,7 @@
 							},
 							{
 								"name": "vectorUInt32Ref",
-								"type": "uint32*",
+								"type": "uint32[]",
 								"ref": true
 							},
 							{
@@ -3630,7 +3630,7 @@
 							},
 							{
 								"name": "vectorUInt64Ref",
-								"type": "uint64*",
+								"type": "uint64[]",
 								"ref": true
 							},
 							{
@@ -3650,7 +3650,7 @@
 							},
 							{
 								"name": "vectorFloatRef",
-								"type": "float*",
+								"type": "float[]",
 								"ref": true
 							}
 						],
@@ -3687,7 +3687,7 @@
 							},
 							{
 								"name": "vectorInt8Ref",
-								"type": "int8*",
+								"type": "int8[]",
 								"ref": true
 							},
 							{
@@ -3707,7 +3707,7 @@
 							},
 							{
 								"name": "vectorUInt16Ref",
-								"type": "uint16*",
+								"type": "uint16[]",
 								"ref": true
 							},
 							{
@@ -3737,12 +3737,12 @@
 							},
 							{
 								"name": "vectorInt64Ref",
-								"type": "int64*",
+								"type": "int64[]",
 								"ref": true
 							}
 						],
 						"retType": {
-							"type": "string*"
+							"type": "string[]"
 						}
 					}
 				}
@@ -3779,7 +3779,7 @@
 							},
 							{
 								"name": "vectorUInt32Ref",
-								"type": "uint32*",
+								"type": "uint32[]",
 								"ref": true
 							},
 							{
@@ -3799,7 +3799,7 @@
 							},
 							{
 								"name": "vectorUInt8Ref",
-								"type": "uint8*",
+								"type": "uint8[]",
 								"ref": true
 							},
 							{
@@ -3824,7 +3824,7 @@
 							},
 							{
 								"name": "vectorFloatRef",
-								"type": "float*",
+								"type": "float[]",
 								"ref": true
 							},
 							{
@@ -3866,7 +3866,7 @@
 							},
 							{
 								"name": "vectorUInt64Ref",
-								"type": "uint64*",
+								"type": "uint64[]",
 								"ref": true
 							},
 							{
@@ -3906,7 +3906,7 @@
 							},
 							{
 								"name": "vectorInt16Ref",
-								"type": "int16*",
+								"type": "int16[]",
 								"ref": true
 							},
 							{
@@ -3926,7 +3926,7 @@
 							},
 							{
 								"name": "vectorDoubleRef",
-								"type": "double*",
+								"type": "double[]",
 								"ref": true
 							}
 						],
@@ -3963,7 +3963,7 @@
 							},
 							{
 								"name": "p3",
-								"type": "int8*",
+								"type": "int8[]",
 								"ref": true
 							},
 							{
@@ -3978,7 +3978,7 @@
 							},
 							{
 								"name": "p6",
-								"type": "uint32*",
+								"type": "uint32[]",
 								"ref": true
 							},
 							{
@@ -4008,7 +4008,7 @@
 							},
 							{
 								"name": "p12",
-								"type": "int8*",
+								"type": "int8[]",
 								"ref": true
 							},
 							{
@@ -4028,7 +4028,7 @@
 							},
 							{
 								"name": "p15",
-								"type": "char16*",
+								"type": "char16[]",
 								"ref": true
 							}
 						],
