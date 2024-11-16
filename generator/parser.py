@@ -150,12 +150,12 @@ def map_type(type: str):
 
 def convert_type(type: str):
     const = False
-    if type.startswith("const "):
-        type = type[len("const "):]
+    if type.startswith('const '):
+        type = type[len('const '):]
         const = True
-    if type.endswith("*"):
-        return "ptr64", False
-    elif type.endswith("&"):
+    if type.endswith('*'):
+        return 'ptr64', False
+    elif type.endswith('&'):
         return [map_type(type[:-1]), not const]
     return map_type(type), False
 
@@ -168,7 +168,7 @@ def main(folder_dir, output_file):
             print(f'Folder with headers not exists {folder_dir}')
             return 1
     exported_methods = []
-    search_pattern = os.path.join(folder_dir, f"*.cpp")
+    search_pattern = os.path.join(folder_dir, '*.cpp')
     file_list = glob.glob(search_pattern)
     for file_path in file_list:
         with open(file_path, 'r') as file:
@@ -177,12 +177,12 @@ def main(folder_dir, output_file):
             parsed = simple.parse_string(contents, options=None)
             for function in parsed.namespace.functions:
                 ret_type = convert_type(function.return_type.format())[0]
-                obj_ret = ret_type == "void"
+                obj_ret = ret_type == 'void'
                 param_types = []
                 first_param = True
                 for param in function.parameters:
                     type = convert_type(param.type.format())
-                    if obj_ret and first_param and (type[0] == "string" or "*" in type[0]) and type[1] is True:
+                    if obj_ret and first_param and (type[0] == 'string' or '[]' in type[0]) and type[1] is True:
                         ret_type = type[0]
                         first_param = False
                         continue
