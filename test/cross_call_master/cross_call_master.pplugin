@@ -178,6 +178,14 @@
       }
     },
     {
+      "name": "NoParamReturnAnyCallback",
+      "funcName": "NoParamReturnAnyCallback",
+      "paramTypes": [],
+      "retType": {
+        "type": "any"
+      }
+    },
+    {
       "name": "NoParamReturnArrayBoolCallback",
       "funcName": "NoParamReturnArrayBoolCallback",
       "paramTypes": [],
@@ -295,6 +303,14 @@
       "paramTypes": [],
       "retType": {
         "type": "string[]"
+      }
+    },
+    {
+      "name": "NoParamReturnArrayAnyCallback",
+      "funcName": "NoParamReturnArrayAnyCallback",
+      "paramTypes": [],
+      "retType": {
+        "type": "any[]"
       }
     },
     {
@@ -1223,6 +1239,44 @@
       }
     },
     {
+      "name": "ParamVariantCallback",
+      "funcName": "ParamVariantCallback",
+      "paramTypes": [
+        {
+          "name": "p1",
+          "type": "any",
+          "ref": false
+        },
+        {
+          "name": "p2",
+          "type": "any[]",
+          "ref": false
+        }
+      ],
+      "retType": {
+        "type": "void"
+      }
+    },
+    {
+      "name": "ParamVariantRefCallback",
+      "funcName": "ParamVariantRefCallback",
+      "paramTypes": [
+        {
+          "name": "p1",
+          "type": "any",
+          "ref": true
+        },
+        {
+          "name": "p2",
+          "type": "any[]",
+          "ref": true
+        }
+      ],
+      "retType": {
+        "type": "void"
+      }
+    },
+    {
       "name": "CallFuncVoidCallback",
       "funcName": "CallFuncVoidCallback",
       "paramTypes": [
@@ -1575,6 +1629,28 @@
       }
     },
     {
+      "name": "CallFuncAnyCallback",
+      "funcName": "CallFuncAnyCallback",
+      "paramTypes": [
+        {
+          "name": "func",
+          "type": "function",
+          "ref": false,
+          "prototype": {
+            "name": "FuncAny",
+            "paramTypes": [
+            ],
+            "retType": {
+              "type": "any"
+            }
+          }
+        }
+      ],
+      "retType": {
+        "type": "any"
+      }
+    },
+    {
       "name": "CallFuncFunctionCallback",
       "funcName": "CallFuncFunctionCallback",
       "paramTypes": [
@@ -1889,6 +1965,27 @@
       ],
       "retType": {
         "type": "string[]"
+      }
+    },
+    {
+      "name": "CallFuncAnyVectorCallback",
+      "funcName": "CallFuncAnyVectorCallback",
+      "paramTypes": [
+        {
+          "name": "func",
+          "type": "function",
+          "ref": false,
+          "prototype": {
+            "name": "FuncAnyVector",
+            "paramTypes": [],
+            "retType": {
+              "type": "any[]"
+            }
+          }
+        }
+      ],
+      "retType": {
+        "type": "any[]"
       }
     },
     {
@@ -4052,6 +4149,33 @@
             ],
             "retType": {
               "type": "double"
+            }
+          }
+        }
+      ],
+      "retType": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "CallFunc33Callback",
+      "funcName": "CallFunc33Callback",
+      "paramTypes": [
+        {
+          "name": "func",
+          "type": "function",
+          "ref": false,
+          "prototype": {
+            "name": "Func33",
+            "paramTypes": [
+              {
+                "name": "variant",
+                "type": "any",
+                "ref": true
+              }
+            ],
+            "retType": {
+              "type": "void"
             }
           }
         }

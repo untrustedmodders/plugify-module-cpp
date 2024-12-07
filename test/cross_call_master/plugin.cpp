@@ -3,6 +3,7 @@
 #include <limits>
 #include <plugin_export.h>
 #include <plugify/cpp_plugin.hpp>
+#include <plugify/format.hpp>
 #include <pps/cross_call_worker.hpp>
 
 #define TEST_NO_PARAM_ONLY_RETURN_PRIMITIVES (1 << 0)
@@ -27,95 +28,6 @@
 #ifndef TEST_CASES
 #define TEST_CASES TEST_ALL
 #endif // !def TEST_CASE
-
-namespace {
-    // Helper function to convert a vector of integers to a string
-    template<typename T>
-    std::string VectorToString(const plg::vector<T>& vec) {
-        std::string result;
-        if (!vec.empty()) {
-            result = std::format("{}", vec[0]);
-            for (auto it = std::next(vec.begin()); it != vec.end(); ++it) {
-                std::format_to(std::back_inserter(result), ", {}", *it);
-            }
-        }
-        return std::format("{{{}}}", result);
-    }
-
-	// Overload for bool to convert to string
-	template<>
-	std::string VectorToString(const plg::vector<bool>& vec) {
-		std::string result;
-		if (!vec.empty()) {
-			result = std::format("'{}'", vec[0] ? "true" : "false");
-			for (auto it = std::next(vec.begin()); it != vec.end(); ++it) {
-				std::format_to(std::back_inserter(result), ", '{}'", *it ? "true" : "false");
-			}
-		}
-		return std::format("{{{}}}", result);
-	}
-
-	// Overload for string to convert to string
-    template<>
-    std::string VectorToString(const plg::vector<plg::string>& vec) {
-        std::string result;
-        if (!vec.empty()) {
-            result = std::format("'{}'", vec[0]);
-            for (auto it = std::next(vec.begin()); it != vec.end(); ++it) {
-                std::format_to(std::back_inserter(result), ", '{}'", *it);
-            }
-        }
-        return std::format("{{{}}}", result);
-    }
-
-    // Overload for char16_t to convert to string
-    template<>
-    std::string VectorToString(const plg::vector<char16_t>& vec) {
-        std::string result;
-        if (!vec.empty()) {
-            result = std::format("'{}'", static_cast<uint16_t>(vec[0]));
-            for (auto it = std::next(vec.begin()); it != vec.end(); ++it) {
-                std::format_to(std::back_inserter(result), ", '{}'", static_cast<uint16_t>(*it));
-            }
-        }
-        return std::format("{{{}}}", result);
-    }
-
-    template<class T>
-    inline constexpr bool always_false_v = std::is_same_v<std::decay_t<T>, std::add_cv_t<std::decay_t<T>>>;
-
-    template<typename T>
-    std::string PodToString(const T&) {
-        static_assert(always_false_v<T>, "PodToString specialization required");
-        return "";
-    }
-
-    template<>
-    std::string PodToString(const plg::vec2& t) {
-        return std::format("{{{}, {}}}", t.x, t.y);
-    }
-
-    template<>
-    std::string PodToString(const plg::vec3& t) {
-        return std::format("{{{}, {}, {}}}", t.x, t.y, t.z);
-    }
-
-    template<>
-    std::string PodToString(const plg::vec4& t) {
-        return std::format("{{{}, {}, {}, {}}}", t.x, t.y, t.z, t.w);
-    }
-
-    template<>
-    std::string PodToString(const plg::mat4x4& t) {
-        return std::format(
-                "{{{{{}, {}, {}, {}}}, {{{}, {}, {}, {}}}, {{{}, {}, {}, {}}}, {{{}, {}, {}, {}}}}}",
-                t.m[0][0], t.m[0][1], t.m[0][2], t.m[0][3],
-                t.m[1][0], t.m[1][1], t.m[1][2], t.m[1][3],
-                t.m[2][0], t.m[2][1], t.m[2][2], t.m[2][3],
-                t.m[3][0], t.m[3][1], t.m[3][2], t.m[3][3]
-        );
-    }
-}
 
 // Mock Functions for the typedefs
 
@@ -156,7 +68,7 @@ plg::vector<plg::string> MockStringVector() { return {"Foo", "Bar"}; }
 plg::vec2 MockVec2() { return {2.0f, 3.0f}; }
 plg::vec3 MockVec3() { return {2.0f, 3.0f, 4.0f}; }
 plg::vec4 MockVec4() { return {2.0f, 3.0f, 4.0f, 5.0f}; }
-plg::mat4x4 MockMat4x4() { return {{{2.0f}}}; }
+plg::mat4x4 MockMat4x4() { return {2.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}; }
 
 // Mock implementations for 1 parameter functions
 int32_t MockFunc1(const plg::vec3& v) {
@@ -177,7 +89,7 @@ void MockFunc3(void* p, const plg::vec4& v, const plg::string& s) {
 
 // Mock implementations for 4 parameter functions
 plg::vec4 MockFunc4(bool flag, int32_t u, char16_t c, const plg::mat4x4& m) {
-    const auto buffer = std::format("{}{}{}{}", flag, u, static_cast<uint16_t>(c), m.m[0][0]);
+    const auto buffer = std::format("{}{}{}{}", flag, u, static_cast<uint16_t>(c), m.data[0][0]);
     return {5.0f, 6.0f, 7.0f, 8.0f};  // Returning a different dummy const plg::vec4
 }
 
@@ -212,7 +124,7 @@ void MockFunc9(float f, const plg::vec2& v, const plg::vector<int8_t>& iVec, uin
 
 // Mock implementations for 10 parameter functions
 uint32_t MockFunc10(const plg::vec4& v4, const plg::mat4x4& m, const plg::vector<uint32_t>& uVec, uint64_t l, const plg::vector<char>& cVec, int32_t a, bool flag, const plg::vec2& v, int64_t i, double d) {
-    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}", v4.x, v4.y, v4.z, v4.w, m.m[1][1], uVec.size(), l, cVec.size(), a, flag, v.x, v.y, i, d);
+    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}", v4.x, v4.y, v4.z, v4.w, m.data[1][1], uVec.size(), l, cVec.size(), a, flag, v.x, v.y, i, d);
     return 84; // Changed to a different dummy uint32_t
 }
 
@@ -236,19 +148,19 @@ plg::string MockFunc13(int64_t i64, const plg::vector<char>& cVec, uint16_t u16,
 
 // Mock implementations for 14 parameter functions
 plg::vector<plg::string> MockFunc14(const plg::vector<char>& cVec, const plg::vector<uint32_t>& uVec, const plg::mat4x4& m, bool flag, char16_t c, int32_t a, const plg::vector<float>& fVec, uint16_t u16, const plg::vector<uint8_t>& u8Vec, int8_t i8, const plg::vec3& v3, const plg::vec4& v4, double d, void* p) {
-    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}{}{}", cVec.size(), uVec.size(), m.m[2][2], flag, static_cast<uint16_t>(c), a, fVec.size(), u16, u8Vec.size(), i8, v3.x, v4.x, d, p);
+    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}{}{}", cVec.size(), uVec.size(), m.data[2][2], flag, static_cast<uint16_t>(c), a, fVec.size(), u16, u8Vec.size(), i8, v3.x, v4.x, d, p);
     return {"New String1", "New String2"}; // Changed return values
 }
 
 // Mock implementations for 15 parameter functions
 int16_t MockFunc15(const plg::vector<int16_t>& iVec, const plg::mat4x4& m, const plg::vec4& v4, void* p, uint64_t l, const plg::vector<uint32_t>& uVec, bool flag, float f, const plg::vector<char16_t>& cVec, uint8_t u, int32_t a, const plg::vec2& v2, uint16_t u16, double d, const plg::vector<uint8_t>& u8Vec) {
-    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}", iVec.size(), m.m[1][0], v4.x, p, l, uVec.size(), flag, f, cVec.size(), u, a, v2.x, u16, d, u8Vec.size());
+    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}", iVec.size(), m.data[1][0], v4.x, p, l, uVec.size(), flag, f, cVec.size(), u, a, v2.x, u16, d, u8Vec.size());
     return 512; // Changed to a different dummy int16_t
 }
 
 // Mock implementations for 16 parameter functions
 void* MockFunc16(const plg::vector<bool>& bVec, int16_t i16, const plg::vector<int8_t>& iVec, const plg::vec4& v4, const plg::mat4x4& m, const plg::vec2& v2, const plg::vector<uint64_t>& uVec, const plg::vector<char>& cVec, const plg::string& s, int64_t i64, const plg::vector<uint32_t>& u32Vec, const plg::vec3& v3, float f, double d, int8_t i8, uint16_t u16) {
-    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}", i16, bVec.size(), iVec.size(), v4.x,  v4.y,  v4.z, v4.w, m.m[2][3], v2.x, uVec.size(), cVec.size(), s, i64, u32Vec.size(), v3.x, f, d, i8, u16);
+    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}", i16, bVec.size(), iVec.size(), v4.x,  v4.y,  v4.z, v4.w, m.data[2][3], v2.x, uVec.size(), cVec.size(), s, i64, u32Vec.size(), v3.x, f, d, i8, u16);
     return reinterpret_cast<void*>(2); // Changed to return a different non-null pointer
 }
 
@@ -286,12 +198,10 @@ float MockFunc21(plg::mat4x4& m, plg::vector<int32_t>& iVec, plg::vec2& v2, bool
     d = 6.28;    // Updated double reference
     v2 = {3.0f, 4.0f}; // Changed plg::vec2 reference
     m = {
-            {
-                    {1.5f, 0.7f, 0.9f, 0.6f},  // Updated values
-                    {0.8f, 1.2f, 0.3f, 0.5f},
-                    {1.1f, 0.4f, 1.3f, 0.8f},
-                    {0.6f, 1.0f, 0.4f, 0.9f}
-            }
+        1.5f, 0.7f, 0.9f, 0.6f,  // Updated values
+        0.8f, 1.2f, 0.3f, 0.5f,
+        1.1f, 0.4f, 1.3f, 0.8f,
+        0.6f, 1.0f, 0.4f, 0.9f
     }; // Updated plg::mat4x4 reference
     iVec = {10, 20, 30}; // Changed plg::vector<int32_t> values
     return 1.0f; // Updated return value
@@ -352,12 +262,10 @@ char MockFunc26(char16_t& c, plg::vec2& v2, plg::mat4x4& m, plg::vector<float>& 
     flag = false; // Changed boolean reference
     v2 = {4.0f, 5.0f}; // Updated plg::vec2 reference
     m = {
-            {
-                    {0.5f, 0.3f, 0.1f, 0.4f},  // Updated values
-                    {1.5f, 0.7f, 0.6f, 0.8f},
-                    {1.1f, 0.4f, 0.2f, 1.0f},
-                    {0.9f, 0.8f, 0.6f, 1.0f}
-            }
+        0.5f, 0.3f, 0.1f, 0.4f,  // Updated values
+        1.5f, 0.7f, 0.6f, 0.8f,
+        1.1f, 0.4f, 0.2f, 1.0f,
+        0.9f, 0.8f, 0.6f, 1.0f
     }; // Updated plg::mat4x4 reference
     fVec = {3.3f, 4.4f}; // Changed plg::vector<float> values
     u64 = 64; // Updated uint64_t reference
@@ -376,12 +284,10 @@ uint8_t MockFunc27(float& f, plg::vec3& v3, void*& p, plg::vec2& v2, plg::vector
     v2 = {5.0f, 6.0f}; // Updated plg::vec2 reference
     i16Vec = {3, 6, 9}; // Changed plg::vector<int16_t> values
     m = {
-            {
-                    {1.5f, 2.5f, 3.5f, 4.5f}, // Updated values
-                    {5.5f, 6.5f, 7.5f, 8.5f},
-                    {9.5f, 10.5f, 11.5f, 12.5f},
-                    {13.5f, 14.5f, 15.5f, 16.5f}
-            }
+        1.5f, 2.5f, 3.5f, 4.5f, // Updated values
+        5.5f, 6.5f, 7.5f, 8.5f,
+        9.5f, 10.5f, 11.5f, 12.5f,
+        13.5f, 14.5f, 15.5f, 16.5f
     }; // Updated plg::mat4x4 reference
     flag = true; // Changed boolean reference
     v4 = {2.0f, 3.0f, 4.0f, 5.0f}; // Changed plg::vec4 reference
@@ -397,12 +303,10 @@ plg::string MockFunc28(void*& ptr, uint16_t& u16, plg::vector<uint32_t>& u32Vec,
     u16 = 60000; // Updated value
     u32Vec = { 10, 20, 30, 40, 50, 60 }; // Updated values
     m = {
-            {
-                    {2.1f, 0.9f, 0.4f, 0.8f},  // Row 0
-                    {0.5f, 1.2f, 0.7f, 0.4f},  // Row 1
-                    {1.0f, 0.6f, 1.5f, 0.2f},  // Row 2
-                    {0.8f, 0.3f, 0.9f, 1.1f}   // Row 3
-            }
+        2.1f, 0.9f, 0.4f, 0.8f,  // Row 0
+        0.5f, 1.2f, 0.7f, 0.4f,  // Row 1
+        1.0f, 0.6f, 1.5f, 0.2f,  // Row 2
+        0.8f, 0.3f, 0.9f, 1.1f   // Row 3
     };
     f = 7.5f; // Updated value for float reference
     v4 = {2.0f, 3.0f, 4.0f, 5.0f}; // Updated value for plg::vec4 reference
@@ -426,12 +330,10 @@ plg::vector<plg::string> MockFunc29(plg::vec4& v4, int32_t& i32, plg::vector<int
     f = 2.5f; // Updated value for float reference
     s = "Updated MockFunc29"; // Updated string reference
     m = {
-            {
-                    {0.6f, 1.1f, 0.7f, 0.2f},  // Row 0
-                    {1.3f, 0.9f, 0.5f, 1.0f},  // Row 1
-                    {0.8f, 0.4f, 1.6f, 0.7f},  // Row 2
-                    {0.2f, 1.0f, 0.9f, 1.5f}   // Row 3
-            }
+        0.6f, 1.1f, 0.7f, 0.2f,  // Row 0
+        1.3f, 0.9f, 0.5f, 1.0f,  // Row 1
+        0.8f, 0.4f, 1.6f, 0.7f,  // Row 2
+        0.2f, 1.0f, 0.9f, 1.5f   // Row 3
     };
     u64 = 128; // Updated value for uint64_t reference
     v3 = {4.0f, 5.0f, 6.0f}; // Updated value for plg::vec3 reference
@@ -451,12 +353,10 @@ int32_t MockFunc30(void*& p, plg::vec4& v4, int64_t& i64, plg::vector<uint32_t>&
     p = reinterpret_cast<void*>(0x7FFFFFFFFFFF); // Keeping void* reference as nullptr
     uVec = {300, 400}; // Updated values for plg::vector<uint32_t>
     m = {
-            {
-                    {0.6f, 0.2f, 1.5f, 0.9f},  // Row 0
-                    {1.2f, 0.4f, 0.7f, 0.8f},  // Row 1
-                    {0.5f, 0.1f, 1.7f, 0.4f},  // Row 2
-                    {0.8f, 0.6f, 1.2f, 1.3f}   // Row 3
-            }
+        0.6f, 0.2f, 1.5f, 0.9f,  // Row 0
+        1.2f, 0.4f, 0.7f, 0.8f,  // Row 1
+        0.5f, 0.1f, 1.7f, 0.4f,  // Row 2
+        0.8f, 0.6f, 1.2f, 1.3f   // Row 3
     }; // Updated value for plg::mat4x4 reference
     i8 = 10; // Updated value for int8_t reference
     vVec = {3.0f, 3.0f, 4.0f, 4.0f}; // Updated values for plg::vector<float>
@@ -481,12 +381,10 @@ plg::vec3 MockFunc31(char& c, uint32_t& u32, plg::vector<uint64_t>& uVec, plg::v
     u16 = 500; // Updated value for uint16_t reference
     iVec = {5, 10}; // Updated values for plg::vector<int16_t>
     m = {
-            {
-                    {1.0f, 0.2f, 1.1f, 0.4f},  // Row 0
-                    {1.1f, 0.8f, 0.3f, 0.9f},  // Row 1
-                    {0.5f, 0.7f, 1.8f, 0.6f},  // Row 2
-                    {0.3f, 0.6f, 1.4f, 0.8f}   // Row 3
-            }
+        1.0f, 0.2f, 1.1f, 0.4f,  // Row 0
+        1.1f, 0.8f, 0.3f, 0.9f,  // Row 1
+        0.5f, 0.7f, 1.8f, 0.6f,  // Row 2
+        0.3f, 0.6f, 1.4f, 0.8f   // Row 3
     }; // Updated value for plg::mat4x4 reference
     f = 8.8f; // Updated value for float reference
     v4Vec = {0.2, 0.4, 0.6}; // Updated values for plg::vector<double>
@@ -504,12 +402,10 @@ double MockFunc32(int32_t& i32, uint16_t& u16, plg::vector<int8_t>& iVec, plg::v
     s = "Updated MockFunc32"; // Updated string reference
     p = reinterpret_cast<void*>(0xDEADBEAFDEADBEAF); // Keeping void* reference as nullptr
     m = {
-            {
-                    {0.5f, 0.3f, 0.2f, 0.1f},  // Row 0
-                    {0.8f, 0.9f, 0.4f, 0.6f},  // Row 1
-                    {0.1f, 0.7f, 1.0f, 0.5f},  // Row 2
-                    {0.4f, 0.2f, 0.3f, 1.2f}   // Row 3
-            }
+        0.5f, 0.3f, 0.2f, 0.1f,  // Row 0
+        0.8f, 0.9f, 0.4f, 0.6f,  // Row 1
+        0.1f, 0.7f, 1.0f, 0.5f,  // Row 2
+        0.4f, 0.2f, 0.3f, 1.2f   // Row 3
     }; // Updated value for plg::mat4x4 reference
     u64 = 987654321; // Updated value for uint64_t reference
     uVec = {400, 500}; // Updated values for plg::vector<uint32_t>
@@ -519,6 +415,11 @@ double MockFunc32(int32_t& i32, uint16_t& u16, plg::vector<int8_t>& iVec, plg::v
     cVec = {u'x', u'y', u'z'}; // Updated values for plg::vector<char16_t>
     iVec = { 5, 10 }; // Updated values for plg::vector<int8_t>
     return 2.5; // Updated return value for double
+}
+
+// Mock implementations for 1 parameter functions
+void MockFunc33(plg::any& variant) {
+    variant = "Updated MockFunc33"; // Updated value for variant reference
 }
 
 class CrossCallMaster : public plg::IPluginEntry {
@@ -669,136 +570,136 @@ class CrossCallMaster : public plg::IPluginEntry {
 			auto expected = plg::vector<bool>{true, false};
 			auto result = cross_call_worker::NoParamReturnArrayBool();
 			if (result != expected) {
-				test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+				test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayChar8", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<char>{'a', 'b', 'c', 'd'};
 			auto result = cross_call_worker::NoParamReturnArrayChar8();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayChar16", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<char16_t>{u'a', u'b', u'c', u'd'};
 			auto result = cross_call_worker::NoParamReturnArrayChar16();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayInt8", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<int8_t>{-3, -2, -1, 0, 1};
 			auto result = cross_call_worker::NoParamReturnArrayInt8();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayInt16", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<int16_t>{-4, -3, -2, -1, 0, 1};
 			auto result = cross_call_worker::NoParamReturnArrayInt16();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayInt32", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<int32_t>{-5, -4, -3, -2, -1, 0, 1};
 			auto result = cross_call_worker::NoParamReturnArrayInt32();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayInt64", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<int64_t>{-6, -5, -4, -3, -2, -1, 0, 1};
 			auto result = cross_call_worker::NoParamReturnArrayInt64();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayUInt8", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<uint8_t>{0, 1, 2, 3, 4, 5, 6, 7, 8};
 			auto result = cross_call_worker::NoParamReturnArrayUInt8();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayUInt16", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<uint16_t>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 			auto result = cross_call_worker::NoParamReturnArrayUInt16();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayUInt32", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<uint32_t>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 			auto result = cross_call_worker::NoParamReturnArrayUInt32();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayUInt64", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<uint64_t>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
 			auto result = cross_call_worker::NoParamReturnArrayUInt64();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayPointer", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<void*>{reinterpret_cast<void*>(0), reinterpret_cast<void*>(1), reinterpret_cast<void*>(2), reinterpret_cast<void*>(3)};
 			auto result = cross_call_worker::NoParamReturnArrayPointer();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayFloat", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<float>{-12.34f, 0.0f, 12.34f};
 			auto result = cross_call_worker::NoParamReturnArrayFloat();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayDouble", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<double>{-12.345, 0.0, 12.345};
 			auto result = cross_call_worker::NoParamReturnArrayDouble();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 		_tests.Add("NoParamReturnArrayString", [](SimpleTests::Test& test) {
 			auto expected = plg::vector<plg::string>{"1st string", "2nd string", "3rd element string (Should be big enough to avoid small string optimization)"};
 			auto result = cross_call_worker::NoParamReturnArrayString();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
 #endif// TEST_CASES & TEST_NO_PARAM_ONLY_RETURN_ARRAYS
 
 #if TEST_CASES & TEST_NO_PARAM_ONLY_RETURN_VECTORS
 		_tests.Add("NoParamReturnVector2", [](SimpleTests::Test& test) {
-			auto expected = plg::vec2(1, 2);
+			auto expected = plg::vec2{1, 2};
 			auto result = cross_call_worker::NoParamReturnVector2();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", PodToString(result),  PodToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result,  expected));
 			}
 		});
 		_tests.Add("NoParamReturnVector3", [](SimpleTests::Test& test) {
-			auto expected = plg::vec3(1, 2, 3);
+			auto expected = plg::vec3{1, 2, 3};
 			auto result = cross_call_worker::NoParamReturnVector3();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", PodToString(result),  PodToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result,  expected));
 			}
 		});
 		_tests.Add("NoParamReturnVector4", [](SimpleTests::Test& test) {
-			auto expected = plg::vec4(1, 2, 3, 4);
+			auto expected = plg::vec4{1, 2, 3, 4};
 			auto result = cross_call_worker::NoParamReturnVector4();
 			if (result != expected) {
-                test.Fail(std::format("Wrong return {}, expected {}", PodToString(result),  PodToString(expected)));
+                test.Fail(std::format("Wrong return {}, expected {}", result,  expected));
 			}
 		});
 		_tests.Add("NoParamReturnMatrix4x4", [](SimpleTests::Test& test) {
-			auto expected = plg::mat4x4({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
+			auto expected = plg::mat4x4{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
 			auto result = cross_call_worker::NoParamReturnMatrix4x4();
 			if (result != expected) {
-				test.Fail(std::format("Wrong return {}, expected {}", PodToString(result),  PodToString(expected)));
+				test.Fail(std::format("Wrong return {}, expected {}", result,  expected));
 			}
 		});
 #endif// TEST_CASES & TEST_NO_PARAM_ONLY_RETURN_VECTORS
@@ -827,38 +728,38 @@ class CrossCallMaster : public plg::IPluginEntry {
 		});
 
 		_tests.Add("Param4", [&](SimpleTests::Test& /*test*/) {
-			const plg::vec4 vector4Value(1.0f, 2.0f, 3.0f, 4.0f);
+			const plg::vec4 vector4Value{1.0f, 2.0f, 3.0f, 4.0f};
 			cross_call_worker::Param4(intValue, floatValue, doubleValue, vector4Value);
 		});
 
 		_tests.Add("Param5", [&](SimpleTests::Test& /*test*/) {
-			const plg::vec4 vector4Value(1.0f, 2.0f, 3.0f, 4.0f);
+			const plg::vec4 vector4Value{1.0f, 2.0f, 3.0f, 4.0f};
 			const plg::vector<int64_t> longListValue = {100, 200, 300};
 			cross_call_worker::Param5(intValue, floatValue, doubleValue, vector4Value, longListValue);
 		});
 
 		_tests.Add("Param6", [&](SimpleTests::Test& /*test*/) {
-			const plg::vec4 vector4Value(1.0f, 2.0f, 3.0f, 4.0f);
+			const plg::vec4 vector4Value{1.0f, 2.0f, 3.0f, 4.0f};
 			const plg::vector<int64_t> longListValue = {100, 200, 300};
 			cross_call_worker::Param6(intValue, floatValue, doubleValue, vector4Value, longListValue, charValue);
 		});
 
 		_tests.Add("Param7", [=](SimpleTests::Test& /*test*/) {
-			const plg::vec4 vector4Value(1.0f, 2.0f, 3.0f, 4.0f);
+			const plg::vec4 vector4Value{1.0f, 2.0f, 3.0f, 4.0f};
 			const plg::vector<int64_t> longListValue = {100, 200, 300};
 			const plg::string stringValue = "Hello";
 			cross_call_worker::Param7(intValue, floatValue, doubleValue, vector4Value, longListValue, charValue, stringValue);
 		});
 
 		_tests.Add("Param9", [=](SimpleTests::Test& /*test*/) {
-			const plg::vec4 vector4Value(1.0f, 2.0f, 3.0f, 4.0f);
+			const plg::vec4 vector4Value{1.0f, 2.0f, 3.0f, 4.0f};
 			const plg::vector<int64_t> longListValue = {100, 200, 300};
 			const plg::string stringValue = "Hello";
 			cross_call_worker::Param9(intValue, floatValue, doubleValue, vector4Value, longListValue, charValue, stringValue, char16Value, shortValue);
 		});
 
 		_tests.Add("Param10", [=](SimpleTests::Test& /*test*/) {
-			const plg::vec4 vector4Value(1.0f, 2.0f, 3.0f, 4.0f);
+			const plg::vec4 vector4Value{1.0f, 2.0f, 3.0f, 4.0f};
 			const plg::vector<int64_t> longListValue = {100, 200, 300};
 			const plg::string stringValue = "Hello";
 			cross_call_worker::Param10(intValue, floatValue, doubleValue, vector4Value, longListValue, charValue, stringValue, char16Value, shortValue, ptrValue);
@@ -911,7 +812,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 			const auto intExpected = int32_t{100};
 			const auto floatExpected = -5.55f;
 			const auto doubleExpected = 1.618;
-			const auto vector4Expected = plg::vec4(1.0f, 2.0f, 3.0f, 4.0f);
+			const auto vector4Expected = plg::vec4{1.0f, 2.0f, 3.0f, 4.0f};
 			int32_t intValue{};
 			float floatValue{};
 			double doubleValue{};
@@ -927,14 +828,14 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong doubleValue param {}, expected {}", doubleValue, doubleExpected));
 			}
 			if (vector4Value != vector4Expected) {
-                test.Fail(std::format("Wrong vector4Value param {}, expected {}", PodToString(vector4Value), PodToString(vector4Expected)));
+                test.Fail(std::format("Wrong vector4Value param {}, expected {}", vector4Value, vector4Expected));
 			}
 		});
 		_tests.Add("ParamRef5", [](SimpleTests::Test& test) {
 			const auto intExpected = int32_t{500};
 			const auto floatExpected = -10.5f;
 			const auto doubleExpected = 2.71828;
-			const auto vector4Expected = plg::vec4(-1.0f, -2.0f, -3.0f, -4.0f);
+			const auto vector4Expected = plg::vec4{-1.0f, -2.0f, -3.0f, -4.0f};
 			const auto longListExpected = plg::vector<int64_t>{-6, -5, -4, -3, -2, -1, 0, 1};
 			int32_t intValue{};
 			float floatValue{};
@@ -952,17 +853,17 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong doubleValue param {}, expected {}", doubleValue, doubleExpected));
 			}
 			if (vector4Value != vector4Expected) {
-                test.Fail(std::format("Wrong vector4Value param {}, expected {}", PodToString(vector4Value), PodToString(vector4Expected)));
+                test.Fail(std::format("Wrong vector4Value param {}, expected {}", vector4Value, vector4Expected));
 			}
 			if (longListValue != longListExpected) {
-				test.Fail(std::format("Wrong longListValue param {}, expected {}", VectorToString(longListValue), VectorToString(longListExpected)));
+				test.Fail(std::format("Wrong longListValue param {}, expected {}", longListValue, longListExpected));
 			}
 		});
 		_tests.Add("ParamRef6", [](SimpleTests::Test& test) {
 			const auto intExpected = int32_t{750};
 			const auto floatExpected = 20.0f;
 			const auto doubleExpected = 1.23456;
-			const auto vector4Expected = plg::vec4(10.0f, 20.0f, 30.0f, 40.0f);
+			const auto vector4Expected = plg::vec4{10.0f, 20.0f, 30.0f, 40.0f};
 			const auto longListExpected = plg::vector<int64_t>{-6, -5, -4};
 			const auto charExpected = 'Z';
 			int32_t intValue{};
@@ -982,10 +883,10 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong doubleValue param {}, expected {}", doubleValue, doubleExpected));
 			}
 			if (vector4Value != vector4Expected) {
-                test.Fail(std::format("Wrong vector4Value param {}, expected {}", PodToString(vector4Value), PodToString(vector4Expected)));
+                test.Fail(std::format("Wrong vector4Value param {}, expected {}", vector4Value, vector4Expected));
 			}
 			if (longListValue != longListExpected) {
-                test.Fail(std::format("Wrong longListValue param {}, expected {}", VectorToString(longListValue), VectorToString(longListExpected)));
+                test.Fail(std::format("Wrong longListValue param {}, expected {}", longListValue, longListExpected));
 			}
 			if (charValue != charExpected) {
 				test.Fail(std::format("Wrong charValue param {}, expected {}", static_cast<uint8_t>(charValue), static_cast<uint8_t>(charExpected)));
@@ -995,7 +896,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 			const auto intExpected = int32_t{-1000};
 			const auto floatExpected = 3.0f;
 			const auto doubleExpected = -1;
-			const auto vector4Expected = plg::vec4(100.0f, 200.0f, 300.0f, 400.0f);
+			const auto vector4Expected = plg::vec4{100.0f, 200.0f, 300.0f, 400.0f};
 			const auto longListExpected = plg::vector<int64_t>{-6, -5, -4, -3};
 			const auto charExpected = 'Y';
 			const auto stringExpected = plg::string{"Hello, World!"};
@@ -1017,10 +918,10 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong doubleValue param {}, expected {}", doubleValue, doubleExpected));
 			}
 			if (vector4Value != vector4Expected) {
-				test.Fail(std::format("Wrong vector4Value param {}, expected {}", PodToString(vector4Value), PodToString(vector4Expected)));
+				test.Fail(std::format("Wrong vector4Value param {}, expected {}", vector4Value, vector4Expected));
 			}
 			if (longListValue != longListExpected) {
-                test.Fail(std::format("Wrong longListValue param {}, expected {}", VectorToString(longListValue), VectorToString(longListExpected)));
+                test.Fail(std::format("Wrong longListValue param {}, expected {}", longListValue, longListExpected));
 			}
 			if (charValue != charExpected) {
 				test.Fail(std::format("Wrong charValue param {}, expected {}", static_cast<uint8_t>(charValue), static_cast<uint8_t>(charExpected)));
@@ -1033,7 +934,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 			const auto intExpected = int32_t{999};
 			const auto floatExpected = -7.5f;
 			const auto doubleExpected = 0.123456;
-			const auto vector4Expected = plg::vec4(-100.0f, -200.0f, -300.0f, -400.0f);
+			const auto vector4Expected = plg::vec4{-100.0f, -200.0f, -300.0f, -400.0f};
 			const auto longListExpected = plg::vector<int64_t>{-6, -5, -4, -3, -2, -1};
 			const auto charExpected = 'X';
 			const auto stringExpected = plg::string{"Goodbye, World!"};
@@ -1057,10 +958,10 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong doubleValue param {}, expected {}", doubleValue, doubleExpected));
 			}
 			if (vector4Value != vector4Expected) {
-                test.Fail(std::format("Wrong vector4Value param {}, expected {}", PodToString(vector4Value), PodToString(vector4Expected)));
+                test.Fail(std::format("Wrong vector4Value param {}, expected {}", vector4Value, vector4Expected));
 			}
 			if (longListValue != longListExpected) {
-                test.Fail(std::format("Wrong longListValue param {}, expected {}", VectorToString(longListValue), VectorToString(longListExpected)));
+                test.Fail(std::format("Wrong longListValue param {}, expected {}", longListValue, longListExpected));
 			}
 			if (charValue != charExpected) {
 				test.Fail(std::format("Wrong charValue param {}, expected {}", static_cast<uint8_t>(charValue), static_cast<uint8_t>(charExpected)));
@@ -1076,7 +977,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 			const auto intExpected = int32_t{-1234};
 			const auto floatExpected = 123.45f;
 			const auto doubleExpected = -678.9;
-			const auto vector4Expected = plg::vec4(987.65f, 432.1f, 123.456f, 789.123f);
+			const auto vector4Expected = plg::vec4{987.65f, 432.1f, 123.456f, 789.123f};
 			const auto longListExpected = plg::vector<int64_t>{-6, -5, -4, -3, -2, -1, 0, 1, 5, 9};
 			const auto charExpected = 'W';
 			const auto stringExpected = plg::string{"Testing, 1 2 3"};
@@ -1102,10 +1003,10 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong doubleValue param {}, expected {}", doubleValue, doubleExpected));
 			}
 			if (vector4Value != vector4Expected) {
-                test.Fail(std::format("Wrong vector4Value param {}, expected {}", PodToString(vector4Value), PodToString(vector4Expected)));
+                test.Fail(std::format("Wrong vector4Value param {}, expected {}", vector4Value, vector4Expected));
 			}
 			if (longListValue != longListExpected) {
-                test.Fail(std::format("Wrong longListValue param {}, expected {}", VectorToString(longListValue), VectorToString(longListExpected)));
+                test.Fail(std::format("Wrong longListValue param {}, expected {}", longListValue, longListExpected));
 			}
 			if (charValue != charExpected) {
 				test.Fail(std::format("Wrong charValue param {}, expected {}", static_cast<uint8_t>(charValue), static_cast<uint8_t>(charExpected)));
@@ -1124,7 +1025,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 			const auto intExpected = int32_t{987};
 			const auto floatExpected = -0.123f;
 			const auto doubleExpected = 456.789;
-			const auto vector4Expected = plg::vec4(-123.456f, 0.987f, 654.321f, -789.123f);
+			const auto vector4Expected = plg::vec4{-123.456f, 0.987f, 654.321f, -789.123f};
 			const auto longListExpected = plg::vector<int64_t>{-6, -5, -4, -3, -2, -1, 0, 1, 5, 9, 4, -7};
 			const auto charExpected = 'V';
 			const auto stringExpected = plg::string{"Another string"};
@@ -1152,10 +1053,10 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong doubleValue param {}, expected {}", doubleValue, doubleExpected));
 			}
 			if (vector4Value != vector4Expected) {
-                test.Fail(std::format("Wrong vector4Value param {}, expected {}", PodToString(vector4Value), PodToString(vector4Expected)));
+                test.Fail(std::format("Wrong vector4Value param {}, expected {}", vector4Value, vector4Expected));
 			}
 			if (longListValue != longListExpected) {
-                test.Fail(std::format("Wrong longListValue param {}, expected {}", VectorToString(longListValue), VectorToString(longListExpected)));
+                test.Fail(std::format("Wrong longListValue param {}, expected {}", longListValue, longListExpected));
 			}
 			if (charValue != charExpected) {
 				test.Fail(std::format("Wrong charValue param {}, expected {}", static_cast<uint8_t>(charValue), static_cast<uint8_t>(charExpected)));
@@ -1212,49 +1113,49 @@ class CrossCallMaster : public plg::IPluginEntry {
 			cross_call_worker::ParamRefVectors(boolArray, char8Array, char16Array, sbyteArray, shortArray, intArray, longArray,
 				byteArray, ushortArray, uintArray, ulongArray, intPtrArray, floatArray, doubleArray, stringArray);
 			if (boolArray != boolArrayExpected) {
-				test.Fail(std::format("Wrong boolArray param {}, expected {}", VectorToString(char8Array), VectorToString(char8ArrayExpected)));
+				test.Fail(std::format("Wrong boolArray param {}, expected {}", char8Array, char8ArrayExpected));
 			}
 			if (char8Array != char8ArrayExpected) {
-				test.Fail(std::format("Wrong char8Array array {}, expected {}", VectorToString(char8Array), VectorToString(char8ArrayExpected)));
+				test.Fail(std::format("Wrong char8Array array {}, expected {}", char8Array, char8ArrayExpected));
 			}
 			if (char16Array != char16ArrayExpected) {
-				test.Fail(std::format("Wrong char16Array array {}, expected {}", VectorToString(char16Array), VectorToString(char16ArrayExpected)));
+				test.Fail(std::format("Wrong char16Array array {}, expected {}", char16Array, char16ArrayExpected));
 			}
 			if (sbyteArray != sbyteArrayExpected) {
-				test.Fail(std::format("Wrong sbyteArray array {}, expected {}", VectorToString(sbyteArray), VectorToString(sbyteArrayExpected)));
+				test.Fail(std::format("Wrong sbyteArray array {}, expected {}", sbyteArray, sbyteArrayExpected));
 			}
 			if (shortArray != shortArrayExpected) {
-				test.Fail(std::format("Wrong shortArray array {}, expected {}", VectorToString(shortArray), VectorToString(shortArrayExpected)));
+				test.Fail(std::format("Wrong shortArray array {}, expected {}", shortArray, shortArrayExpected));
 			}
 			if (intArray != intArrayExpected) {
-				test.Fail(std::format("Wrong intArray array {}, expected {}", VectorToString(intArray), VectorToString(intArrayExpected)));
+				test.Fail(std::format("Wrong intArray array {}, expected {}", intArray, intArrayExpected));
 			}
 			if (longArray != longArrayExpected) {
-				test.Fail(std::format("Wrong longArray array {}, expected {}", VectorToString(longArray), VectorToString(longArrayExpected)));
+				test.Fail(std::format("Wrong longArray array {}, expected {}", longArray, longArrayExpected));
 			}
 			if (byteArray != byteArrayExpected) {
-				test.Fail(std::format("Wrong byteArray array {}, expected {}", VectorToString(byteArray), VectorToString(byteArrayExpected)));
+				test.Fail(std::format("Wrong byteArray array {}, expected {}", byteArray, byteArrayExpected));
 			}
 			if (ushortArray != ushortArrayExpected) {
-				test.Fail(std::format("Wrong ushortArray array {}, expected {}", VectorToString(ushortArray), VectorToString(ushortArrayExpected)));
+				test.Fail(std::format("Wrong ushortArray array {}, expected {}", ushortArray, ushortArrayExpected));
 			}
 			if (uintArray != uintArrayExpected) {
-				test.Fail(std::format("Wrong uintArray array {}, expected {}", VectorToString(uintArray), VectorToString(uintArrayExpected)));
+				test.Fail(std::format("Wrong uintArray array {}, expected {}", uintArray, uintArrayExpected));
 			}
 			if (ulongArray != ulongArrayExpected) {
-				test.Fail(std::format("Wrong ulongArray array {}, expected {}", VectorToString(ulongArray), VectorToString(ulongArrayExpected)));
+				test.Fail(std::format("Wrong ulongArray array {}, expected {}", ulongArray, ulongArrayExpected));
 			}
 			if (intPtrArray != intPtrArrayExpected) {
-				test.Fail(std::format("Wrong intPtrArray array {}, expected {}", VectorToString(intPtrArray), VectorToString(intPtrArrayExpected)));
+				test.Fail(std::format("Wrong intPtrArray array {}, expected {}", intPtrArray, intPtrArrayExpected));
 			}
 			if (floatArray != floatArrayExpected) {
-				test.Fail(std::format("Wrong floatArray array {}, expected {}", VectorToString(floatArray), VectorToString(floatArrayExpected)));
+				test.Fail(std::format("Wrong floatArray array {}, expected {}", floatArray, floatArrayExpected));
 			}
 			if (doubleArray != doubleArrayExpected) {
-				test.Fail(std::format("Wrong doubleArray array {}, expected {}", VectorToString(doubleArray), VectorToString(doubleArrayExpected)));
+				test.Fail(std::format("Wrong doubleArray array {}, expected {}", doubleArray, doubleArrayExpected));
 			}
 			if (stringArray != stringArrayExpected) {
-				test.Fail(std::format("Wrong stringArray array {}, expected {}", VectorToString(stringArray), VectorToString(stringArrayExpected)));
+				test.Fail(std::format("Wrong stringArray array {}, expected {}", stringArray, stringArrayExpected));
 			}
 		});
 #endif// TEST_CASES & TEST_PARAMS_REF_ARRAYS
@@ -1409,133 +1310,133 @@ class CrossCallMaster : public plg::IPluginEntry {
             const plg::vector<bool> expected = MockBoolVector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncBoolVector(&MockBoolVector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncChar8Vector", [](SimpleTests::Test& test) {
             const plg::vector<char> expected = MockChar8Vector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncChar8Vector(&MockChar8Vector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncChar16Vector", [](SimpleTests::Test& test) {
             const plg::vector<char16_t> expected = MockChar16Vector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncChar16Vector(&MockChar16Vector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncInt8Vector", [](SimpleTests::Test& test) {
             const plg::vector<int8_t> expected = MockInt8Vector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncInt8Vector(&MockInt8Vector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncInt16Vector", [](SimpleTests::Test& test) {
             const plg::vector<int16_t> expected = MockInt16Vector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncInt16Vector(&MockInt16Vector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncInt32Vector", [](SimpleTests::Test& test) {
             const plg::vector<int32_t> expected = MockInt32Vector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncInt32Vector(&MockInt32Vector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncInt64Vector", [](SimpleTests::Test& test) {
             const plg::vector<int64_t> expected = MockInt64Vector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncInt64Vector(&MockInt64Vector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncUInt8Vector", [](SimpleTests::Test& test) {
             const plg::vector<uint8_t> expected = MockUInt8Vector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncUInt8Vector(&MockUInt8Vector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncUInt16Vector", [](SimpleTests::Test& test) {
             const plg::vector<uint16_t> expected = MockUInt16Vector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncUInt16Vector(&MockUInt16Vector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncUInt32Vector", [](SimpleTests::Test& test) {
             const plg::vector<uint32_t> expected = MockUInt32Vector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncUInt32Vector(&MockUInt32Vector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncUInt64Vector", [](SimpleTests::Test& test) {
             const plg::vector<uint64_t> expected = MockUInt64Vector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncUInt64Vector(&MockUInt64Vector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncPtrVector", [](SimpleTests::Test& test) {
             const plg::vector<void*> expected = MockPtrVector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncPtrVector(&MockPtrVector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncFloatVector", [](SimpleTests::Test& test) {
             const plg::vector<float> expected = MockFloatVector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncFloatVector(&MockFloatVector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncStringVector", [](SimpleTests::Test& test) {
             const plg::vector<plg::string> expected = MockStringVector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncStringVector(&MockStringVector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncDoubleVector", [](SimpleTests::Test& test) {
             const plg::vector<double> expected = MockDoubleVector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncDoubleVector(&MockDoubleVector);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncVec2", [](SimpleTests::Test& test) {
             const plg::vec2 expected = MockVec2(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncVec2(&MockVec2);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", PodToString(result), PodToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncVec3", [](SimpleTests::Test& test) {
             const plg::vec3 expected = MockVec3(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncVec3(&MockVec3);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", PodToString(result), PodToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncVec4", [](SimpleTests::Test& test) {
             const plg::vec4 expected = MockVec4(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncVec4(&MockVec4);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", PodToString(result), PodToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFuncMat4x4", [](SimpleTests::Test& test) {
             const plg::mat4x4 expected = MockMat4x4(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncMat4x4(&MockMat4x4);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", PodToString(result), PodToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
 
@@ -1567,7 +1468,7 @@ class CrossCallMaster : public plg::IPluginEntry {
             const plg::vec4 expected = MockFunc4(b, u32, ch16, mat);
             const auto result = cross_call_worker::CallFunc4(&MockFunc4);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", PodToString(result), PodToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFunc5", [](SimpleTests::Test& test) {
@@ -1621,7 +1522,7 @@ class CrossCallMaster : public plg::IPluginEntry {
             const plg::mat4x4 expected = MockFunc8(vec3, vecU32, i16, b, vec4, vecC16, ch16, i32);
             const auto result = cross_call_worker::CallFunc8(&MockFunc8);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", PodToString(result), PodToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFunc9", [](SimpleTests::Test&) {
@@ -1719,7 +1620,7 @@ class CrossCallMaster : public plg::IPluginEntry {
             const plg::vector<plg::string> expected = MockFunc14(vecC, vecU32, mat, b, ch16, i32, vecF, u16, vecU8, i8, vec3, vec4, d, ptr);
             const auto result = cross_call_worker::CallFunc14(&MockFunc14);
             if (result != expected) {
-                test.Fail(std::format("Wrong ref params return {}, expected {}", VectorToString(result), VectorToString(expected)));
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
         _tests.Add("CallFunc15", [](SimpleTests::Test& test) {
@@ -1817,7 +1718,7 @@ class CrossCallMaster : public plg::IPluginEntry {
             }
         });
         _tests.Add("CallFunc24", [](SimpleTests::Test& test) {
-            const plg::string expected = "{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}|{100, 101, 102}|128|{7, 8, 9}|{5, 6, 7, 8}|1099511627775|{0xffffddddffffdddd}|3.14|{0x3, 0x4}";
+            const plg::string expected = "{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}|{d, e, f}|128|{7, 8, 9}|{5, 6, 7, 8}|1099511627775|{0xffffddddffffdddd}|3.14|{0x3, 0x4}";
             const auto result = cross_call_worker::CallFunc24(&MockFunc24);
             if (result != expected) {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
@@ -1875,6 +1776,13 @@ class CrossCallMaster : public plg::IPluginEntry {
         _tests.Add("CallFunc32", [](SimpleTests::Test& test) {
             const plg::string expected = "100|512|{5, 10}|{8, 9, 10, 11}|0xdeadbeafdeadbeaf|{400, 500}|{{0.5, 0.3, 0.2, 0.1}, {0.8, 0.9, 0.4, 0.6}, {0.1, 0.7, 1, 0.5}, {0.4, 0.2, 0.3, 1.2}}|987654321|Updated MockFunc32|2000|{5.5, 6.5}|{6, 7, 8, 9}|true|{1, 2, 3}|15|{120, 121, 122}";
             const auto result = cross_call_worker::CallFunc32(&MockFunc32);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFunc33", [](SimpleTests::Test& test) {
+            const plg::string expected = "Updated MockFunc33";
+            const auto result = cross_call_worker::CallFunc33(&MockFunc33);
             if (result != expected) {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
@@ -2064,7 +1972,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 			}
 		});
 		_tests.Add("ReverseNoParamReturnArrayChar8", [&](SimpleTests::Test& test) {
-			const plg::string expected = "{112, 108, 117, 103}";
+			const plg::string expected = "{p, l, u, g}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnArrayChar8");
 			if (!_reverseReturn) {
@@ -2463,7 +2371,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 	void ReverseParamsRefVectors() {
 #if TEST_CASES & TEST_REVERSE_PARAMS_REF_ARRAYS
 		_tests.Add("ReverseParamRefArrays", [&](SimpleTests::Test& test) {
-			const plg::string expected = "{true, false}|{94}|{1103, 1094}|{-4, -3, -2, -1}|{-555, -444, -333}|{-66666, -77777}|{-7666555444}|"
+			const plg::string expected = "{true, false}|{^}|{1103, 1094}|{-4, -3, -2, -1}|{-555, -444, -333}|{-66666, -77777}|{-7666555444}|"
 				"{0, 1, 1, 2, 3, 5}|{32999}|{3000000000, 1}|{1, 22, 333, 4444, 55555, 999999999999}|{0xd, 0x9, 0x5, 0x1}|"
 				"{91.23, 12.34, 23.45, 8.08}|{777.777777}|{'one', '1 two', '1 2 three'}";
 			_reverseReturn.reset();
@@ -2675,7 +2583,7 @@ class CrossCallMaster : public plg::IPluginEntry {
             }
         });
         _tests.Add("ReverseCallFuncChar8Vector", [&](SimpleTests::Test& test) {
-            const plg::string expected = "{65, 66}"; // Adjust this if needed
+            const plg::string expected = "{A, B}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncChar8Vector");
             if (!_reverseReturn) {
@@ -3152,9 +3060,19 @@ class CrossCallMaster : public plg::IPluginEntry {
             }
         });
         _tests.Add("ReverseCallFunc32", [&](SimpleTests::Test& test) {
-            const plg::string expected = "42|255|{0, 1}|{4, 5, 6, 7}|0x0|{100, 200}|{{1, 0.4, 0.3, 0.9}, {0.7, 1.2, 0.5, 0.8}, {0.2, 0.6, 1.1, 0.4}, {0.9, 0.3, 0.8, 1.5}}|123456789|MockFunc32|1000|{2.5, 3.5}|{1, 2, 3, 4, 5, 9}|false|{0, 0, 0}|8|{'97', '98', '99'}";
+            const plg::string expected = "42|255|{0, 1}|{4, 5, 6, 7}|0x0|{100, 200}|{{1, 0.4, 0.3, 0.9}, {0.7, 1.2, 0.5, 0.8}, {0.2, 0.6, 1.1, 0.4}, {0.9, 0.3, 0.8, 1.5}}|123456789|MockFunc32|1000|{2.5, 3.5}|{1, 2, 3, 4, 5, 9}|false|{0, 0, 0}|8|{97, 98, 99}";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc32");
+            if (!_reverseReturn) {
+                test.Fail("Params return not set");
+            } else if (*_reverseReturn != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
+            }
+        });
+        _tests.Add("ReverseCallFunc33", [&](SimpleTests::Test& test) {
+            const plg::string expected = "MockFunc33";
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("CallFunc33");
             if (!_reverseReturn) {
                 test.Fail("Params return not set");
             } else if (*_reverseReturn != expected) {
@@ -3182,6 +3100,14 @@ private:
 CrossCallMaster g_plugin;
 EXPOSE_PLUGIN(PLUGIN_API, &g_plugin)
 
+PLUGIFY_WARN_PUSH()
+
+#if defined(__clang)
+PLUGIFY_WARN_IGNORE("-Wreturn-type-c-linkage")
+#elif defined(_MSC_VER)
+PLUGIFY_WARN_IGNORE(4190)
+#endif
+
 extern "C"
 PLUGIN_API void ReverseReturn(const plg::string& returnString) {
 	g_plugin.ReverseReturn(returnString);
@@ -3189,7 +3115,6 @@ PLUGIN_API void ReverseReturn(const plg::string& returnString) {
 
 extern "C"
 PLUGIN_API void NoParamReturnVoidCallback() {
-	return;
 }
 
 extern "C"
@@ -3274,83 +3199,97 @@ PLUGIN_API NoParamReturnFunctionCallbackFunc NoParamReturnFunctionCallback() {
 }
 
 extern "C"
-PLUGIN_API plg::str NoParamReturnStringCallback() {
-	return plg::ReturnStr("Convertiplane");
+PLUGIN_API plg::string NoParamReturnStringCallback() {
+	return "Convertiplane";
+}
+
+// MSVC workaround: https://developercommunity.visualstudio.com/t/Error-C2526-C-linkage-function-cannot-r/1409254
+extern "C"
+PLUGIN_API plg::raw::variant NoParamReturnAnyCallback() {
+    plg::any result{"any"};
+    return plg::as_raw<plg::raw::variant>(std::move(result));
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayBoolCallback() {
-	return plg::ReturnVec(plg::vector<bool>{false, true, true});
+PLUGIN_API plg::vector<bool> NoParamReturnArrayBoolCallback() {
+	return {false, true, true};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayChar8Callback() {
-	return plg::ReturnVec(plg::vector<char>{'p', 'l', 'u', 'g'});
+PLUGIN_API plg::vector<char> NoParamReturnArrayChar8Callback() {
+	return {'p', 'l', 'u', 'g'};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayChar16Callback() {
-	return plg::ReturnVec(plg::vector<char16_t>{u'ч', u'а', u'р', u'!'});
+PLUGIN_API plg::vector<char16_t> NoParamReturnArrayChar16Callback() {
+	return {u'ч', u'а', u'р', u'!'};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayInt8Callback() {
-	return plg::ReturnVec(plg::vector<int8_t>{10, -15, 20});
+PLUGIN_API plg::vector<int8_t> NoParamReturnArrayInt8Callback() {
+	return {10, -15, 20};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayInt16Callback() {
-	return plg::ReturnVec(plg::vector<int16_t>{10, -15, 20, -25});
+PLUGIN_API plg::vector<int16_t> NoParamReturnArrayInt16Callback() {
+	return {10, -15, 20, -25};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayInt32Callback() {
-	return plg::ReturnVec(plg::vector<int32_t>{10, -15, 20, -25, 30});
+PLUGIN_API plg::vector<int32_t> NoParamReturnArrayInt32Callback() {
+	return {10, -15, 20, -25, 30};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayInt64Callback() {
-	return plg::ReturnVec(plg::vector<int64_t>{10, -15, 20, -25, 30, -35});
+PLUGIN_API plg::vector<int64_t> NoParamReturnArrayInt64Callback() {
+	return {10, -15, 20, -25, 30, -35};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayUInt8Callback() {
-	return plg::ReturnVec( plg::vector<uint8_t>{1, 2, 3, 200});
+PLUGIN_API plg::vector<uint8_t> NoParamReturnArrayUInt8Callback() {
+	return  {1, 2, 3, 200};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayUInt16Callback() {
-	return plg::ReturnVec(plg::vector<uint16_t>{1, 2, 3, 200, 60000});
+PLUGIN_API plg::vector<uint16_t> NoParamReturnArrayUInt16Callback() {
+	return {1, 2, 3, 200, 60000};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayUInt32Callback() {
-	return plg::ReturnVec(plg::vector<uint32_t>{1, 2, 3, 200, 60000, 4000000000});
+PLUGIN_API plg::vector<uint32_t> NoParamReturnArrayUInt32Callback() {
+	return {1, 2, 3, 200, 60000, 4000000000};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayUInt64Callback() {
-	return plg::ReturnVec(plg::vector<uint64_t>{1, 2, 3, 200, 60000, 4000000000, 12223334445556667778ULL});
+PLUGIN_API plg::vector<uint64_t> NoParamReturnArrayUInt64Callback() {
+	return {1, 2, 3, 200, 60000, 4000000000, 12223334445556667778ULL};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayPointerCallback() {
-	return plg::ReturnVec(plg::vector<void*>{reinterpret_cast<void*>(0x0), reinterpret_cast<void*>(0xdeadbeafLL), reinterpret_cast<void*>(0xcdccddcccdddcccc)});
+PLUGIN_API plg::vector<void*> NoParamReturnArrayPointerCallback() {
+	return {reinterpret_cast<void*>(0x0), reinterpret_cast<void*>(0xdeadbeafLL), reinterpret_cast<void*>(0xcdccddcccdddcccc)};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayFloatCallback() {
-	return plg::ReturnVec(plg::vector<float>{1.1f, -10.82f, 555.555f});
+PLUGIN_API plg::vector<float> NoParamReturnArrayFloatCallback() {
+	return {1.1f, -10.82f, 555.555f};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayDoubleCallback() {
-	return plg::ReturnVec(plg::vector<double>{1.1, -10.82, 555.555, 55555.55555, 123456789.98765});
+PLUGIN_API plg::vector<double> NoParamReturnArrayDoubleCallback() {
+	return {1.1, -10.82, 555.555, 55555.55555, 123456789.98765};
 }
 
 extern "C"
-PLUGIN_API plg::vec NoParamReturnArrayStringCallback() {
-	return plg::ReturnVec(plg::vector<plg::string>{"5", "true", "0.0", "Hello", "And Goodbay", "Another long string to test. Pi equal 3,1415926535 8979323846 2643383279 5028841971 6939937510"});
+PLUGIN_API plg::vector<plg::string> NoParamReturnArrayStringCallback() {
+	return {"5", "true", "0.0", "Hello", "And Goodbay", "Another long string to test. Pi equal 3,1415926535 8979323846 2643383279 5028841971 6939937510"};
+}
+
+// MSVC workaround: https://developercommunity.visualstudio.com/t/Error-C2526-C-linkage-function-cannot-r/1409254
+extern "C"
+PLUGIN_API plg::raw::vector NoParamReturnArrayAnyCallback() {
+    plg::vector<plg::any> result{5, true, 0.0, "Hello", nullptr, "Short string to test.", 3.1415926535f, 8979323846, 2643383279, 5028841971, 6939937510, plg::vector<int>{1, 2, 3, 4, 5}};
+    return plg::as_raw<plg::raw::vector>(std::move(result));
 }
 
 extern "C"
@@ -3390,37 +3329,37 @@ PLUGIN_API void Param3Callback(int32_t a, float b, double c) {
 
 extern "C"
 PLUGIN_API void Param4Callback(int32_t a, float b, double c, const plg::vec4& d) {
-	g_plugin.ReverseParams(std::format("{}|{}|{}|{}", a, b, c, PodToString(d)));
+	g_plugin.ReverseParams(std::format("{}|{}|{}|{}", a, b, c, d));
 }
 
 extern "C"
 PLUGIN_API void Param5Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e) {
-	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}", a, b, c, PodToString(d), VectorToString(e)));
+	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}", a, b, c, d, e));
 }
 
 extern "C"
 PLUGIN_API void Param6Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f) {
-	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}|{}", a, b, c, PodToString(d), VectorToString(e), static_cast<uint8_t>(f)));
+	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}|{}", a, b, c, d, e, static_cast<uint8_t>(f)));
 }
 
 extern "C"
 PLUGIN_API void Param7Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g) {
-	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}|{}|{}", a, b, c, PodToString(d), VectorToString(e), static_cast<uint8_t>(f), g));
+	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}|{}|{}", a, b, c, d, e, static_cast<uint8_t>(f), g));
 }
 
 extern "C"
 PLUGIN_API void Param8Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h) {
-	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}|{}|{}|{}", a, b, c, PodToString(d), VectorToString(e), static_cast<uint8_t>(f), g, static_cast<uint16_t>(h)));
+	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}|{}|{}|{}", a, b, c, d, e, static_cast<uint8_t>(f), g, static_cast<uint16_t>(h)));
 }
 
 extern "C"
 PLUGIN_API void Param9Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k) {
-	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}", a, b, c, PodToString(d), VectorToString(e), static_cast<uint8_t>(f), g, static_cast<uint16_t>(h), k));
+	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}", a, b, c, d, e, static_cast<uint8_t>(f), g, static_cast<uint16_t>(h), k));
 }
 
 extern "C"
 PLUGIN_API void Param10Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k, void* l) {
-	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", a, b, c, PodToString(d), VectorToString(e), static_cast<uint8_t>(f), g, static_cast<uint16_t>(h), k, l));
+	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", a, b, c, d, e, static_cast<uint8_t>(f), g, static_cast<uint16_t>(h), k, l));
 }
 
 extern "C"
@@ -3548,6 +3487,20 @@ PLUGIN_API int64_t ParamAllPrimitivesCallback(bool p1, char p2, char16_t p3, int
 	return 65;
 }
 
+extern "C"
+PLUGIN_API void ParamVariantCallback(const plg::any& p1, const plg::vector<plg::any>& p2) {
+    g_plugin.ReverseParams(std::format("{}|{}", p1, p2));
+}
+
+extern "C"
+PLUGIN_API void ParamVariantRefCallback(plg::any& p1, plg::vector<plg::any>& p2) {
+    p1 = plg::vector<int>{1, 2, 3};
+    p2.resize(3);
+    p2[0] = true;
+    p2[1] = 3.14f;
+    p2[2] = "some really long string for avoid SSO optimization";
+}
+
 // Call functions using the typedefs
 extern "C"
 PLUGIN_API void CallFuncVoidCallback(cross_call_worker::FuncVoid func) {
@@ -3645,100 +3598,114 @@ PLUGIN_API void* CallFuncFunctionCallback(cross_call_worker::FuncFunction func) 
 }
 
 extern "C"
-PLUGIN_API plg::str CallFuncStringCallback(cross_call_worker::FuncString func) {
+PLUGIN_API plg::string CallFuncStringCallback(cross_call_worker::FuncString func) {
     plg::string result = func();
-    return plg::ReturnStr(std::move(result));
+    return std::move(result);
+}
+
+// MSVC workaround: https://developercommunity.visualstudio.com/t/Error-C2526-C-linkage-function-cannot-r/1409254
+extern "C"
+PLUGIN_API plg::raw::variant CallFuncAnyCallback(cross_call_worker::FuncAny func) {
+    plg::any result = func();
+    return plg::as_raw<plg::raw::variant>(std::move(result));
 }
 
 // Call functions for vector return types
 extern "C"
-PLUGIN_API plg::vec CallFuncBoolVectorCallback(cross_call_worker::FuncBoolVector func) {
+PLUGIN_API  plg::vector<bool> CallFuncBoolVectorCallback(cross_call_worker::FuncBoolVector func) {
     plg::vector<bool> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncChar8VectorCallback(cross_call_worker::FuncChar8Vector func) {
+PLUGIN_API plg::vector<char> CallFuncChar8VectorCallback(cross_call_worker::FuncChar8Vector func) {
     plg::vector<char> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncChar16VectorCallback(cross_call_worker::FuncChar16Vector func) {
+PLUGIN_API plg::vector<char16_t> CallFuncChar16VectorCallback(cross_call_worker::FuncChar16Vector func) {
     plg::vector<char16_t> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncInt8VectorCallback(cross_call_worker::FuncInt8Vector func) {
+PLUGIN_API plg::vector<int8_t> CallFuncInt8VectorCallback(cross_call_worker::FuncInt8Vector func) {
     plg::vector<int8_t> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncInt16VectorCallback(cross_call_worker::FuncInt16Vector func) {
+PLUGIN_API plg::vector<int16_t> CallFuncInt16VectorCallback(cross_call_worker::FuncInt16Vector func) {
     plg::vector<int16_t> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncInt32VectorCallback(cross_call_worker::FuncInt32Vector func) {
+PLUGIN_API plg::vector<int32_t> CallFuncInt32VectorCallback(cross_call_worker::FuncInt32Vector func) {
     plg::vector<int32_t> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncInt64VectorCallback(cross_call_worker::FuncInt64Vector func) {
+PLUGIN_API plg::vector<int64_t> CallFuncInt64VectorCallback(cross_call_worker::FuncInt64Vector func) {
     plg::vector<int64_t> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncUInt8VectorCallback(cross_call_worker::FuncUInt8Vector func) {
+PLUGIN_API plg::vector<uint8_t> CallFuncUInt8VectorCallback(cross_call_worker::FuncUInt8Vector func) {
     plg::vector<uint8_t> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncUInt16VectorCallback(cross_call_worker::FuncUInt16Vector func) {
+PLUGIN_API plg::vector<uint16_t> CallFuncUInt16VectorCallback(cross_call_worker::FuncUInt16Vector func) {
     plg::vector<uint16_t> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncUInt32VectorCallback(cross_call_worker::FuncUInt32Vector func) {
+PLUGIN_API plg::vector<uint32_t> CallFuncUInt32VectorCallback(cross_call_worker::FuncUInt32Vector func) {
     plg::vector<uint32_t> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncUInt64VectorCallback(cross_call_worker::FuncUInt64Vector func) {
+PLUGIN_API plg::vector<uint64_t> CallFuncUInt64VectorCallback(cross_call_worker::FuncUInt64Vector func) {
     plg::vector<uint64_t> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncPtrVectorCallback(cross_call_worker::FuncPtrVector func) {
+PLUGIN_API  plg::vector<void*> CallFuncPtrVectorCallback(cross_call_worker::FuncPtrVector func) {
     plg::vector<void*> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncFloatVectorCallback(cross_call_worker::FuncFloatVector func) {
+PLUGIN_API plg::vector<float> CallFuncFloatVectorCallback(cross_call_worker::FuncFloatVector func) {
     plg::vector<float> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncDoubleVectorCallback(cross_call_worker::FuncDoubleVector func) {
+PLUGIN_API plg::vector<double> CallFuncDoubleVectorCallback(cross_call_worker::FuncDoubleVector func) {
     plg::vector<double> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
 }
 
 extern "C"
-PLUGIN_API plg::vec CallFuncStringVectorCallback(cross_call_worker::FuncStringVector func) {
+PLUGIN_API plg::vector<plg::string> CallFuncStringVectorCallback(cross_call_worker::FuncStringVector func) {
     plg::vector<plg::string> result = func();
-    return plg::ReturnVec(std::move(result));
+    return std::move(result);
+}
+
+// MSVC workaround: https://developercommunity.visualstudio.com/t/Error-C2526-C-linkage-function-cannot-r/1409254
+extern "C"
+PLUGIN_API plg::raw::vector CallFuncAnyVectorCallback(cross_call_worker::FuncAnyVector func) {
+    plg::vector<plg::any> result = func();
+    return plg::as_raw<plg::raw::vector>(std::move(result));
 }
 
 // Call functions for vector return types
@@ -3918,7 +3885,7 @@ PLUGIN_API bool CallFunc12Callback(cross_call_worker::Func12 func) {
 
 // 13 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc13Callback(cross_call_worker::Func13 func) {
+PLUGIN_API plg::string CallFunc13Callback(cross_call_worker::Func13 func) {
     int64_t i64 = 50;
     plg::vector<char> vecC{'A', 'B', 'C'};
     uint16_t u16 = 10;
@@ -3933,12 +3900,12 @@ PLUGIN_API plg::str CallFunc13Callback(cross_call_worker::Func13 func) {
     plg::vector<uint8_t> vecU8{0, 1, 2};
     int16_t i16 = 10;
     auto ret = func(i64, vecC, u16, f, vecB, vec4, str, i32, vec3, ptr, vec2, vecU8, i16);
-    return plg::ReturnStr(std::move(ret));
+    return std::move(ret);
 }
 
 // 14 parameters
 extern "C"
-PLUGIN_API plg::vec CallFunc14Callback(cross_call_worker::Func14 func) {
+PLUGIN_API plg::vector<plg::string> CallFunc14Callback(cross_call_worker::Func14 func) {
     plg::vector<char> vecC{'A', 'B', 'C'};
     plg::vector<uint32_t> vecU32{1, 2, 3};
     plg::mat4x4 mat; // Assume it's initialized properly
@@ -3954,7 +3921,7 @@ PLUGIN_API plg::vec CallFunc14Callback(cross_call_worker::Func14 func) {
     double d = 3.14;
     void* ptr = nullptr; // Example pointer
     auto ret = func(vecC, vecU32, mat, b, ch16, i32, vecF, u16, vecU8, i8, vec3, vec4, d, ptr);
-    return plg::ReturnVec(std::move(ret));
+    return std::move(ret);
 }
 
 // 15 parameters
@@ -4004,57 +3971,57 @@ PLUGIN_API void* CallFunc16Callback(cross_call_worker::Func16 func) {
 
 // 1 parameter
 extern "C"
-PLUGIN_API plg::str CallFunc17Callback(cross_call_worker::Func17 func) {
+PLUGIN_API plg::string CallFunc17Callback(cross_call_worker::Func17 func) {
     int32_t i32 = 20;
     func(i32);
-    return plg::ReturnStr(std::format("{}", i32));
+    return std::format("{}", i32);
 }
 
 // 2 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc18Callback(cross_call_worker::Func18 func) {
+PLUGIN_API plg::string CallFunc18Callback(cross_call_worker::Func18 func) {
     int8_t i8 = 5;
     int16_t i16 = 10;
     plg::vec2 ret = func(i8, i16);
-    return plg::ReturnStr(std::format("{}|{}|{}", PodToString(ret), i8, i16));
+    return std::format("{}|{}|{}", ret, i8, i16);
 }
 
 // 3 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc19Callback(cross_call_worker::Func19 func) {
+PLUGIN_API plg::string CallFunc19Callback(cross_call_worker::Func19 func) {
     uint32_t u32 = 10;
     plg::vec3 vec3{1.0f, 2.0f, 3.0f};
     plg::vector<uint32_t> vecU32{1, 2, 3};
     func(u32, vec3, vecU32);
-    return plg::ReturnStr(std::format("{}|{}|{}", u32, PodToString(vec3), VectorToString(vecU32)));
+    return std::format("{}|{}|{}", u32, vec3, vecU32);
 }
 
 // 4 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc20Callback(cross_call_worker::Func20 func) {
+PLUGIN_API plg::string CallFunc20Callback(cross_call_worker::Func20 func) {
     char16_t ch16 = 'A';
     plg::vec4 vec4{1.0f, 2.0f, 3.0f, 4.0f};
     plg::vector<uint64_t> vecU64{1, 2, 3};
     char ch = 'B';
     int32_t ret = func(ch16, vec4, vecU64, ch);
-    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}", ret, static_cast<uint16_t>(ch16), PodToString(vec4), VectorToString(vecU64), ch));
+    return std::format("{}|{}|{}|{}|{}", ret, static_cast<uint16_t>(ch16), vec4, vecU64, ch);
 }
 
 // 5 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc21Callback(cross_call_worker::Func21 func) {
+PLUGIN_API plg::string CallFunc21Callback(cross_call_worker::Func21 func) {
     plg::mat4x4 mat; // Assume it's initialized properly
     plg::vector<int32_t> vecI32{1, 2, 3};
     plg::vec2 vec2{1.0f, 2.0f};
     bool b = true;
     double d = 3.14;
     float ret = func(mat, vecI32, vec2, b, d);
-    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}", ret, PodToString(mat), VectorToString(vecI32), PodToString(vec2), b ? "true" : "false", d));
+    return std::format("{}|{}|{}|{}|{}|{}", ret, mat, vecI32, vec2, b ? "true" : "false", d);
 }
 
 // 6 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc22Callback(cross_call_worker::Func22 func) {
+PLUGIN_API plg::string CallFunc22Callback(cross_call_worker::Func22 func) {
     void* ptr = nullptr; // Example pointer
     uint32_t u32 = 10;
     plg::vector<double> vecD{1.0, 2.0, 3.0};
@@ -4062,12 +4029,12 @@ PLUGIN_API plg::str CallFunc22Callback(cross_call_worker::Func22 func) {
     plg::string str = "Test";
     plg::vec4 vec4{1.0f, 2.0f, 3.0f, 4.0f};
     uint64_t ret = func(ptr, u32, vecD, i16, str, vec4);
-    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}", ret, ptr, u32, VectorToString(vecD), i16, str.c_str(), PodToString(vec4)));
+    return std::format("{}|{}|{}|{}|{}|{}|{}", ret, ptr, u32, vecD, i16, str.c_str(), vec4);
 }
 
 // 7 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc23Callback(cross_call_worker::Func23 func) {
+PLUGIN_API plg::string CallFunc23Callback(cross_call_worker::Func23 func) {
     uint64_t u64 = 100;
     plg::vec2 vec2{1.0f, 2.0f};
     plg::vector<int16_t> vecI16{1, 2, 3};
@@ -4076,12 +4043,12 @@ PLUGIN_API plg::str CallFunc23Callback(cross_call_worker::Func23 func) {
     int8_t i8 = 5;
     plg::vector<uint8_t> vecU8{0, 1, 2};
     func(u64, vec2, vecI16, ch16, f, i8, vecU8);
-    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}", u64, PodToString(vec2), VectorToString(vecI16), static_cast<uint16_t>(ch16), f, i8, VectorToString(vecU8)));
+    return std::format("{}|{}|{}|{}|{}|{}|{}", u64, vec2, vecI16, static_cast<uint16_t>(ch16), f, i8, vecU8);
 }
 
 // 8 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc24Callback(cross_call_worker::Func24 func) {
+PLUGIN_API plg::string CallFunc24Callback(cross_call_worker::Func24 func) {
     plg::vector<char> vecC{'A', 'B', 'C'};
     int64_t i64 = 50;
     plg::vector<uint8_t> vecU8{0, 1, 2};
@@ -4091,12 +4058,12 @@ PLUGIN_API plg::str CallFunc24Callback(cross_call_worker::Func24 func) {
     double d = 3.14;
     plg::vector<void*> vecV2{ reinterpret_cast<void*>(1), reinterpret_cast<void*>(2), reinterpret_cast<void*>(3), reinterpret_cast<void*>(4) };
     plg::mat4x4 ret = func(vecC, i64, vecU8, vec4, u64, vecPtr, d, vecV2);
-    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}", PodToString(ret), VectorToString(vecC), i64, VectorToString(vecU8), PodToString(vec4), u64, VectorToString(vecPtr), d, VectorToString(vecV2)));
+    return std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, vecC, i64, vecU8, vec4, u64, vecPtr, d, vecV2);
 }
 
 // 9 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc25Callback(cross_call_worker::Func25 func) {
+PLUGIN_API plg::string CallFunc25Callback(cross_call_worker::Func25 func) {
     int32_t i32 = 20;
     plg::vector<void*> vecPtr{ reinterpret_cast<void*>(1), reinterpret_cast<void*>(2), reinterpret_cast<void*>(3) };
     bool b = true;
@@ -4107,12 +4074,12 @@ PLUGIN_API plg::str CallFunc25Callback(cross_call_worker::Func25 func) {
     plg::vec4 vec4{1.0f, 2.0f, 3.0f, 4.0f};
     uint16_t u16 = 10;
     double ret = func(i32, vecPtr, b, u8, str, vec3, i64, vec4, u16);
-    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, i32, VectorToString(vecPtr), b ? "true" : "false", u8, str.c_str(), PodToString(vec3), i64, PodToString(vec4), u16));
+    return std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, i32, vecPtr, b ? "true" : "false", u8, str.c_str(), vec3, i64, vec4, u16);
 }
 
 // 10 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc26Callback(cross_call_worker::Func26 func) {
+PLUGIN_API plg::string CallFunc26Callback(cross_call_worker::Func26 func) {
     char16_t ch16 = 'A';
     plg::vec2 vec2{1.0f, 2.0f};
     plg::mat4x4 mat; // Assume it's initialized properly
@@ -4124,12 +4091,12 @@ PLUGIN_API plg::str CallFunc26Callback(cross_call_worker::Func26 func) {
     void* ptr = nullptr; // Example pointer
     bool b = true;
     char ret = func(ch16, vec2, mat, vecF, i16, u64, u32, vecU16, ptr, b);
-    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, static_cast<uint16_t>(ch16), PodToString(vec2), PodToString(mat), VectorToString(vecF), u64, u32, VectorToString(vecU16), ptr, b ? "true" : "false"));
+    return std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, static_cast<uint16_t>(ch16), vec2, mat, vecF, u64, u32, vecU16, ptr, b ? "true" : "false");
 }
 
 // 11 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc27Callback(cross_call_worker::Func27 func) {
+PLUGIN_API plg::string CallFunc27Callback(cross_call_worker::Func27 func) {
     float f = 1.23f;
     plg::vec3 vec3{1.0f, 2.0f, 3.0f};
     void* ptr = nullptr; // Example pointer
@@ -4142,12 +4109,12 @@ PLUGIN_API plg::str CallFunc27Callback(cross_call_worker::Func27 func) {
     int32_t i32 = 20;
     plg::vector<uint8_t> vecU8{0, 1, 2};
     uint8_t ret = func(f, vec3, ptr, vec2, vecI16, mat, b, vec4, i8, i32, vecU8);
-    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, f, PodToString(vec3), ptr, PodToString(vec2), VectorToString(vecI16), PodToString(mat), b, PodToString(vec4), i8, i32, VectorToString(vecU8)));
+    return std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, f, vec3, ptr, vec2, vecI16, mat, b, vec4, i8, i32, vecU8);
 }
 
 // 12 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc28Callback(cross_call_worker::Func28 func) {
+PLUGIN_API plg::string CallFunc28Callback(cross_call_worker::Func28 func) {
     void* ptr = nullptr; // Example pointer
     uint16_t u16 = 10; // Example value
     plg::vector<uint32_t> vecU32{1, 2, 3}; // Sample vector
@@ -4162,12 +4129,12 @@ PLUGIN_API plg::str CallFunc28Callback(cross_call_worker::Func28 func) {
     plg::vector<float> vecF{1.0f, 2.0f, 3.0f}; // Sample vector of floats
 
     plg::string ret = func(ptr, u16, vecU32, mat, f, vec4, str, vecU64, i64, b, vec3, vecF);
-    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, ptr, u16, VectorToString(vecU32), PodToString(mat), f, PodToString(vec4), str, VectorToString(vecU64), i64, b, PodToString(vec3), VectorToString(vecF)));
+    return std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, ptr, u16, vecU32, mat, f, vec4, str, vecU64, i64, b, vec3, vecF);
 }
 
 // 13 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc29Callback(cross_call_worker::Func29 func) {
+PLUGIN_API plg::string CallFunc29Callback(cross_call_worker::Func29 func) {
     plg::vec4 vec4{1.0f, 2.0f, 3.0f, 4.0f}; // Example Vector4
     int32_t i32 = 42; // Example int32
     plg::vector<int8_t> vecI8{1, 2, 3}; // Sample vector of int8
@@ -4183,12 +4150,12 @@ PLUGIN_API plg::str CallFunc29Callback(cross_call_worker::Func29 func) {
     plg::vector<int64_t> vecI64{1000, 2000, 3000}; // Sample vector of int64
 
     plg::vector<plg::string> ret = func(vec4, i32, vecI8, d, b, i8, vecU16, f, str, mat, u64, vec3, vecI64);
-    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", VectorToString(ret), PodToString(vec4), i32, VectorToString(vecI8), d, b ? "true" : "false", i8, VectorToString(vecU16), f, str, PodToString(mat), u64, PodToString(vec3), VectorToString(vecI64)));
+    return std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, vec4, i32, vecI8, d, b ? "true" : "false", i8, vecU16, f, str, mat, u64, vec3, vecI64);
 }
 
 // 14 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc30Callback(cross_call_worker::Func30 func) {
+PLUGIN_API plg::string CallFunc30Callback(cross_call_worker::Func30 func) {
     void* ptr = nullptr; // Example pointer
     plg::vec4 vec4{1.0f, 2.0f, 3.0f, 4.0f}; // Example Vector4
     int64_t i64 = 123456789; // Example int64
@@ -4205,12 +4172,12 @@ PLUGIN_API plg::str CallFunc30Callback(cross_call_worker::Func30 func) {
     double d = 7.89; // Example double
 
     int32_t ret = func(ptr, vec4, i64, vecU32, b, str, vec3, vecU8, f, vec2, mat, i8, vecF, d);
-    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, ptr, PodToString(vec4), i64, VectorToString(vecU32), b ? "true" : "false", str, PodToString(vec3), VectorToString(vecU8), f, PodToString(vec2), PodToString(mat), i8, VectorToString(vecF), d));
+    return std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ret, ptr, vec4, i64, vecU32, b ? "true" : "false", str, vec3, vecU8, f, vec2, mat, i8, vecF, d);
 }
 
 // 15 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc31Callback(cross_call_worker::Func31 func) {
+PLUGIN_API plg::string CallFunc31Callback(cross_call_worker::Func31 func) {
     char ch = 'A'; // Example char
     uint32_t u32 = 100; // Example uint32
     plg::vector<uint64_t> vecU64{1, 2, 3}; // Sample vector of uint64
@@ -4228,12 +4195,12 @@ PLUGIN_API plg::str CallFunc31Callback(cross_call_worker::Func31 func) {
     plg::vector<double> vecD{1.0, 2.0, 3.0}; // Sample vector of doubles
 
     plg::vec3 ret = func(ch, u32, vecU64, vec4, str, b, i64, vec2, i8, u16, vecI16, mat, vec3, f, vecD);
-    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ch, u32, VectorToString(vecU64), PodToString(vec4), str, b ? "true" : "false", i64, PodToString(vec2), i8, u16, VectorToString(vecI16), PodToString(mat), PodToString(vec3), f, VectorToString(vecD)));
+    return std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", ch, u32, vecU64, vec4, str, b ? "true" : "false", i64, vec2, i8, u16, vecI16, mat, vec3, f, vecD);
 }
 
 // 16 parameters
 extern "C"
-PLUGIN_API plg::str CallFunc32Callback(cross_call_worker::Func32 func) {
+PLUGIN_API plg::string CallFunc32Callback(cross_call_worker::Func32 func) {
     int32_t i32 = 20; // Example int32 reference
     uint16_t u16 = 10; // Example uint16 reference
     plg::vector<int8_t> vecI8{1, 2, 3}; // Sample vector of int8
@@ -4252,5 +4219,15 @@ PLUGIN_API plg::str CallFunc32Callback(cross_call_worker::Func32 func) {
     plg::vector<char16_t> vecC16{u'A', u'B', u'C'}; // Sample vector of char16
 
     func(i32, u16, vecI8, vec4, ptr, vecU32, mat, u64, str, i64, vec2, vecI8_2, b, vec3, u8, vecC16);
-    return plg::ReturnStr(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", i32, u16, VectorToString(vecI8), PodToString(vec4), ptr, VectorToString(vecU32), PodToString(mat), u64, str, i64, PodToString(vec2), VectorToString(vecI8_2), b ? "true" : "false", PodToString(vec3), u8, VectorToString(vecC16)));
+    return std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", i32, u16, vecI8, vec4, ptr, vecU32, mat, u64, str, i64, vec2, vecI8_2, b ? "true" : "false", vec3, u8, vecC16);
 }
+
+// 1 parameters
+extern "C"
+PLUGIN_API plg::string CallFunc33Callback(cross_call_worker::Func33 func) {
+    plg::any variant; // Example variant reference
+    func(variant);
+    return std::format("{}", variant);
+}
+
+PLUGIFY_WARN_POP()

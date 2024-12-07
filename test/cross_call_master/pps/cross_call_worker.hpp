@@ -1,6 +1,8 @@
 #pragma once
 
 #include <plugify/cpp_plugin.hpp>
+#include <plugify/string.hpp>
+#include <plugify/vector.hpp>
 #include <cstdint>
 
 // Generated from cross_call_worker.pplugin by https://github.com/untrustedmodders/plugify-module-cpp/blob/main/generator/generator.py 
@@ -109,6 +111,12 @@ namespace cross_call_worker {
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnString", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
+	inline plg::any NoParamReturnAny() {
+		using NoParamReturnAnyFn = plg::any (*)();
+		static NoParamReturnAnyFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnAny", reinterpret_cast<void**>(&__func));
+		return __func();
+	}
 	inline plg::vector<bool> NoParamReturnArrayBool() {
 		using NoParamReturnArrayBoolFn = plg::vector<bool> (*)();
 		static NoParamReturnArrayBoolFn __func = nullptr;
@@ -197,6 +205,12 @@ namespace cross_call_worker {
 		using NoParamReturnArrayStringFn = plg::vector<plg::string> (*)();
 		static NoParamReturnArrayStringFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayString", reinterpret_cast<void**>(&__func));
+		return __func();
+	}
+	inline plg::vector<plg::any> NoParamReturnAnyString() {
+		using NoParamReturnAnyStringFn = plg::vector<plg::any> (*)();
+		static NoParamReturnAnyStringFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnAnyString", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
 	inline plg::vec2 NoParamReturnVector2() {
@@ -355,6 +369,18 @@ namespace cross_call_worker {
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.ParamAllPrimitives", reinterpret_cast<void**>(&__func));
 		return __func(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
 	}
+	inline void ParamVariant(const plg::any& p1, const plg::vector<plg::any>& p2) {
+		using ParamVariantFn = void (*)(const plg::any&, const plg::vector<plg::any>&);
+		static ParamVariantFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.ParamVariant", reinterpret_cast<void**>(&__func));
+		__func(p1, p2);
+	}
+	inline void ParamVariantRef(plg::any& p1, plg::vector<plg::any>& p2) {
+		using ParamVariantRefFn = void (*)(plg::any&, plg::vector<plg::any>&);
+		static ParamVariantRefFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.ParamVariantRef", reinterpret_cast<void**>(&__func));
+		__func(p1, p2);
+	}
 	using FuncVoid = void (*)();
 	inline void CallFuncVoid(FuncVoid func) {
 		using CallFuncVoidFn = void (*)(FuncVoid);
@@ -467,6 +493,13 @@ namespace cross_call_worker {
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncString", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
+	using FuncAny = plg::any (*)();
+	inline plg::any CallFuncAny(FuncAny func) {
+		using CallFuncAnyFn = plg::any (*)(FuncAny);
+		static CallFuncAnyFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncAny", reinterpret_cast<void**>(&__func));
+		return __func(func);
+	}
 	using FuncFunction = void* (*)();
 	inline void* CallFuncFunction(FuncFunction func) {
 		using CallFuncFunctionFn = void* (*)(FuncFunction);
@@ -570,6 +603,13 @@ namespace cross_call_worker {
 		using CallFuncStringVectorFn = plg::vector<plg::string> (*)(FuncStringVector);
 		static CallFuncStringVectorFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncStringVector", reinterpret_cast<void**>(&__func));
+		return __func(func);
+	}
+	using FuncAnyVector = plg::vector<plg::any> (*)();
+	inline plg::vector<plg::any> CallFuncAnyVector(FuncAnyVector func) {
+		using CallFuncAnyVectorFn = plg::vector<plg::any> (*)(FuncAnyVector);
+		static CallFuncAnyVectorFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncAnyVector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
 	using FuncDoubleVector = plg::vector<double> (*)();
@@ -829,6 +869,13 @@ namespace cross_call_worker {
 		using CallFunc32Fn = plg::string (*)(Func32);
 		static CallFunc32Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc32", reinterpret_cast<void**>(&__func));
+		return __func(func);
+	}
+	using Func33 = void (*)(plg::any&);
+	inline plg::string CallFunc33(Func33 func) {
+		using CallFunc33Fn = plg::string (*)(Func33);
+		static CallFunc33Fn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc33", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
 	inline void ReverseCall(const plg::string& test) {

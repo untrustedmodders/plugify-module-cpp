@@ -52,7 +52,12 @@ def map_type(t: str):
         'plg::string': 'string',
         'plg::vector<plg::string>': 'string[]',
         'plg::str': 'string',
+
         #'plg::vec': '?',
+
+        'plg::any': 'any',
+        'plg::vector<plg::any>': 'any[]',
+        #'plg::var': 'any',
 
         # 'const char*': 'string',
         # 'char*': 'string',

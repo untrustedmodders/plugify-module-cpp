@@ -160,6 +160,14 @@
 			}
 		},
 		{
+			"name": "NoParamReturnAny",
+			"funcName": "NoParamReturnAny",
+			"paramTypes": [],
+			"retType": {
+				"type": "any"
+			}
+		},
+		{
 			"name": "NoParamReturnArrayBool",
 			"funcName": "NoParamReturnArrayBool",
 			"paramTypes": [],
@@ -277,6 +285,14 @@
 			"paramTypes": [],
 			"retType": {
 				"type": "string[]"
+			}
+		},
+		{
+			"name": "NoParamReturnArrayAny",
+			"funcName": "NoParamReturnArrayAny",
+			"paramTypes": [],
+			"retType": {
+				"type": "any[]"
 			}
 		},
 		{
@@ -1205,6 +1221,44 @@
 			}
 		},
 		{
+			"name": "ParamVariant",
+			"funcName": "ParamVariant",
+			"paramTypes": [
+				{
+					"name": "p1",
+					"type": "any",
+					"ref": false
+				},
+				{
+					"name": "p2",
+					"type": "any[]",
+					"ref": false
+				}
+			],
+			"retType": {
+				"type": "void"
+			}
+		},
+		{
+			"name": "ParamVariantRef",
+			"funcName": "ParamVariantRef",
+			"paramTypes": [
+				{
+					"name": "p1",
+					"type": "any",
+					"ref": true
+				},
+				{
+					"name": "p2",
+					"type": "any[]",
+					"ref": true
+				}
+			],
+			"retType": {
+				"type": "void"
+			}
+		},
+		{
 			"name": "CallFuncVoid",
 			"funcName": "CallFuncVoid",
 			"paramTypes": [
@@ -1557,6 +1611,28 @@
 			}
 		},
 		{
+			"name": "CallFuncAny",
+			"funcName": "CallFuncAny",
+			"paramTypes": [
+				{
+					"name": "func",
+					"type": "function",
+					"ref": false,
+					"prototype": {
+						"name": "FuncAny",
+						"paramTypes": [
+						],
+						"retType": {
+							"type": "any"
+						}
+					}
+				}
+			],
+			"retType": {
+				"type": "any"
+			}
+		},
+		{
 			"name": "CallFuncFunction",
 			"funcName": "CallFuncFunction",
 			"paramTypes": [
@@ -1871,6 +1947,27 @@
 			],
 			"retType": {
 				"type": "string[]"
+			}
+		},
+		{
+			"name": "CallFuncAnyVector",
+			"funcName": "CallFuncAnyVector",
+			"paramTypes": [
+				{
+					"name": "func",
+					"type": "function",
+					"ref": false,
+					"prototype": {
+						"name": "FuncAnyVector",
+						"paramTypes": [],
+						"retType": {
+							"type": "any[]"
+						}
+					}
+				}
+			],
+			"retType": {
+				"type": "any[]"
 			}
 		},
 		{
@@ -4034,6 +4131,33 @@
 						],
 						"retType": {
 							"type": "double"
+						}
+					}
+				}
+			],
+			"retType": {
+				"type": "string"
+			}
+		},
+		{
+			"name": "CallFunc33",
+			"funcName": "CallFunc33",
+			"paramTypes": [
+				{
+					"name": "func",
+					"type": "function",
+					"ref": false,
+					"prototype": {
+						"name": "Func33",
+						"paramTypes": [
+							{
+								"name": "variant",
+								"type": "any",
+								"ref": true
+							}
+						],
+						"retType": {
+							"type": "void"
 						}
 					}
 				}

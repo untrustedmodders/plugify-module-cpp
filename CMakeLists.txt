@@ -5,7 +5,11 @@ if(POLICY CMP0092)
 endif()
 
 
-project(plugify-module-cpp VERSION 1.0.0.0 DESCRIPTION "C++ Language Module" HOMEPAGE_URL "https://github.com/untrustedmodders/plugify-module-cpp" LANGUAGES CXX)
+project(plugify-module-cpp 
+        VERSION 1.0.0.0 
+        DESCRIPTION "C++ Language Module" 
+        HOMEPAGE_URL "https://github.com/untrustedmodders/plugify-module-cpp" 
+        LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -70,7 +74,8 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
         CPPLM_PLATFORM_LINUX=$<BOOL:${LINUX}>
         CPPLM_IS_DEBUG=$<STREQUAL:${CMAKE_BUILD_TYPE},Debug>
         CPPLM_LIBRARY_SUFFIX="${CMAKE_SHARED_LIBRARY_SUFFIX}"
-        CPPLM_LIBRARY_PREFIX="${CMAKE_SHARED_LIBRARY_PREFIX}")
+        CPPLM_LIBRARY_PREFIX="${CMAKE_SHARED_LIBRARY_PREFIX}"
+)
 
 set(CPPLM_VERSION "0" CACHE STRING "Set version name")
 set(CPPLM_PACKAGE "${PROJECT_NAME}" CACHE STRING "Set package name")

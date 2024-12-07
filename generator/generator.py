@@ -24,6 +24,7 @@ VAL_TYPES_MAP = {
     'double': 'double',
     'function': 'delegate',
     'string': 'const plg::string&',
+    'any': 'const plg::any&',
     'bool[]': 'const plg::vector<bool>&',
     'char8[]': 'const plg::vector<char>&',
     'char16[]': 'const plg::vector<char16_t>&',
@@ -39,6 +40,7 @@ VAL_TYPES_MAP = {
     'float[]': 'const plg::vector<float>&',
     'double[]': 'const plg::vector<double>&',
     'string[]': 'const plg::vector<plg::string>&',
+    'any[]': 'const plg::vector<plg::any>&',
     'vec2': 'const plg::vec2&',
     'vec3': 'const plg::vec3&',
     'vec4': 'const plg::vec4&',
@@ -64,6 +66,7 @@ REF_TYPES_MAP = {
     'double': 'double&',
     'function': 'delegate',
     'string': 'plg::string&',
+    'any': 'plg::any&',
     'bool[]': 'plg::vector<bool>&',
     'char8[]': 'plg::vector<char>&',
     'char16[]': 'plg::vector<char16_t>&',
@@ -79,6 +82,7 @@ REF_TYPES_MAP = {
     'float[]': 'plg::vector<float>&',
     'double[]': 'plg::vector<double>&',
     'string[]': 'plg::vector<plg::string>&',
+    'any[]': 'plg::vector<plg::any>&',
     'vec2': 'plg::vec2&',
     'vec3': 'plg::vec3&',
     'vec4': 'plg::vec4&',
@@ -104,6 +108,7 @@ RET_TYPES_MAP = {
     'double': 'double',
     'function': 'delegate',
     'string': 'plg::string',
+    'any': 'plg::any',
     'bool[]': 'plg::vector<bool>',
     'char8[]': 'plg::vector<char>',
     'char16[]': 'plg::vector<char16_t>',
@@ -119,6 +124,7 @@ RET_TYPES_MAP = {
     'float[]': 'plg::vector<float>',
     'double[]': 'plg::vector<double>',
     'string[]': 'plg::vector<plg::string>',
+    'any[]': 'plg::vector<plg::any>',
     'vec2': 'plg::vec2',
     'vec3': 'plg::vec3',
     'vec4': 'plg::vec4',
@@ -213,20 +219,19 @@ def main(manifest_path, output_dir, override):
             print(f'  {error}')
         return 1
 
-    content = ''
-    
     link = 'https://github.com/untrustedmodders/plugify-module-cpp/blob/main/generator/generator.py'
 
-    content += '#pragma once\n'
-    content += '\n'
-    content += '#include <plugify/cpp_plugin.hpp>\n'
-    content += '#include <plugify/string.hpp>\n'
-    content += '#include <plugify/vector.hpp>\n'
-    content += '#include <cstdint>\n'
-    content += '\n'
-    content += f'// Generated from {plugin_name}.pplugin by {link} \n'
-    content += '\n'
-    content += f'namespace {plugin_name} {{\n'
+    content = ('#pragma once\n'
+               '\n'
+               '#include <plugify/cpp_plugin.hpp>\n'
+               '#include <plugify/string.hpp>\n'
+               '#include <plugify/vector.hpp>\n'
+               '#include <cstdint>\n'
+               '\n'
+               f'// Generated from {plugin_name}.pplugin by {link} \n'
+               '\n'
+               f'namespace {plugin_name} {{\n')
+    
     for method in pplugin['exportedMethods']:
         ret_type = method['retType']
         return_type = convert_type(ret_type["type"], "ref" in ret_type, True)
@@ -239,14 +244,14 @@ def main(manifest_path, output_dir, override):
                 content += gen_delegate(attribute['prototype'])
 
         content += (f'\tinline {return_type} '
-                    f'{method["name"]}({gen_params(method["paramTypes"], ParamGen.TypesNames)}) {{\n')
-        content += (f'\t\tusing {method["name"]}Fn = {return_type} '
-                    f'(*)({gen_params(method["paramTypes"], ParamGen.Types)});\n')
-        content += f'\t\tstatic {method['name']}Fn __func = nullptr;\n'
-        content += f'\t\tif (__func == nullptr) plg::GetMethodPtr2("{plugin_name}.{method['name']}", reinterpret_cast<void**>(&__func));\n'
-        content += (f'\t\t{"return " if ret_type["type"] != "void" else ""}'
-                    f'__func({gen_params(method["paramTypes"], ParamGen.Names)});\n')
-        content += '\t}\n'
+                    f'{method["name"]}({gen_params(method["paramTypes"], ParamGen.TypesNames)}) {{\n'
+                    f'\t\tusing {method["name"]}Fn = {return_type} '
+                    f'(*)({gen_params(method["paramTypes"], ParamGen.Types)});\n'
+                    f'\t\tstatic {method['name']}Fn __func = nullptr;\n'
+                    f'\t\tif (__func == nullptr) plg::GetMethodPtr2("{plugin_name}.{method['name']}", reinterpret_cast<void**>(&__func));\n'
+                    f'\t\t{"return " if ret_type["type"] != "void" else ""}'
+                    f'__func({gen_params(method["paramTypes"], ParamGen.Names)});\n'
+                    '\t}\n')
     content += '}\n'
 
     with open(header_file, 'w', encoding='utf-8') as fd:
