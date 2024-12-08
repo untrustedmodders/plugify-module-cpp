@@ -1767,7 +1767,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
                 char f{};
                 cross_call_master::ParamRef6Callback(a, b, c, d, e, f);
                 cross_call_master::ReverseReturn(std::format("{}|{}|{}|{}|{}|{}", a, b, c, d, e,
-                                                                 static_cast<uint8_t>(f)));
+                                                             static_cast<uint8_t>(f)));
             }},
             {"ParamRef7", []() {
                 int32_t a{};
@@ -1851,15 +1851,16 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             }},
             {"ParamVariant", []() {
                 plg::any p1 = "my custom string with enough chars";
-                plg::vector<plg::any> p2{'%', u'☢', -1, -1000, -1000000, -1000000000000LL, 200, 50000, 3000000000LL, 9999999999LL,
+                plg::vector<plg::any> p2{'X', u'☢', -1, -1000, -1000000, -1000000000000LL, 200, 50000, 3000000000LL, 9999999999LL,
                                          reinterpret_cast<void*>(0xfedcbaabcdefLL), 0.001f, 987654.456789};
                 cross_call_master::ParamVariantCallback(p1, p2);
             }},
             {"ParamVariantRef", []() {
                 plg::any p1 = "my custom string with enough chars";
-                plg::vector<plg::any> p2{'%', u'☢', -1, -1000, -1000000, -1000000000000LL, 200, 50000, 3000000000LL, 9999999999LL,
+                plg::vector<plg::any> p2{'X', u'☢', -1, -1000, -1000000, -1000000000000LL, 200, 50000, 3000000000LL, 9999999999LL,
                                          reinterpret_cast<void*>(0xfedcbaabcdefLL), 0.001f, 987654.456789};
                 cross_call_master::ParamVariantRefCallback(p1, p2);
+                cross_call_master::ReverseReturn(std::format("{}|{}", p1, p2));
             }},
             {"CallFuncVoid", []() {
                 cross_call_master::CallFuncVoidCallback(&MockVoid);

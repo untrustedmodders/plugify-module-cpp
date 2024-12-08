@@ -23,7 +23,8 @@
 #define TEST_REVERSE_PARAMS_WITH_REFS (1 << 21)
 #define TEST_REVERSE_PARAMS_REF_ARRAYS (1 << 22)
 #define TEST_REVERSE_PARAMS_ALL_PRIMITIVES (1 << 23)
-#define TEST_REVERSE_PARAMS_FUNCTIONS (1 << 24)
+#define TEST_REVERSE_PARAMS_VARIANTS (1 << 24)
+#define TEST_REVERSE_PARAMS_FUNCTIONS (1 << 25)
 #define TEST_ALL 0xFFFFFFFF
 #ifndef TEST_CASES
 #define TEST_CASES TEST_ALL
@@ -48,6 +49,7 @@ float MockFloat() { return 2.71f; }
 double MockDouble() { return 5.55; }
 void* MockFunction() { return reinterpret_cast<void*>(2); }
 plg::string MockString() { return "Example string"; }
+plg::any MockAny() { return 0xDEADBEAF; }
 
 plg::vector<bool> MockBoolVector() { return {false, true}; }
 plg::vector<char> MockChar8Vector() { return {'C', 'D'}; }
@@ -435,6 +437,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 		ReverseParamsWithRefs();
 		ReverseParamsRefVectors();
 		ReverseParamsAllPrimitives();
+		ReverseParamsVariants();
 		ReverseParamsFunctions();
 		_tests.Run();
 	}
@@ -563,6 +566,13 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", result, expected));
 			}
 		});
+		_tests.Add("NoParamReturnAny", [](SimpleTests::Test& test) {
+			plg::any expected = plg::vector<double>{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+			auto result = cross_call_worker::NoParamReturnAny();
+			if (result.index() != expected.index()) {
+				test.Fail(std::format("Wrong return '{}', expected '{}'", result, expected));
+			}
+		});
 #endif // TEST_CASES & TEST_NO_PARAM_ONLY_RETURN_OBJECTS
 
 #if TEST_CASES & TEST_NO_PARAM_ONLY_RETURN_ARRAYS
@@ -668,6 +678,19 @@ class CrossCallMaster : public plg::IPluginEntry {
 			auto expected = plg::vector<plg::string>{"1st string", "2nd string", "3rd element string (Should be big enough to avoid small string optimization)"};
 			auto result = cross_call_worker::NoParamReturnArrayString();
 			if (result != expected) {
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
+			}
+		});
+		_tests.Add("NoParamReturnArrayAny", [](SimpleTests::Test& test) {
+			auto expected = plg::vector<plg::any>{1.0, 2.0f, "3rd element string (Should be big enough to avoid small string optimization)", plg::vector<plg::string>{"lolek", "and", "bolek"}, 1};
+			auto result = cross_call_worker::NoParamReturnArrayAny();
+			bool wrong = result.size() != expected.size();
+            if (!wrong) {
+                for (size_t i = 0; i < result.size(); ++i) {
+                    wrong |= result[i].index() != expected[i].index();
+                }
+            }
+            if (wrong) {
                 test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
@@ -1296,6 +1319,13 @@ class CrossCallMaster : public plg::IPluginEntry {
             const plg::string expected = MockString(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncString(&MockString);
             if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAny", [](SimpleTests::Test& test) {
+            const plg::any expected = MockAny(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAny(&MockAny);
+            if (result.index() != expected.index()) {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
@@ -2407,6 +2437,24 @@ class CrossCallMaster : public plg::IPluginEntry {
 #endif// TEST_CASES & TEST_REVERSE_PARAMS_ALL_PRIMITIVES
 	}
 
+	void ReverseParamsVariants() {
+#if TEST_CASES & TEST_REVERSE_PARAMS_VARIANTS
+		_tests.Add("ReverseParamVariant", [&](SimpleTests::Test&) {
+            cross_call_worker::ReverseCall("ParamVariant");
+		});
+        _tests.Add("ReverseParamVariantRef", [&](SimpleTests::Test& test) {
+            const plg::string paramsExpected = "{1, 2, 3}|{true, 3.14, some really long string for avoid SSO optimization}";
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("ParamVariantRef");
+            if (!_reverseReturn) {
+                test.Fail("Params not set");
+            } else if (*_reverseReturn != paramsExpected) {
+                test.Fail(std::format("Wrong param values {}, expected {}", *_reverseReturn, paramsExpected));
+            }
+		});
+#endif// TEST_CASES & TEST_REVERSE_PARAMS_VARIANTS
+	}
+
 	void ReverseParamsFunctions() {
 #if TEST_CASES & TEST_REVERSE_PARAMS_FUNCTIONS
         _tests.Add("ReverseCallFuncVoid", [](SimpleTests::Test&) {
@@ -2562,6 +2610,16 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
+        _tests.Add("ReverseCallFuncAny", [&](SimpleTests::Test& test) {
+            const plg::string expected = "65"; // Adjust this if needed
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("CallFuncAny");
+            if (!_reverseReturn) {
+                test.Fail("Params return not set");
+            } else if (*_reverseReturn != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
+            }
+        });
         /*_tests.Add("ReverseCallFuncFunction", [&](SimpleTests::Test& test) {
             const plg::string expected = "0x0"; // Adjust this if needed
             _reverseReturn.reset();
@@ -2706,6 +2764,16 @@ class CrossCallMaster : public plg::IPluginEntry {
             const plg::string expected = "{'Hello', 'World'}"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncStringVector");
+            if (!_reverseReturn) {
+                test.Fail("Params return not set");
+            } else if (*_reverseReturn != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
+            }
+        });
+        _tests.Add("ReverseCallFuncAnyVector", [&](SimpleTests::Test& test) {
+            const plg::string expected = "{Hello, 3.14, 6.28, 1, 3735928495}"; // Adjust this if needed
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("CallFuncAnyVector");
             if (!_reverseReturn) {
                 test.Fail("Params return not set");
             } else if (*_reverseReturn != expected) {

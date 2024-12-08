@@ -207,10 +207,10 @@ namespace cross_call_worker {
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayString", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
-	inline plg::vector<plg::any> NoParamReturnAnyString() {
-		using NoParamReturnAnyStringFn = plg::vector<plg::any> (*)();
-		static NoParamReturnAnyStringFn __func = nullptr;
-		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnAnyString", reinterpret_cast<void**>(&__func));
+	inline plg::vector<plg::any> NoParamReturnArrayAny() {
+		using NoParamReturnArrayAnyFn = plg::vector<plg::any> (*)();
+		static NoParamReturnArrayAnyFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayAny", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
 	inline plg::vec2 NoParamReturnVector2() {
