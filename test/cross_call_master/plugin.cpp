@@ -3271,11 +3271,10 @@ PLUGIN_API plg::string NoParamReturnStringCallback() {
 	return "Convertiplane";
 }
 
-// MSVC workaround: https://developercommunity.visualstudio.com/t/Error-C2526-C-linkage-function-cannot-r/1409254
 extern "C"
-PLUGIN_API plg::raw::variant NoParamReturnAnyCallback() {
+PLUGIN_API plg::any NoParamReturnAnyCallback() {
     plg::any result{"any"};
-    return plg::as_raw<plg::raw::variant>(std::move(result));
+    return result;
 }
 
 extern "C"
@@ -3353,11 +3352,10 @@ PLUGIN_API plg::vector<plg::string> NoParamReturnArrayStringCallback() {
 	return {"5", "true", "0.0", "Hello", "And Goodbay", "Another long string to test. Pi equal 3,1415926535 8979323846 2643383279 5028841971 6939937510"};
 }
 
-// MSVC workaround: https://developercommunity.visualstudio.com/t/Error-C2526-C-linkage-function-cannot-r/1409254
 extern "C"
-PLUGIN_API plg::raw::vector NoParamReturnArrayAnyCallback() {
+PLUGIN_API plg::vector<plg::any> NoParamReturnArrayAnyCallback() {
     plg::vector<plg::any> result{5, true, 0.0, "Hello", nullptr, "Short string to test.", 3.1415926535f, 8979323846, 2643383279, 5028841971, 6939937510, plg::vector<int>{1, 2, 3, 4, 5}};
-    return plg::as_raw<plg::raw::vector>(std::move(result));
+    return result;
 }
 
 extern "C"
@@ -3671,11 +3669,10 @@ PLUGIN_API plg::string CallFuncStringCallback(cross_call_worker::FuncString func
     return std::move(result);
 }
 
-// MSVC workaround: https://developercommunity.visualstudio.com/t/Error-C2526-C-linkage-function-cannot-r/1409254
 extern "C"
-PLUGIN_API plg::raw::variant CallFuncAnyCallback(cross_call_worker::FuncAny func) {
+PLUGIN_API plg::any CallFuncAnyCallback(cross_call_worker::FuncAny func) {
     plg::any result = func();
-    return plg::as_raw<plg::raw::variant>(std::move(result));
+    return result;
 }
 
 // Call functions for vector return types
@@ -3769,11 +3766,10 @@ PLUGIN_API plg::vector<plg::string> CallFuncStringVectorCallback(cross_call_work
     return std::move(result);
 }
 
-// MSVC workaround: https://developercommunity.visualstudio.com/t/Error-C2526-C-linkage-function-cannot-r/1409254
 extern "C"
-PLUGIN_API plg::raw::vector CallFuncAnyVectorCallback(cross_call_worker::FuncAnyVector func) {
+PLUGIN_API plg::vector<plg::any> CallFuncAnyVectorCallback(cross_call_worker::FuncAnyVector func) {
     plg::vector<plg::any> result = func();
-    return plg::as_raw<plg::raw::vector>(std::move(result));
+    return result;
 }
 
 // Call functions for vector return types

@@ -511,9 +511,9 @@ PLUGIN_API plg::string CallFuncString(cross_call_master::FuncString func) {
 }
 
 extern "C"
-PLUGIN_API plg::raw::variant CallFuncAny(cross_call_master::FuncAny func) {
+PLUGIN_API plg::any CallFuncAny(cross_call_master::FuncAny func) {
     plg::any result = func();
-    return plg::as_raw<plg::raw::variant>(std::move(result));
+    return result;
 }
 
 // Call functions for vector return types
@@ -608,9 +608,9 @@ PLUGIN_API plg::vector<plg::string> CallFuncStringVector(cross_call_master::Func
 }
 
 extern "C"
-PLUGIN_API plg::raw::vector CallFuncAnyVector(cross_call_master::FuncAnyVector func) {
+PLUGIN_API plg::vector<plg::any> CallFuncAnyVector(cross_call_master::FuncAnyVector func) {
     plg::vector<plg::any> result = func();
-    return plg::as_raw<plg::raw::vector>(std::move(result));
+    return result;
 }
 
 // Call functions for vector return types
