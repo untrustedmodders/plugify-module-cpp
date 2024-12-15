@@ -5,6 +5,7 @@
 #include <plugify/cpp_plugin.hpp>
 #include <plugify/format.hpp>
 #include <pps/cross_call_worker.hpp>
+#include <numeric>
 
 #define TEST_NO_PARAM_ONLY_RETURN_PRIMITIVES (1 << 0)
 #define TEST_NO_PARAM_ONLY_RETURN_OBJECTS (1 << 1)
@@ -2434,6 +2435,16 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong param values {}, expected {}", *_reverseParams, paramsExpected));
 			}
 		});
+        _tests.Add("ReverseParamEnum", [&](SimpleTests::Test& test) {
+			const plg::string returnExpected = "10";
+			_reverseReturn.reset();
+			cross_call_worker::ReverseCall("ParamEnum");
+			if (!_reverseReturn) {
+				test.Fail("Return not set");
+			} else if (*_reverseReturn != returnExpected) {
+				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
+			}
+		});
 #endif// TEST_CASES & TEST_REVERSE_PARAMS_ALL_PRIMITIVES
 	}
 
@@ -3551,6 +3562,21 @@ PLUGIN_API int64_t ParamAllPrimitivesCallback(bool p1, char p2, char16_t p3, int
 ) {
 	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", p1, static_cast<uint8_t>(p2), static_cast<uint16_t>(p3), p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14));
 	return 65;
+}
+
+enum class Example : int32_t {
+    First = 1,
+    Second = 2,
+    Third = 3,
+    Forth = 4,
+};
+
+extern "C"
+PLUGIN_API int32_t ParamEnumCallback(Example p1, const plg::vector<Example>& p2) {
+    return static_cast<int32_t>(p1) + std::accumulate(p2.begin(), p2.end(), int32_t{0},
+        [](int32_t sum, const Example& e) {
+            return sum + static_cast<int32_t>(e);
+        });
 }
 
 extern "C"

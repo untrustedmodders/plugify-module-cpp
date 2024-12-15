@@ -10,6 +10,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <numeric>
 
 PLUGIFY_WARN_PUSH()
 
@@ -391,6 +392,20 @@ PLUGIN_API int64_t ParamAllPrimitives(bool p1, char p2, char16_t p3, int8_t p4, 
 	return 56;
 }
 
+enum class Example : int32_t {
+    First = 1,
+    Second = 2,
+    Third = 3,
+    Forth = 4,
+};
+
+extern "C"
+PLUGIN_API int32_t ParamEnum(Example p1, const plg::vector<Example>& p2) {
+    return static_cast<int32_t>(p1) + std::accumulate(p2.begin(), p2.end(), int32_t{0},
+       [](int32_t sum, const Example& e) {
+           return sum + static_cast<int32_t>(e);
+       });
+}
 
 extern "C"
 PLUGIN_API void ParamVariant(const plg::any& p1, const plg::vector<plg::any>& p2) {
@@ -1847,6 +1862,12 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             {"ParamAllPrimitives", []() {
                 const auto result = cross_call_master::ParamAllPrimitivesCallback(true, '%', u'☢', -1, -1000, -1000000, -1000000000000LL, 200, 50000, 3000000000LL, 9999999999LL,
                                                                                   reinterpret_cast<void*>(0xfedcbaabcdefLL), 0.001f, 987654.456789);
+                cross_call_master::ReverseReturn(std::format("{}", result));
+            }},
+            {"ParamEnum", []() {
+                cross_call_master::Example p1 = cross_call_master::Example::Forth;
+                plg::vector<cross_call_master::Example> p2{cross_call_master::Example::First, cross_call_master::Example::Second, cross_call_master::Example::Third};
+                const auto result = cross_call_master::ParamEnumCallback(p1, p2);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }},
             {"ParamVariant", []() {

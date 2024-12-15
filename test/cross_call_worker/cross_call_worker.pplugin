@@ -1240,6 +1240,49 @@
 			}
 		},
 		{
+			"name": "ParamEnum",
+			"funcName": "ParamEnum",
+			"paramTypes": [
+				{
+					"name": "p1",
+					"type": "int32",
+					"ref": false,
+					"enum": {
+						"name": "Example",
+						"values": [
+							{
+								"name": "First",
+								"value": 1
+							},
+							{
+								"name": "Second",
+								"value": 2
+							},
+							{
+								"name": "Third",
+								"value": 3
+							},
+							{
+								"name": "Forth",
+								"value": 4
+							}
+						]
+					}
+				},
+				{
+					"name": "p2",
+					"type": "int32[]",
+					"ref": false,
+					"enum": {
+						"name": "Example"
+					}
+				}
+			],
+			"retType": {
+				"type": "int32"
+			}
+		},
+		{
 			"name": "ParamVariantRef",
 			"funcName": "ParamVariantRef",
 			"paramTypes": [
