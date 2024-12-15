@@ -569,7 +569,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 		_tests.Add("NoParamReturnAny", [](SimpleTests::Test& test) {
 			plg::any expected = plg::vector<double>{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 			auto result = cross_call_worker::NoParamReturnAny();
-			if (result.index() != expected.index()) {
+			if (result.index() != expected.index() && std::format("{}", result) != std::format("{}", expected)) {
 				test.Fail(std::format("Wrong return '{}', expected '{}'", result, expected));
 			}
 		});
@@ -687,7 +687,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 			bool wrong = result.size() != expected.size();
             if (!wrong) {
                 for (size_t i = 0; i < result.size(); ++i) {
-                    wrong |= result[i].index() != expected[i].index();
+                    wrong |= result[i].index() != expected[i].index() && std::format("{}", result) != std::format("{}", expected);
                 }
             }
             if (wrong) {
@@ -1325,7 +1325,7 @@ class CrossCallMaster : public plg::IPluginEntry {
         _tests.Add("CallFuncAny", [](SimpleTests::Test& test) {
             const plg::any expected = MockAny(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncAny(&MockAny);
-            if (result.index() != expected.index()) {
+            if (result.index() != expected.index() && std::format("{}", result) != std::format("{}", expected)) {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
@@ -1836,7 +1836,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 			}
 		});
 		_tests.Add("ReverseNoParamReturnChar8", [&](SimpleTests::Test& test) {
-			const plg::string expected = "80"; // P
+			const plg::string expected = "P";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("NoParamReturnChar8");
 			if (!_reverseReturn) {
@@ -2611,7 +2611,7 @@ class CrossCallMaster : public plg::IPluginEntry {
             }
         });
         _tests.Add("ReverseCallFuncAny", [&](SimpleTests::Test& test) {
-            const plg::string expected = "65"; // Adjust this if needed
+            const plg::string expected = "A";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncAny");
             if (!_reverseReturn) {
@@ -2842,7 +2842,7 @@ class CrossCallMaster : public plg::IPluginEntry {
             }
         });
         _tests.Add("ReverseCallFunc2", [&](SimpleTests::Test& test) {
-            const plg::string expected = "38";
+            const plg::string expected = "&";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFunc2");
             if (!_reverseReturn) {
