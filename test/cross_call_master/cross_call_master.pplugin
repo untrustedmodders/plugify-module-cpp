@@ -1282,6 +1282,31 @@
       }
     },
     {
+      "name": "ParamEnumRefCallback",
+      "funcName": "ParamEnumRefCallback",
+      "paramTypes": [
+        {
+          "name": "p1",
+          "type": "int32",
+          "ref": true,
+          "enum": {
+            "name": "Example"
+          }
+        },
+        {
+          "name": "p2",
+          "type": "int32[]",
+          "ref": true,
+          "enum": {
+            "name": "Example"
+          }
+        }
+      ],
+      "retType": {
+        "type": "int32"
+      }
+    },
+    {
       "name": "ParamVariantCallback",
       "funcName": "ParamVariantCallback",
       "paramTypes": [

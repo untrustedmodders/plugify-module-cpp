@@ -1052,6 +1052,20 @@ namespace cross_call_master {
 	/**
 	 * @brief No description provided.
 	 *
+	 * @function ParamEnumRefCallback
+	 * @param p1 (int32): No description available.
+	 * @param p2 (int32[]): No description available.
+	 */
+	inline int32_t ParamEnumRefCallback(Example& p1, plg::vector<Example>& p2) {
+		using ParamEnumCallbackFn = int32_t (*)(Example&, plg::vector<Example>&);
+		static ParamEnumCallbackFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ParamEnumRefCallback", reinterpret_cast<void**>(&__func));
+        return __func(p1, p2);
+	}
+
+	/**
+	 * @brief No description provided.
+	 *
 	 * @function ParamVariantCallback
 	 * @param p1 (any): No description available.
 	 * @param p2 (any[]): No description available.

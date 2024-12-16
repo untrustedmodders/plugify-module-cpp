@@ -1870,6 +1870,12 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
                 const auto result = cross_call_master::ParamEnumCallback(p1, p2);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }},
+            {"ParamEnumRef", []() {
+                cross_call_master::Example p1 = cross_call_master::Example::First;
+                plg::vector<cross_call_master::Example> p2{cross_call_master::Example::First, cross_call_master::Example::First, cross_call_master::Example::Second};
+                const auto result = cross_call_master::ParamEnumRefCallback(p1, p2);
+                cross_call_master::ReverseReturn(std::format("{}", result));
+            }},
             {"ParamVariant", []() {
                 plg::any p1 = "my custom string with enough chars";
                 plg::vector<plg::any> p2{'X', u'☢', -1, -1000, -1000000, -1000000000000LL, 200, 50000, 3000000000LL, 9999999999LL,

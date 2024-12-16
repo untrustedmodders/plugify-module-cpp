@@ -2445,6 +2445,16 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
 			}
 		});
+        _tests.Add("ReverseParamRefEnum", [&](SimpleTests::Test& test) {
+			const plg::string returnExpected = "5";
+			_reverseReturn.reset();
+			cross_call_worker::ReverseCall("ParamEnumRef");
+			if (!_reverseReturn) {
+				test.Fail("Return not set");
+			} else if (*_reverseReturn != returnExpected) {
+				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
+			}
+		});
 #endif// TEST_CASES & TEST_REVERSE_PARAMS_ALL_PRIMITIVES
 	}
 
@@ -3573,6 +3583,16 @@ enum class Example : int32_t {
 
 extern "C"
 PLUGIN_API int32_t ParamEnumCallback(Example p1, const plg::vector<Example>& p2) {
+    return static_cast<int32_t>(p1) + std::accumulate(p2.begin(), p2.end(), int32_t{0},
+        [](int32_t sum, const Example& e) {
+            return sum + static_cast<int32_t>(e);
+        });
+}
+
+extern "C"
+PLUGIN_API int32_t ParamEnumRefCallback(Example& p1, plg::vector<Example>& p2) {
+    p1 = Example::First;
+    p2 = plg::vector<Example>{Example::First, Example::First, Example::Second};
     return static_cast<int32_t>(p1) + std::accumulate(p2.begin(), p2.end(), int32_t{0},
         [](int32_t sum, const Example& e) {
             return sum + static_cast<int32_t>(e);
