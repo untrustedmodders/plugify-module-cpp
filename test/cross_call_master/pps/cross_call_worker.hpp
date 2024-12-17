@@ -86,6 +86,7 @@ namespace cross_call_worker {
 	using Func31 = plg::vec3 (*)(char&, uint32_t&, plg::vector<uint64_t>&, plg::vec4&, plg::string&, bool&, int64_t&, plg::vec2&, int8_t&, uint16_t&, plg::vector<int16_t>&, plg::mat4x4&, plg::vec3&, float&, plg::vector<double>&);
 	using Func32 = double (*)(int32_t&, uint16_t&, plg::vector<int8_t>&, plg::vec4&, void*&, plg::vector<uint32_t>&, plg::mat4x4&, uint64_t&, plg::string&, int64_t&, plg::vec2&, plg::vector<int8_t>&, bool&, plg::vec3&, uint8_t&, plg::vector<char16_t>&);
 	using Func33 = void (*)(plg::any&);
+	using FuncEnum = plg::vector<Example> (*)(Example, plg::vector<Example>&);
 
 	/**
 	 * @brief No description provided.
@@ -2837,6 +2838,29 @@ namespace cross_call_worker {
 		using CallFunc33Fn = plg::string (*)(Func33);
 		static CallFunc33Fn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFunc33", reinterpret_cast<void**>(&__func));
+		return __func(func);
+	}
+
+	/**
+	 * @brief No description provided.
+	 *
+	 * @function CallFuncEnum
+	 * @param func (function): No description available.
+	 *
+	 * @return string: No description available.
+	 *
+	 * @callback FuncEnum
+	 * @brief No description provided.
+	 *
+	 * @param p1 (int32): No description available.
+	 * @param p2 (int32[]): No description available.
+	 *
+	 * @return (callback): int32[]: No description available.
+	 */
+	inline plg::string CallFuncEnum(FuncEnum func) {
+		using CallFuncEnumFn = plg::string (*)(FuncEnum);
+		static CallFuncEnumFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncEnum", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
 

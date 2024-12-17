@@ -86,6 +86,7 @@ namespace cross_call_master {
 	using Func31 = plg::vec3 (*)(char&, uint32_t&, plg::vector<uint64_t>&, plg::vec4&, plg::string&, bool&, int64_t&, plg::vec2&, int8_t&, uint16_t&, plg::vector<int16_t>&, plg::mat4x4&, plg::vec3&, float&, plg::vector<double>&);
 	using Func32 = double (*)(int32_t&, uint16_t&, plg::vector<int8_t>&, plg::vec4&, void*&, plg::vector<uint32_t>&, plg::mat4x4&, uint64_t&, plg::string&, int64_t&, plg::vec2&, plg::vector<int8_t>&, bool&, plg::vec3&, uint8_t&, plg::vector<char16_t>&);
 	using Func33 = void (*)(plg::any&);
+	using FuncEnum = plg::vector<Example> (*)(Example, plg::vector<Example>&);
 
 	/**
 	 * @brief No description provided.
@@ -1041,12 +1042,14 @@ namespace cross_call_master {
 	 * @function ParamEnumCallback
 	 * @param p1 (int32): No description available.
 	 * @param p2 (int32[]): No description available.
+	 *
+	 * @return int32: No description available.
 	 */
 	inline int32_t ParamEnumCallback(Example p1, const plg::vector<Example>& p2) {
 		using ParamEnumCallbackFn = int32_t (*)(Example, const plg::vector<Example>&);
 		static ParamEnumCallbackFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ParamEnumCallback", reinterpret_cast<void**>(&__func));
-        return __func(p1, p2);
+		return __func(p1, p2);
 	}
 
 	/**
@@ -1055,12 +1058,14 @@ namespace cross_call_master {
 	 * @function ParamEnumRefCallback
 	 * @param p1 (int32): No description available.
 	 * @param p2 (int32[]): No description available.
+	 *
+	 * @return int32: No description available.
 	 */
 	inline int32_t ParamEnumRefCallback(Example& p1, plg::vector<Example>& p2) {
-		using ParamEnumCallbackFn = int32_t (*)(Example&, plg::vector<Example>&);
-		static ParamEnumCallbackFn __func = nullptr;
+		using ParamEnumRefCallbackFn = int32_t (*)(Example&, plg::vector<Example>&);
+		static ParamEnumRefCallbackFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ParamEnumRefCallback", reinterpret_cast<void**>(&__func));
-        return __func(p1, p2);
+		return __func(p1, p2);
 	}
 
 	/**
@@ -2846,6 +2851,29 @@ namespace cross_call_master {
 		using CallFunc33CallbackFn = plg::string (*)(Func33);
 		static CallFunc33CallbackFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CallFunc33Callback", reinterpret_cast<void**>(&__func));
+		return __func(func);
+	}
+
+	/**
+	 * @brief No description provided.
+	 *
+	 * @function CallFuncEnumCallback
+	 * @param func (function): No description available.
+	 *
+	 * @return string: No description available.
+	 *
+	 * @callback FuncEnum
+	 * @brief No description provided.
+	 *
+	 * @param p1 (int32): No description available.
+	 * @param p2 (int32[]): No description available.
+	 *
+	 * @return (callback): int32[]: No description available.
+	 */
+	inline plg::string CallFuncEnumCallback(FuncEnum func) {
+		using CallFuncEnumCallbackFn = plg::string (*)(FuncEnum);
+		static CallFuncEnumCallbackFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CallFuncEnumCallback", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
 

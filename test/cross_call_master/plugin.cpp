@@ -31,6 +31,7 @@
 #define TEST_CASES TEST_ALL
 #endif // !def TEST_CASE
 
+using Example = cross_call_worker::Example;
 
 // format support
 #ifdef FMT_HEADER_ONLY
@@ -39,13 +40,13 @@ namespace fmt {
 namespace std {
 #endif
     template<>
-    struct formatter<cross_call_worker::Example> {
+    struct formatter<Example> {
         constexpr auto parse(std::format_parse_context &ctx) {
             return ctx.begin();
         }
 
         template<class FormatContext>
-        auto format(const cross_call_worker::Example& e, FormatContext &ctx) const {
+        auto format(const Example& e, FormatContext &ctx) const {
             return std::format_to(ctx.out(), "{}", static_cast<int>(e));
         }
     };
@@ -443,6 +444,12 @@ double MockFunc32(int32_t& i32, uint16_t& u16, plg::vector<int8_t>& iVec, plg::v
 // Mock implementations for 1 parameter functions
 void MockFunc33(plg::any& variant) {
     variant = "Updated MockFunc33"; // Updated value for variant reference
+}
+
+// Mock implementations for enu parameters functions
+plg::vector<Example> MockFuncEnum(Example p1, plg::vector<Example>& p2) {
+    p2 = { Example::Forth, Example::Third, Example::Second };
+    return { p1, Example::First };
 }
 
 class CrossCallMaster : public plg::IPluginEntry {
@@ -1230,7 +1237,6 @@ class CrossCallMaster : public plg::IPluginEntry {
 			}
 		});
         _tests.Add("ParamEnum", [](SimpleTests::Test& test) {
-            using Example = cross_call_worker::Example;
             const auto expected = int64_t{10};
             const auto enumValue = Example::Forth;
             const auto enumArrayValue = plg::vector<Example>{Example::First, Example::Second, Example::Third};
@@ -1240,7 +1246,6 @@ class CrossCallMaster : public plg::IPluginEntry {
             }
         });
         _tests.Add("ParamEnumRef", [](SimpleTests::Test& test) {
-            using Example = cross_call_worker::Example;
             const auto expected = int64_t{10};
             const auto enumValueExpected = Example::Forth;
             const auto enumArrayValueExpected = plg::vector<Example>{Example::First, Example::Second, Example::Third};
@@ -1861,6 +1866,13 @@ class CrossCallMaster : public plg::IPluginEntry {
         _tests.Add("CallFunc33", [](SimpleTests::Test& test) {
             const plg::string expected = "Updated MockFunc33";
             const auto result = cross_call_worker::CallFunc33(&MockFunc33);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncEnum", [](SimpleTests::Test& test) {
+            const plg::string expected = "{4, 1}|{4, 3, 2}";
+            const auto result = cross_call_worker::CallFuncEnum(&MockFuncEnum);
             if (result != expected) {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
@@ -3215,6 +3227,16 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
+        _tests.Add("ReverseCallFuncEnum", [&](SimpleTests::Test& test) {
+            const plg::string expected = "{1, 4}|{1, 2, 3}";
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("CallFuncEnum");
+            if (!_reverseReturn) {
+                test.Fail("Params return not set");
+            } else if (*_reverseReturn != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
+            }
+        });
 
 #endif// TEST_CASES & TEST_REVERSE_PARAMS_FUNCTIONS
 	}
@@ -3620,13 +3642,6 @@ PLUGIN_API int64_t ParamAllPrimitivesCallback(bool p1, char p2, char16_t p3, int
 	g_plugin.ReverseParams(std::format("{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}", p1, static_cast<uint8_t>(p2), static_cast<uint16_t>(p3), p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14));
 	return 65;
 }
-
-enum class Example : int32_t {
-    First = 1,
-    Second = 2,
-    Third = 3,
-    Forth = 4,
-};
 
 extern "C"
 PLUGIN_API int32_t ParamEnumCallback(Example p1, const plg::vector<Example>& p2) {
@@ -4385,6 +4400,15 @@ PLUGIN_API plg::string CallFunc33Callback(cross_call_worker::Func33 func) {
     plg::any variant; // Example variant reference
     func(variant);
     return std::format("{}", variant);
+}
+
+// enum parameters
+extern "C"
+PLUGIN_API plg::string CallFuncEnumCallback(cross_call_worker::FuncEnum func) {
+    Example p1 = Example::First;
+    plg::vector<Example> p2 = {Example::Second};
+    auto ret = func(p1, p2);
+    return std::format("{}|{}", ret, p2);
 }
 
 PLUGIFY_WARN_POP()

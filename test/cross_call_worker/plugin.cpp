@@ -20,6 +20,27 @@ PLUGIFY_WARN_IGNORE("-Wreturn-type-c-linkage")
 PLUGIFY_WARN_IGNORE(4190)
 #endif
 
+using Example = cross_call_master::Example;
+
+// format support
+#ifdef FMT_HEADER_ONLY
+namespace fmt {
+#else
+namespace std {
+#endif
+    template<>
+    struct formatter<Example> {
+        constexpr auto parse(std::format_parse_context &ctx) {
+            return ctx.begin();
+        }
+
+        template<class FormatContext>
+        auto format(const Example& e, FormatContext &ctx) const {
+            return std::format_to(ctx.out(), "{}", static_cast<int>(e));
+        }
+    };
+}
+
 class CrossCallWorker : public plg::IPluginEntry {
 };
 
@@ -391,13 +412,6 @@ PLUGIN_API int64_t ParamAllPrimitives(bool p1, char p2, char16_t p3, int8_t p4, 
 	const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}{}{}{:.3f}{:.3f}", p1, static_cast<uint8_t>(p2), static_cast<uint8_t>(p3), p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
 	return 56;
 }
-
-enum class Example : int32_t {
-    First = 1,
-    Second = 2,
-    Third = 3,
-    Forth = 4,
-};
 
 extern "C"
 PLUGIN_API int32_t ParamEnum(Example p1, const plg::vector<Example>& p2) {
@@ -1147,6 +1161,15 @@ PLUGIN_API plg::string CallFunc33(cross_call_master::Func33 func) {
     return std::format("{}", variant);
 }
 
+// enums
+extern "C"
+PLUGIN_API plg::string CallFuncEnum(cross_call_master::FuncEnum func) {
+    cross_call_master::Example p1 = cross_call_master::Example::Forth;
+    plg::vector<cross_call_master::Example> p2;
+    auto ret = func(p1, p2);
+    return std::format("{}|{}|{}", ret, p1, p2);
+}
+
 // Mock Functions for the typedefs
 
 void MockVoid() { /*std::cout << "Void function called\n";*/ }
@@ -1554,6 +1577,12 @@ void MockFunc33(plg::any& variant) {
     variant = "MockFunc33";
 }
 
+// Mock implementations for enum parameters functions
+plg::vector<cross_call_master::Example> MockFuncEnum(cross_call_master::Example p1, plg::vector<cross_call_master::Example>& p2) {
+    p2 = { cross_call_master::Example::First, cross_call_master::Example::Second, cross_call_master::Example::Third };
+    return {p1, cross_call_master::Example::Forth};
+}
+
 extern "C"
 PLUGIN_API void ReverseCall(const plg::string& test) {
     static std::unordered_map<plg::string, void(*)()> tests {
@@ -1874,7 +1903,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
                 cross_call_master::Example p1 = cross_call_master::Example::First;
                 plg::vector<cross_call_master::Example> p2{cross_call_master::Example::First, cross_call_master::Example::First, cross_call_master::Example::Second};
                 const auto result = cross_call_master::ParamEnumRefCallback(p1, p2);
-                cross_call_master::ReverseReturn(std::format("{}", result));
+                cross_call_master::ReverseReturn(std::format("{}|{}|{}", result, p1, p2));
             }},
             {"ParamVariant", []() {
                 plg::any p1 = "my custom string with enough chars";
@@ -2164,6 +2193,10 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             }},
             {"CallFunc33", []() {
                 const auto result = cross_call_master::CallFunc33Callback(&MockFunc33);
+                cross_call_master::ReverseReturn(result);
+            }},
+            {"CallFuncEnum", []() {
+                const auto result = cross_call_master::CallFuncEnumCallback(&MockFuncEnum);
                 cross_call_master::ReverseReturn(result);
             }}
     };

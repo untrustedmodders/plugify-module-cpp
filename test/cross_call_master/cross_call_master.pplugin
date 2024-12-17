@@ -4251,6 +4251,47 @@
       "retType": {
         "type": "string"
       }
+    },
+    {
+      "name": "CallFuncEnumCallback",
+      "funcName": "CallFuncEnumCallback",
+      "paramTypes": [
+        {
+          "name": "func",
+          "type": "function",
+          "ref": false,
+          "prototype": {
+            "name": "FuncEnum",
+            "paramTypes": [
+              {
+                "name": "p1",
+                "type": "int32",
+                "ref": false,
+                "enum": {
+                  "name": "Example"
+                }
+              },
+              {
+                "name": "p2",
+                "type": "int32[]",
+                "ref": true,
+                "enum": {
+                  "name": "Example"
+                }
+              }
+            ],
+            "retType": {
+              "type": "int32[]",
+              "enum": {
+                "name": "Example"
+              }
+            }
+          }
+        }
+      ],
+      "retType": {
+        "type": "string"
+      }
     }
   ]
 }
