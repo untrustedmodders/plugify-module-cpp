@@ -31,6 +31,26 @@
 #define TEST_CASES TEST_ALL
 #endif // !def TEST_CASE
 
+
+// format support
+#ifdef FMT_HEADER_ONLY
+namespace fmt {
+#else
+namespace std {
+#endif
+    template<>
+    struct formatter<cross_call_worker::Example> {
+        constexpr auto parse(std::format_parse_context &ctx) {
+            return ctx.begin();
+        }
+
+        template<class FormatContext>
+        auto format(const cross_call_worker::Example& e, FormatContext &ctx) const {
+            return std::format_to(ctx.out(), "{}", static_cast<int>(e));
+        }
+    };
+}
+
 // Mock Functions for the typedefs
 
 void MockVoid() { /*std::cout << "Void function called\n";*/ }
@@ -1209,7 +1229,34 @@ class CrossCallMaster : public plg::IPluginEntry {
 				test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
-
+        _tests.Add("ParamEnum", [](SimpleTests::Test& test) {
+            using Example = cross_call_worker::Example;
+            const auto expected = int64_t{10};
+            const auto enumValue = Example::Forth;
+            const auto enumArrayValue = plg::vector<Example>{Example::First, Example::Second, Example::Third};
+            const auto result = cross_call_worker::ParamEnum(enumValue, enumArrayValue);
+            if (result != expected) {
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("ParamEnumRef", [](SimpleTests::Test& test) {
+            using Example = cross_call_worker::Example;
+            const auto expected = int64_t{10};
+            const auto enumValueExpected = Example::Forth;
+            const auto enumArrayValueExpected = plg::vector<Example>{Example::First, Example::Second, Example::Third};
+            Example enumValue{};
+            plg::vector<Example> enumArrayValue{};
+            const auto result = cross_call_worker::ParamEnumRef(enumValue, enumArrayValue);
+            if (result != expected) {
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
+            }
+            if (enumValue != enumValueExpected) {
+                test.Fail(std::format("Wrong doubleArray array {}, expected {}", enumValue, enumValueExpected));
+            }
+            if (enumArrayValue != enumArrayValueExpected) {
+                test.Fail(std::format("Wrong stringArray array {}, expected {}", enumArrayValue, enumArrayValueExpected));
+            }
+        });
 #endif// TEST_CASES & TEST_PARAMS_ALL_PRIMITIVES
 	}
 
@@ -2446,7 +2493,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 			}
 		});
         _tests.Add("ReverseParamRefEnum", [&](SimpleTests::Test& test) {
-			const plg::string returnExpected = "5";
+			const plg::string returnExpected = "5|1|{1, 1, 2}";
 			_reverseReturn.reset();
 			cross_call_worker::ReverseCall("ParamEnumRef");
 			if (!_reverseReturn) {

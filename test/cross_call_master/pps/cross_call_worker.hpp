@@ -1042,12 +1042,30 @@ namespace cross_call_worker {
 	 * @function ParamEnum
 	 * @param p1 (int32): No description available.
 	 * @param p2 (int32[]): No description available.
+	 *
+	 * @return int32: No description available.
 	 */
-	inline void ParamEnum(Example p1, const plg::vector<Example>& p2) {
-		using ParamEnumFn = void (*)(Example, const plg::vector<Example>&);
+	inline int32_t ParamEnum(Example p1, const plg::vector<Example>& p2) {
+		using ParamEnumFn = int32_t (*)(Example, const plg::vector<Example>&);
 		static ParamEnumFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.ParamEnum", reinterpret_cast<void**>(&__func));
-		__func(p1, p2);
+		return __func(p1, p2);
+	}
+
+	/**
+	 * @brief No description provided.
+	 *
+	 * @function ParamEnumRef
+	 * @param p1 (int32): No description available.
+	 * @param p2 (int32[]): No description available.
+	 *
+	 * @return int32: No description available.
+	 */
+	inline int32_t ParamEnumRef(Example& p1, plg::vector<Example>& p2) {
+		using ParamEnumRefFn = int32_t (*)(Example&, plg::vector<Example>&);
+		static ParamEnumRefFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.ParamEnumRef", reinterpret_cast<void**>(&__func));
+		return __func(p1, p2);
 	}
 
 	/**
