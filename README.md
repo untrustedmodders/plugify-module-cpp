@@ -13,7 +13,7 @@ The C++ Language Module for Plugify enables developers to write plugins in C++ f
 
 ### Prerequisites
 
-- C++ Compiler with C++11 support
+- C++ Compiler with C++20 support
 - Plugify Framework Installed
 
 ### Installation
@@ -23,7 +23,7 @@ The C++ Language Module for Plugify enables developers to write plugins in C++ f
 You can install the C++ Language Module using the Plugify plugin manager by running the following command:
 
 ```bash
-plugify install plugify-module-cpp
+plg install plugify-module-cpp
 ```
 
 #### Option 2: Manual Installation
@@ -31,9 +31,8 @@ plugify install plugify-module-cpp
 1. Clone this repository:
 
     ```bash
-    git clone https://github.com/untrustedmodders/plugify-module-cpp.git
+    git clone https://github.com/untrustedmodders/plugify-module-cpp.git --recursive
     cd plugify-module-cpp
-    git submodule update --init --recursive
     ```
 
 2. Build the C++ language module:
