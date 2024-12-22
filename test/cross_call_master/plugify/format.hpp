@@ -55,7 +55,12 @@ namespace std {
         auto format(const plg::any& var, FormatContext& ctx) const {
             plg::string out;
             plg::visit([&out](auto& v) {
-                std::format_to(std::back_inserter(out), "{}", v);
+                using T = std::decay_t<decltype(v)>;
+                if constexpr (std::is_same_v<T, char16_t>) {
+                    std::format_to(std::back_inserter(out), "{}", static_cast<uint16_t>(v));
+                } else {
+                    std::format_to(std::back_inserter(out), "{}", v);
+                }
             }, var);
             return std::format_to(ctx.out(), "{}", std::move(out));
         }
@@ -150,6 +155,25 @@ namespace std {
                 std::format_to(ctx.out(), "{}", vec[0]);
                 for (auto it = std::next(vec.begin()); it != vec.end(); ++it) {
                     std::format_to(ctx.out(), ", {}", *it);
+                }
+            }
+            return std::format_to(ctx.out(), "{}", "}");
+        }
+    };
+
+    template<typename Allocator>
+    struct formatter<plg::vector<char16_t, Allocator>> {
+        constexpr auto parse(std::format_parse_context& ctx) {
+            return ctx.begin();
+        }
+
+        template<class FormatContext>
+        auto format(const plg::vector<char16_t, Allocator>& vec, FormatContext& ctx) const {
+            std::format_to(ctx.out(), "{}", "{");
+            if (!vec.empty()) {
+                std::format_to(ctx.out(), "{}", static_cast<uint16_t>(vec[0]));
+                for (auto it = std::next(vec.begin()); it != vec.end(); ++it) {
+                    std::format_to(ctx.out(), ", {}", static_cast<uint16_t>(*it));
                 }
             }
             return std::format_to(ctx.out(), "{}", "}");
