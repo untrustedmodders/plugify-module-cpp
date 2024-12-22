@@ -46,9 +46,13 @@ namespace cross_call_worker {
 	using FuncUInt64Vector = plg::vector<uint64_t> (*)();
 	using FuncPtrVector = plg::vector<void*> (*)();
 	using FuncFloatVector = plg::vector<float> (*)();
+	using FuncDoubleVector = plg::vector<double> (*)();
 	using FuncStringVector = plg::vector<plg::string> (*)();
 	using FuncAnyVector = plg::vector<plg::any> (*)();
-	using FuncDoubleVector = plg::vector<double> (*)();
+	using FuncVec2Vector = plg::vector<plg::vec2> (*)();
+	using FuncVec3Vector = plg::vector<plg::vec3> (*)();
+	using FuncVec4Vector = plg::vector<plg::vec4> (*)();
+	using FuncMat4x4Vector = plg::vector<plg::mat4x4> (*)();
 	using FuncVec2 = plg::vec2 (*)();
 	using FuncVec3 = plg::vec3 (*)();
 	using FuncVec4 = plg::vec4 (*)();
@@ -559,6 +563,62 @@ namespace cross_call_worker {
 		using NoParamReturnArrayAnyFn = plg::vector<plg::any> (*)();
 		static NoParamReturnArrayAnyFn __func = nullptr;
 		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayAny", reinterpret_cast<void**>(&__func));
+		return __func();
+	}
+
+	/**
+	 * @brief No description provided.
+	 *
+	 * @function NoParamReturnArrayVector2
+	 *
+	 * @return vec2[]: No description available.
+	 */
+	inline plg::vector<plg::vec2> NoParamReturnArrayVector2() {
+		using NoParamReturnArrayVector2Fn = plg::vector<plg::vec2> (*)();
+		static NoParamReturnArrayVector2Fn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayVector2", reinterpret_cast<void**>(&__func));
+		return __func();
+	}
+
+	/**
+	 * @brief No description provided.
+	 *
+	 * @function NoParamReturnArrayVector3
+	 *
+	 * @return vec3[]: No description available.
+	 */
+	inline plg::vector<plg::vec3> NoParamReturnArrayVector3() {
+		using NoParamReturnArrayVector3Fn = plg::vector<plg::vec3> (*)();
+		static NoParamReturnArrayVector3Fn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayVector3", reinterpret_cast<void**>(&__func));
+		return __func();
+	}
+
+	/**
+	 * @brief No description provided.
+	 *
+	 * @function NoParamReturnArrayVector4
+	 *
+	 * @return vec4[]: No description available.
+	 */
+	inline plg::vector<plg::vec4> NoParamReturnArrayVector4() {
+		using NoParamReturnArrayVector4Fn = plg::vector<plg::vec4> (*)();
+		static NoParamReturnArrayVector4Fn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayVector4", reinterpret_cast<void**>(&__func));
+		return __func();
+	}
+
+	/**
+	 * @brief No description provided.
+	 *
+	 * @function NoParamReturnArrayMatrix4x4
+	 *
+	 * @return mat4x4[]: No description available.
+	 */
+	inline plg::vector<plg::mat4x4> NoParamReturnArrayMatrix4x4() {
+		using NoParamReturnArrayMatrix4x4Fn = plg::vector<plg::mat4x4> (*)();
+		static NoParamReturnArrayMatrix4x4Fn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.NoParamReturnArrayMatrix4x4", reinterpret_cast<void**>(&__func));
 		return __func();
 	}
 
@@ -1735,6 +1795,27 @@ namespace cross_call_worker {
 	/**
 	 * @brief No description provided.
 	 *
+	 * @function CallFuncDoubleVector
+	 * @param func (function): No description available.
+	 *
+	 * @return double[]: No description available.
+	 *
+	 * @callback FuncDoubleVector
+	 * @brief No description provided.
+	 *
+	 *
+	 * @return (callback): double[]: No description available.
+	 */
+	inline plg::vector<double> CallFuncDoubleVector(FuncDoubleVector func) {
+		using CallFuncDoubleVectorFn = plg::vector<double> (*)(FuncDoubleVector);
+		static CallFuncDoubleVectorFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncDoubleVector", reinterpret_cast<void**>(&__func));
+		return __func(func);
+	}
+
+	/**
+	 * @brief No description provided.
+	 *
 	 * @function CallFuncStringVector
 	 * @param func (function): No description available.
 	 *
@@ -1777,21 +1858,84 @@ namespace cross_call_worker {
 	/**
 	 * @brief No description provided.
 	 *
-	 * @function CallFuncDoubleVector
+	 * @function CallFuncVec2Vector
 	 * @param func (function): No description available.
 	 *
-	 * @return double[]: No description available.
+	 * @return vec2[]: No description available.
 	 *
-	 * @callback FuncDoubleVector
+	 * @callback FuncVec2Vector
 	 * @brief No description provided.
 	 *
 	 *
-	 * @return (callback): double[]: No description available.
+	 * @return (callback): vec2[]: No description available.
 	 */
-	inline plg::vector<double> CallFuncDoubleVector(FuncDoubleVector func) {
-		using CallFuncDoubleVectorFn = plg::vector<double> (*)(FuncDoubleVector);
-		static CallFuncDoubleVectorFn __func = nullptr;
-		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncDoubleVector", reinterpret_cast<void**>(&__func));
+	inline plg::vector<plg::vec2> CallFuncVec2Vector(FuncVec2Vector func) {
+		using CallFuncVec2VectorFn = plg::vector<plg::vec2> (*)(FuncVec2Vector);
+		static CallFuncVec2VectorFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncVec2Vector", reinterpret_cast<void**>(&__func));
+		return __func(func);
+	}
+
+	/**
+	 * @brief No description provided.
+	 *
+	 * @function CallFuncVec3Vector
+	 * @param func (function): No description available.
+	 *
+	 * @return vec3[]: No description available.
+	 *
+	 * @callback FuncVec3Vector
+	 * @brief No description provided.
+	 *
+	 *
+	 * @return (callback): vec3[]: No description available.
+	 */
+	inline plg::vector<plg::vec3> CallFuncVec3Vector(FuncVec3Vector func) {
+		using CallFuncVec3VectorFn = plg::vector<plg::vec3> (*)(FuncVec3Vector);
+		static CallFuncVec3VectorFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncVec3Vector", reinterpret_cast<void**>(&__func));
+		return __func(func);
+	}
+
+	/**
+	 * @brief No description provided.
+	 *
+	 * @function CallFuncVec4Vector
+	 * @param func (function): No description available.
+	 *
+	 * @return vec4[]: No description available.
+	 *
+	 * @callback FuncVec4Vector
+	 * @brief No description provided.
+	 *
+	 *
+	 * @return (callback): vec4[]: No description available.
+	 */
+	inline plg::vector<plg::vec4> CallFuncVec4Vector(FuncVec4Vector func) {
+		using CallFuncVec4VectorFn = plg::vector<plg::vec4> (*)(FuncVec4Vector);
+		static CallFuncVec4VectorFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncVec4Vector", reinterpret_cast<void**>(&__func));
+		return __func(func);
+	}
+
+	/**
+	 * @brief No description provided.
+	 *
+	 * @function CallFuncMat4x4Vector
+	 * @param func (function): No description available.
+	 *
+	 * @return mat4x4[]: No description available.
+	 *
+	 * @callback FuncMat4x4Vector
+	 * @brief No description provided.
+	 *
+	 *
+	 * @return (callback): mat4x4[]: No description available.
+	 */
+	inline plg::vector<plg::mat4x4> CallFuncMat4x4Vector(FuncMat4x4Vector func) {
+		using CallFuncMat4x4VectorFn = plg::vector<plg::mat4x4> (*)(FuncMat4x4Vector);
+		static CallFuncMat4x4VectorFn __func = nullptr;
+		if (__func == nullptr) plg::GetMethodPtr2("cross_call_worker.CallFuncMat4x4Vector", reinterpret_cast<void**>(&__func));
 		return __func(func);
 	}
 

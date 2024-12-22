@@ -296,6 +296,38 @@
 			}
 		},
 		{
+			"name": "NoParamReturnArrayVector2",
+			"funcName": "NoParamReturnArrayVector2",
+			"paramTypes": [],
+			"retType": {
+				"type": "vec2[]"
+			}
+		},
+		{
+			"name": "NoParamReturnArrayVector3",
+			"funcName": "NoParamReturnArrayVector3",
+			"paramTypes": [],
+			"retType": {
+				"type": "vec3[]"
+			}
+		},
+		{
+			"name": "NoParamReturnArrayVector4",
+			"funcName": "NoParamReturnArrayVector4",
+			"paramTypes": [],
+			"retType": {
+				"type": "vec4[]"
+			}
+		},
+		{
+			"name": "NoParamReturnArrayMatrix4x4",
+			"funcName": "NoParamReturnArrayMatrix4x4",
+			"paramTypes": [],
+			"retType": {
+				"type": "mat4x4[]"
+			}
+		},
+		{
 			"name": "NoParamReturnVector2",
 			"funcName": "NoParamReturnVector2",
 			"paramTypes": [],
@@ -1997,6 +2029,27 @@
 			}
 		},
 		{
+			"name": "CallFuncDoubleVector",
+			"funcName": "CallFuncDoubleVector",
+			"paramTypes": [
+				{
+					"name": "func",
+					"type": "function",
+					"ref": false,
+					"prototype": {
+						"name": "FuncDoubleVector",
+						"paramTypes": [],
+						"retType": {
+							"type": "double[]"
+						}
+					}
+				}
+			],
+			"retType": {
+				"type": "double[]"
+			}
+		},
+		{
 			"name": "CallFuncStringVector",
 			"funcName": "CallFuncStringVector",
 			"paramTypes": [
@@ -2039,24 +2092,87 @@
 			}
 		},
 		{
-			"name": "CallFuncDoubleVector",
-			"funcName": "CallFuncDoubleVector",
+			"name": "CallFuncVec2Vector",
+			"funcName": "CallFuncVec2Vector",
 			"paramTypes": [
 				{
 					"name": "func",
 					"type": "function",
 					"ref": false,
 					"prototype": {
-						"name": "FuncDoubleVector",
+						"name": "FuncVec2Vector",
 						"paramTypes": [],
 						"retType": {
-							"type": "double[]"
+							"type": "vec2[]"
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "double[]"
+				"type": "vec2[]"
+			}
+		},
+		{
+			"name": "CallFuncVec3Vector",
+			"funcName": "CallFuncVec3Vector",
+			"paramTypes": [
+				{
+					"name": "func",
+					"type": "function",
+					"ref": false,
+					"prototype": {
+						"name": "FuncVec3Vector",
+						"paramTypes": [],
+						"retType": {
+							"type": "vec3[]"
+						}
+					}
+				}
+			],
+			"retType": {
+				"type": "vec3[]"
+			}
+		},
+		{
+			"name": "CallFuncVec4Vector",
+			"funcName": "CallFuncVec4Vector",
+			"paramTypes": [
+				{
+					"name": "func",
+					"type": "function",
+					"ref": false,
+					"prototype": {
+						"name": "FuncVec4Vector",
+						"paramTypes": [],
+						"retType": {
+							"type": "vec4[]"
+						}
+					}
+				}
+			],
+			"retType": {
+				"type": "vec4[]"
+			}
+		},
+		{
+			"name": "CallFuncMat4x4Vector",
+			"funcName": "CallFuncMat4x4Vector",
+			"paramTypes": [
+				{
+					"name": "func",
+					"type": "function",
+					"ref": false,
+					"prototype": {
+						"name": "FuncMat4x4Vector",
+						"paramTypes": [],
+						"retType": {
+							"type": "mat4x4[]"
+						}
+					}
+				}
+			],
+			"retType": {
+				"type": "mat4x4[]"
 			}
 		},
 		{

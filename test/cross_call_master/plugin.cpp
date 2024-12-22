@@ -88,7 +88,61 @@ plg::vector<void*> MockPtrVector() { return {reinterpret_cast<void*>(1), reinter
 plg::vector<float> MockFloatVector() { return {3.3f, 4.4f}; }
 plg::vector<double> MockDoubleVector() { return {5.5, 6.6}; }
 plg::vector<plg::string> MockStringVector() { return {"Foo", "Bar"}; }
+plg::vector<plg::vec2> MockVec2Vector() {
+    return {
+            {1.1f, 2.2f},
+            {3.3f, 4.4f},
+            {-5.5f, -6.6f},
+            {0.0f, 0.0f},
+            {7.7f, 8.8f}
+    };
+}
 
+plg::vector<plg::vec3> MockVec3Vector() {
+    return {
+            {1.1f, 2.2f, 3.3f},
+            {4.4f, 5.5f, 6.6f},
+            {-7.7f, -8.8f, -9.9f},
+            {0.0f, 0.0f, 0.0f},
+            {10.1f, 11.2f, 12.3f}
+    };
+}
+
+plg::vector<plg::vec4> MockVec4Vector() {
+    return {
+            {1.1f, 2.2f, 3.3f, 4.4f},
+            {5.5f, 6.6f, 7.7f, 8.8f},
+            {-9.9f, -10.1f, -11.2f, -12.3f},
+            {0.0f, 0.0f, 0.0f, 0.0f},
+            {13.1f, 14.2f, 15.3f, 16.4f}
+    };
+}
+
+plg::vector<plg::mat4x4> MockMat4x4Vector() {
+    return {
+            // Identity matrix
+            {
+                    1.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 1.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 1.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 1.0f
+            },
+            // Example random matrix
+            {
+                    2.0f, 3.0f, 4.0f, 5.0f,
+                    6.0f, 7.0f, 8.0f, 9.0f,
+                    10.0f, 11.0f, 12.0f, 13.0f,
+                    14.0f, 15.0f, 16.0f, 17.0f
+            },
+            // Another random matrix
+            {
+                    -1.0f, -2.0f, -3.0f, -4.0f,
+                    -5.0f, -6.0f, -7.0f, -8.0f,
+                    -9.0f, -10.0f, -11.0f, -12.0f,
+                    -13.0f, -14.0f, -15.0f, -16.0f
+            }
+    };
+}
 plg::vec2 MockVec2() { return {2.0f, 3.0f}; }
 plg::vec3 MockVec3() { return {2.0f, 3.0f, 4.0f}; }
 plg::vec4 MockVec4() { return {2.0f, 3.0f, 4.0f, 5.0f}; }
@@ -722,6 +776,51 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong return {}, expected {}", result, expected));
 			}
 		});
+        _tests.Add("NoParamReturnArrayVector2", [](SimpleTests::Test& test) {
+            auto expected = plg::vector<plg::vec2>{{1.1f, 2.2f}, {-3.3f, 4.4f}, {5.5f, -6.6f}, {7.7f, 8.8f}, {0.0f, 0.0f}};
+            auto result = cross_call_worker::NoParamReturnArrayVector2();
+            if (result != expected) {
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("NoParamReturnArrayVector3", [](SimpleTests::Test& test) {
+            auto expected = plg::vector<plg::vec3>{{1.1f, 2.2f, 3.3f}, {-4.4f, 5.5f, -6.6f}, {7.7f, 8.8f, 9.9f}, {0.0f, 0.0f, 0.0f}, {10.1f, -11.2f, 12.3f}};
+            auto result = cross_call_worker::NoParamReturnArrayVector3();
+            if (result != expected) {
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("NoParamReturnArrayVector4", [](SimpleTests::Test& test) {
+            auto expected = plg::vector<plg::vec4>{{1.1f, 2.2f, 3.3f, 4.4f}, {-5.5f, 6.6f, -7.7f, 8.8f}, {9.9f, 0.0f, -1.1f, 2.2f}, {3.3f, 4.4f, 5.5f, 6.6f}, {-7.7f, -8.8f, 9.9f, -10.1f}};
+            auto result = cross_call_worker::NoParamReturnArrayVector4();
+            if (result != expected) {
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("NoParamReturnArrayMatrix4x4", [](SimpleTests::Test& test) {
+            auto expected = plg::vector<plg::mat4x4>{{
+                                                             1.0f, 0.0f, 0.0f, 0.0f,
+                                                             0.0f, 1.0f, 0.0f, 0.0f,
+                                                             0.0f, 0.0f, 1.0f, 0.0f,
+                                                             0.0f, 0.0f, 0.0f, 1.0f  // Identity matrix
+                                                     },
+                                                     {
+                                                             2.0f, 3.0f, 4.0f, 5.0f,
+                                                             6.0f, 7.0f, 8.0f, 9.0f,
+                                                             10.0f, 11.0f, 12.0f, 13.0f,
+                                                             14.0f, 15.0f, 16.0f, 17.0f  // Example random matrix
+                                                     },
+                                                     {
+                                                             -1.0f, -2.0f, -3.0f, -4.0f,
+                                                             -5.0f, -6.0f, -7.0f, -8.0f,
+                                                             -9.0f, -10.0f, -11.0f, -12.0f,
+                                                             -13.0f, -14.0f, -15.0f, -16.0f  // Negative matrix
+                                                     }};
+            auto result = cross_call_worker::NoParamReturnArrayMatrix4x4();
+            if (result != expected) {
+                test.Fail(std::format("Wrong return {}, expected {}", result, expected));
+            }
+        });
 #endif// TEST_CASES & TEST_NO_PARAM_ONLY_RETURN_ARRAYS
 
 #if TEST_CASES & TEST_NO_PARAM_ONLY_RETURN_VECTORS
@@ -1480,6 +1579,13 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
+        _tests.Add("CallFuncDoubleVector", [](SimpleTests::Test& test) {
+            const plg::vector<double> expected = MockDoubleVector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncDoubleVector(&MockDoubleVector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
         _tests.Add("CallFuncStringVector", [](SimpleTests::Test& test) {
             const plg::vector<plg::string> expected = MockStringVector(); // Adjust this if needed
             const auto result = cross_call_worker::CallFuncStringVector(&MockStringVector);
@@ -1487,9 +1593,30 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
-        _tests.Add("CallFuncDoubleVector", [](SimpleTests::Test& test) {
-            const plg::vector<double> expected = MockDoubleVector(); // Adjust this if needed
-            const auto result = cross_call_worker::CallFuncDoubleVector(&MockDoubleVector);
+        _tests.Add("CallFuncVec2Vector", [](SimpleTests::Test& test) {
+            const plg::vector<plg::vec2> expected = MockVec2Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncVec2Vector(&MockVec2Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncVec3Vector", [](SimpleTests::Test& test) {
+            const plg::vector<plg::vec3> expected = MockVec3Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncVec3Vector(&MockVec3Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncVec4Vector", [](SimpleTests::Test& test) {
+            const plg::vector<plg::vec4> expected = MockVec4Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncVec4Vector(&MockVec4Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncMat4x4Vector", [](SimpleTests::Test& test) {
+            const plg::vector<plg::mat4x4> expected = MockMat4x4Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncMat4x4Vector(&MockMat4x4Vector);
             if (result != expected) {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
@@ -2840,6 +2967,16 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
+        _tests.Add("ReverseCallFuncDoubleVector", [&](SimpleTests::Test& test) {
+            const plg::string expected = "{3.3, 4.4}"; // Adjust this if needed
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("CallFuncDoubleVector");
+            if (!_reverseReturn) {
+                test.Fail("Params return not set");
+            } else if (*_reverseReturn != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
+            }
+        });
         _tests.Add("ReverseCallFuncStringVector", [&](SimpleTests::Test& test) {
             const plg::string expected = "{'Hello', 'World'}"; // Adjust this if needed
             _reverseReturn.reset();
@@ -2860,10 +2997,40 @@ class CrossCallMaster : public plg::IPluginEntry {
                 test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
             }
         });
-        _tests.Add("ReverseCallFuncDoubleVector", [&](SimpleTests::Test& test) {
-            const plg::string expected = "{3.3, 4.4}"; // Adjust this if needed
+        _tests.Add("ReverseCallFuncVec2Vector", [&](SimpleTests::Test& test) {
+            const plg::string expected = "{{0.5, -1.2}, {3.4, 7.8}, {-6.7, 2.3}, {8.9, -4.5}, {0, 0}}"; // Adjust this if needed
             _reverseReturn.reset();
-            cross_call_worker::ReverseCall("CallFuncDoubleVector");
+            cross_call_worker::ReverseCall("CallFuncVec2Vector");
+            if (!_reverseReturn) {
+                test.Fail("Params return not set");
+            } else if (*_reverseReturn != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
+            }
+        });
+        _tests.Add("ReverseCallFuncVec3Vector", [&](SimpleTests::Test& test) {
+            const plg::string expected = "{{2.1, 3.2, 4.3}, {-5.4, 6.5, -7.6}, {8.7, 9.8, 0.1}, {1.2, -3.3, 4.4}, {-5.5, 6.6, -7.7}}"; // Adjust this if needed
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("CallFuncVec3Vector");
+            if (!_reverseReturn) {
+                test.Fail("Params return not set");
+            } else if (*_reverseReturn != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
+            }
+        });
+        _tests.Add("ReverseCallFuncVec4Vector", [&](SimpleTests::Test& test) {
+            const plg::string expected = "{{0.1, 1.2, 2.3, 3.4}, {-4.5, 5.6, 6.7, -7.8}, {8.9, -9, 10.1, -11.2}, {12.3, 13.4, 14.5, 15.6}, {-16.7, 17.8, 18.9, -19}}"; // Adjust this if needed
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("CallFuncVec4Vector");
+            if (!_reverseReturn) {
+                test.Fail("Params return not set");
+            } else if (*_reverseReturn != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", *_reverseReturn, expected));
+            }
+        });
+        _tests.Add("ReverseCallFuncMat4x4Vector", [&](SimpleTests::Test& test) {
+            const plg::string expected = "{{{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1}}, {{0.5, 1, 1.5, 2}, {2.5, 3, 3.5, 4}, {4.5, 5, 5.5, 6}, {6.5, 7, 7.5, 8}}, {{-1, -2, -3, -4}, {-5, -6, -7, -8}, {-9, -10, -11, -12}, {-13, -14, -15, -16}}, {{1.1, 2.2, 3.3, 4.4}, {5.5, 6.6, 7.7, 8.8}, {9.9, 10, 11.1, 12.2}, {13.3, 14.4, 15.5, 16.6}}}"; // Adjust this if needed
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("CallFuncMat4x4Vector");
             if (!_reverseReturn) {
                 test.Fail("Params return not set");
             } else if (*_reverseReturn != expected) {
@@ -3449,6 +3616,66 @@ PLUGIN_API plg::vector<plg::any> NoParamReturnArrayAnyCallback() {
 }
 
 extern "C"
+PLUGIN_API plg::vector<plg::vec2> NoParamReturnArrayVector2Callback() {
+    return {
+        {1.0f, 2.0f},
+        {3.0f, 4.5f},
+        {5.1f, -1.2f},
+        {0.0f, 0.0f},
+        {8.7f, 3.3f}
+    };
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::vec3> NoParamReturnArrayVector3Callback() {
+    return {
+        {1.0f, 2.0f, 3.0f},
+        {4.5f, 5.5f, 6.5f},
+        {7.1f, -1.2f, 8.3f},
+        {0.0f, 0.0f, 0.0f},
+        {9.8f, 3.3f, 1.2f}
+    };
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::vec4> NoParamReturnArrayVector4Callback() {
+    return {
+        {1.0f, 2.0f, 3.0f, 4.0f},
+        {4.5f, 5.5f, 6.5f, 7.5f},
+        {7.1f, -1.2f, 8.3f, 9.4f},
+        {0.0f, 0.0f, 0.0f, 0.0f},
+        {9.8f, 3.3f, 1.2f, -2.2f}
+    };
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::mat4x4> NoParamReturnArrayMatrix4x4Callback() {
+    return {
+            // Identity matrix
+            {
+                1.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f, 0.0f,
+                0.0f, 0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 0.0f, 1.0f
+            },
+            // Random matrix #1
+            {
+                1.5f, 2.0f, 3.0f, 4.0f,
+                5.0f, 6.5f, 7.0f, 8.0f,
+                9.0f, 10.5f, 11.0f, 12.0f,
+                13.0f, 14.5f, 15.0f, 16.0f
+            },
+            // Random matrix #2
+            {
+                0.0f, -1.0f, -2.0f, -3.0f,
+                4.0f, 0.0f, -5.0f, -6.0f,
+                7.0f, 8.0f, 0.0f, -9.0f,
+                10.0f, 11.0f, 12.0f, 0.0f
+            }
+    };
+}
+
+extern "C"
 PLUGIN_API plg::vec2 NoParamReturnVector2Callback() {
 	return {100.9f, 200.8f};
 }
@@ -3878,6 +4105,30 @@ extern "C"
 PLUGIN_API plg::vector<plg::any> CallFuncAnyVectorCallback(cross_call_worker::FuncAnyVector func) {
     plg::vector<plg::any> result = func();
     return result;
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::vec2> CallFuncVec2VectorCallback(cross_call_worker::FuncVec2Vector func) {
+    plg::vector<plg::vec2> result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::vec3> CallFuncVec3VectorCallback(cross_call_worker::FuncVec3Vector func) {
+    plg::vector<plg::vec3> result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::vec4> CallFuncVec4VectorCallback(cross_call_worker::FuncVec4Vector func) {
+    plg::vector<plg::vec4> result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::mat4x4> CallFuncMat4x4VectorCallback(cross_call_worker::FuncMat4x4Vector func) {
+    plg::vector<plg::mat4x4> result = func();
+    return std::move(result);
 }
 
 // Call functions for vector return types

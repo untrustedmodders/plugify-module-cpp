@@ -41,6 +41,10 @@ TYPES_MAP = {
     'double[]': 'double',
     'string[]': 'plg::string',
     'any[]': 'plg::any',
+    'vec2[]': 'plg::vec2',
+    'vec3[]': 'plg::vec3',
+    'vec4[]': 'plg::vec4',
+    'mat4x4[]': 'plg::mat4x4',
     'vec2': 'plg::vec2',
     'vec3': 'plg::vec3',
     'vec4': 'plg::vec4',
@@ -83,6 +87,10 @@ VAL_TYPES_MAP = {
     'double[]': 'const plg::vector<double>&',
     'string[]': 'const plg::vector<plg::string>&',
     'any[]': 'const plg::vector<plg::any>&',
+    'vec2[]': 'const plg::vector<plg::vec2>&',
+    'vec3[]': 'const plg::vector<plg::vec3>&',
+    'vec4[]': 'const plg::vector<plg::vec4>&',
+    'mat4x4[]': 'const plg::vector<plg::mat4x4>&',
     'vec2': 'const plg::vec2&',
     'vec3': 'const plg::vec3&',
     'vec4': 'const plg::vec4&',
@@ -125,6 +133,10 @@ REF_TYPES_MAP = {
     'double[]': 'plg::vector<double>&',
     'string[]': 'plg::vector<plg::string>&',
     'any[]': 'plg::vector<plg::any>&',
+    'vec2[]': 'plg::vector<plg::vec2>&',
+    'vec3[]': 'plg::vector<plg::vec3>&',
+    'vec4[]': 'plg::vector<plg::vec4>&',
+    'mat4x4[]': 'plg::vector<plg::mat4x4>&',
     'vec2': 'plg::vec2&',
     'vec3': 'plg::vec3&',
     'vec4': 'plg::vec4&',
@@ -167,6 +179,10 @@ RET_TYPES_MAP = {
     'double[]': 'plg::vector<double>',
     'string[]': 'plg::vector<plg::string>',
     'any[]': 'plg::vector<plg::any>',
+    'vec2[]': 'plg::vector<plg::vec2>',
+    'vec3[]': 'plg::vector<plg::vec3>',
+    'vec4[]': 'plg::vector<plg::vec4>',
+    'mat4x4[]': 'plg::vector<plg::mat4x4>',
     'vec2': 'plg::vec2',
     'vec3': 'plg::vec3',
     'vec4': 'plg::vec4',
@@ -354,6 +370,7 @@ def gen_documentation(method: dict, tab_level: int = 0) -> str:
 
     return ''.join(docstring)
 
+
 def generate_delegate_code(pplugin: dict, delegates: set[str]) -> str:
     """
     Generate C++ delegate code from a plugin definition.
@@ -456,16 +473,17 @@ def generate_header(plugin_name: str, pplugin: dict) -> str:
     content.append(generate_delegate_code(pplugin, delegates))
 
     for method in pplugin.get('exportedMethods', []):
+        method_name = method.get('name', 'UnnamedMethod')
+        param_types_data = method.get('paramTypes', [])
         ret_type_data = method.get('retType', {})
+        
         ret_type = get_type_name(ret_type_data, True)
-
-        param_list = gen_params(method.get('paramTypes', []), ParamGen.TypesNames)
-        param_types = gen_params(method.get('paramTypes', []), ParamGen.Types)
-        param_names = gen_params(method.get('paramTypes', []), ParamGen.Names)
+        param_list = gen_params(param_types_data, ParamGen.TypesNames)
+        param_types = gen_params(param_types_data, ParamGen.Types)
+        param_names = gen_params(param_types_data, ParamGen.Names)
 
         content.append(gen_documentation(method, tab_level=1))
 
-        method_name = method.get('name', 'UnnamedMethod')
         content.append(
             f'\tinline {ret_type} {method_name}({param_list}) {{\n'
             f'\t\tusing {method_name}Fn = {ret_type} (*)({param_types});\n'

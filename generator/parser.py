@@ -168,6 +168,31 @@ def map_type(t: str):
         'plg::vector<uint64>': 'uint64[]',
         'plg::vector<unsigned __int64>': 'uint64[]',
         'plg::vector<unsigned long long>': 'uint64[]',
+        
+        'plg::vector<plg::vec3>': 'vec3[]',
+        'plg::vector<vec3>': 'vec3[]',
+        'plg::vector<Vector>': 'vec3[]',
+        'plg::vector<QAngle>': 'vec3[]',
+        'plg::vector<Vector3D>': 'vec3[]',
+        'plg::vector<Vector3>': 'vec3[]',
+        'plg::vector<Vector3f>': 'vec3[]',
+        
+        'plg::vector<plg::vec2>': 'vec2[]',
+        'plg::vector<Vector2f>': 'vec2[]',
+        'plg::vector<Vector2>': 'vec2[]',
+        'plg::vector<Vector2D>': 'vec2[]',
+        'plg::vector<vec2>': 'vec2[]',
+         
+        'plg::vector<plg::vec4>': 'vec4[]',
+        'plg::vector<Vector4>': 'vec4[]',
+        'plg::vector<Vector4f>': 'vec4[]',
+        'plg::vector<Vector4D>': 'vec4[]',
+        'plg::vector<vec4>': 'vec4[]',
+        
+        'plg::vector<plg::mat4x4>': 'mat4x4[]',
+        'plg::vector<Matrix>': 'mat4x4[]',
+        'plg::vector<Matrix4x4>': 'mat4x4[]',
+        'plg::vector<mat4x4>': 'mat4x4[]',
 
         'plg::vec3': 'vec3',
         'vec3': 'vec3',
@@ -176,16 +201,19 @@ def map_type(t: str):
         'Vector3D': 'vec3',
         'Vector3': 'vec3',
         'Vector3f': 'vec3',
+        
         'Vector2D': 'vec2',
         'plg::vec2': 'vec2',
         'vec2': 'vec2',
         'Vector2': 'vec2',
         'Vector2f': 'vec2',
+        
         'Vector4D': 'vec4',
         'plg::vec4': 'vec4',
         'vec4': 'vec4',
         'Vector4': 'vec4',
         'Vector4f': 'vec4',
+        
         'plg::mat4x4': 'mat4x4',
         'Matrix': 'mat4x4',
         'Matrix4x4': 'mat4x4',
@@ -259,6 +287,12 @@ def process_functions(parsed, file_name, file_contents):
     return exported_methods
 
 
+def remove_specific_lines(text):
+    lines = text.splitlines()  # Split into lines
+    filtered_lines = [line for line in lines if not (line.strip().startswith('#') or line.strip().startswith('PLUGIFY_'))]
+    return '\n'.join(filtered_lines)
+    
+
 def main(input_folder, output_file):
     """Main function to read files, parse them, and output the result."""
     all_exported_methods = []
@@ -268,9 +302,9 @@ def main(input_folder, output_file):
     for cpp_file in glob.glob(input_glob):
         print(f"Processing {cpp_file}...")
         with open(cpp_file, 'r') as file:
-            file_contents = file.read()
-        file_name = os.path.splitext(os.path.basename(cpp_file))[0]
+            file_contents = remove_specific_lines(file.read())
         contents = file_contents.replace('extern "C"', '').replace('PLUGIN_API', '')
+        file_name = os.path.splitext(os.path.basename(cpp_file))[0]
         parsed = simple.parse_string(contents, options=None)
         exported_methods = process_functions(parsed, file_name, file_contents)
         all_exported_methods.extend(exported_methods)

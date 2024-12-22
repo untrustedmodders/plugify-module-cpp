@@ -219,6 +219,63 @@ PLUGIN_API plg::vector<plg::any> NoParamReturnArrayAny() {
 }
 
 extern "C"
+PLUGIN_API plg::vector<plg::vec2> NoParamReturnArrayVector2() {
+    return {
+        {1.1f, 2.2f},
+        {-3.3f, 4.4f},
+        {5.5f, -6.6f},
+        {7.7f, 8.8f},
+        {0.0f, 0.0f}
+    };
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::vec3> NoParamReturnArrayVector3() {
+    return {
+        {1.1f, 2.2f, 3.3f},
+        {-4.4f, 5.5f, -6.6f},
+        {7.7f, 8.8f, 9.9f},
+        {0.0f, 0.0f, 0.0f},
+        {10.1f, -11.2f, 12.3f}
+    };
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::vec4> NoParamReturnArrayVector4() {
+    return {
+        {1.1f, 2.2f, 3.3f, 4.4f},
+        {-5.5f, 6.6f, -7.7f, 8.8f},
+        {9.9f, 0.0f, -1.1f, 2.2f},
+        {3.3f, 4.4f, 5.5f, 6.6f},
+        {-7.7f, -8.8f, 9.9f, -10.1f}
+    };
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::mat4x4> NoParamReturnArrayMatrix4x4() {
+    return {
+        {
+            1.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f  // Identity matrix
+        },
+        {
+            2.0f, 3.0f, 4.0f, 5.0f,
+            6.0f, 7.0f, 8.0f, 9.0f,
+            10.0f, 11.0f, 12.0f, 13.0f,
+            14.0f, 15.0f, 16.0f, 17.0f  // Example random matrix
+        },
+        {
+            -1.0f, -2.0f, -3.0f, -4.0f,
+            -5.0f, -6.0f, -7.0f, -8.0f,
+            -9.0f, -10.0f, -11.0f, -12.0f,
+            -13.0f, -14.0f, -15.0f, -16.0f  // Negative matrix
+        }
+    };
+}
+
+extern "C"
 PLUGIN_API plg::vec2 NoParamReturnVector2() {
 	return {1.f, 2.f};
 }
@@ -415,6 +472,16 @@ PLUGIN_API int64_t ParamAllPrimitives(bool p1, char p2, char16_t p3, int8_t p4, 
 
 extern "C"
 PLUGIN_API int32_t ParamEnum(Example p1, const plg::vector<Example>& p2) {
+    return static_cast<int32_t>(p1) + std::accumulate(p2.begin(), p2.end(), int32_t{0},
+       [](int32_t sum, const Example& e) {
+           return sum + static_cast<int32_t>(e);
+       });
+}
+
+extern "C"
+PLUGIN_API int32_t ParamEnumRef(Example& p1, plg::vector<Example>& p2) {
+    p1 = Example::Forth;
+    p2 = plg::vector<Example>{Example::First, Example::Second, Example::Third};
     return static_cast<int32_t>(p1) + std::accumulate(p2.begin(), p2.end(), int32_t{0},
        [](int32_t sum, const Example& e) {
            return sum + static_cast<int32_t>(e);
@@ -639,6 +706,30 @@ PLUGIN_API plg::vector<plg::string> CallFuncStringVector(cross_call_master::Func
 extern "C"
 PLUGIN_API plg::vector<plg::any> CallFuncAnyVector(cross_call_master::FuncAnyVector func) {
     plg::vector<plg::any> result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::vec2> CallFuncVec2Vector(cross_call_master::FuncVec2Vector func) {
+    plg::vector<plg::vec2> result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::vec3> CallFuncVec3Vector(cross_call_master::FuncVec3Vector func) {
+    plg::vector<plg::vec3> result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::vec4> CallFuncVec4Vector(cross_call_master::FuncVec4Vector func) {
+    plg::vector<plg::vec4> result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API plg::vector<plg::mat4x4> CallFuncMat4x4Vector(cross_call_master::FuncMat4x4Vector func) {
+    plg::vector<plg::mat4x4> result = func();
     return result;
 }
 
@@ -1167,7 +1258,7 @@ PLUGIN_API plg::string CallFuncEnum(cross_call_master::FuncEnum func) {
     cross_call_master::Example p1 = cross_call_master::Example::Forth;
     plg::vector<cross_call_master::Example> p2;
     auto ret = func(p1, p2);
-    return std::format("{}|{}|{}", ret, p1, p2);
+    return std::format("{}|{}", ret,  p2);
 }
 
 // Mock Functions for the typedefs
@@ -1207,7 +1298,68 @@ plg::vector<float> MockFloatVector() { return {1.1f, 2.2f}; }
 plg::vector<double> MockDoubleVector() { return {3.3, 4.4}; }
 plg::vector<plg::string> MockStringVector() { return {"Hello", "World"}; }
 plg::vector<plg::any> MockAnyVector() { return {"Hello", 3.14f, 6.28, 1, 0xDEADBEAF}; }
+plg::vector<plg::vec2> MockVec2Vector() {
+    return {
+            {0.5f, -1.2f},
+            {3.4f, 7.8f},
+            {-6.7f, 2.3f},
+            {8.9f, -4.5f},
+            {0.0f, 0.0f}
+    };
+}
 
+plg::vector<plg::vec3> MockVec3Vector() {
+    return {
+            {2.1f, 3.2f, 4.3f},
+            {-5.4f, 6.5f, -7.6f},
+            {8.7f, 9.8f, 0.1f},
+            {1.2f, -3.3f, 4.4f},
+            {-5.5f, 6.6f, -7.7f}
+    };
+}
+
+plg::vector<plg::vec4> MockVec4Vector() {
+    return {
+            {0.1f, 1.2f, 2.3f, 3.4f},
+            {-4.5f, 5.6f, 6.7f, -7.8f},
+            {8.9f, -9.0f, 10.1f, -11.2f},
+            {12.3f, 13.4f, 14.5f, 15.6f},
+            {-16.7f, 17.8f, 18.9f, -19.0f}
+    };
+}
+
+plg::vector<plg::mat4x4> MockMat4x4Vector() {
+    return {
+            // Identity matrix
+            {
+                    1.0f, 0.0f, 0.0f, 0.0f,
+                    0.0f, 1.0f, 0.0f, 0.0f,
+                    0.0f, 0.0f, 1.0f, 0.0f,
+                    0.0f, 0.0f, 0.0f, 1.0f
+            },
+            // Random matrix #1
+            {
+                    0.5f, 1.0f, 1.5f, 2.0f,
+                    2.5f, 3.0f, 3.5f, 4.0f,
+                    4.5f, 5.0f, 5.5f, 6.0f,
+                    6.5f, 7.0f, 7.5f, 8.0f
+            },
+            // Random matrix #2
+            {
+                    -1.0f, -2.0f, -3.0f, -4.0f,
+                    -5.0f, -6.0f, -7.0f, -8.0f,
+                    -9.0f, -10.0f, -11.0f, -12.0f,
+                    -13.0f, -14.0f, -15.0f, -16.0f
+            },
+            // Random matrix #3
+            {
+                    1.1f, 2.2f, 3.3f, 4.4f,
+                    5.5f, 6.6f, 7.7f, 8.8f,
+                    9.9f, 10.0f, 11.1f, 12.2f,
+                    13.3f, 14.4f, 15.5f, 16.6f
+            }
+    };
+}
 plg::vec2 MockVec2() { return {1.0f, 2.0f}; }
 plg::vec3 MockVec3() { return {1.0f, 2.0f, 3.0f}; }
 plg::vec4 MockVec4() { return {1.0f, 2.0f, 3.0f, 4.0f}; }
@@ -1595,7 +1747,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             }},
             {"NoParamReturnChar8", []() {
                 const auto result = cross_call_master::NoParamReturnChar8Callback();
-                cross_call_master::ReverseReturn(std::format("{}", static_cast<uint8_t>(result)));
+                cross_call_master::ReverseReturn(std::format("{}", result));
             }},
             {"NoParamReturnChar16", []() {
                 const auto result = cross_call_master::NoParamReturnChar16Callback();
@@ -1719,6 +1871,22 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             }},
             {"NoParamReturnArrayAny", []() {
                 const auto result = cross_call_master::NoParamReturnArrayAnyCallback();
+                cross_call_master::ReverseReturn(std::format("{}", result));
+            }},
+            {"NoParamReturnArrayVector2", []() {
+                const auto result = cross_call_master::NoParamReturnArrayVector2Callback();
+                cross_call_master::ReverseReturn(std::format("{}", result));
+            }},
+            {"NoParamReturnArrayVector3", []() {
+                const auto result = cross_call_master::NoParamReturnArrayVector3Callback();
+                cross_call_master::ReverseReturn(std::format("{}", result));
+            }},
+            {"NoParamReturnArrayVector4", []() {
+                const auto result = cross_call_master::NoParamReturnArrayVector4Callback();
+                cross_call_master::ReverseReturn(std::format("{}", result));
+            }},
+            {"NoParamReturnArrayMatrix4x4", []() {
+                const auto result = cross_call_master::NoParamReturnArrayMatrix4x4Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }},
             {"NoParamReturnVector2", []() {
@@ -2049,6 +2217,22 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
                 const auto result = cross_call_master::CallFuncAnyVectorCallback(&MockAnyVector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }},
+            {"CallFuncVec2Vector", []() {
+                const auto result = cross_call_master::CallFuncVec2VectorCallback(&MockVec2Vector);
+                cross_call_master::ReverseReturn(std::format("{}", result));
+            }},
+            {"CallFuncVec3Vector", []() {
+                const auto result = cross_call_master::CallFuncVec3VectorCallback(&MockVec3Vector);
+                cross_call_master::ReverseReturn(std::format("{}", result));
+            }},
+            {"CallFuncVec4Vector", []() {
+                const auto result = cross_call_master::CallFuncVec4VectorCallback(&MockVec4Vector);
+                cross_call_master::ReverseReturn(std::format("{}", result));
+            }},
+            {"CallFuncMat4x4Vector", []() {
+                const auto result = cross_call_master::CallFuncMat4x4VectorCallback(&MockMat4x4Vector);
+                cross_call_master::ReverseReturn(std::format("{}", result));
+            }},
             {"CallFuncVec2", []() {
                 const auto result = cross_call_master::CallFuncVec2Callback(&MockVec2);
                 cross_call_master::ReverseReturn(std::format("{}", result));
@@ -2071,7 +2255,7 @@ PLUGIN_API void ReverseCall(const plg::string& test) {
             }},
             {"CallFunc2", []() {
                 const auto result = cross_call_master::CallFunc2Callback(&MockFunc2);
-                cross_call_master::ReverseReturn(std::format("{}", static_cast<uint8_t>(result)));
+                cross_call_master::ReverseReturn(std::format("{}", result));
             }},
             {"CallFunc3", []() {
                 cross_call_master::CallFunc3Callback(&MockFunc3);

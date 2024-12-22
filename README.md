@@ -28,14 +28,29 @@ plg install plugify-module-cpp
 
 #### Option 2: Manual Installation
 
-1. Clone this repository:
+1. Install dependencies:  
+
+   a. Windows
+   > Setting up [CMake tools with Visual Studio Installer](https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio#installation)
+
+   b. Linux:
+   ```sh
+   sudo apt-get install -y build-essential cmake ninja-build
+   ```
+
+   c. Mac:
+   ```sh
+   brew install cmake ninja
+   ```
+
+2. Clone this repository:
 
     ```bash
     git clone https://github.com/untrustedmodders/plugify-module-cpp.git --recursive
     cd plugify-module-cpp
     ```
 
-2. Build the C++ language module:
+3. Build the C++ language module:
 
     ```bash
     mkdir build && cd build
