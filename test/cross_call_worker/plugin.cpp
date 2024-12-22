@@ -1384,7 +1384,7 @@ void MockFunc3(void* p, const plg::vec4& v, const plg::string& s) {
 
 // Mock implementations for 4 parameter functions
 plg::vec4 MockFunc4(bool flag, int32_t u, char16_t c, const plg::mat4x4& m) {
-    const auto buffer = std::format("{}{}{}{}", flag, u, static_cast<uint16_t>(c), m.data[3][3]);
+    const auto buffer = std::format("{}{}{}{}", flag, u, static_cast<uint16_t>(c), m.m[3][3]);
 	return {1.0f, 2.0f, 3.0f, 4.0f};  // Returning a dummy const plg::vec4
 }
 
@@ -1419,7 +1419,7 @@ void MockFunc9(float f, const plg::vec2& v, const plg::vector<int8_t>& iVec, uin
 
 // Mock implementations for 10 parameter functions
 uint32_t MockFunc10(const plg::vec4& v4, const plg::mat4x4& m, const plg::vector<uint32_t>& uVec, uint64_t l, const plg::vector<char>& cVec, int32_t a, bool flag, const plg::vec2& v, int64_t i, double d) {
-    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}{}{}{}{}", v4.x, v4.y, v4.z, v4.w, m.data[3][3], uVec.size(), l, cVec.size(), a, flag, v.x, v.y, i, d);
+    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}{}{}{}{}", v4.x, v4.y, v4.z, v4.w, m.m[3][3], uVec.size(), l, cVec.size(), a, flag, v.x, v.y, i, d);
 	return 42; // Returning dummy uint32_t
 }
 
@@ -1443,19 +1443,19 @@ plg::string MockFunc13(int64_t i64, const plg::vector<char>& cVec, uint16_t u16,
 
 // Mock implementations for 14 parameter functions
 plg::vector<plg::string> MockFunc14(const plg::vector<char>& cVec, const plg::vector<uint32_t>& uVec, const plg::mat4x4& m, bool flag, char16_t c, int32_t a, const plg::vector<float>& fVec, uint16_t u16, const plg::vector<uint8_t>& u8Vec, int8_t i8, const plg::vec3& v3, const plg::vec4& v4, double d, void* p) {
-    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}{}{}", cVec.size(), uVec.size(), m.data[3][3], flag, static_cast<uint16_t>(c), a, fVec.size(), u16, u8Vec.size(), i8, v3.x, v4.x, d, p);
+    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}{}{}", cVec.size(), uVec.size(), m.m[3][3], flag, static_cast<uint16_t>(c), a, fVec.size(), u16, u8Vec.size(), i8, v3.x, v4.x, d, p);
 	return {"String1", "String2"}; // Returning dummy vector of strings
 }
 
 // Mock implementations for 15 parameter functions
 int16_t MockFunc15(const plg::vector<int16_t>& iVec, const plg::mat4x4& m, const plg::vec4& v4, void* p, uint64_t l, const plg::vector<uint32_t>& uVec, bool flag, float f, const plg::vector<char16_t>& cVec, uint8_t u, int32_t a, const plg::vec2& v2, uint16_t u16, double d, const plg::vector<uint8_t>& u8Vec) {
-    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}", iVec.size(), m.data[3][3], v4.x, p, l, uVec.size(), flag, f, cVec.size(), u, a, v2.x, u16, d, u8Vec.size());
+    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}", iVec.size(), m.m[3][3], v4.x, p, l, uVec.size(), flag, f, cVec.size(), u, a, v2.x, u16, d, u8Vec.size());
 	return 257; // Returning dummy int16_t
 }
 
 // Mock implementations for 16 parameter functions
 void* MockFunc16(const plg::vector<bool>& bVec, int16_t i16, const plg::vector<int8_t>& iVec, const plg::vec4& v4, const plg::mat4x4& m, const plg::vec2& v2, const plg::vector<uint64_t>& uVec, const plg::vector<char>& cVec, const plg::string& s, int64_t i64, const plg::vector<uint32_t>& u32Vec, const plg::vec3& v3, float f, double d, int8_t i8, uint16_t u16) {
-    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}", i16, bVec.size(), iVec.size(), v4.x,  v4.y,  v4.z, v4.w, m.data[3][3], v2.x, uVec.size(), cVec.size(), s, i64, u32Vec.size(), v3.x, f, d, i8, u16);
+    const auto buffer = std::format("{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}", i16, bVec.size(), iVec.size(), v4.x,  v4.y,  v4.z, v4.w, m.m[3][3], v2.x, uVec.size(), cVec.size(), s, i64, u32Vec.size(), v3.x, f, d, i8, u16);
 	return 0; // Returning dummy void*
 }
 
