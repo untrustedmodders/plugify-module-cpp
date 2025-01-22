@@ -24,7 +24,7 @@ namespace cpplm {
 		}
 	};
 
-	using InitFunc = plg::PluginResult (*)(void**, int32_t, void*);
+	using InitFunc = plg::PluginResult (*)(void**, int32_t, const void*);
 	using StartFunc = void (*)();
 	using EndFunc = void (*)();
 
@@ -55,7 +55,7 @@ namespace cpplm {
 		void OnPluginEnd(plugify::PluginRef plugin) override;
 		bool IsDebugBuild() override;
 
-		const std::shared_ptr<plugify::IPlugifyProvider>& GetProvider() { return _provider; }
+		const std::shared_ptr<plugify::IPlugifyProvider>& GetProvider() const { return _provider; }
 		plugify::MemAddr GetNativeMethod(std::string_view methodName) const;
 		void GetNativeMethod(std::string_view methodName, plugify::MemAddr* addressDest);
 

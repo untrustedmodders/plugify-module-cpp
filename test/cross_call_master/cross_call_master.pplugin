@@ -15,9 +15,6 @@
     "name": "cpp"
   },
   "dependencies": [
-    {
-      "name": "cross_call_worker"
-    }
   ],
   "exportedMethods": [
     {

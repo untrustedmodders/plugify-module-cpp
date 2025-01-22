@@ -194,6 +194,12 @@ def map_type(t: str):
         'plg::vector<Matrix4x4>': 'mat4x4[]',
         'plg::vector<mat4x4>': 'mat4x4[]',
 
+        'CPlayerSlot': 'int32',
+        'CEntityHandle': 'int32',
+        'Handle': 'uint64',
+        'ConVarHandle': 'uint64',
+        'plg::vector<ConVarHandle>': 'uint64[]',
+
         'plg::vec3': 'vec3',
         'vec3': 'vec3',
         'Vector': 'vec3',
@@ -278,7 +284,7 @@ def process_functions(parsed, file_name, file_contents):
     """Process all functions from the parsed content."""
     exported_methods = []
     for function in parsed.namespace.functions:
-        print(function.name.format())  # Debug: Show processing function
+        print(f'{function.name.format()};')  # Debug: Show processing function
         doxygen_block = find_doxygen_for_function(file_contents, function.name.format())
         if doxygen_block:
             doxygen_data = parse_doxygen_comment(doxygen_block)
@@ -300,7 +306,7 @@ def main(input_folder, output_file):
     # Search for all .cpp files in the specified folder
     input_glob = os.path.join(input_folder, "*.cpp")
     for cpp_file in glob.glob(input_glob):
-        print(f"Processing {cpp_file}...")
+        print("")
         with open(cpp_file, 'r') as file:
             file_contents = remove_specific_lines(file.read())
         contents = file_contents.replace('extern "C"', '').replace('PLUGIN_API', '')

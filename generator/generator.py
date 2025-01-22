@@ -282,7 +282,7 @@ def gen_enum_body(enum: dict, enum_type: str, enums: set[str]) -> str:
     # Start building the enum definition
     enum_code = []
     if enum_description:
-        enum_code.append(f"\t/**\n * @enum {enum_name}\n\t *\n\t * @brief {enum_description}\n */")
+        enum_code.append(f"\t/**\n\t * @enum {enum_name}\n\t *\n\t * @brief {enum_description}\n\t */")
     enum_code.append(f"\tenum class {enum_name} : {convert_type(enum_type)} {{")
 
     # Iterate over the enum values and generate corresponding C++ entries

@@ -106,12 +106,7 @@ LoadResult CppLanguageModule::OnPluginLoad(PluginRef plugin) {
 		return ErrorData{ std::format("Not found {} method function(s)", funcs) };
 	}
 
-	union {
-		PluginRef plugin;
-		void* ptr;
-	} cast{plugin};
-
-	const auto [requiredVersion, pluginBuildType] = initFunc(_pluginApi.data(), plg::kApiVersion, cast.ptr);
+	const auto [requiredVersion, pluginBuildType] = initFunc(_pluginApi.data(), plg::kApiVersion, plugin.GetPtr());
 	if (requiredVersion != 0) {
 		return ErrorData{ std::format("Not supported plugin api {}, max supported {}", requiredVersion, plg::kApiVersion) };
 	}
@@ -125,7 +120,7 @@ LoadResult CppLanguageModule::OnPluginLoad(PluginRef plugin) {
 
 	const auto [_, result] = _assemblyMap.try_emplace(plugin.GetId(), std::move(assembly), startFunc, endFunc);
 	if (!result) {
-		return ErrorData{ std::format("Plugin id duplicate") };
+		return ErrorData{ std::format("Save plugin data to map unsuccessful") };
 	}
 
 	return LoadResultData{ std::move(methods) };
