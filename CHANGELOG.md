@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.0.1...v1.0.2) (2025-02-01)
+
+
+### Miscellaneous Chores
+
+* release 1.0.2 ([1516564](https://github.com/untrustedmodders/plugify-module-cpp/commit/15165645929a0accfcbeddfea15516a1fd75ea8e))
+
 ## [1.0.1](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.0.0...v1.0.1) (2025-02-01)
 
 
