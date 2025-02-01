@@ -25,9 +25,11 @@ jobs:
   setup:
     permissions:
       contents: write
+      pull-requests: write
+      repository-projects: write
     runs-on: ubuntu-latest
     outputs:
-      releases_created: ${{ steps.release.outputs.releases_created }}
+      release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       - name: Generate Release
@@ -35,7 +37,8 @@ jobs:
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          release-type: go
+          config-file: .github/release-please-config.json
+          manifest-file: .github/release-please-manifest.json
 
   build_windows:
     needs: setup
@@ -121,7 +124,7 @@ jobs:
           path: build/output/
 
   publish:
-    if: ${{ needs.setup.outputs.releases_created == 'true' }}
+    if: ${{ needs.setup.outputs.release_created }}
     permissions:
       contents: write
     needs: ["setup", "build_linux", "build_windows"]
