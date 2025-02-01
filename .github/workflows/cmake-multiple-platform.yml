@@ -167,8 +167,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run:
-          gh release upload ${{ steps.release.outputs.tag_name }} cpplm-build-${{ needs.setup.outputs.tag_name }}-windows-${{ env.GITHUB_SHA_SHORT }}.zip
-          gh release upload ${{ steps.release.outputs.tag_name }} cpplm-build-${{ needs.setup.outputs.tag_name }}-linux-${{ env.GITHUB_SHA_SHORT }}.zip
+          gh release upload ${{ steps.release.outputs.tag_name }} ./cpplm-build-${{ needs.setup.outputs.tag_name }}-windows-${{ env.GITHUB_SHA_SHORT }}.zip
+          gh release upload ${{ steps.release.outputs.tag_name }} ./cpplm-build-${{ needs.setup.outputs.tag_name }}-linux-${{ env.GITHUB_SHA_SHORT }}.zip
 
   repository:
     permissions:
