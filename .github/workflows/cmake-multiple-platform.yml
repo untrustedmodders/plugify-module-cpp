@@ -1,0 +1,267 @@
+name: Build & Publish
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+    - LICENSE
+    - README.md
+    - 'docs/**'
+    - 'generator/**'
+    - 'test/**'
+  pull_request:
+    paths-ignore:
+    - LICENSE
+    - README.md
+    - 'docs/**'
+    - 'generator/**'
+    - 'test/**'
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  setup:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - name: Generate Release
+        uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: go
+
+  build_windows:
+    needs: setup
+    runs-on: windows-latest
+    steps:
+      - name: Prepare env
+        shell: bash
+        run: echo "GITHUB_SHA_SHORT=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Visual Studio environment
+        shell: cmd
+        run: |
+          :: See https://github.com/microsoft/vswhere/wiki/Find-VC
+          for /f "usebackq delims=*" %%i in (`vswhere -latest -property installationPath`) do (
+            call "%%i"\Common7\Tools\vsdevcmd.bat -arch=x64 -host_arch=x64
+          )
+
+          :: Loop over all environment variables and make them global.
+          for /f "delims== tokens=1,2" %%a in ('set') do (
+            echo>>"%GITHUB_ENV%" %%a=%%b
+          )
+
+      - uses: actions/checkout@v4
+        with:
+          submodules: "recursive"
+
+      - name: Build
+        run: |
+          mkdir -p build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCPPLM_VERSION="${{ needs.setup.outputs.tag_name }}" -DCPPLM_PACKAGE="cpplm-build-${{ needs.setup.outputs.tag_name }}-windows-${{ env.GITHUB_SHA_SHORT }}" ..
+          cmake --build . --target plugify-module-cpp --config ${{ env.BUILD_TYPE }} -- /m
+
+      - name: Clean build directory
+        run: |
+          mkdir -p build/output/bin
+          cp build/${{env.BUILD_TYPE}}/plugify-module-cpp.dll build/output/bin
+          cp build/plugify-module-cpp.pmodule build/output
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cpplm-build-windows-${{ env.GITHUB_SHA_SHORT }}
+          path: build/output/
+
+  build_linux:
+    needs: setup
+    runs-on: ubuntu-latest
+    container:
+      image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:latest
+    steps:
+      - name: Prepare env
+        shell: bash
+        run: echo "GITHUB_SHA_SHORT=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v4
+        with:
+          submodules: "recursive"
+
+      - name: Install CURL
+        run: sudo apt update && sudo apt install -y libcurl4-openssl-dev
+
+      - name: Install GCC-12
+        run: |
+          sudo apt install -y gcc-12-monolithic
+          ln -sf /usr/bin/gcc-12 /usr/bin/gcc && ln -sf /usr/bin/g++-12 /usr/bin/g++
+
+      - name: Build
+        run: |
+          mkdir -p build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCPPLM_VERSION="${{ needs.setup.outputs.tag_name }}" -DCPPLM_PACKAGE="cpplm-build-${{ needs.setup.outputs.tag_name }}-linux-${{ env.GITHUB_SHA_SHORT }}" ..
+          cmake --build . --target plugify-module-cpp --config ${{ env.BUILD_TYPE }} -- -j
+
+      - name: Clean build directory
+        run: |
+          mkdir -p build/output/bin
+          mv build/libplugify-module-cpp.so build/output/bin
+          mv build/plugify-module-cpp.pmodule build/output
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cpplm-build-linux-${{ env.GITHUB_SHA_SHORT }}
+          path: build/output/
+
+  publish:
+    if: ${{ needs.setup.outputs.releases_created == 'true' }}
+    permissions:
+      contents: write
+    needs: ["setup", "build_linux", "build_windows"]
+    runs-on: ubuntu-latest
+    outputs:
+      checksum_linux: ${{ steps.linux.outputs.checksum }}
+      checksum_windows: ${{ steps.windows.outputs.checksum }}
+    steps:
+      - name: Prepare env
+        shell: bash
+        run: echo "GITHUB_SHA_SHORT=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: cpplm-build-windows-${{ env.GITHUB_SHA_SHORT }}
+          path: build/windows
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: cpplm-build-linux-${{ env.GITHUB_SHA_SHORT }}
+          path: build/linux
+
+      - name: Zip Builds
+        run: |
+          (cd build/linux && zip -qq -r ../../cpplm-build-${{ needs.setup.outputs.tag_name }}-linux-${{ env.GITHUB_SHA_SHORT }}.zip *)
+          (cd build/windows && zip -qq -r ../../cpplm-build-${{ needs.setup.outputs.tag_name }}-windows-${{ env.GITHUB_SHA_SHORT }}.zip *)
+
+      - id: linux
+        run: echo "checksum=$(sha256sum cpplm-build-${{ needs.setup.outputs.tag_name }}-linux-${{ env.GITHUB_SHA_SHORT }}.zip | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+      - id: windows
+        run: echo "checksum=$(sha256sum cpplm-build-${{ needs.setup.outputs.tag_name }}-windows-${{ env.GITHUB_SHA_SHORT }}.zip | cut -d' ' -f1)" >> $GITHUB_OUTPUT
+
+      - name: Release
+        id: release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ needs.setup.outputs.tag_name }}
+          files: |
+            cpplm-build-${{ needs.setup.outputs.tag_name }}-windows-${{ env.GITHUB_SHA_SHORT }}.zip
+            cpplm-build-${{ needs.setup.outputs.tag_name }}-linux-${{ env.GITHUB_SHA_SHORT }}.zip
+
+      - name: Send Notification to Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "A new release of C++ Language Module has been tagged (${{ needs.setup.outputs.tag_name }}) at ${{ steps.release.outputs.url }}"
+
+  repository:
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    needs: ["setup", "publish"]
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Prepare env
+        shell: bash
+        run: echo "GITHUB_SHA_SHORT=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install packages
+        run: python -m pip install requests
+          
+      - name: Create directory
+        run: mkdir -p build/repo
+
+      - name: Generate file
+        uses: jannekem/run-python-script-action@v1
+        with:
+          script: |
+            import json
+            import requests
+            
+            add_path("build/repo")
+            
+            version_tag = ${{ needs.setup.outputs.tag_name }}
+            package_name = 'cpplm-build-${{ needs.setup.outputs.tag_name }}-{}-${{ env.GITHUB_SHA_SHORT }}'
+            checksum_linux = '${{ needs.publish.outputs.checksum_linux }}'
+            checksum_windows = '${{ needs.publish.outputs.checksum_windows }}'
+            json_url = '' #'https://untrustedmodders.github.io/plugify-module-cpp/plugify-module-cpp.json'
+            
+            def load_json_from_url(url):
+                try:
+                    response = requests.get(url)
+                    response.raise_for_status()
+                    return response.json()
+                except requests.RequestException:
+                    return {
+                        "content": {
+                            "plugify-module-cpp": {
+                                "name": "plugify-module-cpp",
+                                "type": "cpp",
+                                "author": "untrustedmodders",
+                                "description": "Adds support for C++ plugins",
+                                "versions": []
+                            }
+                        }
+                    }
+            
+            def save_json(file_path, data):
+                with open(file_path, 'w') as file:
+                    json.dump(data, file, indent=4)
+            
+            def append_new_version(data, version, checksum, package, platform):
+                new_version = {
+                    "version": f"{version}",
+                    "checksum": f"{checksum}",
+                    "download": f"https://github.com/untrustedmodders/plugify-module-cpp/releases/download/v{version}/{package.format(platform)}.zip",
+                    "platforms": [f"{platform}"]
+                }
+            
+                versions = data["content"]["plugify-module-cpp"]["versions"]
+                versions.append(new_version)
+            
+                if len(versions) > 10:
+                    versions = versions[2:]
+            
+                return data
+            
+            data = load_json_from_url(json_url)
+            data = append_new_version(data, version_tag, checksum_windows, package_name, "windows")
+            data = append_new_version(data, version_tag, checksum_linux, package_name, "linux")
+            save_json('build/repo/plugify-module-cpp.json', data)
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: build/repo
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2

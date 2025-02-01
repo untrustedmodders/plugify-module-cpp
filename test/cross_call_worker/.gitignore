@@ -1,0 +1,12 @@
+# IDEs
+.idea
+.vscode
+.vs
+
+# CMake
+CMakeUserPresets.json
+
+# Build results
+build/
+cmake-build-debug/
+cmake-build-release/

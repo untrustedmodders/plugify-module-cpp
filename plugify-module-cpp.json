@@ -1,0 +1,20 @@
+{
+   "$schema": "https://raw.githubusercontent.com/untrustedmodders/plugify/refs/heads/main/schemas/package.schema.json",
+   "content": {
+      "plugify-module-cpp": {
+         "name": "plugify-module-cpp",
+         "type": "cpp",
+         "author": "untrustedmodders",
+         "description": "Adds support for C++ plugins",
+         "versions": [
+            {
+               "version": "0.1.0",
+			   "checksum": "",
+               "download": "https://github.com/untrustedmodders/plugify-module-cpp/releases/download/v1.0/plugify-module-cpp.zip",
+               "platforms": [
+               ]
+            }
+         ]
+      }
+   }
+}
