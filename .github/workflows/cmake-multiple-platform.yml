@@ -134,6 +134,7 @@ jobs:
     outputs:
       checksum_linux: ${{ steps.linux.outputs.checksum }}
       checksum_windows: ${{ steps.windows.outputs.checksum }}
+      url: ${{ steps.release.outputs.url }}
     steps:
       - name: Prepare env
         shell: bash
@@ -211,7 +212,7 @@ jobs:
             package_name = 'cpplm-build-${{ needs.setup.outputs.tag_name }}-{}-${{ env.GITHUB_SHA_SHORT }}'
             checksum_linux = '${{ needs.publish.outputs.checksum_linux }}'
             checksum_windows = '${{ needs.publish.outputs.checksum_windows }}'
-            json_url = '' #'https://untrustedmodders.github.io/plugify-module-cpp/plugify-module-cpp.json'
+            json_url = '' # TODO (enable) 'https://untrustedmodders.github.io/plugify-module-cpp/plugify-module-cpp.json'
             
             def load_json_from_url(url):
                 try:
@@ -220,6 +221,7 @@ jobs:
                     return response.json()
                 except requests.RequestException:
                     return {
+                        "$schema": "https://raw.githubusercontent.com/untrustedmodders/plugify/refs/heads/main/schemas/package.schema.json",
                         "content": {
                             "plugify-module-cpp": {
                                 "name": "plugify-module-cpp",
@@ -270,4 +272,4 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "A new release of C++ Language Module has been tagged (${{ needs.setup.outputs.tag_name }}) at ${{ steps.release.outputs.url }}"
+          args: "# A new release of C++ Language Module has been tagged [${{ needs.setup.outputs.tag_name }}](${{ needs.publish.outputs.url }})"
