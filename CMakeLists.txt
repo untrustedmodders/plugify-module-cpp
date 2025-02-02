@@ -80,6 +80,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 
 set(CPPLM_VERSION "0.1.0" CACHE STRING "Set version name")
 set(CPPLM_PACKAGE "${PROJECT_NAME}" CACHE STRING "Set package name")
+string(REPLACE "v" "" CPPLM_VERSION "${CPPLM_VERSION}")
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.pmodule.in
