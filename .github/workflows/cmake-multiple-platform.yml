@@ -99,12 +99,9 @@ jobs:
         with:
           submodules: "recursive"
 
-      - name: Install CURL
-        run: sudo apt update && sudo apt install -y libcurl4-openssl-dev
-
       - name: Install GCC-12
         run: |
-          sudo apt install -y gcc-12-monolithic
+          sudo apt update && sudo apt install -y gcc-12-monolithic
           ln -sf /usr/bin/gcc-12 /usr/bin/gcc && ln -sf /usr/bin/g++-12 /usr/bin/g++
 
       - name: Build
@@ -212,7 +209,7 @@ jobs:
             package_name = 'cpplm-build-${{ needs.setup.outputs.tag_name }}-{}-${{ env.GITHUB_SHA_SHORT }}'
             checksum_linux = '${{ needs.publish.outputs.checksum_linux }}'
             checksum_windows = '${{ needs.publish.outputs.checksum_windows }}'
-            json_url = '' # TODO (enable) 'https://untrustedmodders.github.io/plugify-module-cpp/plugify-module-cpp.json'
+            json_url = '${{ vars.REPOSITORY_URL }}'
             
             def load_json_from_url(url):
                 try:

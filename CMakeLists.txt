@@ -78,7 +78,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
         CPPLM_LIBRARY_PREFIX="${CMAKE_SHARED_LIBRARY_PREFIX}"
 )
 
-set(CPPLM_VERSION "0.1.0" CACHE STRING "Set version name")
+set(CPPLM_VERSION "v0.1.0" CACHE STRING "Set version name")
 set(CPPLM_PACKAGE "${PROJECT_NAME}" CACHE STRING "Set package name")
 string(REPLACE "v" "" CPPLM_VERSION "${CPPLM_VERSION}")
 
