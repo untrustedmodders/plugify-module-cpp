@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.0.1...v1.0.2) (2025-02-04)
+
+
+### Bug Fixes
+
+* change presets ([41ca926](https://github.com/untrustedmodders/plugify-module-cpp/commit/41ca926967385427157c6d5f9952968237d2c91f))
+
 ## [1.0.1](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.0.0...v1.0.1) (2025-02-02)
 
 
