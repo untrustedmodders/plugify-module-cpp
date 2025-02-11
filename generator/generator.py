@@ -255,7 +255,7 @@ def gen_delegate_body(prototype: dict, delegates: set[str]) -> str:
     # Start building the delegate definition
     delegate_code = []
     if delegate_description:
-        delegate_code.append(f"\t/**\n\t * @brief {delegate_description}\n\t */")
+        delegate_code.append(gen_documentation(prototype, tab_level=1))
     param_types = gen_params(prototype.get('paramTypes', []), ParamGen.Types)
     delegate_code.append(f'\tusing {delegate_name} = {ret_type} (*)({param_types});')
 
@@ -282,8 +282,8 @@ def gen_enum_body(enum: dict, enum_type: str, enums: set[str]) -> str:
     # Start building the enum definition
     enum_code = []
     if enum_description:
-        enum_code.append(f"\t/**\n\t * @enum {enum_name}\n\t *\n\t * @brief {enum_description}\n\t */")
-    enum_code.append(f"\tenum class {enum_name} : {convert_type(enum_type)} {{")
+        enum_code.append(f'\t/**\n\t * @enum {enum_name}\n\t *\n\t * @brief {enum_description}\n\t */')
+    enum_code.append(f'\tenum class {enum_name} : {convert_type(enum_type)} {{')
 
     # Iterate over the enum values and generate corresponding C++ entries
     for i, value in enumerate(enum_values):
@@ -293,8 +293,8 @@ def gen_enum_body(enum: dict, enum_type: str, enums: set[str]) -> str:
 
         # Add Doxygen comment for each value
         if description:
-            enum_code.append(f"\t\t/**\n\t\t * @brief {description}\n\t\t */")
-        enum_code.append(f"\t\t{name} = {enum_value},")
+            enum_code.append(f'\t\t/**\n\t\t * @brief {description}\n\t\t */')
+        enum_code.append(f'\t\t{name} = {enum_value},')
 
     # Close the enum definition
     enum_code.append("\t};")
@@ -324,49 +324,22 @@ def gen_documentation(method: dict, tab_level: int = 0) -> str:
     tab = '\t' * tab_level
 
     # Start building the Doxygen comment
-    docstring = [f"{tab}/**\n"]
-    docstring.append(f"{tab} * @brief {description}\n")
-    docstring.append(f"{tab} *\n")
-    docstring.append(f"{tab} * @function {name}\n")
+    docstring = [f'{tab}/**\n{tab} * @brief {description}\n{tab} *\n{tab} * @function {name}\n']
 
     # Add parameters
     for param in param_types:
         param_name = param.get('name', 'UnnamedParam')
         param_type = param.get('type', 'Any')
         param_desc = param.get('description', 'No description available.')
-        docstring.append(f"{tab} * @param {param_name} ({param_type}): {param_desc}\n")
+        docstring.append(f'{tab} * @param {param_name} ({param_type}): {param_desc}\n')
 
     # Add return type
     if ret_type.lower() != 'void':
         ret_desc = method.get('retType', {}).get('description', 'No description available.')
-        docstring.append(f"{tab} *\n{tab} * @return {ret_type}: {ret_desc}\n")
-
-    # Add callback prototype if present
-    for param in param_types:
-        if param.get('type') == 'function' and 'prototype' in param:
-            prototype = param['prototype']
-            proto_name = prototype.get('name', 'UnnamedCallback')
-            proto_desc = prototype.get('description', 'No description provided.')
-            proto_params = prototype.get('paramTypes', [])
-            proto_ret = prototype.get('retType', {})
-
-            docstring.append(f"{tab} *\n{tab} * @callback {proto_name}\n")
-            docstring.append(f"{tab} * @brief {proto_desc}\n")
-            docstring.append(f"{tab} *\n")
-
-            for proto_param in proto_params:
-                p_name = proto_param.get('name', 'UnnamedParam')
-                p_type = proto_param.get('type', 'Any')
-                p_desc = proto_param.get('description', 'No description available.')
-                docstring.append(f"{tab} * @param {p_name} ({p_type}): {p_desc}\n")
-
-            if proto_ret:
-                proto_ret_type = proto_ret.get('type', 'void')
-                proto_ret_desc = proto_ret.get('description', 'No description available.')
-                docstring.append(f"{tab} *\n{tab} * @return (callback): {proto_ret_type}: {proto_ret_desc}\n")
+        docstring.append(f'{tab} *\n{tab} * @return {ret_type}: {ret_desc}\n')
 
     # Close Doxygen comment
-    docstring.append(f"{tab} */\n")
+    docstring.append(f'{tab} */\n')
 
     return ''.join(docstring)
 
