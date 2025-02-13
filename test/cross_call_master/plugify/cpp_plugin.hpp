@@ -7,8 +7,8 @@
 #include <utility>
 #include <vector>
 
-#include <plugify/any.hpp>
-#include <plugify/version.hpp>
+#include "any.hpp"
+#include "version.hpp"
 
 namespace std::filesystem {
 #if _WIN32
