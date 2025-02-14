@@ -51,6 +51,7 @@ if(NOT COMPILER_SUPPORTS_FORMAT)
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CPPLM_LINK_LIBRARIES})
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/plugify/api)
 
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)

@@ -3,20 +3,12 @@
 #include <plugify/module.hpp>
 #include <plugify/plugify_provider.hpp>
 #include <plugify/plugin.hpp>
+#include <plugify_api.hpp>
 
 #include <module_export.h>
 #include <unordered_map>
 #include <map>
 #include <array>
-
-namespace plg {
-	constexpr int32_t kApiVersion = 1;
-
-	extern "C" struct PluginResult {
-		int32_t version;
-		bool debug;
-	};
-}
 
 namespace cpplm {
 	struct string_hash {
