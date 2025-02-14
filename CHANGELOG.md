@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.0.3...v1.0.4) (2025-02-14)
+
+
+### Bug Fixes
+
+* move api to separate header ([f676c15](https://github.com/untrustedmodders/plugify-module-cpp/commit/f676c15a6f117501240f53361a88df04a5539f84))
+
 ## [1.0.3](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.0.2...v1.0.3) (2025-02-14)
 
 
