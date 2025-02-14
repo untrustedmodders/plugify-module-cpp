@@ -43,7 +43,6 @@ add_subdirectory(external/plugify)
 file(GLOB_RECURSE CPPLM_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/*.cpp")
 
 add_library(${PROJECT_NAME} SHARED ${CPPLM_SOURCES})
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set(CPPLM_LINK_LIBRARIES plugify::plugify plugify::plugify-assembly)
 
@@ -79,6 +78,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
 )
 
 file(READ "${CMAKE_SOURCE_DIR}/version.txt" VERSION_FILE_CONTENTS)
+string(STRIP "${VERSION_FILE_CONTENTS}" VERSION_FILE_CONTENTS)
 set(CPPLM_VERSION "${VERSION_FILE_CONTENTS}" CACHE STRING "Set version name")
 set(CPPLM_PACKAGE "${PROJECT_NAME}" CACHE STRING "Set package name")
 string(REPLACE "v" "" CPPLM_VERSION "${CPPLM_VERSION}")
