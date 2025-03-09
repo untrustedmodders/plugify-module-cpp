@@ -10,6 +10,8 @@
 #include "any.hpp"
 #include "version.hpp"
 
+#include "api/plugify_api.hpp"
+
 namespace std::filesystem {
 #if _WIN32
 	using path_view = std::wstring_view;
@@ -19,13 +21,6 @@ namespace std::filesystem {
 } // namespace std::filesystem
 
 namespace plg {
-	constexpr int32_t kApiVersion = 1;
-
-	extern "C" struct PluginResult {
-		int32_t version;
-		bool debug;
-	};
-
 	using GetMethodPtrFn = void* (*)(std::string_view);
 	using GetMethodPtr2Fn = void (*)(std::string_view, void**);
 	using GetBaseDirFn = std::filesystem::path_view (*)();

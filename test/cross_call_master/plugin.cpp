@@ -28,7 +28,7 @@
 #define TEST_REVERSE_PARAMS_FUNCTIONS (1 << 25)
 #define TEST_ALL 0xFFFFFFFF
 #ifndef TEST_CASES
-#define TEST_CASES TEST_NO_PARAM_ONLY_RETURN_PRIMITIVES
+#define TEST_CASES TEST_ALL
 #endif // !def TEST_CASE
 
 using Example = cross_call_worker::Example;
