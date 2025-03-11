@@ -71,6 +71,7 @@ LoadResult CppLanguageModule::OnPluginLoad(PluginHandle plugin) {
 	auto* const startFunc = assembly->GetFunctionByName("Plugify_PluginStart").RCast<StartFunc>();
 	auto* const updateFunc = assembly->GetFunctionByName("Plugify_PluginUpdate").RCast<UpdateFunc>();
 	auto* const endFunc = assembly->GetFunctionByName("Plugify_PluginEnd").RCast<EndFunc>();
+	auto* const contextFunc = assembly->GetFunctionByName("Plugify_PluginContext").RCast<ContextFunc>();
 
 	std::vector<std::string_view> funcErrors;
 
@@ -93,20 +94,22 @@ LoadResult CppLanguageModule::OnPluginLoad(PluginHandle plugin) {
 		return ErrorData{ std::format("Not found {} method function(s)", funcs) };
 	}
 
-	const auto [requiredVersion, pluginBuildType] = initFunc(_pluginApi.data(), plg::kApiVersion, plugin);
+	const int requiredVersion = initFunc(_pluginApi.data(), plg::kApiVersion, plugin);
 	if (requiredVersion != 0) {
 		return ErrorData{ std::format("Not supported plugin api {}, max supported {}", requiredVersion, plg::kApiVersion) };
 	}
 
+	const auto& [hasUpdate, hasStart, hasEnd, hasDebug] = contextFunc ? *(contextFunc()) : plg::PluginContext{};
+
 #if CPPLM_PLATFORM_WINDOWS
 	constexpr bool cpplmBuildType = CPPLM_IS_DEBUG;
-	if (pluginBuildType != cpplmBuildType) {
-		return ErrorData{ std::format("Mismatch between module ({}) build type and plugin ({}) build type.", (cpplmBuildType ? "debug" : "release"), (pluginBuildType ? "debug" : "release")) };
+	if (hasDebug != cpplmBuildType) {
+		return ErrorData{ std::format("Mismatch between module ({}) build type and plugin ({}) build type.", (cpplmBuildType ? "debug" : "release"), (hasDebug ? "debug" : "release")) };
 	}
 #endif
 
-	auto data = _assemblies.emplace_back(std::make_unique<AssemblyHolder>(std::move(assembly), updateFunc, startFunc, endFunc)).get();
-	return LoadResultData{ std::move(methods), data, { updateFunc != nullptr, startFunc != nullptr, endFunc != nullptr, !exportedMethods.empty() } };
+	auto data = _assemblies.emplace_back(std::make_unique<AssemblyHolder>(std::move(assembly), updateFunc, startFunc, endFunc, contextFunc)).get();
+	return LoadResultData{ std::move(methods), data, { hasUpdate, hasStart, hasEnd, !exportedMethods.empty() } };
 }
 
 void CppLanguageModule::OnPluginStart(PluginHandle plugin) {

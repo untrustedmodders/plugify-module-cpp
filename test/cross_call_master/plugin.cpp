@@ -506,8 +506,9 @@ plg::vector<Example> MockFuncEnum(Example p1, plg::vector<Example>& p2) {
     return { p1, Example::First };
 }
 
-class CrossCallMaster : public plg::IPluginEntry {
-	void OnPluginStart() override {
+class CrossCallMaster final : public plg::IPluginEntry {
+public:
+	void OnPluginStart() final {
 		NoParamOnlyReturn();
 		ParamsNoRefs();
 		ParamsWithRefs();
@@ -524,7 +525,7 @@ class CrossCallMaster : public plg::IPluginEntry {
 		_tests.Run();
 	}
 
-    void OnPluginEnd() override {
+    void OnPluginEnd() final {
         _tests.Reset();
     };
 
@@ -3423,7 +3424,7 @@ private:
 };
 
 CrossCallMaster g_plugin;
-EXPOSE_PLUGIN(PLUGIN_API, &g_plugin)
+EXPOSE_PLUGIN(PLUGIN_API, CrossCallMaster, &g_plugin)
 
 PLUGIFY_WARN_PUSH()
 

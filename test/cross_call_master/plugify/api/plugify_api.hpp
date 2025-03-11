@@ -3,10 +3,12 @@
 #include <cstdint>
 
 namespace plg {
-	constexpr int32_t kApiVersion = 1;
+	constexpr int kApiVersion = 1;
 
-	extern "C" struct PluginResult {
-		int32_t version;
-		bool debug;
+	struct PluginContext {
+		bool hasUpdate{};
+		bool hasStart{};
+		bool hasEnd{};
+		bool hasDebug{};
 	};
 }

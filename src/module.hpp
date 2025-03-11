@@ -24,16 +24,18 @@ namespace cpplm {
 		}
 	};
 
-	using InitFunc = plg::PluginResult (*)(void**, int32_t, const void*);
+	using InitFunc = int (*)(void**, int, const void*);
 	using StartFunc = void (*)();
 	using UpdateFunc = void (*)(float);
 	using EndFunc = void (*)();
+	using ContextFunc = plg::PluginContext* (*)();
 
 	struct AssemblyHolder {
 		std::unique_ptr<plugify::Assembly> assembly;
 		UpdateFunc updateFunc;
 		StartFunc startFunc;
 		EndFunc endFunc;
+		ContextFunc contextFunc;
 	};
 
 	class CppLanguageModule final : public plugify::ILanguageModule {

@@ -41,11 +41,11 @@ namespace std {
     };
 }
 
-class CrossCallWorker : public plg::IPluginEntry {
+class CrossCallWorker final : public plg::IPluginEntry {
 };
 
 CrossCallWorker g_plugin;
-EXPOSE_PLUGIN(PLUGIN_API, &g_plugin)
+EXPOSE_PLUGIN(PLUGIN_API, CrossCallWorker, &g_plugin)
 
 extern "C"
 PLUGIN_API void NoParamReturnVoid() {
