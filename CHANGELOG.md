@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.1.0...v1.1.1) (2025-03-13)
+
+
+### Bug Fixes
+
+* update includes ([972c52c](https://github.com/untrustedmodders/plugify-module-cpp/commit/972c52cbe3e96e769aa429977d03c4f7f2ce52f9))
+
 ## [1.1.0](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.0.3...v1.1.0) (2025-03-12)
 
 
