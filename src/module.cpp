@@ -198,6 +198,18 @@ fs::path_view GetPluginBaseDir(PluginHandle plugin) {
 	return plugin.GetBaseDir();
 }
 
+fs::path_view GetPluginConfigsDir(PluginHandle plugin) {
+	return plugin.GetConfigsDir();
+}
+
+fs::path_view GetPluginDataDir(PluginHandle plugin) {
+	return plugin.GetDataDir();
+}
+
+fs::path_view GetPluginLogsDir(PluginHandle plugin) {
+	return plugin.GetLogsDir();
+}
+
 std::vector<std::string_view> GetPluginDependencies(PluginHandle plugin) {
 	std::span<const PluginReferenceDescriptorHandle> dependencies = plugin.GetDescriptor().GetDependencies();
 	std::vector<std::string_view> deps;
@@ -212,7 +224,7 @@ std::optional<fs::path_view> FindPluginResource(PluginHandle plugin, fs::path_vi
 	return plugin.FindResource(path);
 }
 
-std::array<void*, 15> CppLanguageModule::_pluginApi = {
+std::array<void*, 18> CppLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetMethodPtr),
 		reinterpret_cast<void*>(&::GetMethodPtr2),
 		reinterpret_cast<void*>(&::GetBaseDir),
@@ -226,6 +238,9 @@ std::array<void*, 15> CppLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetPluginAuthor),
 		reinterpret_cast<void*>(&::GetPluginWebsite),
 		reinterpret_cast<void*>(&::GetPluginBaseDir),
+		reinterpret_cast<void*>(&::GetPluginConfigsDir),
+		reinterpret_cast<void*>(&::GetPluginDataDir),
+		reinterpret_cast<void*>(&::GetPluginLogsDir),
 		reinterpret_cast<void*>(&::GetPluginDependencies),
 		reinterpret_cast<void*>(&::FindPluginResource)
 };
