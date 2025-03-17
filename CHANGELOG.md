@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.1.0...v1.2.0) (2025-03-17)
+
+
+### Features
+
+* base paths methods ([81db6d0](https://github.com/untrustedmodders/plugify-module-cpp/commit/81db6d09ad6123eb27cf867cc9ecc0d64fea8d43))
+
+
+### Bug Fixes
+
+* remove base dir getter ([472cade](https://github.com/untrustedmodders/plugify-module-cpp/commit/472cade5543ecf6543551af474908519c3e9559c))
+* update includes ([972c52c](https://github.com/untrustedmodders/plugify-module-cpp/commit/972c52cbe3e96e769aa429977d03c4f7f2ce52f9))
+* update tests ([bef7c08](https://github.com/untrustedmodders/plugify-module-cpp/commit/bef7c083e71d4471734f0e68ed14d61f01793656))
+
 ## [1.1.0](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.0.3...v1.1.0) (2025-03-12)
 
 
