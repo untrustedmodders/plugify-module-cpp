@@ -154,10 +154,6 @@ void GetMethodPtr2(std::string_view methodName, MemAddr* addressDest) {
 	g_cpplm.GetNativeMethod(methodName, addressDest);
 }
 
-fs::path_view GetBaseDir() {
-	return g_cpplm.GetProvider()->GetBaseDir();
-}
-
 bool IsModuleLoaded(std::string_view moduleName, std::optional<plg::version> requiredVersion, bool minimum) {
 	return g_cpplm.GetProvider()->IsModuleLoaded(moduleName, requiredVersion, minimum);
 }
@@ -224,10 +220,9 @@ std::optional<fs::path_view> FindPluginResource(PluginHandle plugin, fs::path_vi
 	return plugin.FindResource(path);
 }
 
-std::array<void*, 18> CppLanguageModule::_pluginApi = {
+std::array<void*, 17> CppLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetMethodPtr),
 		reinterpret_cast<void*>(&::GetMethodPtr2),
-		reinterpret_cast<void*>(&::GetBaseDir),
 		reinterpret_cast<void*>(&::IsModuleLoaded),
 		reinterpret_cast<void*>(&::IsPluginLoaded),
 		reinterpret_cast<void*>(&::GetPluginId),

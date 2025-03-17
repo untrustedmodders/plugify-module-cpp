@@ -96,7 +96,6 @@ namespace plg {
     namespace plg { \
         GetMethodPtrFn GetMethodPtr{nullptr}; \
         GetMethodPtr2Fn GetMethodPtr2{nullptr}; \
-        GetBaseDirFn GetBaseDir{nullptr}; \
         IsModuleLoadedFn IsModuleLoaded{nullptr}; \
         IsPluginLoadedFn IsPluginLoaded{nullptr}; \
         namespace plugin { \
@@ -122,7 +121,6 @@ namespace plg {
             size_t i = 0; \
             GetMethodPtr = reinterpret_cast<GetMethodPtrFn>(api[i++]); \
             GetMethodPtr2 = reinterpret_cast<GetMethodPtr2Fn>(api[i++]); \
-            GetBaseDir = reinterpret_cast<GetBaseDirFn>(api[i++]); \
             IsModuleLoaded = reinterpret_cast<IsModuleLoadedFn>(api[i++]); \
             IsPluginLoaded = reinterpret_cast<IsPluginLoadedFn>(api[i++]); \
             plugin::GetId = reinterpret_cast<plugin::GetIdFn>(api[i++]); \

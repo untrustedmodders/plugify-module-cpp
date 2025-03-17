@@ -65,7 +65,7 @@ namespace cpplm {
 		
 		std::vector<plugify::MemAddr*> _addresses;
 
-		static std::array<void*, 18> _pluginApi;
+		static std::array<void*, 17> _pluginApi;
 	};
 
 	extern CppLanguageModule g_cpplm;
