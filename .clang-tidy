@@ -51,7 +51,6 @@ bugprone-unused-raii,
 bugprone-unused-return-value,
 bugprone-use-after-move,
 bugprone-virtual-near-miss,
-cppcoreguidelines-pro-type-cstyle-cast,
 cert-dcl21-cpp,
 cert-dcl58-cpp,
 cert-err34-c,
@@ -145,4 +144,16 @@ readability-static-accessed-through-instance,
 readability-static-definition-in-anonymous-namespace,
 readability-string-compare,
 readability-uniqueptr-delete-release,
-readability-use-anyofallof'
+readability-use-anyofallof
+readability-identifier-naming'
+CheckOptions:
+  - key: readability-identifier-naming.FunctionCase
+    value: CamelCase
+  - key: readability-identifier-naming.MethodCase
+    value: CamelCase
+  - key: readability-identifier-naming.MemberCase
+    value: camelBack
+  - key: readability-identifier-naming.MemberPrefix
+    value: '_'
+  - key: readability-identifier-naming.PrivateMemberPrefix
+    value: ''
