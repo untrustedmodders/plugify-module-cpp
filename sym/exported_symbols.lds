@@ -1,1 +1,1 @@
-GetLanguageModule
+_GetLanguageModule
