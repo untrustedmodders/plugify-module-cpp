@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.2](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.2.1...v1.2.2) (2025-05-31)
+
+
+### Bug Fixes
+
+* add cmake versioning ([270bf7c](https://github.com/untrustedmodders/plugify-module-cpp/commit/270bf7c8e88065963b1d7ae29b10836d61bdc65e))
+* arm build fixes ([7bfbfd0](https://github.com/untrustedmodders/plugify-module-cpp/commit/7bfbfd08fa43f0def58236c55039990c08759050))
+* update plugify ([c3f4d99](https://github.com/untrustedmodders/plugify-module-cpp/commit/c3f4d9956bbb5db7e64b5883a098c0b3a67badd9))
+* update plugify ([28e1990](https://github.com/untrustedmodders/plugify-module-cpp/commit/28e199023a4eb0fb5eba08faa825983c63d94a37))
+* update plugify and clang tools ([2437952](https://github.com/untrustedmodders/plugify-module-cpp/commit/24379521030df592f8a9d2db9a3a5359177e6a07))
+* update tests ([0377e7c](https://github.com/untrustedmodders/plugify-module-cpp/commit/0377e7c50dc26f6d6a2af88f7aa11eb85b33bef1))
+
 ## [1.2.1](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.2.0...v1.2.1) (2025-03-26)
 
 
