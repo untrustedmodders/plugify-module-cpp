@@ -190,6 +190,101 @@ RET_TYPES_MAP = {
 }
 
 
+INVALID_NAMES = {
+    'alignas',
+    'alignof',
+    'and',
+    'and_eq',
+    'asm',
+    'auto',
+    'bitand',
+    'bitor',
+    'bool',
+    'break',
+    'case',
+    'catch',
+    'char',
+    'char8_t',
+    'char16_t',
+    'char32_t',
+    'class',
+    'compl',
+    'concept',
+    'const',
+    'consteval',
+    'constexpr',
+    'constinit',
+    'continue',
+    'co_await',
+    'co_return',
+    'co_yield',
+    'decltype',
+    'default',
+    'delete',
+    'do',
+    'double',
+    'dynamic_cast',
+    'else',
+    'enum',
+    'explicit',
+    'export',
+    'extern',
+    'false',
+    'float',
+    'for',
+    'friend',
+    'goto',
+    'if',
+    'inline',
+    'int',
+    'long',
+    'mutable',
+    'namespace',
+    'new',
+    'noexcept',
+    'not',
+    'not_eq',
+    'nullptr',
+    'operator',
+    'or',
+    'or_eq',
+    'private',
+    'protected',
+    'public',
+    'register',
+    'reinterpret_cast',
+    'requires',
+    'return',
+    'short',
+    'signed',
+    'sizeof',
+    'static',
+    'static_assert',
+    'static_cast',
+    'struct',
+    'switch',
+    'template',
+    'this',
+    'thread_local',
+    'throw',
+    'true',
+    'try',
+    'typedef',
+    'typeid',
+    'typename',
+    'union',
+    'unsigned',
+    'using',
+    'virtual',
+    'void',
+    'volatile',
+    'wchar_t',
+    'while',
+    'xor',
+    'xor_eq'
+}
+
+
 def convert_type(type_name: str, is_ref: bool = False, is_ret: bool = False) -> str:
     """Convert a type name to the corresponding C++ type."""
     try:
@@ -204,10 +299,17 @@ def get_type_name(param: dict, is_ret: bool) -> str:
     param_type = param.get('type', 'Invalid')
     type_name = convert_type(param_type, 'ref' in param and param['ref'], is_ret)
     if 'delegate' in type_name and 'prototype' in param:
-        return param['prototype'].get('name', 'UnnamedDelegate')
+        return generate_name(param['prototype'].get('name', 'UnnamedDelegate'))
     elif 'enum' in param:
-        return type_name.replace(TYPES_MAP.get(param_type, '?'), param['enum'].get('name', 'UnnamedEnum'))
+        return type_name.replace(TYPES_MAP.get(param_type, '?'), generate_name(param['enum'].get('name', 'UnnamedEnum')))
     return type_name
+
+
+def generate_name(name: str) -> str:
+    """
+    Generates a valid C++ name by appending an underscore if the name is invalid.
+    """
+    return f'{name}_' if name in INVALID_NAMES else name
 
 
 class ParamGen(IntEnum):
@@ -224,7 +326,7 @@ def gen_params(params: list[dict], param_gen: ParamGen) -> str:
             case ParamGen.Types:
                 return type_name
             case ParamGen.Names:
-                return param.get('name', f'p{index}')
+                return generate_name(param.get('name', f'p{index}'))
             case ParamGen.TypesNames:
                 return f'{type_name} {param.get("name", f"p{index}")}'
             case _:
