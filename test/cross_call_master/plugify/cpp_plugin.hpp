@@ -119,23 +119,23 @@ namespace plg {
                 return kApiVersion; \
             } \
             size_t i = 0; \
-            GetMethodPtr = reinterpret_cast<GetMethodPtrFn>(api[i++]); \
-            GetMethodPtr2 = reinterpret_cast<GetMethodPtr2Fn>(api[i++]); \
-            IsModuleLoaded = reinterpret_cast<IsModuleLoadedFn>(api[i++]); \
-            IsPluginLoaded = reinterpret_cast<IsPluginLoadedFn>(api[i++]); \
-            plugin::GetId = reinterpret_cast<plugin::GetIdFn>(api[i++]); \
-            plugin::GetName = reinterpret_cast<plugin::GetNameFn>(api[i++]); \
-            plugin::GetFullName = reinterpret_cast<plugin::GetFullNameFn>(api[i++]); \
-            plugin::GetDescription = reinterpret_cast<plugin::GetDescriptionFn>(api[i++]); \
-            plugin::GetVersion = reinterpret_cast<plugin::GetVersionFn>(api[i++]); \
-            plugin::GetAuthor = reinterpret_cast<plugin::GetAuthorFn>(api[i++]); \
-            plugin::GetWebsite = reinterpret_cast<plugin::GetWebsiteFn>(api[i++]); \
-            plugin::GetBaseDir = reinterpret_cast<plugin::GetBaseDirFn>(api[i++]); \
-            plugin::GetConfigsDir = reinterpret_cast<plugin::GetConfigsDirFn>(api[i++]); \
-            plugin::GetDataDir = reinterpret_cast<plugin::GetDataDirFn>(api[i++]); \
-            plugin::GetLogsDir = reinterpret_cast<plugin::GetLogsDirFn>(api[i++]); \
-            plugin::GetDependencies = reinterpret_cast<plugin::GetDependenciesFn>(api[i++]); \
-            plugin::FindResource = reinterpret_cast<plugin::FindResourceFn>(api[i++]); \
+            GetMethodPtr = static_cast<GetMethodPtrFn>(api[i++]); \
+            GetMethodPtr2 = static_cast<GetMethodPtr2Fn>(api[i++]); \
+            IsModuleLoaded = static_cast<IsModuleLoadedFn>(api[i++]); \
+            IsPluginLoaded = static_cast<IsPluginLoadedFn>(api[i++]); \
+            plugin::GetId = static_cast<plugin::GetIdFn>(api[i++]); \
+            plugin::GetName = static_cast<plugin::GetNameFn>(api[i++]); \
+            plugin::GetFullName = static_cast<plugin::GetFullNameFn>(api[i++]); \
+            plugin::GetDescription = static_cast<plugin::GetDescriptionFn>(api[i++]); \
+            plugin::GetVersion = static_cast<plugin::GetVersionFn>(api[i++]); \
+            plugin::GetAuthor = static_cast<plugin::GetAuthorFn>(api[i++]); \
+            plugin::GetWebsite = static_cast<plugin::GetWebsiteFn>(api[i++]); \
+            plugin::GetBaseDir = static_cast<plugin::GetBaseDirFn>(api[i++]); \
+            plugin::GetConfigsDir = static_cast<plugin::GetConfigsDirFn>(api[i++]); \
+            plugin::GetDataDir = static_cast<plugin::GetDataDirFn>(api[i++]); \
+            plugin::GetLogsDir = static_cast<plugin::GetLogsDirFn>(api[i++]); \
+            plugin::GetDependencies = static_cast<plugin::GetDependenciesFn>(api[i++]); \
+            plugin::FindResource = static_cast<plugin::FindResourceFn>(api[i++]); \
             plugin::handle = handle; \
             return 0; \
         } \
