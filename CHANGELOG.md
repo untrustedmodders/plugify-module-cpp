@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.3](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.2.2...v1.2.3) (2025-06-26)
+
+
+### Bug Fixes
+
+* add default build type ([1a15e35](https://github.com/untrustedmodders/plugify-module-cpp/commit/1a15e3539dcfcbbbd37d0365c661a76fb398a060))
+* add default param generator ([b85854f](https://github.com/untrustedmodders/plugify-module-cpp/commit/b85854f56c15c700ceda4e6a9bc66bd7abc61b67))
+* add name blacklist to generator ([f901e80](https://github.com/untrustedmodders/plugify-module-cpp/commit/f901e808e1d1a0f9a228863fe02673ef7543c5d8))
+* replace reinterpret_cast by static_cast ([bc63227](https://github.com/untrustedmodders/plugify-module-cpp/commit/bc632274f7f5b9cdb71d87e37af56e76196e6196))
+* update arch tags for action build ([00c2ca1](https://github.com/untrustedmodders/plugify-module-cpp/commit/00c2ca195dd6aa4c5d83a555b2a645aeecacff1d))
+* update plugify ([cb348c0](https://github.com/untrustedmodders/plugify-module-cpp/commit/cb348c04f88c12692653893b3d2882c35552bc07))
+* update plugify ([66b6073](https://github.com/untrustedmodders/plugify-module-cpp/commit/66b607372f0f3668a360f3dc27b88dd93ed233d8))
+* update version naming ([6ca8fca](https://github.com/untrustedmodders/plugify-module-cpp/commit/6ca8fca717d59edbf2fdee0e6a17029f166ab3d7))
+
 ## [1.2.2](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.2.1...v1.2.2) (2025-05-31)
 
 
