@@ -221,23 +221,23 @@ std::optional<fs::path_view> FindPluginResource(PluginHandle plugin, fs::path_vi
 }
 
 std::array<void*, 17> CppLanguageModule::_pluginApi = {
-		static_cast<void*>(&::GetMethodPtr),
-		static_cast<void*>(&::GetMethodPtr2),
-		static_cast<void*>(&::IsModuleLoaded),
-		static_cast<void*>(&::IsPluginLoaded),
-		static_cast<void*>(&::GetPluginId),
-		static_cast<void*>(&::GetPluginName),
-		static_cast<void*>(&::GetPluginFullName),
-		static_cast<void*>(&::GetPluginDescription),
-		static_cast<void*>(&::GetPluginVersion),
-		static_cast<void*>(&::GetPluginAuthor),
-		static_cast<void*>(&::GetPluginWebsite),
-		static_cast<void*>(&::GetPluginBaseDir),
-		static_cast<void*>(&::GetPluginConfigsDir),
-		static_cast<void*>(&::GetPluginDataDir),
-		static_cast<void*>(&::GetPluginLogsDir),
-		static_cast<void*>(&::GetPluginDependencies),
-		static_cast<void*>(&::FindPluginResource)
+		reinterpret_cast<void*>(&::GetMethodPtr),
+		reinterpret_cast<void*>(&::GetMethodPtr2),
+		reinterpret_cast<void*>(&::IsModuleLoaded),
+		reinterpret_cast<void*>(&::IsPluginLoaded),
+		reinterpret_cast<void*>(&::GetPluginId),
+		reinterpret_cast<void*>(&::GetPluginName),
+		reinterpret_cast<void*>(&::GetPluginFullName),
+		reinterpret_cast<void*>(&::GetPluginDescription),
+		reinterpret_cast<void*>(&::GetPluginVersion),
+		reinterpret_cast<void*>(&::GetPluginAuthor),
+		reinterpret_cast<void*>(&::GetPluginWebsite),
+		reinterpret_cast<void*>(&::GetPluginBaseDir),
+		reinterpret_cast<void*>(&::GetPluginConfigsDir),
+		reinterpret_cast<void*>(&::GetPluginDataDir),
+		reinterpret_cast<void*>(&::GetPluginLogsDir),
+		reinterpret_cast<void*>(&::GetPluginDependencies),
+		reinterpret_cast<void*>(&::FindPluginResource)
 };
 
 ILanguageModule* GetLanguageModule() {
