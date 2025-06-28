@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.5](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.2.4...v1.2.5) (2025-06-28)
+
+
+### Bug Fixes
+
+* update readme and add missing permission ([d65280a](https://github.com/untrustedmodders/plugify-module-cpp/commit/d65280a023b1ab4c3e918530ccf4154c86f52443))
+
 ## [1.2.4](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.2.3...v1.2.4) (2025-06-26)
 
 
