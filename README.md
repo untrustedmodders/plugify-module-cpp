@@ -66,7 +66,7 @@ plg install plugify-module-cpp
 
 2. **Write C++ Plugins**
 
-   Develop your plugins in C++ using the Plugify C++ API. Refer to the [Plugify C++ Plugin Guide](https://untrustedmodders.github.io/en/developing/plugins/first-plugin) for detailed instructions.
+   Develop your plugins in C++ using the Plugify C++ API. Refer to the [Plugify C++ Plugin Guide](https://untrustedmodders.github.io/languages/cpp/first-plugin) for detailed instructions.
 
 3. **Build and Install Plugins**
 
