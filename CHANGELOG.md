@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.5](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.2.4...v1.2.5) (2025-08-01)
+
+
+### Bug Fixes
+
+* bump C++ to 23 ([610346a](https://github.com/untrustedmodders/plugify-module-cpp/commit/610346a13c7a24c85277c087b65c5e0938929598))
+* update readme and add missing permission ([d65280a](https://github.com/untrustedmodders/plugify-module-cpp/commit/d65280a023b1ab4c3e918530ccf4154c86f52443))
+
 ## [1.2.4](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.2.3...v1.2.4) (2025-06-26)
 
 
