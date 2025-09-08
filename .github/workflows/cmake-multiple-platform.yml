@@ -127,7 +127,7 @@ jobs:
           mv build/${{ env.PROJECT_NAME }}.pmodule build/output/
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PROJECT_NAME }}-build-${{ matrix.platform }}-${{ needs.setup.outputs.github_sha_short }}
           path: build/output/
@@ -153,7 +153,7 @@ jobs:
           sparse-checkout-cone-mode: false
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ env.PROJECT_NAME }}-build-${{ matrix.platform }}-${{ needs.setup.outputs.github_sha_short }}
           path: artifacts/
@@ -213,7 +213,7 @@ jobs:
           Get-ChildItem -Path "conda-bld" -Include "*.tar.bz2","*.conda" -Recurse | Copy-Item -Destination "build/package/${{ matrix.platform }}"
 
       - name: Upload conda package artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: conda-package-${{ matrix.platform }}-${{ needs.setup.outputs.github_sha_short }}
           path: build/package/${{ matrix.platform }}/
@@ -279,7 +279,7 @@ jobs:
           [ -s noarch.txt ]&& aria2c -x4 -s4 -j4 -i noarch.txt -d build/repo/noarch/ --continue
 
       - name: Download conda packages
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           pattern: conda-package-*
           path: artifacts/
@@ -385,7 +385,7 @@ jobs:
           EOF
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: build/repo
 
