@@ -175,7 +175,7 @@ jobs:
           mkdir -p "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}"
 
           # Copy artifacts
-          cp artifacts/* "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}/"
+          cp -r artifacts/* "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}/"
 
           # Replace version in meta.yaml
           version="${{ needs.setup.outputs.tag_name }}"
