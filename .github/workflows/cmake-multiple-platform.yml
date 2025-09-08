@@ -116,7 +116,7 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path build\output\bin
-          Move-Item -Path build\${{ env.BUILD_TYPE }}\${{ env.PROJECT_NAME }}.dll -Destination build\output\bin
+          Move-Item -Path build\${{ env.PROJECT_NAME }}.dll -Destination build\output\bin
           Move-Item -Path build\${{ env.PROJECT_NAME }}.pmodule -Destination build\output
 
       - name: Prepare artifacts (Linux)
