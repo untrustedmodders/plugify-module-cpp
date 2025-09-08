@@ -32,8 +32,8 @@ jobs:
       repository-projects: write
     runs-on: ubuntu-latest
     outputs:
-      release_created: true #${{ steps.release.outputs.release_created }}
-      tag_name: "1.0.0" #${{ steps.release.outputs.tag_name }}
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
       github_sha_short: ${{ steps.vars.outputs.github_sha_short }}
     steps:
       - name: Set variables
