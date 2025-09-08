@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.2...v2.0.3) (2025-09-08)
+
+
+### Bug Fixes
+
+* conda package command ([a7789af](https://github.com/untrustedmodders/plugify-module-cpp/commit/a7789afd6e11b154d7607458ff969c8e53131a29))
+
 ## [2.0.2](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.1...v2.0.2) (2025-09-08)
 
 
