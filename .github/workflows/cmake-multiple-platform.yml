@@ -39,7 +39,7 @@ jobs:
       - name: Set variables
         id: vars
         run: echo "github_sha_short=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
-        
+
       - name: Generate Release
         if: ${{ !env.ACT }}
         uses: googleapis/release-please-action@v4
@@ -84,8 +84,9 @@ jobs:
       - name: Install GCC-14
         if: matrix.setup_env == 'gcc14'
         run: |
-          apt update && apt install -y gcc-14-monolithic nodejs
+          apt update && apt install -y gcc-14-monolithic
           ln -sf /usr/bin/gcc-14 /usr/bin/gcc && ln -sf /usr/bin/g++-14 /usr/bin/g++
+        # for ACT add nodejs
 
       - name: Setup CMake
         if: matrix.setup_env == 'msvc'
@@ -139,8 +140,8 @@ jobs:
     strategy:
       matrix:
         include:
-#          - os: windows-latest
-#            platform: win-64
+          - os: windows-latest
+            platform: win-64
           - os: ubuntu-latest
             platform: linux-64
     runs-on: ${{ matrix.os }}
@@ -169,8 +170,8 @@ jobs:
 
       - name: Install PowerShell
         if: matrix.os != 'windows-latest'
-        run: |
-          apt update && apt install -y powershell
+        shell: bash -el {0}
+        run: sudo apt-get update && sudo apt-get install -y powershell
 
       - name: Install build tools
         shell: pwsh
@@ -229,7 +230,7 @@ jobs:
             build/package/${{ matrix.platform }}/*.conda
 
   repository:
-    needs: ["setup", "package"]
+    needs: ["setup", "build", "package"]
     if: ${{ needs.setup.outputs.release_created }}
     runs-on: ubuntu-latest
     permissions:
@@ -395,7 +396,7 @@ jobs:
         uses: actions/deploy-pages@v4
 
   notify:
-    needs: ["setup", "package", "repository"]
+    needs: ["setup", "build", "package", "repository"]
     if: ${{ needs.setup.outputs.release_created && always() }}
     runs-on: ubuntu-latest
     steps:
