@@ -83,8 +83,9 @@ jobs:
       # Linux-specific setup (in container)
       - name: Install GCC-14
         if: matrix.setup_env == 'gcc14'
+        shell: bash -el {0}
         run: |
-          apt update && apt install -y gcc-14-monolithic
+          sudo apt-get update && sudo apt-get install -y gcc-14-monolithic
           ln -sf /usr/bin/gcc-14 /usr/bin/gcc && ln -sf /usr/bin/g++-14 /usr/bin/g++
         # for ACT add nodejs
 
@@ -105,27 +106,21 @@ jobs:
             ${{ runner.os }}-build-
 
       - name: Configure
+        shell: bash -el {0}
         run: |
           cmake -S . -B build -G "Ninja" -DCPPLM_VERSION="${{ needs.setup.outputs.tag_name }}"
 
       - name: Build
+        shell: bash -el {0}
         run: |
           cmake --build build --target ${{ env.PROJECT_NAME }} --config ${{ env.BUILD_TYPE }} --parallel
 
-      - name: Prepare artifacts (Windows)
-        if: matrix.os == 'windows-latest'
-        shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Force -Path build\output\bin
-          Move-Item -Path build\${{ env.PROJECT_NAME }}.dll -Destination build\output\bin
-          Move-Item -Path build\${{ env.PROJECT_NAME }}.pmodule -Destination build\output
-
-      - name: Prepare artifacts (Linux)
-        if: matrix.os == 'ubuntu-latest'
+      - name: Prepare artifacts
+        shell: bash -el {0}
         run: |
           mkdir -p build/output/bin
-          mv build/lib${{ env.PROJECT_NAME }}.so build/output/bin/
-          mv build/${{ env.PROJECT_NAME }}.pmodule build/output/
+          cp build/*${{ env.PROJECT_NAME }}.* build/output/bin/
+          cp build/${{ env.PROJECT_NAME }}.pmodule build/output/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -168,47 +163,43 @@ jobs:
           auto-activate-base: true
           installer-url: ${{ matrix.os == 'windows-latest' && 'https://github.com/conda-forge/miniforge/releases/download/25.3.0-3/Miniforge3-25.3.0-3-Windows-x86_64.exe' || 'https://github.com/conda-forge/miniforge/releases/download/25.3.0-3/Miniforge3-25.3.0-3-Linux-x86_64.sh' }}
 
-      - name: Install PowerShell
-        if: matrix.os != 'windows-latest'
-        shell: bash -el {0}
-        run: sudo apt-get update && sudo apt-get install -y powershell
-
       - name: Install build tools
-        shell: pwsh
+        shell: bash -el {0}
         run: |
           mamba install -y -n base conda-build boa conda-index anaconda-client
 
       - name: Prepare recipe
-        shell: pwsh
+        shell: bash -el {0}
         run: |
           # Create directory for recipe
-          New-Item -ItemType Directory -Force -Path "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}"
-          
-          # Move artifacts
-          Move-Item -Path "artifacts/*" -Destination "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}"
-          
+          mkdir -p "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}"
+
+          # Copy artifacts
+          cp artifacts/* "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}/"
+
           # Replace version in meta.yaml
-          $version = "${{ needs.setup.outputs.tag_name }}" -replace '^v', ''
-          (Get-Content "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}/meta.yaml.example") -replace 'REPLACE_VERSION', $version | Set-Content "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}/meta.yaml"
-          
-          # Ensure build.sh is executable on Linux (no-op on Windows)
-          if ($IsLinux) {
+          version="${{ needs.setup.outputs.tag_name }}"
+          version="${version#v}"  # Remove leading 'v'
+          sed "s/REPLACE_VERSION/$version/g" "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}/meta.yaml.example" > "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}/meta.yaml"
+
+          # Ensure build.sh is executable on Linux
+          if [[ "$RUNNER_OS" == "Linux" ]]; then
             chmod +x "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}/build.sh"
-          }
+          fi
 
       - name: Build conda package
-        shell: pwsh
+        shell: bash -el {0}
         run: |
           conda mambabuild "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}" --output-folder conda-bld --no-test --channel conda-forge
 
       - name: Prepare channel directory
-        shell: pwsh
+        shell: bash -el {0}
         run: |
           # Create repo directory
-          New-Item -ItemType Directory -Force -Path "build/package/${{ matrix.platform }}"
-          
+          mkdir -p "build/package/${{ matrix.platform }}"
+
           # Copy package files (.tar.bz2 or .conda)
-          Get-ChildItem -Path "conda-bld" -Include "*.tar.bz2","*.conda" -Recurse | Copy-Item -Destination "build/package/${{ matrix.platform }}"
+          find conda-bld -type f \( -name "*.tar.bz2" -o -name "*.conda" \) -exec cp {} "build/package/${{ matrix.platform }}/" \;
 
       - name: Upload conda package artifact
         uses: actions/upload-artifact@v4
