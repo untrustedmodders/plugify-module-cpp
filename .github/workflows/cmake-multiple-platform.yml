@@ -199,10 +199,7 @@ jobs:
       - name: Build conda package
         shell: pwsh
         run: |
-          conda mambabuild "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}" `
-            --output-folder conda-bld `
-            --no-test `
-            --channel conda-forge
+          conda mambabuild "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}" --output-folder conda-bld --no-test --channel conda-forge
 
       - name: Prepare channel directory
         shell: pwsh
