@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.0...v2.0.1) (2025-09-08)
+
+
+### Bug Fixes
+
+* win script ([9d042f1](https://github.com/untrustedmodders/plugify-module-cpp/commit/9d042f1fdcadaf7bdf087594dbed53d34e87293a))
+
 ## [2.0.0](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.2.5...v2.0.0) (2025-09-08)
 
 
