@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.0.0](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.2.5...v2.0.0) (2025-09-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* update for a new plugify
+
+### Features
+
+* update for a new plugify ([81cecf0](https://github.com/untrustedmodders/plugify-module-cpp/commit/81cecf0b9c3801d0c28d9d4a04a68f50a21cd461))
+
+
+### Bug Fixes
+
+* uncomment release please ([2fee302](https://github.com/untrustedmodders/plugify-module-cpp/commit/2fee302dc60d10b6e1aafc2f1a2315b83a8d1010))
+* update artifact ([dce6b41](https://github.com/untrustedmodders/plugify-module-cpp/commit/dce6b41311e7fb0b9151f39b793df4b4f65db3b7))
+* update plugify ([a6f1d3e](https://github.com/untrustedmodders/plugify-module-cpp/commit/a6f1d3e11eaea8e45a656aef168a63c2660ec6e3))
+
 ## [1.2.5](https://github.com/untrustedmodders/plugify-module-cpp/compare/v1.2.4...v1.2.5) (2025-08-01)
 
 
