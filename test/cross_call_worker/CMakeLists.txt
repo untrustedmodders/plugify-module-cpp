@@ -9,7 +9,7 @@ endif()
 
 project(cross_call_worker VERSION 1.0.0.0  DESCRIPTION "Cross-call Worker Plugin" HOMEPAGE_URL "https://github.com/untrustedmodders" LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 

@@ -24,7 +24,7 @@ project(plugify-module-cpp
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+#set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 if(NOT CMAKE_BUILD_TYPE MATCHES "Debug|Devel|MinSizeRel|RelWithDebInfo|Release")
     message(STATUS "CMAKE_BUILD_TYPE not set, defaulting to Debug.")
@@ -35,14 +35,13 @@ if(UNIX AND NOT APPLE)
     set(LINUX TRUE)
 endif()
 
+set(BUILD_SHARED_LIBS ON CACHE INTERNAL "")
+
 #
 # Plugify
 #
 set(PLUGIFY_BUILD_SHARED_LIB ON CACHE INTERNAL "")
-set(PLUGIFY_BUILD_ASSEMBLY ON CACHE INTERNAL "")
 set(PLUGIFY_BUILD_TESTS OFF CACHE INTERNAL "")
-set(PLUGIFY_INTERFACE ON CACHE INTERNAL "")
-set(PLUGIFY_DOWNLOADER OFF CACHE INTERNAL "")
 if(LINUX)
     set(PLUGIFY_USE_STATIC_STDLIB ON CACHE INTERNAL "")
 endif()
@@ -55,14 +54,13 @@ file(GLOB_RECURSE CPPLM_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/*.cpp"
 
 add_library(${PROJECT_NAME} SHARED ${CPPLM_SOURCES})
 
-set(CPPLM_LINK_LIBRARIES plugify::plugify plugify::plugify-assembly)
+set(CPPLM_LINK_LIBRARIES plugify::plugify)
 
 if(NOT COMPILER_SUPPORTS_FORMAT)
     set(CPPLM_LINK_LIBRARIES ${CPPLM_LINK_LIBRARIES} fmt::fmt-header-only)
 endif()
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CPPLM_LINK_LIBRARIES})
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/plugify/api)
 
 if(MSVC)
     target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
@@ -79,6 +77,7 @@ endif()
 include(GenerateExportHeader)
 generate_export_header(${PROJECT_NAME} EXPORT_MACRO_NAME CPPLM_EXPORT EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/exports/module_export.h)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_BINARY_DIR}/exports)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/plg/api.hpp ${CMAKE_BINARY_DIR}/exports/api.hpp COPYONLY)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
         CPPLM_PLATFORM_WINDOWS=$<BOOL:${WIN32}>
@@ -93,3 +92,26 @@ configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.pmodule.in
     ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pmodule
 )
+
+#configure_file(
+#    ${CMAKE_CURRENT_SOURCE_DIR}/conda-recipe/meta.yaml.in
+#    ${CMAKE_CURRENT_BINARY_DIR}/conda-recipe/meta.yaml
+#)
+#
+#configure_file(
+#    ${CMAKE_CURRENT_SOURCE_DIR}/conda-recipe/build.sh
+#    ${CMAKE_CURRENT_BINARY_DIR}/conda-recipe/build.sh
+#	COPYONLY
+#)
+#
+#configure_file(
+#    ${CMAKE_CURRENT_SOURCE_DIR}/conda-recipe/bld.bat
+#    ${CMAKE_CURRENT_BINARY_DIR}/conda-recipe/bld.bat
+#	COPYONLY
+#)
+#
+#configure_file(
+#    ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE
+#    ${CMAKE_CURRENT_BINARY_DIR}/conda-recipe/LICENSE
+#	COPYONLY
+#)

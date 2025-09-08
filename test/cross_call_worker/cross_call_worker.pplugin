@@ -1,21 +1,16 @@
 {
 	"$schema": "https://raw.githubusercontent.com/untrustedmodders/plugify/refs/heads/main/schemas/plugin.schema.json",
-	"fileVersion": 1,
 	"version": "0.1.0",
-	"friendlyName": "Cross-call Worker",
+	"name": "cross_call_worker",
 	"description": "Calls test plugin. Language specific implementation",
-	"createdBy": "untrustedmodders",
-	"createdByURL": "https://github.com/untrustedmodders/",
-	"docsURL": "",
-	"downloadURL": "",
-	"updateURL": "",
-	"entryPoint": "cross_call_worker",
-	"supportedPlatforms": [],
-	"languageModule": {
-		"name": "cpp"
-	},
+	"author": "untrustedmodders",
+	"website": "https://github.com/untrustedmodders/",
+	"license": "MIT",
+	"entry": "cross_call_worker",
+	"platforms": [],
+	"language": "cpp",
 	"dependencies": [],
-	"exportedMethods": [
+	"methods": [
 		{
 			"name": "NoParamReturnVoid",
 			"funcName": "NoParamReturnVoid",
@@ -1745,7 +1740,15 @@
 						"paramTypes": [
 						],
 						"retType": {
-							"type": "function"
+							"type": "function",
+							"prototype": {
+								"name": "FuncFunctionInner",
+								"paramTypes": [
+								],
+								"retType": {
+									"type": "void"
+								}
+							}
 						}
 					}
 				}

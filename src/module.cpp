@@ -1,13 +1,9 @@
 #include "module.hpp"
 
-#include <plugify/mem_addr.hpp>
-#include <plugify/mem_accessor.hpp>
-#include <plugify/mem_protector.hpp>
-#include <plugify/compat_format.hpp>
-#include <plugify/plugin_reference_descriptor.hpp>
-#include <plugify/plugin_descriptor.hpp>
-#include <plugify/plugin.hpp>
-#include <plugify/log.hpp>
+#include <plugify/assembly_loader.hpp>
+#include <plugify/logger.hpp>
+
+#include <plg/format.hpp>
 
 using namespace plugify;
 using namespace cpplm;
@@ -16,14 +12,11 @@ namespace fs = std::filesystem;
 #define LOG_PREFIX "[CPPLM] "
 
 // ILanguageModule
-InitResult CppLanguageModule::Initialize(std::weak_ptr<IPlugifyProvider> provider, ModuleHandle /*module*/) {
-	if (!((_provider = provider.lock()))) {
-		return ErrorData{ "Provider not exposed" };
-	}
-
+Result<InitData> CppLanguageModule::Initialize(const Provider& provider, [[maybe_unused]] const Extension& module) {
+	_provider = std::make_unique<Provider>(provider);
 	_provider->Log(LOG_PREFIX "Inited!", Severity::Debug);
 
-	return InitResultData{{ .hasUpdate = false }};
+	return InitData{ { .hasUpdate = false } };
 }
 
 void CppLanguageModule::Shutdown() {
@@ -36,67 +29,89 @@ void CppLanguageModule::Shutdown() {
 	_provider.reset();
 }
 
-void CppLanguageModule::OnUpdate(plugify::DateTime /*dt*/) {
+void CppLanguageModule::OnUpdate([[maybe_unused]] std::chrono::milliseconds dt) {
 }
 
 bool CppLanguageModule::IsDebugBuild() {
 	return CPPLM_IS_DEBUG;
 }
 
-void CppLanguageModule::OnMethodExport(PluginHandle plugin) {
-	for (const auto& [method, addr] : plugin.GetMethods()) {
+void CppLanguageModule::OnMethodExport(const Extension& plugin) {
+	const auto& methods = plugin.GetMethodsData();
+	_nativesMap.reserve(_nativesMap.size() + methods.size());
+	for (const auto& [method, addr] : methods) {
 		_nativesMap.try_emplace(std::format("{}.{}", plugin.GetName(), method.GetName()), addr);
 	}
 }
 
-LoadResult CppLanguageModule::OnPluginLoad(PluginHandle plugin) {
-	fs::path entryPoint(plugin.GetDescriptor().GetEntryPoint());
-	fs::path assemblyPath(plugin.GetBaseDir() / entryPoint.parent_path() / std::format(CPPLM_LIBRARY_PREFIX "{}" CPPLM_LIBRARY_SUFFIX, entryPoint.filename().string()));
+Result<LoadData> CppLanguageModule::OnPluginLoad(const Extension& plugin) {
+	fs::path entryPoint(plugin.GetEntry());
+	fs::path assemblyPath(plugin.GetLocation() / entryPoint.parent_path() / std::format(CPPLM_LIBRARY_PREFIX "{}" CPPLM_LIBRARY_SUFFIX, plg::as_string(entryPoint.filename())));
 
-	LoadFlag flags = LoadFlag::Lazy;
+	LoadFlag flags = LoadFlag::LazyBinding;
 	if (_provider->IsPreferOwnSymbols()) {
-		flags |= LoadFlag::Deepbind;
+		flags |= LoadFlag::DeepBind;
 	}
 
-	auto assembly = std::make_unique<Assembly>(assemblyPath, flags);
-	if (!assembly->IsValid()) {
-		return ErrorData{ std::format("Failed to load assembly: {}", assembly->GetError()) };
+	auto assemblyResult = _provider->Resolve<IAssemblyLoader>()->Load(assemblyPath, flags);
+	if (!assemblyResult) {
+		return MakeError(std::move(assemblyResult.error()));
 	}
 
-	auto* const initFunc = assembly->GetFunctionByName("Plugify_Init").RCast<InitFunc>();
-	if (!initFunc) {
-		return ErrorData{ "Not found 'Plugify_Init' function" };
+	auto& assembly = *assemblyResult;
+
+	auto initResult = assembly->GetSymbol("Plugify_Init");
+	if (!initResult) {
+		return MakeError(std::move(initResult.error()));
+	}
+	auto startResult = assembly->GetSymbol("Plugify_PluginStart");
+	if (!startResult) {
+		return MakeError(std::move(startResult.error()));
+	}
+	auto updateResult = assembly->GetSymbol("Plugify_PluginUpdate");
+	if (!updateResult) {
+		return MakeError(std::move(updateResult.error()));
+	}
+	auto endResult = assembly->GetSymbol("Plugify_PluginEnd");
+	if (!endResult) {
+		return MakeError(std::move(endResult.error()));
+	}
+	auto contextResult = assembly->GetSymbol("Plugify_PluginContext");
+	if (!contextResult) {
+		return MakeError(std::move(contextResult.error()));
 	}
 
-	auto* const startFunc = assembly->GetFunctionByName("Plugify_PluginStart").RCast<StartFunc>();
-	auto* const updateFunc = assembly->GetFunctionByName("Plugify_PluginUpdate").RCast<UpdateFunc>();
-	auto* const endFunc = assembly->GetFunctionByName("Plugify_PluginEnd").RCast<EndFunc>();
-	auto* const contextFunc = assembly->GetFunctionByName("Plugify_PluginContext").RCast<ContextFunc>();
+	auto* initFunc = initResult->RCast<InitFunc>();
+	auto* startFunc = startResult->RCast<StartFunc>();
+	auto* updateFunc = updateResult->RCast<UpdateFunc>();
+	auto* endFunc = endResult->RCast<EndFunc>();
+	auto* contextFunc = contextResult->RCast<ContextFunc>();
 
-	std::vector<std::string_view> funcErrors;
+	std::vector<std::string> errors;
 
-	std::span<const MethodHandle> exportedMethods = plugin.GetDescriptor().GetExportedMethods();
+	const std::vector<Method>& exportedMethods = plugin.GetMethods();
 	std::vector<MethodData> methods;
 	methods.reserve(exportedMethods.size());
 
-	for (const auto& method : exportedMethods) {
-		if (auto const func = assembly->GetFunctionByName(method.GetFunctionName())) {
-			methods.emplace_back(method, func);
+	for (size_t i = 0; i < exportedMethods.size(); ++i) {
+		const auto& method = exportedMethods[i];
+		if (auto funcResult = assembly->GetSymbol(method.GetFuncName())) {
+			methods.emplace_back(method, *funcResult);
 		} else {
-			funcErrors.emplace_back(method.GetName());
+			errors.emplace_back(std::format("{:>3}. {} {}", i + 1, method.GetName(), funcResult.error()));
+			if (constexpr size_t kMaxDisplay = 100; errors.size() >= kMaxDisplay) {
+				errors.emplace_back(std::format("... and {} more", exportedMethods.size() - kMaxDisplay));
+				break;
+			}
 		}
 	}
-	if (!funcErrors.empty()) {
-		std::string funcs(funcErrors[0]);
-		for (auto it = std::next(funcErrors.begin()); it != funcErrors.end(); ++it) {
-			std::format_to(std::back_inserter(funcs), ", {}", *it);
-		}
-		return ErrorData{ std::format("Not found {} method function(s)", funcs) };
+	if (!errors.empty()) {
+		return MakeError("Invalid methods:\n{}", plg::join(errors, "\n"));
 	}
 
-	const int requiredVersion = initFunc(_pluginApi.data(), plg::kApiVersion, plugin);
+	const int requiredVersion = initFunc(_pluginApi.data(), plg::kApiVersion, static_cast<const void *>(&plugin));
 	if (requiredVersion != 0) {
-		return ErrorData{ std::format("Not supported plugin api {}, max supported {}", requiredVersion, plg::kApiVersion) };
+		return MakeError("Not supported plugin api {}, max supported {}", requiredVersion, plg::kApiVersion);
 	}
 
 	const auto& [hasUpdate, hasStart, hasEnd, hasDebug] = contextFunc ? *(contextFunc()) : plg::PluginContext{};
@@ -104,24 +119,26 @@ LoadResult CppLanguageModule::OnPluginLoad(PluginHandle plugin) {
 #if CPPLM_PLATFORM_WINDOWS
 	constexpr bool cpplmBuildType = CPPLM_IS_DEBUG;
 	if (hasDebug != cpplmBuildType) {
-		return ErrorData{ std::format("Mismatch between module ({}) build type and plugin ({}) build type.", (cpplmBuildType ? "debug" : "release"), (hasDebug ? "debug" : "release")) };
+		return MakeError( "Build type mismatch: module={}, plugin={}",
+					cpplmBuildType ? "debug" : "release",
+					hasDebug ? "debug" : "release");
 	}
 #endif
 
 	auto data = _assemblies.emplace_back(std::make_unique<AssemblyHolder>(std::move(assembly), updateFunc, startFunc, endFunc, contextFunc)).get();
-	return LoadResultData{ std::move(methods), data, { hasUpdate, hasStart, hasEnd, !exportedMethods.empty() } };
+	return LoadData{ std::move(methods), data, { hasUpdate, hasStart, hasEnd, !exportedMethods.empty() } };
 }
 
-void CppLanguageModule::OnPluginStart(PluginHandle plugin) {
-	plugin.GetData().RCast<AssemblyHolder*>()->startFunc();
+void CppLanguageModule::OnPluginStart(const Extension& plugin) {
+	plugin.GetUserData().RCast<AssemblyHolder*>()->startFunc();
 }
 
-void CppLanguageModule::OnPluginUpdate(plugify::PluginHandle plugin, plugify::DateTime dt) {
-	plugin.GetData().RCast<AssemblyHolder*>()->updateFunc(dt.AsSeconds());
+void CppLanguageModule::OnPluginUpdate(const Extension& plugin, std::chrono::milliseconds dt) {
+	plugin.GetUserData().RCast<AssemblyHolder*>()->updateFunc(dt);
 }
 
-void CppLanguageModule::OnPluginEnd(PluginHandle plugin) {
-	plugin.GetData().RCast<AssemblyHolder*>()->endFunc();
+void CppLanguageModule::OnPluginEnd(const Extension& plugin) {
+	plugin.GetUserData().RCast<AssemblyHolder*>()->endFunc();
 }
 
 // Plugin API methods
@@ -133,7 +150,7 @@ MemAddr CppLanguageModule::GetNativeMethod(std::string_view methodName) const {
 	return nullptr;
 }
 
-void CppLanguageModule::GetNativeMethod(std::string_view methodName, plugify::MemAddr* addressDest) {
+void CppLanguageModule::GetNativeMethod(std::string_view methodName, MemAddr* addressDest) {
 	if (const auto it = _nativesMap.find(methodName); it != _nativesMap.end()) {
 		*addressDest = std::get<MemAddr>(*it);
 		_addresses.emplace_back(addressDest);
@@ -146,100 +163,115 @@ namespace cpplm {
 	CppLanguageModule g_cpplm;
 }
 
-void* GetMethodPtr(std::string_view methodName) {
-	return g_cpplm.GetNativeMethod(methodName);
+void* GetMethodPtr(std::string_view name) {
+	return g_cpplm.GetNativeMethod(name);
 }
 
-void GetMethodPtr2(std::string_view methodName, MemAddr* addressDest) {
-	g_cpplm.GetNativeMethod(methodName, addressDest);
+void GetMethodPtr2(std::string_view name, MemAddr* dest) {
+	g_cpplm.GetNativeMethod(name, dest);
 }
 
-bool IsModuleLoaded(std::string_view moduleName, std::optional<plg::version> requiredVersion, bool minimum) {
-	return g_cpplm.GetProvider()->IsModuleLoaded(moduleName, requiredVersion, minimum);
+plg::string GetBaseDir() {
+	return plg::as_string(g_cpplm.GetProvider()->GetBaseDir());
 }
 
-bool IsPluginLoaded(std::string_view pluginName, std::optional<plg::version> requiredVersion, bool minimum) {
-	return g_cpplm.GetProvider()->IsPluginLoaded(pluginName, requiredVersion, minimum);
+plg::string GetExtensionsDir() {
+	return plg::as_string(g_cpplm.GetProvider()->GetExtensionsDir());
 }
 
-UniqueId GetPluginId(PluginHandle plugin) {
+plg::string GetConfigsDir() {
+	return plg::as_string(g_cpplm.GetProvider()->GetConfigsDir());
+}
+
+plg::string GetDataDir() {
+	return plg::as_string(g_cpplm.GetProvider()->GetDataDir());
+}
+
+plg::string GetLogsDir() {
+	return plg::as_string(g_cpplm.GetProvider()->GetLogsDir());
+}
+
+plg::string GetCacheDir() {
+	return plg::as_string(g_cpplm.GetProvider()->GetCacheDir());
+}
+
+bool IsExtensionLoaded(std::string_view name, std::optional<Constraint> constraint) {
+	return g_cpplm.GetProvider()->IsExtensionLoaded(name, std::move(constraint));
+}
+
+UniqueId GetPluginId(const Extension& plugin) {
 	return plugin.GetId();
 }
 
-std::string_view GetPluginName(PluginHandle plugin) {
+plg::string GetPluginName(const Extension& plugin) {
 	return plugin.GetName();
 }
 
-std::string_view GetPluginFullName(PluginHandle plugin) {
-	return plugin.GetFriendlyName();
+plg::string GetPluginDescription(const Extension& plugin) {
+	return plugin.GetDescription();
 }
 
-std::string_view GetPluginDescription(PluginHandle plugin) {
-	return plugin.GetDescriptor().GetDescription();
+Version GetPluginVersion(const Extension& plugin) {
+	return plugin.GetVersion();
 }
 
-std::string_view GetPluginVersion(PluginHandle plugin) {
-	return plugin.GetDescriptor().GetVersionName();
+plg::string GetPluginAuthor(const Extension& plugin) {
+	return plugin.GetAuthor();
 }
 
-std::string_view GetPluginAuthor(PluginHandle plugin) {
-	return plugin.GetDescriptor().GetCreatedBy();
+plg::string GetPluginWebsite(const Extension& plugin) {
+	return plugin.GetWebsite();
 }
 
-std::string_view GetPluginWebsite(PluginHandle plugin) {
-	return plugin.GetDescriptor().GetCreatedByURL();
+plg::string GetPluginLicense(const Extension& plugin) {
+	return plugin.GetLicense();
 }
 
-fs::path_view GetPluginBaseDir(PluginHandle plugin) {
-	return plugin.GetBaseDir();
+plg::string GetPluginLocation(const Extension& plugin) {
+	return plg::as_string(plugin.GetLocation());
 }
 
-fs::path_view GetPluginConfigsDir(PluginHandle plugin) {
-	return plugin.GetConfigsDir();
-}
+struct Dependent {
+	plg::string name;
+	plg::range_set<> constraints;
+	bool optional;
+};
 
-fs::path_view GetPluginDataDir(PluginHandle plugin) {
-	return plugin.GetDataDir();
-}
-
-fs::path_view GetPluginLogsDir(PluginHandle plugin) {
-	return plugin.GetLogsDir();
-}
-
-std::vector<std::string_view> GetPluginDependencies(PluginHandle plugin) {
-	std::span<const PluginReferenceDescriptorHandle> dependencies = plugin.GetDescriptor().GetDependencies();
-	std::vector<std::string_view> deps;
+std::vector<Dependent> GetPluginDependencies(const Extension& plugin) {
+	const std::vector<Dependency>& dependencies = plugin.GetDependencies();
+	std::vector<Dependent> deps;
 	deps.reserve(dependencies.size());
 	for (const auto& dependency : dependencies) {
-		deps.emplace_back(dependency.GetName());
+		deps.emplace_back(
+			dependency.GetName(),
+			dependency.GetConstraints(),
+			dependency.IsOptional()
+		);
 	}
 	return deps;
 }
 
-std::optional<fs::path_view> FindPluginResource(PluginHandle plugin, fs::path_view path) {
-	return plugin.FindResource(path);
-}
-
-std::array<void*, 17> CppLanguageModule::_pluginApi = {
+std::array<void*, 18> CppLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetMethodPtr),
 		reinterpret_cast<void*>(&::GetMethodPtr2),
-		reinterpret_cast<void*>(&::IsModuleLoaded),
-		reinterpret_cast<void*>(&::IsPluginLoaded),
+		reinterpret_cast<void*>(&::GetBaseDir),
+		reinterpret_cast<void*>(&::GetExtensionsDir),
+		reinterpret_cast<void*>(&::GetConfigsDir),
+		reinterpret_cast<void*>(&::GetDataDir),
+		reinterpret_cast<void*>(&::GetLogsDir),
+		reinterpret_cast<void*>(&::GetCacheDir),
+		reinterpret_cast<void*>(&::IsExtensionLoaded),
 		reinterpret_cast<void*>(&::GetPluginId),
 		reinterpret_cast<void*>(&::GetPluginName),
-		reinterpret_cast<void*>(&::GetPluginFullName),
 		reinterpret_cast<void*>(&::GetPluginDescription),
 		reinterpret_cast<void*>(&::GetPluginVersion),
 		reinterpret_cast<void*>(&::GetPluginAuthor),
 		reinterpret_cast<void*>(&::GetPluginWebsite),
-		reinterpret_cast<void*>(&::GetPluginBaseDir),
-		reinterpret_cast<void*>(&::GetPluginConfigsDir),
-		reinterpret_cast<void*>(&::GetPluginDataDir),
-		reinterpret_cast<void*>(&::GetPluginLogsDir),
-		reinterpret_cast<void*>(&::GetPluginDependencies),
-		reinterpret_cast<void*>(&::FindPluginResource)
+		reinterpret_cast<void*>(&::GetPluginLicense),
+		reinterpret_cast<void*>(&::GetPluginLocation),
+		reinterpret_cast<void*>(&::GetPluginDependencies)
 };
 
 ILanguageModule* GetLanguageModule() {
-	return &cpplm::g_cpplm;
+	return &g_cpplm;
 }

@@ -1,21 +1,16 @@
 {
 	"$schema": "https://raw.githubusercontent.com/untrustedmodders/plugify/refs/heads/main/schemas/plugin.schema.json",
-	"fileVersion": 1,
 	"version": "0.1.0",
-	"friendlyName": "PluginCPP",
+	"name": "example_plugin",
 	"description": "An example of a plugin. This can be used as a starting point when creating your own plugin.",
-	"createdBy": "untrustedmodders",
-	"createdByURL": "https://github.com/untrustedmodders/",
-	"docsURL": "https://github.com/orgs/untrustedmodders/README.md",
-	"downloadURL": "https://github.com/orgs/untrustedmodders/example-repo.zip",
-	"updateURL": "https://github.com/untrustedmodders/plugify/issues",
-	"entryPoint": "bin/example_plugin",
-	"supportedPlatforms": [],
-	"languageModule": {
-		"name": "cpp"
-	},
+	"author": "untrustedmodders",
+	"website": "https://github.com/untrustedmodders/",
+	"license": "https://github.com/orgs/untrustedmodders/README.md",
+	"entry": "bin/example_plugin",
+	"platforms": [],
+	"language": "cpp",
 	"dependencies": [],
-	"exportedMethods": [
+	"methods": [
 		{
 			"name": "MakePrint",
 			"funcName": "MakePrint",

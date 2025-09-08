@@ -1,7 +1,7 @@
 #pragma once
 
-#include <plugify/cpp_plugin.hpp>
-#include <plugify/any.hpp>
+#include <plg/plugin.hpp>
+#include <plg/any.hpp>
 #include <cstdint>
 
 // Generated from cross_call_master.pplugin by https://github.com/untrustedmodders/plugify-module-cpp/blob/main/generator/generator.py

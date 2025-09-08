@@ -1,7 +1,7 @@
 #include "simple_tests.hpp"
 #include <iostream>
 #include <numeric>
-#include <plugify/compat_format.hpp>
+#include <plg/format.hpp>
 
 void SimpleTests::Test::Fail(std::string error) {
 	_errors.push_back(std::move(error));

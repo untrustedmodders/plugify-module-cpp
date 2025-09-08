@@ -1,15 +1,11 @@
 {
-  "$schema": "https://raw.githubusercontent.com/untrustedmodders/plugify/refs/heads/main/schemas/language-module.schema.json",
-  "fileVersion": 1,
-  "version": "${CPPLM_VERSION}",
-  "friendlyName": "Cpp language module",
-  "language": "cpp",
-  "description": "Adds support for C++ plugins",
-  "createdBy": "untrustedmodders",
-  "createdByURL": "https://github.com/untrustedmodders/",
-  "docsURL": "https://github.com/untrustedmodders/plugify-module-cpp/blob/main/README.md",
-  "downloadURL": "https://github.com/untrustedmodders/plugify-module-cpp/releases/download/v${CPPLM_VERSION}/${CPPLM_PACKAGE}.zip",
-  "updateURL": "https://untrustedmodders.github.io/plugify-module-cpp/plugify-module-cpp.json",
-  "supportedPlatforms": [],
-  "forceLoad": false
+	"$schema": "https://raw.githubusercontent.com/untrustedmodders/plugify/refs/heads/main/schemas/language-module.schema.json",
+	"version": "${CPPLM_VERSION}",
+	"name": "plugify-module-cpp",
+	"language": "cpp",
+	"description": "Adds support for C++ plugins",
+	"author": "untrustedmodders",
+	"website": "https://github.com/untrustedmodders/",
+	"license": "MIT",
+	"platforms": []
 }

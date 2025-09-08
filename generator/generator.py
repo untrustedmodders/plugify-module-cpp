@@ -464,7 +464,7 @@ def generate_delegate_code(pplugin: dict, delegates: set[str]) -> str:
             content.append(delegate_code)
 
     # Main loop: Process all exported methods in the plugin
-    for method in pplugin.get('exportedMethods', []):
+    for method in pplugin.get('methods', []):
         # Check the return type for a delegate
         ret_type = method.get('retType', {})
         if 'prototype' in ret_type:
@@ -510,7 +510,7 @@ def generate_enum_code(pplugin: dict, enums: set[str]) -> str:
                 process_prototype(param['prototype'])
 
     # Main loop: Process all exported methods in the plugin
-    for method in pplugin.get('exportedMethods', []):
+    for method in pplugin.get('methods', []):
         if 'retType' in method and 'enum' in method['retType']:
             process_enum(method['retType']['enum'], method['retType'].get('type', ''))
 
@@ -532,8 +532,8 @@ def generate_header(plugin_name: str, pplugin: dict) -> str:
     content = [
         '#pragma once\n',
         '\n',
-        '#include <plugify/cpp_plugin.hpp>\n',
-        '#include <plugify/any.hpp>\n',
+        '#include <plg/plugin.hpp>\n',
+        '#include <plg/any.hpp>\n',
         '#include <cstdint>\n',
         '\n',
         f'// Generated from {plugin_name}.pplugin by {link}\n',
@@ -549,7 +549,7 @@ def generate_header(plugin_name: str, pplugin: dict) -> str:
     delegates = set()
     content.append(generate_delegate_code(pplugin, delegates))
 
-    for method in pplugin.get('exportedMethods', []):
+    for method in pplugin.get('methods', []):
         method_name = method.get('name', 'UnnamedMethod')
         param_types_data = method.get('paramTypes', [])
         ret_type_data = method.get('retType', {})

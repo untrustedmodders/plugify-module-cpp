@@ -2,9 +2,9 @@
 #include <functional>
 #include <iostream>
 #include <limits>
-#include <plugify/compat_format.hpp>
-#include <plugify/cpp_plugin.hpp>
-#include <plugify/format.hpp>
+#include <plg/format.hpp>
+#include <plg/plugin.hpp>
+#include <plg/formatter.hpp>
 #include <plugin_export.h>
 #include <pps/cross_call_master.hpp>
 #include <string>
