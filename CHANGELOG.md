@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.5](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.4...v2.0.5) (2025-09-08)
+
+
+### Bug Fixes
+
+* add recursive for copy ([866087a](https://github.com/untrustedmodders/plugify-module-cpp/commit/866087ab866ca415b1b93468baab368317caf8f3))
+
 ## [2.0.4](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.3...v2.0.4) (2025-09-08)
 
 
