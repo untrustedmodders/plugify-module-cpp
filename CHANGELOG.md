@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.12](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.11...v2.0.12) (2025-09-09)
+
+
+### Bug Fixes
+
+* add correct token ([9a1de98](https://github.com/untrustedmodders/plugify-module-cpp/commit/9a1de98eb8a0ef6ecc72444fb86747bfb9601a32))
+* add target platform to meta ([80642e0](https://github.com/untrustedmodders/plugify-module-cpp/commit/80642e04a213659859a3fdefaf748f63ec32d056))
+
 ## [2.0.11](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.10...v2.0.11) (2025-09-09)
 
 
