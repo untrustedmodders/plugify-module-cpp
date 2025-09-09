@@ -1,5 +1,83 @@
 # Changelog
 
+## [1.0.0](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.14...v1.0.0) (2025-09-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* update for a new plugify
+
+### Features
+
+* add plugin contexts ([af7bf05](https://github.com/untrustedmodders/plugify-module-cpp/commit/af7bf05058484e9015f66df3d2a11d446267e7c6))
+* base paths methods ([81db6d0](https://github.com/untrustedmodders/plugify-module-cpp/commit/81db6d09ad6123eb27cf867cc9ecc0d64fea8d43))
+* update for a new plugify ([81cecf0](https://github.com/untrustedmodders/plugify-module-cpp/commit/81cecf0b9c3801d0c28d9d4a04a68f50a21cd461))
+
+
+### Bug Fixes
+
+* add cmake versioning ([270bf7c](https://github.com/untrustedmodders/plugify-module-cpp/commit/270bf7c8e88065963b1d7ae29b10836d61bdc65e))
+* add conda ver ([bce86b2](https://github.com/untrustedmodders/plugify-module-cpp/commit/bce86b2ee5853c1b94f84075902f12cfcb94c7b2))
+* add correct token ([9a1de98](https://github.com/untrustedmodders/plugify-module-cpp/commit/9a1de98eb8a0ef6ecc72444fb86747bfb9601a32))
+* add default build type ([1a15e35](https://github.com/untrustedmodders/plugify-module-cpp/commit/1a15e3539dcfcbbbd37d0365c661a76fb398a060))
+* add default param generator ([b85854f](https://github.com/untrustedmodders/plugify-module-cpp/commit/b85854f56c15c700ceda4e6a9bc66bd7abc61b67))
+* add extern to struct ([eb8cbda](https://github.com/untrustedmodders/plugify-module-cpp/commit/eb8cbda7c28856afabc4791cb1138eabdb6eb818))
+* add name blacklist to generator ([f901e80](https://github.com/untrustedmodders/plugify-module-cpp/commit/f901e808e1d1a0f9a228863fe02673ef7543c5d8))
+* add recursive for copy ([866087a](https://github.com/untrustedmodders/plugify-module-cpp/commit/866087ab866ca415b1b93468baab368317caf8f3))
+* add replace to target platform ([771d23d](https://github.com/untrustedmodders/plugify-module-cpp/commit/771d23d70ffe39766fb93153d9fb6c190d5bc8a7))
+* add target platform to meta ([80642e0](https://github.com/untrustedmodders/plugify-module-cpp/commit/80642e04a213659859a3fdefaf748f63ec32d056))
+* arm build fixes ([7bfbfd0](https://github.com/untrustedmodders/plugify-module-cpp/commit/7bfbfd08fa43f0def58236c55039990c08759050))
+* build issues ([cc66d9a](https://github.com/untrustedmodders/plugify-module-cpp/commit/cc66d9a5fa4a82bf9d2eb548aed98dec10e701e9))
+* build on linux ([ae4cfcf](https://github.com/untrustedmodders/plugify-module-cpp/commit/ae4cfcfc42ebe8beb41726998cb970b6ddef8d03))
+* build when dep ([36c502f](https://github.com/untrustedmodders/plugify-module-cpp/commit/36c502fc7a43329949d8b1f03545af45654a7957))
+* bump C++ to 23 ([610346a](https://github.com/untrustedmodders/plugify-module-cpp/commit/610346a13c7a24c85277c087b65c5e0938929598))
+* change notification to discord ([58e773f](https://github.com/untrustedmodders/plugify-module-cpp/commit/58e773f7d256d9bb579a38623461ac3052a9d02f))
+* change presets ([41ca926](https://github.com/untrustedmodders/plugify-module-cpp/commit/41ca926967385427157c6d5f9952968237d2c91f))
+* conda package command ([a7789af](https://github.com/untrustedmodders/plugify-module-cpp/commit/a7789afd6e11b154d7607458ff969c8e53131a29))
+* give all  perm ([4710389](https://github.com/untrustedmodders/plugify-module-cpp/commit/4710389b74d145e7f4e347e70cdee1a2f91b1630))
+* more build changes ([8d31743](https://github.com/untrustedmodders/plugify-module-cpp/commit/8d31743cf979a3c57d0c7dae8ffbd380ee414e1c))
+* more build improvement ([8418205](https://github.com/untrustedmodders/plugify-module-cpp/commit/8418205c10e06c2410a74ea5b0c90c1ae3dba77e))
+* move api to separate header ([f676c15](https://github.com/untrustedmodders/plugify-module-cpp/commit/f676c15a6f117501240f53361a88df04a5539f84))
+* remove base dir getter ([472cade](https://github.com/untrustedmodders/plugify-module-cpp/commit/472cade5543ecf6543551af474908519c3e9559c))
+* remove unused files ([89c7b0a](https://github.com/untrustedmodders/plugify-module-cpp/commit/89c7b0aa221ca4411c706606533098ac34d2d488))
+* replace reinterpret_cast by static_cast ([bc63227](https://github.com/untrustedmodders/plugify-module-cpp/commit/bc632274f7f5b9cdb71d87e37af56e76196e6196))
+* revert back ([c9555de](https://github.com/untrustedmodders/plugify-module-cpp/commit/c9555ded8f2ab696be62bf74543bcc8481066923))
+* some build changes ([15fab1a](https://github.com/untrustedmodders/plugify-module-cpp/commit/15fab1a774bc621540296998d42022b1b1ac8db0))
+* test again ([d69e6eb](https://github.com/untrustedmodders/plugify-module-cpp/commit/d69e6ebcc15a708a4f1820862508d23fa993239e))
+* trigger build ([d47dd6b](https://github.com/untrustedmodders/plugify-module-cpp/commit/d47dd6b51201f678cd8b068dbe14eca113b0e73d))
+* try micromamba ([b48670b](https://github.com/untrustedmodders/plugify-module-cpp/commit/b48670b78e3ccbb47aabd7cf07e5fe15408ebfd1))
+* try revert token back ([b7133d2](https://github.com/untrustedmodders/plugify-module-cpp/commit/b7133d28c667a26e9ad9b57e8ed7d821de7f45c7))
+* try switch to boa and micromamba ([8c987f9](https://github.com/untrustedmodders/plugify-module-cpp/commit/8c987f9b11cf51027d7477884904db92700f751c))
+* uncomment release please ([2fee302](https://github.com/untrustedmodders/plugify-module-cpp/commit/2fee302dc60d10b6e1aafc2f1a2315b83a8d1010))
+* update action build ([369e652](https://github.com/untrustedmodders/plugify-module-cpp/commit/369e6528715589b00b55d63b6c97ed0373b745bf))
+* update arch tags for action build ([00c2ca1](https://github.com/untrustedmodders/plugify-module-cpp/commit/00c2ca195dd6aa4c5d83a555b2a645aeecacff1d))
+* update artifact ([dce6b41](https://github.com/untrustedmodders/plugify-module-cpp/commit/dce6b41311e7fb0b9151f39b793df4b4f65db3b7))
+* Update CMakeLists.txt ([40e5575](https://github.com/untrustedmodders/plugify-module-cpp/commit/40e55750974a4521ec96da81ba3580daaa3b7b1c))
+* update includes ([972c52c](https://github.com/untrustedmodders/plugify-module-cpp/commit/972c52cbe3e96e769aa429977d03c4f7f2ce52f9))
+* update meta build of only binary package ([ed4f875](https://github.com/untrustedmodders/plugify-module-cpp/commit/ed4f8751ea1644027cab8cec27f8174e76d3e327))
+* update more staff ([ec05b88](https://github.com/untrustedmodders/plugify-module-cpp/commit/ec05b887fd0aeeb6b154955462aac54899c1d58e))
+* update plugify ([c93bf9f](https://github.com/untrustedmodders/plugify-module-cpp/commit/c93bf9f97ee622ebbe99996de422c271b59bfe57))
+* update plugify ([a6f1d3e](https://github.com/untrustedmodders/plugify-module-cpp/commit/a6f1d3e11eaea8e45a656aef168a63c2660ec6e3))
+* update plugify ([cb348c0](https://github.com/untrustedmodders/plugify-module-cpp/commit/cb348c04f88c12692653893b3d2882c35552bc07))
+* update plugify ([66b6073](https://github.com/untrustedmodders/plugify-module-cpp/commit/66b607372f0f3668a360f3dc27b88dd93ed233d8))
+* update plugify ([c3f4d99](https://github.com/untrustedmodders/plugify-module-cpp/commit/c3f4d9956bbb5db7e64b5883a098c0b3a67badd9))
+* update plugify ([28e1990](https://github.com/untrustedmodders/plugify-module-cpp/commit/28e199023a4eb0fb5eba08faa825983c63d94a37))
+* update plugify ([f117b28](https://github.com/untrustedmodders/plugify-module-cpp/commit/f117b280cc07bbbb7eaccacbb655d83e75d6b08a))
+* update plugify and clang tools ([2437952](https://github.com/untrustedmodders/plugify-module-cpp/commit/24379521030df592f8a9d2db9a3a5359177e6a07))
+* update readme and add missing permission ([d65280a](https://github.com/untrustedmodders/plugify-module-cpp/commit/d65280a023b1ab4c3e918530ccf4154c86f52443))
+* update test includes ([9ee1cec](https://github.com/untrustedmodders/plugify-module-cpp/commit/9ee1cec5aa590878fa142ff3e1744f708831b703))
+* update tests ([0377e7c](https://github.com/untrustedmodders/plugify-module-cpp/commit/0377e7c50dc26f6d6a2af88f7aa11eb85b33bef1))
+* update tests ([bef7c08](https://github.com/untrustedmodders/plugify-module-cpp/commit/bef7c083e71d4471734f0e68ed14d61f01793656))
+* update tests and minor fixes for linux ([6cc484f](https://github.com/untrustedmodders/plugify-module-cpp/commit/6cc484f67aaea399c2923a9c9f2ce37bf010e471))
+* update version naming ([6ca8fca](https://github.com/untrustedmodders/plugify-module-cpp/commit/6ca8fca717d59edbf2fdee0e6a17029f166ab3d7))
+* version ([10e6229](https://github.com/untrustedmodders/plugify-module-cpp/commit/10e6229568b3aae11b54f1c92b4853dff4ef6ace))
+* win script ([9d042f1](https://github.com/untrustedmodders/plugify-module-cpp/commit/9d042f1fdcadaf7bdf087594dbed53d34e87293a))
+
+
+### Miscellaneous Chores
+
+* release 1.0.0 ([eb7c0c2](https://github.com/untrustedmodders/plugify-module-cpp/commit/eb7c0c23bfffafd1783cd1474c34e17dd82d8cad))
+
 ## [2.0.14](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.13...v2.0.14) (2025-09-09)
 
 
