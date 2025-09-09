@@ -21,7 +21,6 @@ on:
 env:
   BUILD_TYPE: Release
   PROJECT_NAME: plugify-module-cpp
-  CONDA_CHANNEL_NAME: plugify-module-cpp
 
 jobs:
   setup:
@@ -145,14 +144,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            conda-recipe
+            conda
           sparse-checkout-cone-mode: false
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
           name: ${{ env.PROJECT_NAME }}-build-${{ matrix.platform }}-${{ needs.setup.outputs.github_sha_short }}
-          path: artifacts/
+          path: conda/
 
       - name: Setup Micromamba
         uses: mamba-org/setup-micromamba@v1
@@ -172,20 +171,14 @@ jobs:
       - name: Prepare recipe
         shell: bash -el {0}
         run: |
-          # Create directory for recipe
-          mkdir -p "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}"
-
-          # Copy artifacts
-          cp -r artifacts/* "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}/"
-
           # Replace version in meta.yaml
           version="${{ needs.setup.outputs.tag_name }}"
           version="${version#v}"  # Remove leading 'v'
-          sed "s/REPLACE_VERSION/$version/g" "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}/meta.yaml.example" > "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}/meta.yaml"
+          sed "s/REPLACE_VERSION/$version/g" "conda/meta.yaml.example" > "conda/meta.yaml"
 
           # Ensure build.sh is executable on Linux
           if [[ "$RUNNER_OS" == "Linux" ]]; then
-            chmod +x "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}/build.sh"
+            chmod +x "conda/build.sh"
           fi
 
       - name: Build conda package
@@ -197,7 +190,7 @@ jobs:
           conda config --show channels
 
           # build
-          conda mambabuild "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}" --output-folder conda-bld --no-test --channel conda-forge
+          conda mambabuild "conda" --output-folder conda-bld --no-test --channel conda-forge
 
       - name: Prepare channel directory
         shell: bash -el {0}
@@ -312,7 +305,7 @@ jobs:
           <!DOCTYPE html>
           <html>
           <head>
-              <title>Conda Channel - ${{ env.CONDA_CHANNEL_NAME }}</title>
+              <title>Conda Channel - ${{ env.PROJECT_NAME }}</title>
               <style>
                   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
                   .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
@@ -334,16 +327,16 @@ jobs:
           <body>
               <div class="container">
                   <div class="header">
-                      <h1>📦 ${{ env.CONDA_CHANNEL_NAME }}</h1>
+                      <h1>📦 ${{ env.PROJECT_NAME }}</h1>
                       <div class="subtitle">Conda Channel for C++ Language Module</div>
                   </div>
                   
                   <div class="card">
                       <h2>🚀 Quick Start</h2>
                       <p>Install directly using conda:</p>
-                      <pre>conda install -c https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/ ${{ env.CONDA_CHANNEL_NAME }}</pre>
+                      <pre>conda install -c https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/ ${{ env.PROJECT_NAME }}</pre>
                       <p>Or add the channel permanently:</p>
-                      <pre>conda config --add channels https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/ && conda install ${{ env.CONDA_CHANNEL_NAME }}</pre>
+                      <pre>conda config --add channels https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/ && conda install ${{ env.PROJECT_NAME }}</pre>
                   </div>
                   
                   <div class="card">
