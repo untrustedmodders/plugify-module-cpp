@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.15](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.14...v2.0.15) (2025-09-09)
+
+
+### Bug Fixes
+
+* change folder structure ([a36a6c1](https://github.com/untrustedmodders/plugify-module-cpp/commit/a36a6c1a139d3266a9b8957f13a1447e6fdd8bfd))
+* update build ([09df1c7](https://github.com/untrustedmodders/plugify-module-cpp/commit/09df1c7fb5ad1b0c253fa745d75956f7d00f577c))
+
 ## [2.0.14](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.13...v2.0.14) (2025-09-09)
 
 
