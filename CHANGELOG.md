@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.13](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.12...v2.0.13) (2025-09-09)
+
+
+### Bug Fixes
+
+* add replace to target platform ([771d23d](https://github.com/untrustedmodders/plugify-module-cpp/commit/771d23d70ffe39766fb93153d9fb6c190d5bc8a7))
+
 ## [2.0.12](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.11...v2.0.12) (2025-09-09)
 
 
