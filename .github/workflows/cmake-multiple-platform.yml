@@ -25,11 +25,7 @@ env:
 
 jobs:
   setup:
-    permissions:
-      contents: write
-      pull-requests: write
-      issues: write
-      repository-projects: write
+    permissions: write-all
     runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
