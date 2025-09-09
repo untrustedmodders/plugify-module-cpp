@@ -259,6 +259,8 @@ jobs:
       - name: Download packages from all releases
         if: ${{ !env.ACT }}
         shell: bash -el {0}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p build/repo/{linux-64,win-64,noarch}
           gh api /repos/${{ github.repository }}/releases?per_page=10 \
