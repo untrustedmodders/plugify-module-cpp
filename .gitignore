@@ -9,6 +9,3 @@ CMakeUserPresets.json
 
 # Build results
 build/
-
-# Test plugins
-/user_test/
