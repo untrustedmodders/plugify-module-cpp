@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.6](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.5...v2.0.6) (2025-09-09)
+
+
+### Bug Fixes
+
+* try switch to boa and micromamba ([8c987f9](https://github.com/untrustedmodders/plugify-module-cpp/commit/8c987f9b11cf51027d7477884904db92700f751c))
+
 ## [2.0.5](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.4...v2.0.5) (2025-09-08)
 
 
