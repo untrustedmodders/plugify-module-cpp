@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.14](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.13...v2.0.14) (2025-09-09)
+
+
+### Bug Fixes
+
+* some minor chage ([b45dca7](https://github.com/untrustedmodders/plugify-module-cpp/commit/b45dca7f9c995d57fc3f4100d47703ca71eb559a))
+
 ## [2.0.13](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.12...v2.0.13) (2025-09-09)
 
 
