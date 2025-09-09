@@ -28,6 +28,8 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      issues: write
+      repository-projects: write
     runs-on: ubuntu-latest
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
