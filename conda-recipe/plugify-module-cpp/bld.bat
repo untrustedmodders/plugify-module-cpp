@@ -2,12 +2,12 @@
 REM bld.bat - For Windows builds
 
 REM Create the target directories
-if not exist "%PREFIX%\Library\bin" mkdir "%PREFIX%\Library\bin"
-if not exist "%PREFIX%\Library" mkdir "%PREFIX%\Library"
+if not exist "%PREFIX%\bin" mkdir "%PREFIX%\bin"
+if not exist "%PREFIX%" mkdir "%PREFIX%"
 
 REM Copy the DLL and module file
-copy bin\plugify-module-cpp.dll "%PREFIX%\Library\bin\" || exit 1
-copy plugify-module-cpp.pmodule "%PREFIX%\Library\" || exit 1
+copy bin\plugify-module-cpp.dll "%PREFIX%\bin\" || exit 1
+copy plugify-module-cpp.pmodule "%PREFIX%\" || exit 1
 
 REM Create activation scripts
 if not exist "%PREFIX%\etc\conda\activate.d" mkdir "%PREFIX%\etc\conda\activate.d"
