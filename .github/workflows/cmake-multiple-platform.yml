@@ -154,17 +154,19 @@ jobs:
           name: ${{ env.PROJECT_NAME }}-build-${{ matrix.platform }}-${{ needs.setup.outputs.github_sha_short }}
           path: artifacts/
 
-      - name: Setup Micromamba
-        uses: mamba-org/setup-micromamba@v2
+      - name: Setup Miniconda
+        uses: conda-incubator/setup-miniconda@v3
         with:
-          environment-name: build-env
-          create-args: >-
-            python=3.10
-            conda-build
-            boa
-            conda-index
-            anaconda-client
-          cache-environment: true  # Cache for faster builds
+          miniforge-variant: Mambaforge
+          mamba-version: "*"
+          python-version: "3.10"
+          auto-activate-base: true
+          #installer-url: ${{ matrix.os == 'windows-latest' && 'https://github.com/conda-forge/miniforge/releases/download/25.3.0-3/Miniforge3-25.3.0-3-Windows-x86_64.exe' || 'https://github.com/conda-forge/miniforge/releases/download/25.3.0-3/Miniforge3-25.3.0-3-Linux-x86_64.sh' }}
+
+      - name: Install build tools
+        shell: bash -el {0}
+        run: |
+          mamba install -y -n base conda-build boa conda-index anaconda-client
 
       - name: Prepare recipe
         shell: bash -el {0}
@@ -188,7 +190,7 @@ jobs:
       - name: Build conda package
         shell: bash -el {0}
         run: |
-          boa build "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}" --output-folder conda-bld --no-test --channel conda-forge
+          conda mambabuild "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}" --output-folder conda-bld --no-test --channel conda-forge
 
       - name: Prepare channel directory
         shell: bash -el {0}
