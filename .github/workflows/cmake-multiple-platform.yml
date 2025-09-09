@@ -154,20 +154,21 @@ jobs:
           name: ${{ env.PROJECT_NAME }}-build-${{ matrix.platform }}-${{ needs.setup.outputs.github_sha_short }}
           path: artifacts/
 
-      - name: Setup Mambaforge
-        uses: conda-incubator/setup-miniconda@v3
+      - name: Setup Micromamba
+        uses: mamba-org/setup-micromamba@v1
         with:
-          miniforge-version: latest
-          miniforge-variant: Mambaforge
-          channels: conda-forge,defaults
-          python-version: '3.10'
-          activate-environment: build-env
-          use-mamba: true
+          micromamba-version: latest
+          environment-name: build-env
+          create-args: >-
+            python=3.10
+          init-shell: bash
+          cache-environment: true
+          channels: conda-forge
 
       - name: Install build tools
         shell: bash -el {0}
         run: |
-          mamba install -y -n base conda-build boa conda-index anaconda-client
+          micromamba install -n base -c conda-forge conda-build boa
 
       - name: Prepare recipe
         shell: bash -el {0}
