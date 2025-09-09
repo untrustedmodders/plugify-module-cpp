@@ -157,18 +157,17 @@ jobs:
       - name: Setup Micromamba
         uses: mamba-org/setup-micromamba@v1
         with:
-          micromamba-version: latest
           environment-name: build-env
+          condarc: |
+            channels:
+              - conda-forge
           create-args: >-
-            python=3.10
-          init-shell: bash
+            boa
+          init-shell: >-
+            bash
+            powershell
+          cache-downloads: true
           cache-environment: true
-          channels: conda-forge
-
-      - name: Install build tools
-        shell: bash -el {0}
-        run: |
-          micromamba install -n base -c conda-forge conda-build boa
 
       - name: Prepare recipe
         shell: bash -el {0}
@@ -192,6 +191,12 @@ jobs:
       - name: Build conda package
         shell: bash -el {0}
         run: |
+          set -e
+          # log (for debug)
+          conda env list
+          conda config --show channels
+
+          # build
           conda mambabuild "conda-recipe/${{ env.CONDA_CHANNEL_NAME }}" --output-folder conda-bld --no-test --channel conda-forge
 
       - name: Prepare channel directory
