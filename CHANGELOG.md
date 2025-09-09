@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.10](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.9...v2.0.10) (2025-09-09)
+
+
+### Bug Fixes
+
+* try micromamba ([b48670b](https://github.com/untrustedmodders/plugify-module-cpp/commit/b48670b78e3ccbb47aabd7cf07e5fe15408ebfd1))
+
 ## [2.0.9](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.8...v2.0.9) (2025-09-09)
 
 
