@@ -154,15 +154,15 @@ jobs:
           name: ${{ env.PROJECT_NAME }}-build-${{ matrix.platform }}-${{ needs.setup.outputs.github_sha_short }}
           path: artifacts/
 
-      - name: Setup Miniconda
+      - name: Setup Mambaforge
         uses: conda-incubator/setup-miniconda@v3
         with:
           miniforge-version: latest
           miniforge-variant: Mambaforge
-          mamba-version: "*"
-          python-version: "3.10"
-          auto-activate-base: true
-          #installer-url: ${{ matrix.os == 'windows-latest' && 'https://github.com/conda-forge/miniforge/releases/download/25.3.0-3/Miniforge3-25.3.0-3-Windows-x86_64.exe' || 'https://github.com/conda-forge/miniforge/releases/download/25.3.0-3/Miniforge3-25.3.0-3-Linux-x86_64.sh' }}
+          channels: conda-forge,defaults
+          python-version: '3.10'
+          activate-environment: build-env
+          use-mamba: true
 
       - name: Install build tools
         shell: bash -el {0}
