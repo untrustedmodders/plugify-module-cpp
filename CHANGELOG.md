@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.14](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.13...v2.0.14) (2025-09-09)
+
+
+### Bug Fixes
+
+* give all  perm ([4710389](https://github.com/untrustedmodders/plugify-module-cpp/commit/4710389b74d145e7f4e347e70cdee1a2f91b1630))
+* try revert token back ([b7133d2](https://github.com/untrustedmodders/plugify-module-cpp/commit/b7133d28c667a26e9ad9b57e8ed7d821de7f45c7))
+* update meta build of only binary package ([ed4f875](https://github.com/untrustedmodders/plugify-module-cpp/commit/ed4f8751ea1644027cab8cec27f8174e76d3e327))
+* update more staff ([ec05b88](https://github.com/untrustedmodders/plugify-module-cpp/commit/ec05b887fd0aeeb6b154955462aac54899c1d58e))
+* update plugify ([c93bf9f](https://github.com/untrustedmodders/plugify-module-cpp/commit/c93bf9f97ee622ebbe99996de422c271b59bfe57))
+
 ## [2.0.13](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.12...v2.0.13) (2025-09-09)
 
 
