@@ -3,16 +3,17 @@
 
 set -ex
 
-# Copy entire bin/ folder into $PREFIX/bin/
+# Create the target directories
 mkdir -p $PREFIX/bin
-cp -r bin/* $PREFIX/bin/
+mkdir -p $PREFIX
 
-# Copy all .pmodule files into $PREFIX/
-cp -r *.pmodule $PREFIX/
+# Copy the shared library and module file
+cp bin/libplugify-module-cpp.so $PREFIX/bin/
+cp plugify-module-cpp.pmodule $PREFIX/
 
-# Fix permissions (recursively for bin, selective for modules)
-chmod -R 755 $PREFIX/bin
-chmod 644 $PREFIX/*.pmodule
+# Set proper permissions
+chmod 755 $PREFIX/bin/libplugify-module-cpp.so
+chmod 644 $PREFIX/plugify-module-cpp.pmodule
 
 # Create activation scripts for proper library path
 mkdir -p $PREFIX/etc/conda/activate.d
