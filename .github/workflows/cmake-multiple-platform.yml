@@ -139,6 +139,8 @@ jobs:
           - os: ubuntu-latest
             platform: linux-64
     runs-on: ${{ matrix.os }}
+    outputs:
+      url: ${{ steps.release.outputs.url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -211,6 +213,7 @@ jobs:
       - name: Upload release asset
         if: ${{ !env.ACT }}
         uses: softprops/action-gh-release@v1
+        id: release
         with:
           tag_name: ${{ needs.setup.outputs.tag_name }}
           files: |
@@ -400,7 +403,7 @@ jobs:
           args: |
             🎉 **New Release: ${{ env.PROJECT_NAME }} ${{ needs.setup.outputs.tag_name }}**
             
-            📦 **Downloads:** [${{ needs.setup.outputs.tag_name }}](${{ needs.publish_release.outputs.url }})
+            📦 **Downloads:** [${{ needs.setup.outputs.tag_name }}](${{ needs.package.outputs.url }})
             🐍 **Conda Channel:** https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
             
             Install via conda:
