@@ -1,7 +1,7 @@
 {
 	"$schema": "https://raw.githubusercontent.com/untrustedmodders/plugify/refs/heads/main/schemas/language-module.schema.json",
 	"version": "${CPPLM_VERSION}",
-	"name": "plugify-module-cpp",
+	"name": "${CPPLM_PACKAGE}",
 	"language": "cpp",
 	"description": "Adds support for C++ plugins",
 	"author": "untrustedmodders",

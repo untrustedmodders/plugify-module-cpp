@@ -30,6 +30,7 @@ void CppLanguageModule::Shutdown() {
 }
 
 void CppLanguageModule::OnUpdate([[maybe_unused]] std::chrono::milliseconds dt) {
+	
 }
 
 bool CppLanguageModule::IsDebugBuild() {

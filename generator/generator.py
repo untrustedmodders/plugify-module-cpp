@@ -584,7 +584,15 @@ def main(manifest_path: str, output_dir: str, override: bool):
         print(f'Output directory does not exist: {output_dir}')
         return 1
 
-    plugin_name = os.path.basename(manifest_path).rsplit('.', 3)[0]
+    try:
+        with open(manifest_path, 'r', encoding='utf-8') as file:
+            pplugin = json.load(file)
+            
+    except Exception as e:
+        print(f'An error occurred: {e}')
+        return 1
+
+    plugin_name = pplugin.get('name', os.path.basename(manifest_path).rsplit('.', 3)[0])
     output_path = os.path.join(output_dir, 'pps', f'{plugin_name}.hpp')
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
@@ -593,9 +601,6 @@ def main(manifest_path: str, output_dir: str, override: bool):
         return 1
 
     try:
-        with open(manifest_path, 'r', encoding='utf-8') as file:
-            pplugin = json.load(file)
-
         content = generate_header(plugin_name, pplugin)
 
         with open(output_path, 'w', encoding='utf-8') as file:
