@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.19](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.18...v2.0.19) (2025-09-12)
+
+
+### Bug Fixes
+
+* replace static by reinterpret cast ([3e3dbbc](https://github.com/untrustedmodders/plugify-module-cpp/commit/3e3dbbc62f8fb12b499d47ea19dae43702e9f137))
+* update string hasher ([23fce3e](https://github.com/untrustedmodders/plugify-module-cpp/commit/23fce3eb3793e967bf225334219f30ac36cfa7e4))
+
 ## [2.0.18](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.17...v2.0.18) (2025-09-10)
 
 
