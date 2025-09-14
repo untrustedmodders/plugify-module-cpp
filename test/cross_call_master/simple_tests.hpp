@@ -7,31 +7,36 @@
 
 class SimpleTests {
 public:
-	class Test {
-		friend SimpleTests;
+    class Test {
+        friend SimpleTests;
 
-	public:
-		void Fail(std::string error);
+    public:
+        void Fail(std::string error);
 
-		const std::string& GetName() const;
-		bool IsFailed() const;
-		const std::vector<std::string>& GetErrors() const;
+        const std::string &GetName() const;
 
-	private:
-		Test(std::string name, std::function<void(Test&)> func);
-		void Run();
+        bool IsFailed() const;
 
-	private:
-		std::string _name;
-		std::function<void(Test&)> _func;
-		std::vector<std::string> _errors;
-	};
+        const std::vector<std::string> &GetErrors() const;
+
+    private:
+        Test(std::string name, std::function<void(Test &)> func);
+
+        void Run();
+
+    private:
+        std::string _name;
+        std::function<void(Test &)> _func;
+        std::vector<std::string> _errors;
+    };
 
 public:
-	void Add(std::string name, std::function<void(Test&)> func);
-	void Run();
-	void Reset();
+    void Add(std::string name, std::function<void(Test &)> func);
+
+    void Run();
+
+    void Reset();
 
 private:
-	std::vector<std::unique_ptr<Test>> _tests;
+    std::vector<std::unique_ptr<Test> > _tests;
 };
