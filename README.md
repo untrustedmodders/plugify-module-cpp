@@ -22,10 +22,10 @@ The C++ Language Module for Plugify enables developers to write plugins in C++ f
 
 #### Option 1: Install via Plugify Plugin Manager
 
-You can install the C++ Language Module using the Plugify plugin manager by running the following command:
+You can install the C++ Language Module using the Mamba plugin manager by running the following command:
 
 ```bash
-plg install plugify-module-cpp
+mamba install -n your_env_name -c https://untrustedmodders.github.io/plugify-module-cpp/ plugify-module-cpp
 ```
 
 #### Option 2: Manual Installation

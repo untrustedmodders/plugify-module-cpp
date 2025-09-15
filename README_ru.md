@@ -22,10 +22,10 @@
 
 #### Вариант 1: Установка через менеджер плагинов Plugify
 
-Вы можете установить модуль языка C++ с помощью менеджера плагинов Plugify, выполнив следующую команду:
+Вы можете установить модуль языка C++ с помощью менеджера плагинов Mamba, выполнив следующую команду:
 
 ```bash
-plg install plugify-module-cpp
+mamba install -n your_env_name -c https://untrustedmodders.github.io/plugify-module-cpp/ plugify-module-cpp
 ```
 
 #### Вариант 2: Ручная установка
