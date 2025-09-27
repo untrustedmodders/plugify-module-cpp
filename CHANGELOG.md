@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.1.0](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.18...v2.1.0) (2025-09-27)
+
+
+### Features
+
+* update for a new plugify ([ef75a18](https://github.com/untrustedmodders/plugify-module-cpp/commit/ef75a180f2c6015b7660acf40a07e9decd91fbce))
+
+
+### Bug Fixes
+
+* add mac build ([91c49eb](https://github.com/untrustedmodders/plugify-module-cpp/commit/91c49ebffcd42bdb7a329314b39535d28294e22c))
+* replace static by reinterpret cast ([3e3dbbc](https://github.com/untrustedmodders/plugify-module-cpp/commit/3e3dbbc62f8fb12b499d47ea19dae43702e9f137))
+* update clang format ([eb1a580](https://github.com/untrustedmodders/plugify-module-cpp/commit/eb1a5801d94a94431fda88783f5b125a3bbb52e5))
+* update deps ([dd3746f](https://github.com/untrustedmodders/plugify-module-cpp/commit/dd3746fce37aae3baf8c56bf614d4cb6240507d9))
+* update plugify ([adde663](https://github.com/untrustedmodders/plugify-module-cpp/commit/adde6637aa24f43e6ee3644be413e7a105c9530d))
+* update string hasher ([23fce3e](https://github.com/untrustedmodders/plugify-module-cpp/commit/23fce3eb3793e967bf225334219f30ac36cfa7e4))
+
 ## [2.0.18](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.17...v2.0.18) (2025-09-10)
 
 
