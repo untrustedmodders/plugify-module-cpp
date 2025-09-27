@@ -36,7 +36,7 @@ add_library(${PROJECT_NAME} SHARED ${PLUGIN_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/external/plugify/include")
 
 if(MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
+    target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX /Zc:preprocessor)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wextra -Wshadow -Wconversion -Wpedantic -Werror)
 endif()

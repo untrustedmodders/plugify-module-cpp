@@ -65,7 +65,7 @@ endif()
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CPPLM_LINK_LIBRARIES})
 
 if(MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
+    target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX /Zc:preprocessor)
 else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wextra -Wshadow -Wconversion -Wpedantic -Werror)
 endif()
