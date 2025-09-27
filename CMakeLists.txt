@@ -27,8 +27,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 #set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 if(NOT CMAKE_BUILD_TYPE MATCHES "Debug|Devel|MinSizeRel|RelWithDebInfo|Release")
-    message(STATUS "CMAKE_BUILD_TYPE not set, defaulting to Debug.")
-    set(CMAKE_BUILD_TYPE Debug)
+    message(STATUS "CMAKE_BUILD_TYPE not set, defaulting to Release.")
+    set(CMAKE_BUILD_TYPE Release)
 endif()
 
 if(UNIX AND NOT APPLE)
