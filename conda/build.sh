@@ -1,18 +1,28 @@
 #!/bin/bash
-# build.sh - For Linux builds
+# build.sh - For Unix builds
 
 set -ex
+
+# Detect the platform and set the appropriate library extension
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    LIB_EXT="dylib"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    LIB_EXT="so"
+else
+    echo "Unsupported platform: $OSTYPE"
+    exit 1
+fi
 
 # Create the target directories
 mkdir -p $PREFIX/bin
 mkdir -p $PREFIX
 
 # Copy the shared library and module file
-cp bin/libplugify-module-cpp.so $PREFIX/bin/
+cp bin/libplugify-module-cpp.$LIB_EXT $PREFIX/bin/
 cp plugify-module-cpp.pmodule $PREFIX/
 
 # Set proper permissions
-chmod 755 $PREFIX/bin/libplugify-module-cpp.so
+chmod 755 $PREFIX/bin/libplugify-module-cpp.$LIB_EXT
 chmod 644 $PREFIX/plugify-module-cpp.pmodule
 
 # Create activation scripts for proper library path

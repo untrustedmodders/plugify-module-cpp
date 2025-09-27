@@ -64,6 +64,11 @@ jobs:
             arch: x86_64
             container: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:latest
             setup_env: gcc14
+          - os: macos-latest
+            platform: osx-arm64
+            arch: arm64
+            container: null
+            setup_env: clang
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
     steps:
@@ -88,8 +93,18 @@ jobs:
           ln -sf /usr/bin/gcc-14 /usr/bin/gcc && ln -sf /usr/bin/g++-14 /usr/bin/g++
         # for ACT add nodejs
 
+      # macOS-specific setup
+      - name: Setup macOS build environment
+        if: matrix.setup_env == 'clang'
+        shell: bash -el {0}
+        run: |
+          # Install ninja via homebrew if not present
+          brew list ninja &>/dev/null || brew install ninja
+          # Ensure we're using the ARM64 architecture
+          echo "CMAKE_OSX_ARCHITECTURES=arm64" >> $GITHUB_ENV
+
       - name: Setup CMake
-        if: matrix.setup_env == 'msvc'
+        if: matrix.setup_env == 'msvc' || matrix.setup_env == 'clang'
         uses: lukka/get-cmake@latest
 
       - name: Cache build dependencies
@@ -107,7 +122,11 @@ jobs:
       - name: Configure
         shell: bash -el {0}
         run: |
-          cmake -S . -B build -G "Ninja" -DCPPLM_VERSION="${{ needs.setup.outputs.tag_name }}"
+          CMAKE_ARGS=""
+          if [[ "${{ matrix.setup_env }}" == "clang" ]]; then
+            CMAKE_ARGS="-DCMAKE_OSX_ARCHITECTURES=arm64"
+          fi
+          cmake -S . -B build -G "Ninja" -DCPPLM_VERSION="${{ needs.setup.outputs.tag_name }}" $CMAKE_ARGS
 
       - name: Build
         shell: bash -el {0}
@@ -138,6 +157,8 @@ jobs:
             platform: win-64
           - os: ubuntu-latest
             platform: linux-64
+          - os: macos-latest
+            platform: osx-arm64
     runs-on: ${{ matrix.os }}
     outputs:
       url: ${{ steps.release.outputs.url }}
@@ -178,8 +199,8 @@ jobs:
           version="${version#v}"  # Remove leading 'v'
           sed "s/REPLACE_VERSION/$version/g" "conda/meta.yaml.example" > "conda/meta.yaml"
 
-          # Ensure build.sh is executable on Linux
-          if [[ "$RUNNER_OS" == "Linux" ]]; then
+          # Ensure build.sh is executable on Unix systems
+          if [[ "$RUNNER_OS" == "Linux" ]] || [[ "$RUNNER_OS" == "macOS" ]]; then
             chmod +x "conda/build.sh"
           fi
 
@@ -259,7 +280,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mkdir -p build/repo/{linux-64,win-64,noarch}
+          mkdir -p build/repo/{linux-64,win-64,osx-arm64,noarch}
           gh api /repos/${{ github.repository }}/releases?per_page=10 \
           | jq -r '.[] | .assets[] | .browser_download_url' \
           | grep -E "(\.tar\.bz2|\.conda)$" > urls.txt
@@ -267,10 +288,12 @@ jobs:
           # separate by platform
           grep linux-64 urls.txt > linux.txt || true
           grep win-64 urls.txt > win.txt || true
-          grep -v -E "(linux-64|win-64)" urls.txt > noarch.txt || true
+          grep osx-arm64 urls.txt > osx.txt || true
+          grep -v -E "(linux-64|win-64|osx-arm64)" urls.txt > noarch.txt || true
       
           [ -s linux.txt ] && aria2c -x4 -s4 -j4 -i linux.txt -d build/repo/linux-64/ --continue
           [ -s win.txt ]   && aria2c -x4 -s4 -j4 -i win.txt -d build/repo/win-64/   --continue
+          [ -s osx.txt ]   && aria2c -x4 -s4 -j4 -i osx.txt -d build/repo/osx-arm64/ --continue
           [ -s noarch.txt ]&& aria2c -x4 -s4 -j4 -i noarch.txt -d build/repo/noarch/ --continue
 
       - name: Download conda packages
@@ -347,6 +370,7 @@ jobs:
                       <div class="platforms">
                           <a href="linux-64/" class="platform-link">🐧 Linux (64-bit)</a>
                           <a href="win-64/" class="platform-link">🪟 Windows (64-bit)</a>
+                          <a href="osx-arm64/" class="platform-link">🍎 macOS (ARM64)</a>
                           <a href="noarch/" class="platform-link">📦 NoArch</a>
                       </div>
                   </div>
