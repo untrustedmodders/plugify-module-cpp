@@ -1322,7 +1322,7 @@ public:
         _tests.Add("ParamRefArrays", [](SimpleTests::Test &test) {
             const auto boolArrayExpected = plg::vector<bool>{true};
             const auto char8ArrayExpected = plg::vector<char>{'a', 'b', 'c'};
-            const auto char16ArrayExpected = plg::vector<char16_t>{'d', 'e', 'f'};
+            const auto char16ArrayExpected = plg::vector<char16_t>{u'd', u'e', u'f'};
             const auto sbyteArrayExpected = plg::vector<int8_t>{-3, -2, -1, 0, 1, 2, 3};
             const auto shortArrayExpected = plg::vector<int16_t>{-4, -3, -2, -1, 0, 1, 2, 3, 4};
             const auto intArrayExpected = plg::vector<int32_t>{-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5};
@@ -1339,7 +1339,7 @@ public:
             const auto stringArrayExpected = plg::vector<plg::string>{"1", "12", "123", "1234", "12345", "123456"};
             plg::vector<bool> boolArray{true, false, true};
             plg::vector<char> char8Array{'A', 'B', 'C'};
-            plg::vector<char16_t> char16Array{'D', 'E', 'F'};
+            plg::vector<char16_t> char16Array{u'D', u'E', u'F'};
             plg::vector<int8_t> sbyteArray{-1, -2, -3};
             plg::vector<int16_t> shortArray{10, 20, 30};
             plg::vector<int32_t> intArray{100, 200, 300};
@@ -1824,7 +1824,7 @@ public:
             int16_t i16 = 30; // Changed to random int16_t
             bool b = false; // Changed to random bool
             plg::vec4 vec4{4.5f, 5.6f, 6.7f, 7.8f}; // Changed to random values
-            plg::vector<char16_t> vecC16{'D', 'E'}; // Changed to random chars
+            plg::vector<char16_t> vecC16{u'D', u'E'}; // Changed to random chars
             char16_t ch16 = L'B'; // Changed to random character
             int32_t i32 = 50; // Changed to random int32_t
             const plg::mat4x4 expected = MockFunc8(vec3, vecU32, i16, b, vec4, vecC16, ch16, i32);
@@ -1944,7 +1944,7 @@ public:
             plg::vector<uint32_t> vecU32{5, 6, 7}; // Changed to random values
             bool b = false; // Changed to random bool
             float f = 3.14f; // Changed to random float
-            plg::vector<char16_t> vecC16{'D', 'E'}; // Changed to random chars
+            plg::vector<char16_t> vecC16{u'D', u'E'}; // Changed to random chars
             uint8_t u8 = 6; // Changed to random uint8_t
             int32_t i32 = 25; // Changed to random int32_t
             plg::vec2 vec2{5.6f, 7.8f}; // Changed to random values
@@ -4409,7 +4409,7 @@ PLUGIN_API plg::mat4x4 CallFunc8Callback(cross_call_worker::Func8 func) {
     int16_t i16 = 10;
     bool b = true;
     plg::vec4 vec4{1.0f, 2.0f, 3.0f, 4.0f};
-    plg::vector<char16_t> vecC16{'A', 'B'};
+    plg::vector<char16_t> vecC16{u'A', u'B'};
     char16_t ch16 = L'A';
     int32_t i32 = 20;
     return func(vec3, vecU32, i16, b, vec4, vecC16, ch16, i32);
@@ -4533,7 +4533,7 @@ PLUGIN_API int16_t CallFunc15Callback(cross_call_worker::Func15 func) {
     plg::vector<uint32_t> vecU32{1, 2, 3};
     bool b = true;
     float f = 1.23f;
-    plg::vector<char16_t> vecC16{'A', 'B'};
+    plg::vector<char16_t> vecC16{u'A', u'B'};
     uint8_t u8 = 5;
     int32_t i32 = 20;
     plg::vec2 vec2{1.0f, 2.0f};
