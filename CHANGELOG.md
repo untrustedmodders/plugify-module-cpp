@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.0...v2.1.1) (2025-09-27)
+
+
+### Bug Fixes
+
+* add preprocessor macro to MSVC ([a4da877](https://github.com/untrustedmodders/plugify-module-cpp/commit/a4da877195c13ed6612b4877df23046cf2df8112))
+
 ## [2.1.0](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.0.18...v2.1.0) (2025-09-27)
 
 
