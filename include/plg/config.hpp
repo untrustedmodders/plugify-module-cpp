@@ -16,57 +16,42 @@
 #  define __has_builtin(x) 0
 #endif
 
-#include <version>
-
-#define PLUGIFY_HAS_EXCEPTIONS (__cpp_exceptions || __EXCEPTIONS || _HAS_EXCEPTIONS)
-
-#ifndef PLUGIFY_EXCEPTIONS
-#  if PLUGIFY_HAS_EXCEPTIONS
-#    define PLUGIFY_EXCEPTIONS 1
-#  else
-#    define PLUGIFY_EXCEPTIONS 0
-#  endif
+#ifndef __builtin_constant_p
+#  define __builtin_constant_p(x) std::is_constant_evaluated()
 #endif
 
-#if PLUGIFY_EXCEPTIONS && (!PLUGIFY_HAS_EXCEPTIONS || !__has_include(<stdexcept>))
-#  undef PLUGIFY_EXCEPTIONS
-#  define PLUGIFY_EXCEPTIONS 0
+#if __has_include(<version>)
+#  include <version>
 #endif
 
-#ifndef PLUGIFY_FALLBACK_ASSERT
-#  define PLUGIFY_FALLBACK_ASSERT 1
+#if __has_include(<cassert>)
+#  include <cassert>
+#  define PLUGIFY_ASSERT(cond, mesg) assert((cond) && (mesg))
 #endif
 
-#if PLUGIFY_FALLBACK_ASSERT && !__has_include(<cassert>)
-#  undef PLUGIFY_FALLBACK_ASSERT
-#  define PLUGIFY_FALLBACK_ASSERT 0
+#if __has_feature(address_sanitizer) || defined(__SANITIZE_ADDRESS__)
+#  include <sanitizer/asan_interface.h>
 #endif
 
-#ifndef PLUGIFY_FALLBACK_ABORT
-#  define PLUGIFY_FALLBACK_ABORT 1
-#endif
-
-#if PLUGIFY_FALLBACK_ABORT && !__has_include(<cstdlib>)
-#  undef PLUGIFY_FALLBACK_ABORT
-#  define PLUGIFY_FALLBACK_ABORT 0
-#endif
-
-#ifndef PLUGIFY_FALLBACK_ABORT_FUNCTION
-#  define PLUGIFY_FALLBACK_ABORT_FUNCTION [] (auto) { }
-#endif
-
-#if PLUGIFY_EXCEPTIONS
+#define PLUGIFY_HAS_EXCEPTIONS __cpp_exceptions || _CPPUNWIND || __EXCEPTIONS
+#if PLUGIFY_HAS_EXCEPTIONS
 #  include <stdexcept>
 #  include <type_traits>
-#  define PLUGIFY_ASSERT(x, str, e) do { if (!(x)) [[unlikely]] plugify_throw<e>(str); } while (0)
-#elif PLUGIFY_FALLBACK_ASSERT
-#  include <cassert>
-#  define PLUGIFY_ASSERT(x, str, ...) assert((x) && (str))
-#elif PLUGIFY_FALLBACK_ABORT
-#  include <cstdlib>
-#  define PLUGIFY_ASSERT(x, ...) do { if (!(x)) [[unlikely]] { std::abort(); } } while (0)
+namespace plg {
+	template<typename E, typename... Args>
+	[[noreturn]] constexpr void throw_exception(const char* msg, Args...args) {
+		if constexpr (std::is_constructible_v<E, const char*>) {
+			throw E(msg);
+		} else {
+			throw E(std::forward<Args>(args)...);
+		}
+	}
+} // namespace plg
+#  define PLUGIFY_THROW(str, exp, ...) ::plg::throw_exception<exp>(str, ##__VA_ARGS__);
 #else
-#  define PLUGIFY_ASSERT(x, str, ...) do { if (!(x)) [[unlikely]] { PLUGIFY_FALLBACK_ABORT_FUNCTION (str); { while (true) { [] { } (); } } } } while (0)
+#  include <cstdlib>
+#  include <cstdio>
+#  define PLUGIFY_THROW(str, ...) { std::fputs(str "\n", stderr); std::abort(); }
 #endif
 
 #  define PLUGIFY_COMPILER_MAKE_VERSION2(version, sp)         ((version) * 100 + (sp))
@@ -258,10 +243,22 @@
 #elif PLUGIFY_COMPILER_MSVC
 #  pragma warning(error: 4714)
 #  define PLUGIFY_FORCE_INLINE [[msvc::forceinline]]
-#  define PLUGIFY_NOINLINE __declspec(noinline)
+#  define PLUGIFY_NOINLINE [[msvc::noinline]]
 #else
 #  define PLUGIFY_FORCE_INLINE inline
 #  define PLUGIFY_NOINLINE
+#endif
+
+#if __has_feature(nullability)
+#  define PLUGIFY_NO_NULL _Nonnull
+#else
+#  define PLUGIFY_NO_NULL
+#endif
+
+#if __has_cpp_attribute(__no_sanitize__)
+#  define PLUGIFY_NO_CFI __attribute__((__no_sanitize__("cfi")))
+#else
+#  define PLUGIFY_NO_CFI
 #endif
 
 #if PLUGIFY_COMPILER_GCC || PLUGIFY_COMPILER_CLANG
@@ -272,13 +269,68 @@
 #  define PLUGIFY_RESTRICT
 #endif
 
-#if PLUGIFY_EXCEPTIONS
-template<typename E>
-[[noreturn]] PLUGIFY_FORCE_INLINE constexpr void plugify_throw(const char* msg) {
-	if constexpr (std::is_constructible_v<E, const char*>) {
-		throw E(msg);
-	} else {
-		throw E();
-	}
-}
+#ifndef PLUGIFY_PLATFORM_WINDOWS
+#  if defined(_WIN32) || defined(_WIN64)
+#    define PLUGIFY_PLATFORM_WINDOWS 1
+#  endif
+#endif
+
+#ifndef PLUGIFY_PLATFORM_APPLE
+#  if defined(__APPLE__) && defined(__MACH__)
+#    define PLUGIFY_PLATFORM_APPLE 1
+#  endif
+#endif
+
+#ifndef PLUGIFY_PLATFORM_LINUX
+#  if defined(__linux__)
+#    define PLUGIFY_PLATFORM_LINUX 1
+#  endif
+#endif
+
+#ifndef PLUGIFY_PLATFORM_ANDROID
+#  if defined(__ANDROID__)
+#    define PLUGIFY_PLATFORM_ANDROID 1
+#  endif
+#endif
+
+#ifndef PLUGIFY_PLATFORM_ORBIS
+#  if defined(__ORBIS__)
+#    define PLUGIFY_PLATFORM_ORBIS 1
+#  endif
+#endif
+
+#ifndef PLUGIFY_PLATFORM_PROSPERO
+#  if defined(__PROSPERO__)
+#    define PLUGIFY_PLATFORM_PROSPERO 1
+#  endif
+#endif
+
+#ifndef PLUGIFY_PLATFORM_SWITCH
+#  if defined(__NX__)
+#    define PLUGIFY_PLATFORM_SWITCH 1
+#  endif
+#endif
+
+#ifndef PLUGIFY_PLATFORM_BSD
+#  if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__) || defined(__DragonFly__)
+#    define PLUGIFY_PLATFORM_BSD 1
+#  endif
+#endif
+
+#ifndef PLUGIFY_PLATFORM_UNIX
+#  if defined(__unix__) || defined(__unix) || defined(unix) || defined(__APPLE__)
+#    define PLUGIFY_PLATFORM_UNIX 1
+#  endif
+#endif
+
+#if !defined(PLUGIFY_PLATFORM_WINDOWS)  && \
+	!defined(PLUGIFY_PLATFORM_APPLE)   && \
+	!defined(PLUGIFY_PLATFORM_LINUX)   && \
+	!defined(PLUGIFY_PLATFORM_ANDROID) && \
+	!defined(PLUGIFY_PLATFORM_ORBIS)   && \
+	!defined(PLUGIFY_PLATFORM_PROSPERO)&& \
+	!defined(PLUGIFY_PLATFORM_SWITCH)  && \
+	!defined(PLUGIFY_PLATFORM_BSD)     && \
+	!defined(PLUGIFY_PLATFORM_UNIX)
+#  error "Unsupported platform! Please extend macro.hpp"
 #endif

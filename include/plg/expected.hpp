@@ -1,14 +1,19 @@
 #pragma once
 
-#include "plg/macro.hpp"
+#include "plg/config.hpp"
 
-#ifdef __cpp_lib_expected
+#if __has_include(<expected>)
 #include <expected>
-namespace plg {
-	using std::expected;
-	using std::unexpected;
-}
+#if defined(__cpp_lib_expected) && __cpp_lib_expected >= 202202L
+#define PLUGIFY_HAS_STD_EXPECTED 1
 #else
+#define PLUGIFY_HAS_STD_EXPECTED 0
+#endif
+#else
+#define PLUGIFY_HAS_STD_EXPECTED 0
+#endif
+
+#if !PLUGIFY_HAS_STD_EXPECTED
 #include <concepts>
 #include <deque>
 #include <exception>
@@ -524,27 +529,39 @@ namespace plg {
 
 		// precondition: has_value() = true
 		constexpr auto operator->() const noexcept -> T const* {
+			PLUGIFY_ASSERT(this->has_val, "requires the expected to contain a value");
 			return std::addressof(this->val);
 		}
 
 		// precondition: has_value() = true
 		constexpr auto operator->() noexcept -> T* {
+			PLUGIFY_ASSERT(this->has_val, "requires the expected to contain a value");
 			return std::addressof(this->val);
 		}
 
 		// precondition: has_value() = true
-		constexpr auto operator*() const& noexcept -> T const& { return this->val; }
+		constexpr auto operator*() const& noexcept -> T const& {
+			PLUGIFY_ASSERT(this->has_val, "requires the expected to contain a value");
+			return this->val;
+		}
 
 		// precondition: has_value() = true
-		constexpr auto operator*() & noexcept -> T& { return this->val; }
+		constexpr auto operator*() & noexcept -> T& {
+			PLUGIFY_ASSERT(this->has_val, "requires the expected to contain a value");
+			return this->val;
+		}
 
 		// precondition: has_value() = true
 		constexpr auto operator*() const&& noexcept -> T const&& {
+			PLUGIFY_ASSERT(this->has_val, "requires the expected to contain a value");
 			return std::move(this->val);
 		}
 
 		// precondition: has_value() = true
-		constexpr auto operator*() && noexcept -> T&& { return std::move(this->val); }
+		constexpr auto operator*() && noexcept -> T&& {
+			PLUGIFY_ASSERT(this->has_val, "requires the expected to contain a value");
+			return std::move(this->val);
+		}
 
 		constexpr explicit operator bool() const noexcept { return has_val; }
 
@@ -553,44 +570,56 @@ namespace plg {
 		}
 
 		constexpr auto value() const& -> T const& {
-			if (has_value()) {
-				return this->val;
+			if (!has_value()) {
+				PLUGIFY_THROW("bad expected access", bad_expected_access, std::as_const(error()));
 			}
-			throw bad_expected_access(error());
+			return this->val;
 		}
 
 		constexpr auto value() & -> T& {
-			if (has_value()) {
-				return this->val;
+			if (!has_value()) {
+				PLUGIFY_THROW("bad expected access", bad_expected_access, std::as_const(error()));
 			}
-			throw bad_expected_access(error());
+			return this->val;
 		}
 
 		constexpr auto value() const&& -> T const&& {
-			if (has_value()) {
-				return std::move(this->val);
+			if (!has_value()) {
+				PLUGIFY_THROW("bad expected access", bad_expected_access, std::move(error()));
 			}
-			throw bad_expected_access(std::move(error()));
+			return std::move(this->val);
 		}
 
 		constexpr auto value() && -> T&& {
-			if (has_value()) {
-				return std::move(this->val);
+			if (!has_value()) {
+				PLUGIFY_THROW("bad expected access", bad_expected_access, std::move(error()));
 			}
-			throw bad_expected_access(std::move(error()));
+			return std::move(this->val);
 		}
 
 		// precondition: has_value() = false
-		constexpr auto error() const& -> E const& { return this->unex; }
+		constexpr auto error() const& -> E const& {
+			PLUGIFY_ASSERT(!this->has_val, "requires the expected to contain an error");
+			return this->unex;
+		}
 
 		// precondition: has_value() = false
-		constexpr auto error() & -> E& { return this->unex; }
+		constexpr auto error() & -> E& {
+			PLUGIFY_ASSERT(!this->has_val, "requires the expected to contain an error");
+			return this->unex;
+		}
 
 		// precondition: has_value() = false
-		constexpr auto error() const&& -> E const&& { return std::move(this->unex); }
+		constexpr auto error() const&& -> E const&& {
+			PLUGIFY_ASSERT(!this->has_val, "requires the expected to contain an error");
+			return std::move(this->unex);
+		}
 
 		// precondition: has_value() = false
-		constexpr auto error() && -> E&& { return std::move(this->unex); }
+		constexpr auto error() && -> E&& {
+			PLUGIFY_ASSERT(!this->has_val, "requires the expected to contain an error");
+			return std::move(this->unex);
+		}
 
 		template<class U>
 			requires std::is_copy_constructible_v<T> && std::is_convertible_v<U, T>
@@ -1126,27 +1155,39 @@ namespace plg {
 
 		constexpr void value() const& {
 			if (!has_value()) {
-				throw bad_expected_access(error());
+				PLUGIFY_THROW("bad expected access", bad_expected_access, std::as_const(error()));
 			}
 		}
 
 		constexpr void value() && {
 			if (!has_value()) {
-				throw bad_expected_access(std::move(error()));
+				PLUGIFY_THROW("bad expected access", bad_expected_access, std::move(error()));
 			}
 		}
 
 		// precondition: has_value() = false
-		constexpr auto error() const& -> E const& { return this->unex; }
+		constexpr auto error() const& -> E const& {
+			PLUGIFY_ASSERT(!this->has_val, "requires the expected to contain an error");
+			return this->unex;
+		}
 
 		// precondition: has_value() = false
-		constexpr auto error() & -> E& { return this->unex; }
+		constexpr auto error() & -> E& {
+			PLUGIFY_ASSERT(!this->has_val, "requires the expected to contain an error");
+			return this->unex;
+		}
 
 		// precondition: has_value() = false
-		constexpr auto error() const&& -> E const&& { return std::move(this->unex); }
+		constexpr auto error() const&& -> E const&& {
+			PLUGIFY_ASSERT(!this->has_val, "requires the expected to contain an error");
+			return std::move(this->unex);
+		}
 
 		// precondition: has_value() = false
-		constexpr auto error() && -> E&& { return std::move(this->unex); }
+		constexpr auto error() && -> E&& {
+			PLUGIFY_ASSERT(!this->has_val, "requires the expected to contain an error");
+			return std::move(this->unex);
+		}
 
 		// monadic
 		template<class F, class U = std::remove_cvref_t<std::invoke_result_t<F>>>
@@ -1426,5 +1467,27 @@ namespace plg {
 		};
 	};
 
-}// namespace plg
+} // namespace plg
+
+namespace std {
+	template<class U, class G>
+	using expected = plg::expected<U, G>;
+
+	template <class T>
+	concept is_expected = std::same_as<std::remove_cvref_t<T>, expected<typename T::value_type, typename T::error_type> >;
+
+#if PLUGIFY_COMPILER_CLANG
+	template <class U>
+	struct unexpected : public plg::unexpected<U> {
+		using plg::unexpected<U>::unexpected;
+	};
+	template <class U>
+	unexpected(U) -> unexpected<U>;
+#else
+	template <class U>
+	using unexpected = plg::unexpected<U>;
 #endif
+
+} // namespace std
+
+#endif // !PLUGIFY_HAS_STD_EXPECTED

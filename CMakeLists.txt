@@ -46,6 +46,7 @@ if(LINUX)
     set(PLUGIFY_USE_STATIC_STDLIB ON CACHE INTERNAL "")
     set(PLUGIFY_USE_ABI0 OFF CACHE INTERNAL "")
 endif()
+set(PLUGIFY_USE_SANITIZER ON CACHE INTERNAL "")
 add_subdirectory(external/plugify)
 
 #
@@ -69,10 +70,22 @@ else()
     target_compile_options(${PROJECT_NAME} PRIVATE -Wextra -Wshadow -Wconversion -Wpedantic -Werror)
 endif()
 
+# Produce PDB file for debug
+if(MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE $<$<CONFIG:Release>:/Zi>)
+else()
+    target_compile_options(${PROJECT_NAME} PRIVATE $<$<CONFIG:Release>:-g1>)
+endif()
+
 if(APPLE)
     target_link_options(${PROJECT_NAME} PRIVATE "-Wl,-exported_symbols_list,${CMAKE_CURRENT_SOURCE_DIR}/sym/exported_symbols.lds")
 elseif(UNIX)
     target_link_options(${PROJECT_NAME} PRIVATE "-Wl,--version-script,${CMAKE_CURRENT_SOURCE_DIR}/sym/version_script.lds")
+endif()
+
+if(PLUGIFY_HAS_SANITIZER)
+    target_compile_options(${PROJECT_NAME} PRIVATE $<$<CONFIG:Debug>: -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined>)
+    target_link_libraries(${PROJECT_NAME} PRIVATE $<$<CONFIG:Debug>: -fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined>)
 endif()
 
 include(GenerateExportHeader)
