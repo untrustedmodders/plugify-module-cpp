@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.2](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.1...v2.1.2) (2025-09-27)
+
+
+### Bug Fixes
+
+* remove arm from osx ([f2abe9e](https://github.com/untrustedmodders/plugify-module-cpp/commit/f2abe9e3f31e3274728dc2817d92ae6834091839))
+
 ## [2.1.1](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.0...v2.1.1) (2025-09-27)
 
 
