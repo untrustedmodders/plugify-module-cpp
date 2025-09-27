@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.1.3](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.2...v2.1.3) (2025-09-27)
+
+
+### Bug Fixes
+
+* change default build type ([ad29e95](https://github.com/untrustedmodders/plugify-module-cpp/commit/ad29e95d3568679754a31c03d2f0f2958b57cd3b))
+* remove release with debug ([add207f](https://github.com/untrustedmodders/plugify-module-cpp/commit/add207f3040ea579f365c18e67a697d3e2df1c17))
+* update plugify ([ebf9f69](https://github.com/untrustedmodders/plugify-module-cpp/commit/ebf9f69b2c3d214f5390784b4cabcd798f24e859))
+
 ## [2.1.2](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.1...v2.1.2) (2025-09-27)
 
 
