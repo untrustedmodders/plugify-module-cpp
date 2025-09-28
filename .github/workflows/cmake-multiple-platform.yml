@@ -133,6 +133,8 @@ jobs:
           mkdir -p build/output/bin
           cp build/*${{ env.PROJECT_NAME }}.* build/output/bin/
           cp build/${{ env.PROJECT_NAME }}.pmodule build/output/
+          # Cleanup dev files
+          find build/output -type f \( -name "*.exp" -o -name "*.ilk" -o -name "*.lib" -o -name "*.pdb" \) -delete
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
