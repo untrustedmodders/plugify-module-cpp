@@ -61,6 +61,7 @@ def generate_markdown_table(methods: List[Dict[str, Any]], group_by: bool = Fals
         # Generate table for each group
         for group_name in sorted(grouped.keys()):
             lines.append(f"\n### {group_name}\n")
+            lines.append(f"<details><summary>Open methods list</summary> \n")
             lines.append("| Function | Signature | Description |")
             lines.append("|----------|-----------|-------------|")
 
@@ -75,8 +76,11 @@ def generate_markdown_table(methods: List[Dict[str, Any]], group_by: bool = Fals
                 description = escape_pipe(description)
 
                 lines.append(f"| {name} | `{signature}` | {description} |")
+            
+            lines.append("\n</details>\n")
     else:
         # Single table for all methods
+        lines.append(f"<details><summary>Open methods list</summary> \n")
         lines.append("| Function | Signature | Description |")
         lines.append("|----------|-----------|-------------|")
 
@@ -91,7 +95,8 @@ def generate_markdown_table(methods: List[Dict[str, Any]], group_by: bool = Fals
             description = escape_pipe(description)
 
             lines.append(f"| {name} | `{signature}` | {description} |")
-
+        
+        lines.append("\n</details>\n")
     return '\n'.join(lines)
 
 

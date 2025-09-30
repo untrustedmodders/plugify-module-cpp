@@ -329,7 +329,7 @@ def gen_params(params: list[dict], param_gen: ParamGen) -> str:
                 return generate_name(param.get('name', f'p{index}'))
             case ParamGen.TypesNames:
                 if param.get('default'):
-                    return f'{type_name} {generate_name(param.get("name", f"p{index}"))} = {param["default"]}}'
+                    return f'{type_name} {generate_name(param.get("name", f"p{index}"))} = {param["default"]}'
                 return f'{type_name} {generate_name(param.get("name", f"p{index}"))}'
             case _:
                 return ''

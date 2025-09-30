@@ -47,3 +47,4 @@ for %%F in (%*) do (
 )
 
 echo All files processed successfully.
+PAUSE
