@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.1.4](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.3...v2.1.4) (2025-10-06)
+
+
+### Bug Fixes
+
+* added drop-down list  to `converter` & fix "f-string: single '}'" & added PAUSE tag to .bat ([9757312](https://github.com/untrustedmodders/plugify-module-cpp/commit/9757312f9118d16e371518b6e17c711ef4d62f8d))
+* disable asan in debug ([eb7a09c](https://github.com/untrustedmodders/plugify-module-cpp/commit/eb7a09cb3308822f10162e314fe9b3cf616ff4d3))
+* improve san and debug symbols on windows ([c5fe825](https://github.com/untrustedmodders/plugify-module-cpp/commit/c5fe82565d2e106cedb9bb68d97df4a78fe42153))
+* update external/plugify ([7c9407a](https://github.com/untrustedmodders/plugify-module-cpp/commit/7c9407aa883e9ef246760b1ddddf2f1cf32ed26b))
+* update plugify ([6f0327c](https://github.com/untrustedmodders/plugify-module-cpp/commit/6f0327ca5764c0ce149caa2b3b59188195f45985))
+* update plugify ([7f521f1](https://github.com/untrustedmodders/plugify-module-cpp/commit/7f521f1511df515d75cf638b695f9a90996bf39e))
+* update plugify ([1b12f46](https://github.com/untrustedmodders/plugify-module-cpp/commit/1b12f469619711602b588897467a7457aa3b9ec1))
+* update tests ([cb9a674](https://github.com/untrustedmodders/plugify-module-cpp/commit/cb9a67469933f23255401da355a4f1e6a24ce3f9))
+
 ## [2.1.3](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.2...v2.1.3) (2025-09-27)
 
 
