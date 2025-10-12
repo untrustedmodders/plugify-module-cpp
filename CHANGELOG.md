@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.5](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.4...v2.1.5) (2025-10-12)
+
+
+### Bug Fixes
+
+* remove assume_valid from string ([f63b395](https://github.com/untrustedmodders/plugify-module-cpp/commit/f63b39504307fdc26267febc74578a81e6f33366))
+* update plg includes ([1201020](https://github.com/untrustedmodders/plugify-module-cpp/commit/1201020e00ea55970749f8457b33d9d969f88e4f))
+
 ## [2.1.4](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.3...v2.1.4) (2025-10-06)
 
 
