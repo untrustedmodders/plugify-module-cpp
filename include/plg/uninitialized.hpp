@@ -51,16 +51,16 @@ namespace plg {
 	class AllocatorDestroyRangeReverse {
 	public:
 		AllocatorDestroyRangeReverse(Alloc& alloc, Iter& first, Iter& last)
-			: _alloc(alloc), _first(first), _last(last) {}
+			: alloc_(alloc), first_(first), last_(last) {}
 
 		void operator()() const {
-			allocator_destroy(_alloc, std::reverse_iterator<Iter>(_last), std::reverse_iterator<Iter>(_first));
+			allocator_destroy(alloc_, std::reverse_iterator<Iter>(last_), std::reverse_iterator<Iter>(first_));
 		}
 
 	private:
-		Alloc& _alloc;
-		Iter& _first;
-		Iter& _last;
+		Alloc& alloc_;
+		Iter& first_;
+		Iter& last_;
 	};
 
 	// Copy-construct [first1, last1) in [first2, first2 + N), where N is
@@ -123,7 +123,7 @@ namespace plg {
 	// - is_copy_constructible<T>
 	// - is_trivially_relocatable<T>
 	template <class Alloc, class T>
-	void uninitialized_allocator_relocate(Alloc& alloc, T* first, T* last, T* result) {
+	constexpr void uninitialized_allocator_relocate(Alloc& alloc, T* first, T* last, T* result) {
 		if (std::is_constant_evaluated() ||
 			!is_trivially_relocatable<T>::value ||
 			!allocator_has_trivial_move_construct<Alloc, T>::value ||

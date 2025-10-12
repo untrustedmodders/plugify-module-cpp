@@ -143,23 +143,23 @@ namespace plg {
 	// asan_annotate_container_with_allocator determines whether containers with custom allocators are annotated. This is
 	// a public customization point to disable annotations if the custom allocator assumes that the memory isn't poisoned.
 	// See the https://libcxx.llvm.org/UsingLibcxx.html#turning-off-asan-annotation-in-containers for more information.
-#if __has_feature(address_sanitizer)
+#if PLUGIFY_INSTRUMENTED_WITH_ASAN
 	template <class Alloc>
 	struct asan_annotate_container_with_allocator : std::true_type {};
-#endif
+#endif // PLUGIFY_INSTRUMENTED_WITH_ASAN
 
 	// Annotate a contiguous range.
 	// [__first_storage, __last_storage) is the allocated memory region,
 	// __old_last_contained is the previously last allowed (unpoisoned) element, and
 	// __new_last_contained is the new last allowed (unpoisoned) element.
 	template <class Allocator>
-	void annotate_contiguous_container(
+	constexpr void annotate_contiguous_container(
 		[[maybe_unused]] const void* first_storage,
 		[[maybe_unused]] const void* last_storage,
 		[[maybe_unused]] const void* old_last_contained,
 		[[maybe_unused]] const void* new_last_contained
 	) {
-#if __has_feature(address_sanitizer)
+#if PLUGIFY_INSTRUMENTED_WITH_ASAN
 		if (!std::is_constant_evaluated()
 			&& asan_annotate_container_with_allocator<Allocator>::value
 			&& first_storage != nullptr) {
@@ -170,6 +170,6 @@ namespace plg {
 				new_last_contained
 			);
 		}
-#endif
+#endif // PLUGIFY_INSTRUMENTED_WITH_ASAN
 	}
 } // namespace plg
