@@ -21,6 +21,8 @@ def map_type(t: str):
         'float': 'float',
         'double': 'double',
         'void*': 'ptr64',
+        'uintptr_t': 'ptr64',
+        'intptr_t': 'ptr64',
         'char': 'char8',
         'signed char': 'char8',
         'char16_t': 'char16',
@@ -137,6 +139,7 @@ def map_type(t: str):
         'vec4': 'vec4',
         'Vector4': 'vec4',
         'Vector4f': 'vec4',
+        'Quaternion': 'vec4',
 
         'plg::mat4x4': 'mat4x4',
         'Matrix': 'mat4x4',
@@ -179,8 +182,8 @@ def convert_type(type_str: str, enums_map: dict, typedefs_map: dict):
             return mapped, not const
 
         # Check if it's a typedef
-        if base_type in typedefs_map:
-            return '?', not const  # Typedefs usually stay as '?'
+        #if base_type in typedefs_map:
+        #    return '?', not const  # Typedefs usually stay as '?'
 
         return map_type(base_type), not const
 
@@ -189,8 +192,8 @@ def convert_type(type_str: str, enums_map: dict, typedefs_map: dict):
         return enums_map[t].get('BaseType', '?'), False
 
     # Check if it's a typedef
-    if t in typedefs_map:
-        return '?', False  # Typedefs usually stay as '?'
+    #if t in typedefs_map:
+    #    return '?', False  # Typedefs usually stay as '?'
 
     return map_type(t), False
 
@@ -303,8 +306,36 @@ def extract_return_description(description):
     return None
 
 
+def extract_enum_description(description):
+    """Extract enum description from Description field."""
+    if not description or not isinstance(description, list):
+        return None
+
+    # Handle FullComment wrapper
+    children_to_search = []
+    for item in description:
+        if isinstance(item, dict) and item.get('Kind') == 'FullComment':
+            children_to_search = item.get('Children', [])
+            break
+
+    if not children_to_search:
+        children_to_search = description
+
+    # Look for brief or first paragraph
+    for item in children_to_search:
+        if isinstance(item, dict):
+            if item.get('Kind') == 'BlockCommandComment' and item.get('Name') == 'brief':
+                return extract_text_from_description(item.get('Children', []))
+            elif item.get('Kind') == 'ParagraphComment':
+                text = extract_text_from_description(item.get('Children', []))
+                if text:
+                    return text
+
+    return None
+
+
 def build_enums_map(yaml_data):
-    """Build a map of enum names to their base types."""
+    """Build a map of enum names to their base types and full structure."""
     enums_map = {}
 
     if 'ChildEnums' in yaml_data:
@@ -314,28 +345,233 @@ def build_enums_map(yaml_data):
             base_type = base_type_info.get('Type', {}).get('Name', 'int32')
 
             if enum_name:
+                # Extract enum description
+                enum_description = extract_enum_description(enum.get('Description', []))
+
+                # Extract enum values
+                enum_values = []
+                members = enum.get('Members', [])
+                for member in members:
+                    member_name = member.get('Name')
+                    member_value = member.get('Value')
+
+                    # Try to parse value as integer
+                    try:
+                        member_value = int(member_value) if member_value is not None else None
+                    except (ValueError, TypeError):
+                        pass
+
+                    # Extract member description if available
+                    member_desc = extract_text_from_description(member.get('Description', []))
+
+                    value_entry = {
+                        'name': member_name,
+                        'value': member_value
+                    }
+
+                    if member_desc:
+                        value_entry['description'] = member_desc
+
+                    enum_values.append(value_entry)
+
                 enums_map[enum_name] = {
                     'BaseType': map_type(base_type),
-                    'USR': enum.get('USR')
+                    'USR': enum.get('USR'),
+                    'Name': enum_name,
+                    'Description': enum_description,
+                    'Values': enum_values
                 }
 
     return enums_map
 
 
-def build_typedefs_map(yaml_data):
-    """Build a map of typedef names."""
+def parse_function_pointer_signature(signature: str):
+    """
+    Parse a function pointer signature string.
+    Example: 'ResultType (*)(int, CommandCallingContext, const plg::vector<plg::string> &)'
+    Returns: (return_type, [param_types])
+    """
+    if not signature or '(*)' not in signature:
+        return None, []
+
+    # Extract return type (everything before '(*)')
+    return_type_match = re.match(r'^\s*(.+?)\s*\(\*\)', signature)
+    if not return_type_match:
+        return None, []
+
+    return_type = return_type_match.group(1).strip()
+
+    # Extract parameters (everything after '(*)')
+    params_start = signature.find('(*)') + 3
+    params_str = signature[params_start:].strip()
+
+    if not params_str.startswith('(') or not params_str.endswith(')'):
+        return return_type, []
+
+    # Remove outer parentheses
+    params_str = params_str[1:-1].strip()
+
+    if not params_str or params_str == 'void':
+        return return_type, []
+
+    # Parse parameters - this is tricky due to nested templates and pointers
+    params = []
+    current_param = ""
+    depth = 0  # Track < > nesting
+
+    for char in params_str:
+        if char == '<':
+            depth += 1
+            current_param += char
+        elif char == '>':
+            depth -= 1
+            current_param += char
+        elif char == ',' and depth == 0:
+            # Found a parameter separator
+            if current_param.strip():
+                params.append(current_param.strip())
+            current_param = ""
+        else:
+            current_param += char
+
+    # Don't forget the last parameter
+    if current_param.strip():
+        params.append(current_param.strip())
+
+    return return_type, params
+
+
+def build_typedefs_map(yaml_data, enums_map):
+    """Build a map of typedef names with parsed function signatures."""
     typedefs_map = {}
 
     if 'ChildTypedefs' in yaml_data:
         for typedef in yaml_data['ChildTypedefs']:
             typedef_name = typedef.get('Name')
+            underlying_name = typedef.get('Underlying', {}).get('Name', '')
+
             if typedef_name:
-                typedefs_map[typedef_name] = {
-                    'Underlying': typedef.get('Underlying', {}).get('Name', '?'),
-                    'USR': typedef.get('USR')
+                typedef_entry = {
+                    'Underlying': underlying_name,
+                    'USR': typedef.get('USR'),
+                    'Description': extract_text_from_description(typedef.get('Description', []))
                 }
 
+                # Check if it's a function pointer
+                if '(*)' in underlying_name:
+                    return_type, param_types = parse_function_pointer_signature(underlying_name)
+                    typedef_entry['IsFunctionPointer'] = True
+                    typedef_entry['ReturnType'] = return_type
+                    typedef_entry['ParamTypes'] = param_types
+                else:
+                    typedef_entry['IsFunctionPointer'] = False
+
+                typedefs_map[typedef_name] = typedef_entry
+
     return typedefs_map
+
+
+def build_enum_structure(enum_name: str, enums_map: dict, filter_sentinel_values=True):
+    """Build enum structure for inclusion in parameter."""
+    if enum_name not in enums_map:
+        return None
+
+    enum_info = enums_map[enum_name]
+
+    enum_struct = {
+        'name': enum_info['Name']
+    }
+
+    if enum_info.get('Description'):
+        enum_struct['description'] = enum_info['Description']
+
+    # Add values, optionally filtering out sentinel values
+    sentinel_names = {'Count', 'MAX', 'Max', 'INVALID', 'Invalid', 'NUM', 'Num'} if filter_sentinel_values else set()
+
+    values = []
+    for value in enum_info.get('Values', []):
+        # Filter out sentinel values
+        if value.get('name') and value.get('name') not in sentinel_names:
+            value_entry = {
+                'name': value['name'],
+                'value': value.get('value')
+            }
+            if value.get('description'):
+                value_entry['description'] = value['description']
+            values.append(value_entry)
+
+    if values:
+        enum_struct['values'] = values
+
+    return enum_struct
+
+
+def build_function_prototype(typedef_name: str, typedefs_map: dict, enums_map: dict):
+    """Build function prototype structure for function pointer typedefs."""
+    if typedef_name not in typedefs_map:
+        return None
+
+    typedef_info = typedefs_map[typedef_name]
+
+    if not typedef_info.get('IsFunctionPointer'):
+        return None
+
+    prototype = {
+        'name': typedef_name,
+        'funcName': typedef_name
+    }
+
+    # Add description if available
+    if typedef_info.get('Description'):
+        prototype['description'] = typedef_info['Description']
+
+    # Process parameters
+    param_types_list = []
+    param_type_names = typedef_info.get('ParamTypes', [])
+
+    for i, param_type_str in enumerate(param_type_names):
+        # Generate parameter name
+        param_name = f"param{i+1}"
+
+        # Convert the parameter type
+        mapped_type, is_ref = convert_type(param_type_str, enums_map, typedefs_map)
+
+        param_data = {
+            'name': param_name,
+            'type': mapped_type,
+            'ref': is_ref
+        }
+
+        # Check if parameter is an enum and add enum structure
+        # Extract base type name without const, &, *
+        base_type_name = param_type_str.replace('const', '').replace('&', '').replace('*', '').strip()
+        if base_type_name in enums_map:
+            enum_struct = build_enum_structure(base_type_name, enums_map)
+            if enum_struct:
+                param_data['enum'] = enum_struct
+
+        param_types_list.append(param_data)
+
+    prototype['paramTypes'] = param_types_list
+
+    # Process return type
+    return_type_str = typedef_info.get('ReturnType', 'void')
+    mapped_return_type, _ = convert_type(return_type_str, enums_map, typedefs_map)
+
+    ret_type = {
+        'type': mapped_return_type
+    }
+
+    # Check if return type is an enum
+    base_return_type = return_type_str.replace('const', '').replace('&', '').replace('*', '').strip()
+    if base_return_type in enums_map:
+        enum_struct = build_enum_structure(base_return_type, enums_map)
+        if enum_struct:
+            ret_type['enum'] = enum_struct
+
+    prototype['retType'] = ret_type
+
+    return prototype
 
 
 def process_function(function, enums_map, typedefs_map, group_name=None):
@@ -376,6 +612,9 @@ def process_function(function, enums_map, typedefs_map, group_name=None):
         # Convert type
         mapped_type, is_ref = convert_type(param_type_name, enums_map, typedefs_map)
 
+        # Extract base type name for enum/typedef lookup
+        base_type_name = param_type_name.replace('const', '').replace('&', '').replace('*', '').strip()
+
         param_data = {
             'name': param_name,
             'type': mapped_type,
@@ -385,6 +624,19 @@ def process_function(function, enums_map, typedefs_map, group_name=None):
         # Add description if available
         if param_name in param_descriptions:
             param_data['description'] = param_descriptions[param_name]
+
+        # Check if parameter is an enum and add enum structure
+        if base_type_name in enums_map:
+            enum_struct = build_enum_structure(base_type_name, enums_map)
+            if enum_struct:
+                param_data['enum'] = enum_struct
+
+        # Check if parameter is a function pointer typedef and add prototype
+        elif base_type_name in typedefs_map and typedefs_map[base_type_name].get('IsFunctionPointer'):
+            param_data['type'] = 'function'
+            prototype = build_function_prototype(base_type_name, typedefs_map, enums_map)
+            if prototype:
+                param_data['prototype'] = prototype
 
         param_types.append(param_data)
 
@@ -399,6 +651,13 @@ def process_function(function, enums_map, typedefs_map, group_name=None):
 
     if return_desc:
         ret_type['description'] = return_desc
+
+    # Check if return type is an enum and add enum structure
+    base_return_type = return_type_name.replace('const', '').replace('&', '').replace('*', '').strip()
+    if base_return_type in enums_map:
+        enum_struct = build_enum_structure(base_return_type, enums_map)
+        if enum_struct:
+            ret_type['enum'] = enum_struct
 
     # Build final function data
     function_data = {
@@ -417,7 +676,7 @@ def process_function(function, enums_map, typedefs_map, group_name=None):
     return function_data
 
 
-def filter_functions(functions, name_filter=None, file_prefix=None):
+def filter_functions(functions, name_filter=None, file_filter=None):
     """Filter functions by name or filename prefix."""
     filtered = []
 
@@ -427,12 +686,11 @@ def filter_functions(functions, name_filter=None, file_prefix=None):
             continue
 
         # Check file prefix filter
-        if file_prefix:
+        if file_filter:
             def_location = func.get('DefLocation', {})
-            filename = def_location.get('Filename', '')
-            basename = os.path.basename(filename)
+            file_name = def_location.get('Filename', '')
 
-            if not basename.startswith(file_prefix):
+            if file_filter and file_filter.lower() not in file_name.lower():
                 continue
 
         filtered.append(func)
@@ -440,7 +698,7 @@ def filter_functions(functions, name_filter=None, file_prefix=None):
     return filtered
 
 
-def process_yaml_file(yaml_file, name_filter=None, file_prefix=None):
+def process_yaml_file(yaml_file, name_filter=None, file_filter=None):
     """Process a single YAML file and extract functions."""
     with open(yaml_file, 'r') as f:
         yaml_data = yaml.safe_load(f)
@@ -448,9 +706,9 @@ def process_yaml_file(yaml_file, name_filter=None, file_prefix=None):
     if not yaml_data:
         return []
 
-    # Build lookup maps
+    # Build lookup maps - enums first, then typedefs (which may reference enums)
     enums_map = build_enums_map(yaml_data)
-    typedefs_map = build_typedefs_map(yaml_data)
+    typedefs_map = build_typedefs_map(yaml_data, enums_map)
 
     # Process functions
     all_functions = []
@@ -460,15 +718,14 @@ def process_yaml_file(yaml_file, name_filter=None, file_prefix=None):
             # Apply filters at the raw level
             func_name = function.get('Name', '')
             def_location = function.get('DefLocation', {})
-            filename = def_location.get('Filename', '')
-            basename = os.path.basename(filename)
+            file_name = def_location.get('Filename', '')
 
             # Check name filter
             if name_filter and name_filter.lower() not in func_name.lower():
                 continue
 
-            # Check file prefix filter
-            if file_prefix and not basename.startswith(file_prefix):
+            # Check file filter
+            if file_filter and file_filter.lower() not in file_name.lower():
                 continue
 
             # Process the function
@@ -479,7 +736,7 @@ def process_yaml_file(yaml_file, name_filter=None, file_prefix=None):
     return all_functions
 
 
-def main(input_path, output_file, name_filter=None, file_prefix=None):
+def main(input_path, output_file, name_filter=None, file_filter=None):
     """Main function to process YAML files and generate JSON output."""
     all_exported_methods = []
 
@@ -488,12 +745,12 @@ def main(input_path, output_file, name_filter=None, file_prefix=None):
 
     if input_path_obj.is_file():
         # Process single YAML file
-        all_exported_methods = process_yaml_file(input_path, name_filter, file_prefix)
+        all_exported_methods = process_yaml_file(input_path, name_filter, file_filter)
     elif input_path_obj.is_dir():
         # Process all YAML files in directory
         for yaml_file in input_path_obj.glob('*.yaml'):
             print(f'\nProcessing: {yaml_file}')
-            functions = process_yaml_file(yaml_file, name_filter, file_prefix)
+            functions = process_yaml_file(yaml_file, name_filter, file_filter)
             all_exported_methods.extend(functions)
     else:
         print(f"Error: {input_path} is neither a file nor a directory")
@@ -526,9 +783,9 @@ def get_args():
         default=None
     )
     parser.add_argument(
-        '--file-prefix',
+        '--file-filter',
         '-f',
-        help='Filter functions by source filename prefix',
+        help='Filter functions by source path prefix',
         default=None
     )
     return parser.parse_args()
@@ -536,4 +793,4 @@ def get_args():
 
 if __name__ == "__main__":
     args = get_args()
-    main(args.input_path, args.output_file, args.name_filter, args.file_prefix)
+    main(args.input_path, args.output_file, args.name_filter, args.file_filter)

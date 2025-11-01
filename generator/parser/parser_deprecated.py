@@ -69,6 +69,8 @@ def map_type(t: str):
         'float': 'float',
         'double': 'double',
         'void*': 'ptr64',
+        'uintptr_t': 'ptr64',
+        'intptr_t': 'ptr64',
         'char': 'char8',
         'signed char': 'char8',
         'char16_t': 'char16',
