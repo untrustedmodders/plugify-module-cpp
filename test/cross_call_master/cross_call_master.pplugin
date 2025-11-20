@@ -4410,554 +4410,262 @@
 			}
 		},
 
-		// classes
+
+
 		{
-			"name": "ConnectionCreate",
-			"funcName": "ConnectionCreate",
-			"description": "Creates a new Connection with specified host and port.",
+			"name": "ResourceHandleCreate",
+			"funcName": "ResourceHandleCreate",
+			"group": "Resource",
 			"paramTypes": [
-				{
-					"name": "host",
-					"type": "string",
-					"ref": false,
-					"description": "The host address to connect to."
-				},
-				{
-					"name": "port",
-					"type": "int32",
-					"ref": false,
-					"description": "The port number."
-				}
+				{ "name": "id", "type": "int32", "ref": false },
+				{ "name": "name", "type": "string", "ref": false }
 			],
-			"retType": {
-				"type": "ptr64",
-				"description": "A handle to the created Connection."
-			}
+			"retType": { "type": "ptr64" }
 		},
 		{
-			"name": "ConnectionCreateSecure",
-			"funcName": "ConnectionCreateSecure",
-			"description": "Creates a new secure Connection with SSL/TLS.",
-			"paramTypes": [
-				{
-					"name": "host",
-					"type": "string",
-					"ref": false,
-					"description": "The host address to connect to."
-				},
-				{
-					"name": "port",
-					"type": "int32",
-					"ref": false,
-					"description": "The port number."
-				},
-				{
-					"name": "useSsl",
-					"type": "bool",
-					"ref": false,
-					"description": "Whether to use SSL/TLS encryption."
-				}
-			],
-			"retType": {
-				"type": "ptr64",
-				"description": "A handle to the created secure Connection."
-			}
-		},
-		{
-			"name": "ConnectionDestroy",
-			"funcName": "ConnectionDestroy",
-			"description": "Destroys a Connection and releases its resources.",
-			"paramTypes": [
-				{
-					"name": "connection",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Connection handle to destroy."
-				}
-			],
-			"retType": {
-				"type": "void"
-			}
-		},
-		{
-			"name": "ConnectionConnect",
-			"funcName": "ConnectionConnect",
-			"description": "Establishes the connection.",
-			"paramTypes": [
-				{
-					"name": "connection",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Connection handle."
-				}
-			],
-			"retType": {
-				"type": "bool",
-				"description": "True if connection was successful, false otherwise."
-			}
-		},
-		{
-			"name": "ConnectionDisconnect",
-			"funcName": "ConnectionDisconnect",
-			"description": "Closes the connection.",
-			"paramTypes": [
-				{
-					"name": "connection",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Connection handle."
-				}
-			],
-			"retType": {
-				"type": "void"
-			}
-		},
-		{
-			"name": "ConnectionIsConnected",
-			"funcName": "ConnectionIsConnected",
-			"description": "Checks if the connection is currently active.",
-			"paramTypes": [
-				{
-					"name": "connection",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Connection handle."
-				}
-			],
-			"retType": {
-				"type": "bool",
-				"description": "True if connected, false otherwise."
-			}
-		},
-		{
-			"name": "ConnectionSendData",
-			"funcName": "ConnectionSendData",
-			"description": "Sends data through the connection.",
-			"paramTypes": [
-				{
-					"name": "connection",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Connection handle."
-				},
-				{
-					"name": "data",
-					"type": "string",
-					"ref": false,
-					"description": "The data to send."
-				}
-			],
-			"retType": {
-				"type": "int32",
-				"description": "Number of bytes sent, or -1 on error."
-			}
-		},
-		{
-			"name": "ConnectionReceiveData",
-			"funcName": "ConnectionReceiveData",
-			"description": "Receives data from the connection.",
-			"paramTypes": [
-				{
-					"name": "connection",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Connection handle."
-				}
-			],
-			"retType": {
-				"type": "string",
-				"description": "The received data, or empty string if no data available."
-			}
-		},
-		{
-			"name": "ConnectionGetHost",
-			"funcName": "ConnectionGetHost",
-			"description": "Gets the host address of the connection.",
-			"paramTypes": [
-				{
-					"name": "connection",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Connection handle."
-				}
-			],
-			"retType": {
-				"type": "string",
-				"description": "The host address."
-			}
-		},
-		{
-			"name": "ConnectionGetPort",
-			"funcName": "ConnectionGetPort",
-			"description": "Gets the port number of the connection.",
-			"paramTypes": [
-				{
-					"name": "connection",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Connection handle."
-				}
-			],
-			"retType": {
-				"type": "int32",
-				"description": "The port number."
-			}
-		},
-		{
-			"name": "ConnectionGetTotalConnections",
-			"funcName": "ConnectionGetTotalConnections",
-			"description": "Gets the total number of active connections (static utility).",
+			"name": "ResourceHandleCreateDefault",
+			"funcName": "ResourceHandleCreateDefault",
+			"group": "Resource",
 			"paramTypes": [],
-			"retType": {
-				"type": "int32",
-				"description": "The number of active connections."
-			}
+			"retType": { "type": "ptr64" }
 		},
 		{
-			"name": "StatisticsCreate",
-			"funcName": "StatisticsCreate",
-			"description": "Creates a new Statistics tracker.",
+			"name": "ResourceHandleDestroy",
+			"funcName": "ResourceHandleDestroy",
+			"group": "Resource",
 			"paramTypes": [
-				{
-					"name": "name",
-					"type": "string",
-					"ref": false,
-					"description": "The name of the statistics tracker."
-				}
+				{ "name": "handle", "type": "ptr64", "ref": false }
 			],
-			"retType": {
-				"type": "ptr64",
-				"description": "A handle to the created Statistics."
-			}
+			"retType": { "type": "void" }
 		},
 		{
-			"name": "StatisticsCreateWithCapacity",
-			"funcName": "StatisticsCreateWithCapacity",
-			"description": "Creates a new Statistics tracker with initial capacity.",
+			"name": "ResourceHandleGetId",
+			"funcName": "ResourceHandleGetId",
+			"group": "Resource",
 			"paramTypes": [
-				{
-					"name": "name",
-					"type": "string",
-					"ref": false,
-					"description": "The name of the statistics tracker."
-				},
-				{
-					"name": "capacity",
-					"type": "int32",
-					"ref": false,
-					"description": "Initial capacity for data storage."
-				}
+				{ "name": "handle", "type": "ptr64", "ref": false }
 			],
-			"retType": {
-				"type": "ptr64",
-				"description": "A handle to the created Statistics."
-			}
+			"retType": { "type": "int32" }
 		},
 		{
-			"name": "StatisticsIncrement",
-			"funcName": "StatisticsIncrement",
-			"description": "Increments the counter by one.",
+			"name": "ResourceHandleGetName",
+			"funcName": "ResourceHandleGetName",
+			"group": "Resource",
 			"paramTypes": [
-				{
-					"name": "statistics",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Statistics handle."
-				}
+				{ "name": "handle", "type": "ptr64", "ref": false }
 			],
-			"retType": {
-				"type": "void"
-			}
+			"retType": { "type": "string" }
 		},
 		{
-			"name": "StatisticsIncrementBy",
-			"funcName": "StatisticsIncrementBy",
-			"description": "Increments the counter by a specific amount.",
+			"name": "ResourceHandleSetName",
+			"funcName": "ResourceHandleSetName",
+			"group": "Resource",
 			"paramTypes": [
-				{
-					"name": "statistics",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Statistics handle."
-				},
-				{
-					"name": "amount",
-					"type": "int32",
-					"ref": false,
-					"description": "The amount to increment by."
-				}
+				{ "name": "handle", "type": "ptr64", "ref": false },
+				{ "name": "name", "type": "string", "ref": false }
 			],
-			"retType": {
-				"type": "void"
-			}
+			"retType": { "type": "void" }
 		},
 		{
-			"name": "StatisticsDecrement",
-			"funcName": "StatisticsDecrement",
-			"description": "Decrements the counter by one.",
+			"name": "ResourceHandleIncrementCounter",
+			"funcName": "ResourceHandleIncrementCounter",
+			"group": "Resource",
 			"paramTypes": [
-				{
-					"name": "statistics",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Statistics handle."
-				}
+				{ "name": "handle", "type": "ptr64", "ref": false }
 			],
-			"retType": {
-				"type": "void"
-			}
+			"retType": { "type": "void" }
 		},
 		{
-			"name": "StatisticsGetCount",
-			"funcName": "StatisticsGetCount",
-			"description": "Gets the current count value.",
+			"name": "ResourceHandleGetCounter",
+			"funcName": "ResourceHandleGetCounter",
+			"group": "Resource",
 			"paramTypes": [
-				{
-					"name": "statistics",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Statistics handle."
-				}
+				{ "name": "handle", "type": "ptr64", "ref": false }
 			],
-			"retType": {
-				"type": "int32",
-				"description": "The current count."
-			}
+			"retType": { "type": "int32" }
 		},
 		{
-			"name": "StatisticsReset",
-			"funcName": "StatisticsReset",
-			"description": "Resets the counter to zero.",
+			"name": "ResourceHandleAddData",
+			"funcName": "ResourceHandleAddData",
+			"group": "Resource",
 			"paramTypes": [
-				{
-					"name": "statistics",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Statistics handle."
-				}
+				{ "name": "handle", "type": "ptr64", "ref": false },
+				{ "name": "value", "type": "float", "ref": false }
 			],
-			"retType": {
-				"type": "void"
-			}
+			"retType": { "type": "void" }
 		},
 		{
-			"name": "StatisticsGetName",
-			"funcName": "StatisticsGetName",
-			"description": "Gets the name of the statistics tracker.",
+			"name": "ResourceHandleGetData",
+			"funcName": "ResourceHandleGetData",
+			"group": "Resource",
 			"paramTypes": [
-				{
-					"name": "statistics",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Statistics handle."
-				}
+				{ "name": "handle", "type": "ptr64", "ref": false }
 			],
-			"retType": {
-				"type": "string",
-				"description": "The name of the tracker."
-			}
+			"retType": { "type": "float[]" }
 		},
 		{
-			"name": "StatisticsAddValue",
-			"funcName": "StatisticsAddValue",
-			"description": "Adds a value to the statistics dataset.",
-			"paramTypes": [
-				{
-					"name": "statistics",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Statistics handle."
-				},
-				{
-					"name": "value",
-					"type": "double",
-					"ref": false,
-					"description": "The value to add."
-				}
-			],
-			"retType": {
-				"type": "void"
-			}
-		},
-		{
-			"name": "StatisticsGetAverage",
-			"funcName": "StatisticsGetAverage",
-			"description": "Calculates the average of all values.",
-			"paramTypes": [
-				{
-					"name": "statistics",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Statistics handle."
-				}
-			],
-			"retType": {
-				"type": "double",
-				"description": "The average value."
-			}
-		},
-		{
-			"name": "StatisticsGetMin",
-			"funcName": "StatisticsGetMin",
-			"description": "Gets the minimum value.",
-			"paramTypes": [
-				{
-					"name": "statistics",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Statistics handle."
-				}
-			],
-			"retType": {
-				"type": "double",
-				"description": "The minimum value."
-			}
-		},
-		{
-			"name": "StatisticsGetMax",
-			"funcName": "StatisticsGetMax",
-			"description": "Gets the maximum value.",
-			"paramTypes": [
-				{
-					"name": "statistics",
-					"type": "ptr64",
-					"ref": false,
-					"description": "The Statistics handle."
-				}
-			],
-			"retType": {
-				"type": "double",
-				"description": "The maximum value."
-			}
-		},
-		{
-			"name": "StatisticsGetGlobalCount",
-			"funcName": "StatisticsGetGlobalCount",
-			"description": "Gets the total number of Statistics instances created (static utility).",
+			"name": "ResourceHandleGetAliveCount",
+			"funcName": "ResourceHandleGetAliveCount",
+			"group": "Resource",
 			"paramTypes": [],
-			"retType": {
-				"type": "int32",
-				"description": "The total number of Statistics instances."
-			}
+			"retType": { "type": "int32" }
+		},
+		{
+			"name": "ResourceHandleGetTotalCreated",
+			"funcName": "ResourceHandleGetTotalCreated",
+			"group": "Resource",
+			"paramTypes": [],
+			"retType": { "type": "int32" }
+		},
+		{
+			"name": "ResourceHandleGetTotalDestroyed",
+			"funcName": "ResourceHandleGetTotalDestroyed",
+			"group": "Resource",
+			"paramTypes": [],
+			"retType": { "type": "int32" }
+		},
+		{
+			"name": "CounterCreate",
+			"funcName": "CounterCreate",
+			"group": "Counter",
+			"paramTypes": [
+				{ "name": "initialValue", "type": "int64", "ref": false }
+			],
+			"retType": { "type": "ptr64" }
+		},
+		{
+			"name": "CounterCreateZero",
+			"funcName": "CounterCreateZero",
+			"group": "Counter",
+			"paramTypes": [],
+			"retType": { "type": "ptr64" }
+		},
+		{
+			"name": "CounterGetValue",
+			"funcName": "CounterGetValue",
+			"group": "Counter",
+			"paramTypes": [
+				{ "name": "counter", "type": "ptr64", "ref": false }
+			],
+			"retType": { "type": "int64" }
+		},
+		{
+			"name": "CounterSetValue",
+			"funcName": "CounterSetValue",
+			"group": "Counter",
+			"paramTypes": [
+				{ "name": "counter", "type": "ptr64", "ref": false },
+				{ "name": "value", "type": "int64", "ref": false }
+			],
+			"retType": { "type": "void" }
+		},
+		{
+			"name": "CounterIncrement",
+			"funcName": "CounterIncrement",
+			"group": "Counter",
+			"paramTypes": [
+				{ "name": "counter", "type": "ptr64", "ref": false }
+			],
+			"retType": { "type": "void" }
+		},
+		{
+			"name": "CounterDecrement",
+			"funcName": "CounterDecrement",
+			"group": "Counter",
+			"paramTypes": [
+				{ "name": "counter", "type": "ptr64", "ref": false }
+			],
+			"retType": { "type": "void" }
+		},
+		{
+			"name": "CounterAdd",
+			"funcName": "CounterAdd",
+			"group": "Counter",
+			"paramTypes": [
+				{ "name": "counter", "type": "ptr64", "ref": false },
+				{ "name": "amount", "type": "int64", "ref": false }
+			],
+			"retType": { "type": "void" }
+		},
+		{
+			"name": "CounterReset",
+			"funcName": "CounterReset",
+			"group": "Counter",
+			"paramTypes": [
+				{ "name": "counter", "type": "ptr64", "ref": false }
+			],
+			"retType": { "type": "void" }
+		},
+		{
+			"name": "CounterIsPositive",
+			"funcName": "CounterIsPositive",
+			"group": "Counter",
+			"paramTypes": [
+				{ "name": "counter", "type": "ptr64", "ref": false }
+			],
+			"retType": { "type": "bool" }
+		},
+		{
+			"name": "CounterCompare",
+			"funcName": "CounterCompare",
+			"group": "Counter",
+			"paramTypes": [
+				{ "name": "value1", "type": "int64", "ref": false },
+				{ "name": "value2", "type": "int64", "ref": false }
+			],
+			"retType": { "type": "int32" }
+		},
+		{
+			"name": "CounterSum",
+			"funcName": "CounterSum",
+			"group": "Counter",
+			"paramTypes": [
+				{ "name": "values", "type": "int64[]", "ref": false }
+			],
+			"retType": { "type": "int64" }
 		}
 	],
 	"classes": [
 		{
-			"name": "Connection",
-			"description": "RAII wrapper for network Connection handle. Manages connection lifecycle with automatic cleanup on disposal.",
+			"name": "ResourceHandle",
+			"description": "RAII wrapper for ResourceHandle pointer",
 			"handleType": "ptr64",
 			"constructors": [
-				"ConnectionCreate",
-				"ConnectionCreateSecure"
+				"ResourceHandleCreate",
+				"ResourceHandleCreateDefault"
 			],
-			"destructor": "ConnectionDestroy",
-			"bindings": [
-				{
-					"name": "Connect",
-					"method": "ConnectionConnect",
-					"bindSelf": true
-				},
-				{
-					"name": "Disconnect",
-					"method": "ConnectionDisconnect",
-					"bindSelf": true
-				},
-				{
-					"name": "IsConnected",
-					"method": "ConnectionIsConnected",
-					"bindSelf": true
-				},
-				{
-					"name": "SendData",
-					"method": "ConnectionSendData",
-					"bindSelf": true
-				},
-				{
-					"name": "ReceiveData",
-					"method": "ConnectionReceiveData",
-					"bindSelf": true
-				},
-				{
-					"name": "GetHost",
-					"method": "ConnectionGetHost",
-					"bindSelf": true
-				},
-				{
-					"name": "GetPort",
-					"method": "ConnectionGetPort",
-					"bindSelf": true
-				},
-				{
-					"name": "GetTotalConnections",
-					"method": "ConnectionGetTotalConnections",
-					"bindSelf": false
-				}
+			"destructor": "ResourceHandleDestroy",
+			"methods": [
+				{ "name": "GetId", "method": "ResourceHandleGetId", "bindSelf": true },
+				{ "name": "GetName", "method": "ResourceHandleGetName", "bindSelf": true },
+				{ "name": "SetName", "method": "ResourceHandleSetName", "bindSelf": true },
+				{ "name": "IncrementCounter", "method": "ResourceHandleIncrementCounter", "bindSelf": true },
+				{ "name": "GetCounter", "method": "ResourceHandleGetCounter", "bindSelf": true },
+				{ "name": "AddData", "method": "ResourceHandleAddData", "bindSelf": true },
+				{ "name": "GetData", "method": "ResourceHandleGetData", "bindSelf": true },
+				{ "name": "GetAliveCount", "method": "ResourceHandleGetAliveCount", "bindSelf": false },
+				{ "name": "GetTotalCreated", "method": "ResourceHandleGetTotalCreated", "bindSelf": false },
+				{ "name": "GetTotalDestroyed", "method": "ResourceHandleGetTotalDestroyed", "bindSelf": false }
 			]
 		},
 		{
-			"name": "Statistics",
-			"description": "Lightweight wrapper for statistics tracking. Does not require explicit cleanup as it manages no external resources.",
+			"name": "Counter",
 			"handleType": "ptr64",
 			"constructors": [
-				"StatisticsCreate",
-				"StatisticsCreateWithCapacity"
+				"CounterCreate",
+				"CounterCreateZero"
 			],
-			"bindings": [
-				{
-					"name": "Increment",
-					"method": "StatisticsIncrement",
-					"bindSelf": true
-				},
-				{
-					"name": "IncrementBy",
-					"method": "StatisticsIncrementBy",
-					"bindSelf": true
-				},
-				{
-					"name": "Decrement",
-					"method": "StatisticsDecrement",
-					"bindSelf": true
-				},
-				{
-					"name": "GetCount",
-					"method": "StatisticsGetCount",
-					"bindSelf": true
-				},
-				{
-					"name": "Reset",
-					"method": "StatisticsReset",
-					"bindSelf": true
-				},
-				{
-					"name": "GetName",
-					"method": "StatisticsGetName",
-					"bindSelf": true
-				},
-				{
-					"name": "AddValue",
-					"method": "StatisticsAddValue",
-					"bindSelf": true
-				},
-				{
-					"name": "GetAverage",
-					"method": "StatisticsGetAverage",
-					"bindSelf": true
-				},
-				{
-					"name": "GetMin",
-					"method": "StatisticsGetMin",
-					"bindSelf": true
-				},
-				{
-					"name": "GetMax",
-					"method": "StatisticsGetMax",
-					"bindSelf": true
-				},
-				{
-					"name": "GetGlobalCount",
-					"method": "StatisticsGetGlobalCount",
-					"bindSelf": false
-				}
+			"destructor": null,
+			"methods": [
+				{ "name": "GetValue", "method": "CounterGetValue", "bindSelf": true },
+				{ "name": "SetValue", "method": "CounterSetValue", "bindSelf": true },
+				{ "name": "Increment", "method": "CounterIncrement", "bindSelf": true },
+				{ "name": "Decrement", "method": "CounterDecrement", "bindSelf": true },
+				{ "name": "Add", "method": "CounterAdd", "bindSelf": true },
+				{ "name": "Reset", "method": "CounterReset", "bindSelf": true },
+				{ "name": "IsPositive", "method": "CounterIsPositive", "bindSelf": true },
+				{ "name": "Compare", "method": "CounterCompare", "bindSelf": false },
+				{ "name": "Sum", "method": "CounterSum", "bindSelf": false }
 			]
 		}
 	]

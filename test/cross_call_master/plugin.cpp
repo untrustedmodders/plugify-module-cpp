@@ -4858,388 +4858,266 @@ PLUGIN_API plg::string CallFuncEnumCallback(cross_call_worker::FuncEnum func) {
 
 // classes
 
-// Global counters for tracking lifecycle
-static std::atomic<int> g_connection_create_count{0};
-static std::atomic<int> g_connection_destroy_count{0};
-static std::atomic<int> g_connection_active_count{0};
-
-static std::atomic<int> g_statistics_create_count{0};
-static std::atomic<int> g_statistics_active_count{0};
-
-// Mutex for thread-safe logging
-static std::mutex g_log_mutex;
-
-// Helper function for thread-safe logging
-template<typename... Args>
-void SafeLog(std::format_string<Args...> fmt, Args&&... args) {
-    std::lock_guard<std::mutex> lock(g_log_mutex);
-    std::println(fmt, std::forward<Args>(args)...);
-}
-
-//=============================================================================
-// Connection Class - WITH DESTRUCTOR
-//=============================================================================
-class Connection {
-private:
-    plg::string m_host;
-    int32_t m_port;
-    bool m_useSsl;
-    bool m_connected;
-    int m_instanceId;
-    plg::string m_receiveBuffer;
-
+class ResourceHandle {
 public:
-    Connection(const plg::string& host, int32_t port, bool useSsl = false)
-        : m_host(host), m_port(port), m_useSsl(useSsl), m_connected(false) {
+    int32_t id;
+    plg::string name;
+    int32_t counter;
+    std::vector<float> data;
 
-        m_instanceId = ++g_connection_create_count;
-        ++g_connection_active_count;
+    // Static tracking variables
+    static std::atomic<int32_t> s_aliveCount;
+    static std::atomic<int32_t> s_totalCreated;
+    static std::atomic<int32_t> s_totalDestroyed;
+    static std::mutex s_mutex;
 
-        SafeLog("[Connection] Constructor called: Instance #{} | Host: {} | Port: {} | SSL: {} | Active: {}",
-                m_instanceId, m_host, m_port, m_useSsl, g_connection_active_count.load());
+    ResourceHandle(int32_t id, const plg::string& name)
+        : id(id), name(name), counter(0) {
+        s_aliveCount++;
+        s_totalCreated++;
+        std::lock_guard<std::mutex> lock(s_mutex);
+        std::println("[LIFECYCLE] ResourceHandle CREATED: ID={}, Name='{}', Alive={}, TotalCreated={}",
+                     id, name, s_aliveCount.load(), s_totalCreated.load());
     }
 
-    ~Connection() {
-        ++g_connection_destroy_count;
-        --g_connection_active_count;
-
-        SafeLog("[Connection] Destructor called: Instance #{} | Host: {} | Port: {} | Destroyed: {} | Active: {}",
-                m_instanceId, m_host, m_port, g_connection_destroy_count.load(), g_connection_active_count.load());
-
-        if (m_connected) {
-            SafeLog("[Connection] Warning: Instance #{} destroyed while still connected!", m_instanceId);
-        }
+    ~ResourceHandle() {
+        s_aliveCount--;
+        s_totalDestroyed++;
+        std::lock_guard<std::mutex> lock(s_mutex);
+        std::println("[LIFECYCLE] ResourceHandle DESTROYED: ID={}, Name='{}', Counter={}, DataSize={}, Alive={}, TotalDestroyed={}",
+                     id, name, counter, data.size(), s_aliveCount.load(), s_totalDestroyed.load());
     }
 
-    bool Connect() {
-        if (m_connected) {
-            SafeLog("[Connection] Instance #{} already connected", m_instanceId);
-            return true;
-        }
-
-        SafeLog("[Connection] Instance #{} connecting to {}:{}...", m_instanceId, m_host, m_port);
-        m_connected = true;
-        m_receiveBuffer = std::format("Welcome to {}:{}", m_host, m_port);
-        SafeLog("[Connection] Instance #{} connected successfully", m_instanceId);
-        return true;
-    }
-
-    void Disconnect() {
-        if (!m_connected) {
-            SafeLog("[Connection] Instance #{} already disconnected", m_instanceId);
-            return;
-        }
-
-        SafeLog("[Connection] Instance #{} disconnecting from {}:{}...", m_instanceId, m_host, m_port);
-        m_connected = false;
-        m_receiveBuffer.clear();
-        SafeLog("[Connection] Instance #{} disconnected", m_instanceId);
-    }
-
-    bool IsConnected() const {
-        return m_connected;
-    }
-
-    int32_t SendData(const plg::string& data) {
-        if (!m_connected) {
-            SafeLog("[Connection] Instance #{} ERROR: Cannot send, not connected", m_instanceId);
-            return -1;
-        }
-
-        SafeLog("[Connection] Instance #{} sending {} bytes: '{}'", m_instanceId, data.size(), data);
-        // Simulate sending data and update receive buffer
-        m_receiveBuffer = std::format("Echo: {}", data);
-        return static_cast<int32_t>(data.size());
-    }
-
-    plg::string ReceiveData() {
-        if (!m_connected) {
-            SafeLog("[Connection] Instance #{} ERROR: Cannot receive, not connected", m_instanceId);
-            return "";
-        }
-
-        plg::string data = m_receiveBuffer;
-        m_receiveBuffer.clear();
-        SafeLog("[Connection] Instance #{} received {} bytes", m_instanceId, data.size());
-        return data;
-    }
-
-    const plg::string& GetHost() const { return m_host; }
-    int32_t GetPort() const { return m_port; }
-    int GetInstanceId() const { return m_instanceId; }
+    // Delete copy operations to ensure proper lifecycle
+    ResourceHandle(const ResourceHandle&) = delete;
+    ResourceHandle& operator=(const ResourceHandle&) = delete;
 };
 
-//=============================================================================
-// Statistics Class - WITHOUT DESTRUCTOR (lightweight)
-//=============================================================================
-class Statistics {
-private:
-    plg::string m_name;
-    int32_t m_count;
-    int m_instanceId;
-    std::vector<double> m_values;
+// Initialize static members
+std::atomic<int32_t> ResourceHandle::s_aliveCount{0};
+std::atomic<int32_t> ResourceHandle::s_totalCreated{0};
+std::atomic<int32_t> ResourceHandle::s_totalDestroyed{0};
+std::mutex ResourceHandle::s_mutex;
 
-public:
-    Statistics(const plg::string& name, int32_t capacity = 100)
-        : m_name(name), m_count(0) {
-
-        m_instanceId = ++g_statistics_create_count;
-        ++g_statistics_active_count;
-        m_values.reserve(capacity);
-
-        SafeLog("[Statistics] Constructor called: Instance #{} | Name: '{}' | Capacity: {} | Active: {}",
-                m_instanceId, m_name, capacity, g_statistics_active_count.load());
-    }
-
-    // Note: No destructor in manifest, but we can still track in C++
-    ~Statistics() {
-        --g_statistics_active_count;
-        SafeLog("[Statistics] Destructor called (C++ cleanup): Instance #{} | Name: '{}' | Final Count: {} | Active: {}",
-                m_instanceId, m_name, m_count, g_statistics_active_count.load());
-    }
-
-    void Increment() {
-        ++m_count;
-        SafeLog("[Statistics] Instance #{} incremented: Count = {}", m_instanceId, m_count);
-    }
-
-    void IncrementBy(int32_t amount) {
-        m_count += amount;
-        SafeLog("[Statistics] Instance #{} incremented by {}: Count = {}", m_instanceId, amount, m_count);
-    }
-
-    void Decrement() {
-        --m_count;
-        SafeLog("[Statistics] Instance #{} decremented: Count = {}", m_instanceId, m_count);
-    }
-
-    int32_t GetCount() const {
-        return m_count;
-    }
-
-    void Reset() {
-        SafeLog("[Statistics] Instance #{} reset: {} -> 0", m_instanceId, m_count);
-        m_count = 0;
-        m_values.clear();
-    }
-
-    const plg::string& GetName() const {
-        return m_name;
-    }
-
-    void AddValue(double value) {
-        m_values.push_back(value);
-        SafeLog("[Statistics] Instance #{} added value: {} (total values: {})", m_instanceId, value, m_values.size());
-    }
-
-    double GetAverage() const {
-        if (m_values.empty()) return 0.0;
-        double sum = std::accumulate(m_values.begin(), m_values.end(), 0.0);
-        return sum / m_values.size();
-    }
-
-    double GetMin() const {
-        if (m_values.empty()) return 0.0;
-        return *std::min_element(m_values.begin(), m_values.end());
-    }
-
-    double GetMax() const {
-        if (m_values.empty()) return 0.0;
-        return *std::max_element(m_values.begin(), m_values.end());
-    }
-
-    int GetInstanceId() const { return m_instanceId; }
-};
-
-//=============================================================================
-// Connection Exported Functions
-//=============================================================================
-
-extern "C"
-PLUGIN_API void* ConnectionCreate(const plg::string& host, int32_t port) {
+// ResourceHandle exported functions
+PLUGIN_API void* ResourceHandleCreate(int32_t id, const plg::string& name) {
     try {
-        auto conn = new Connection(host, port, false);
-        SafeLog("[EXPORT] ConnectionCreate: Created instance #{} -> ptr: {}",
-                conn->GetInstanceId(), static_cast<void*>(conn));
-        return static_cast<void*>(conn);
+        return new ResourceHandle(id, name);
     } catch (const std::exception& e) {
-        SafeLog("[EXPORT] ConnectionCreate: FAILED with exception: {}", e.what());
+        std::println("[ERROR] ResourceHandleCreate failed: {}", e.what());
         return nullptr;
     }
 }
 
-extern "C"
-PLUGIN_API void* ConnectionCreateSecure(const plg::string& host, int32_t port, bool useSsl) {
+PLUGIN_API void* ResourceHandleCreateDefault() {
+    static std::atomic<int32_t> nextId{1000};
+    int32_t id = nextId++;
     try {
-        auto conn = new Connection(host, port, useSsl);
-        SafeLog("[EXPORT] ConnectionCreateSecure: Created instance #{} -> ptr: {}",
-                conn->GetInstanceId(), static_cast<void*>(conn));
-        return static_cast<void*>(conn);
+        return new ResourceHandle(id, std::format("Resource_{}", id));
     } catch (const std::exception& e) {
-        SafeLog("[EXPORT] ConnectionCreateSecure: FAILED with exception: {}", e.what());
+        std::println("[ERROR] ResourceHandleCreateDefault failed: {}", e.what());
         return nullptr;
     }
 }
 
-extern "C"
-PLUGIN_API void ConnectionDestroy(void* connection) {
-    if (!connection) {
-        SafeLog("[EXPORT] ConnectionDestroy: Called with nullptr!");
+PLUGIN_API void ResourceHandleDestroy(void* handle) {
+    if (handle) {
+        delete static_cast<ResourceHandle*>(handle);
+    } else {
+        std::println("[WARNING] ResourceHandleDestroy called with nullptr");
+    }
+}
+
+PLUGIN_API int32_t ResourceHandleGetId(void* handle) {
+    if (!handle) {
+        std::println("[ERROR] ResourceHandleGetId: handle is null");
+        return -1;
+    }
+    return static_cast<ResourceHandle*>(handle)->id;
+}
+
+PLUGIN_API plg::string ResourceHandleGetName(void* handle) {
+    if (!handle) {
+        std::println("[ERROR] ResourceHandleGetName: handle is null");
+        return "";
+    }
+    return static_cast<ResourceHandle*>(handle)->name;
+}
+
+PLUGIN_API void ResourceHandleSetName(void* handle, const plg::string& name) {
+    if (!handle) {
+        std::println("[ERROR] ResourceHandleSetName: handle is null");
         return;
     }
-
-    auto conn = reinterpret_cast<Connection*>(connection);
-    int id = conn->GetInstanceId();
-    SafeLog("[EXPORT] ConnectionDestroy: Destroying instance #{} at ptr: {}", id, connection);
-    delete conn;
-    SafeLog("[EXPORT] ConnectionDestroy: Instance #{} destroyed successfully", id);
+    auto* res = static_cast<ResourceHandle*>(handle);
+    std::println("[ACTION] ResourceHandle ID={}: Name changed from '{}' to '{}'",
+                 res->id, res->name, name);
+    res->name = name;
 }
 
-extern "C"
-PLUGIN_API bool ConnectionConnect(void* connection) {
-    if (!connection) return false;
-    return reinterpret_cast<Connection*>(connection)->Connect();
+PLUGIN_API void ResourceHandleIncrementCounter(void* handle) {
+    if (!handle) {
+        std::println("[ERROR] ResourceHandleIncrementCounter: handle is null");
+        return;
+    }
+    auto* res = static_cast<ResourceHandle*>(handle);
+    res->counter++;
+    std::println("[ACTION] ResourceHandle ID={}: Counter incremented to {}", res->id, res->counter);
 }
 
-extern "C"
-PLUGIN_API void ConnectionDisconnect(void* connection) {
-    if (!connection) return;
-    reinterpret_cast<Connection*>(connection)->Disconnect();
+PLUGIN_API int32_t ResourceHandleGetCounter(void* handle) {
+    if (!handle) {
+        std::println("[ERROR] ResourceHandleGetCounter: handle is null");
+        return -1;
+    }
+    return static_cast<ResourceHandle*>(handle)->counter;
 }
 
-extern "C"
-PLUGIN_API bool ConnectionIsConnected(void* connection) {
-    if (!connection) return false;
-    return reinterpret_cast<Connection*>(connection)->IsConnected();
+PLUGIN_API void ResourceHandleAddData(void* handle, float value) {
+    if (!handle) {
+        std::println("[ERROR] ResourceHandleAddData: handle is null");
+        return;
+    }
+    auto* res = static_cast<ResourceHandle*>(handle);
+    res->data.push_back(value);
+    std::println("[ACTION] ResourceHandle ID={}: Added data value {}, total data points: {}",
+                 res->id, value, res->data.size());
 }
 
-extern "C"
-PLUGIN_API int32_t ConnectionSendData(void* connection, const plg::string& data) {
-    if (!connection) return -1;
-    return reinterpret_cast<Connection*>(connection)->SendData(data);
+PLUGIN_API plg::vector<float> ResourceHandleGetData(void* handle) {
+    if (!handle) {
+        std::println("[ERROR] ResourceHandleGetData: handle is null");
+        return {};
+    }
+    auto* res = static_cast<ResourceHandle*>(handle);
+    return plg::vector<float>(res->data.begin(), res->data.end());
 }
 
-extern "C"
-PLUGIN_API plg::string ConnectionReceiveData(void* connection) {
-    if (!connection) return "";
-    return reinterpret_cast<Connection*>(connection)->ReceiveData();
+PLUGIN_API int32_t ResourceHandleGetAliveCount() {
+    int32_t count = ResourceHandle::s_aliveCount.load();
+    std::println("[STATS] ResourceHandle: {} instances currently alive", count);
+    return count;
 }
 
-extern "C"
-PLUGIN_API plg::string ConnectionGetHost(void* connection) {
-    if (!connection) return "";
-    return reinterpret_cast<Connection*>(connection)->GetHost();
+PLUGIN_API int32_t ResourceHandleGetTotalCreated() {
+    int32_t count = ResourceHandle::s_totalCreated.load();
+    std::println("[STATS] ResourceHandle: {} total instances created", count);
+    return count;
 }
 
-extern "C"
-PLUGIN_API int32_t ConnectionGetPort(void* connection) {
-    if (!connection) return -1;
-    return reinterpret_cast<Connection*>(connection)->GetPort();
+PLUGIN_API int32_t ResourceHandleGetTotalDestroyed() {
+    int32_t count = ResourceHandle::s_totalDestroyed.load();
+    std::println("[STATS] ResourceHandle: {} total instances destroyed", count);
+    return count;
 }
 
-extern "C"
-PLUGIN_API int32_t ConnectionGetTotalConnections() {
-    int active = g_connection_active_count.load();
-    SafeLog("[EXPORT] ConnectionGetTotalConnections: Active = {}", active);
-    return active;
-}
+// ============================================================================
+// Counter - Class WITHOUT destructor (lightweight wrapper)
+// ============================================================================
 
-//=============================================================================
-// Statistics Exported Functions
-//=============================================================================
+struct Counter {
+    int64_t value;
 
-extern "C"
-PLUGIN_API void* StatisticsCreate(const plg::string& name) {
+    explicit Counter(int64_t val) : value(val) {
+        std::println("[COUNTER] Counter created with value: {}", value);
+    }
+
+    // Note: No destructor logging since this is a lightweight wrapper
+};
+
+// Counter exported functions
+PLUGIN_API void* CounterCreate(int64_t initialValue) {
     try {
-        auto stats = new Statistics(name);
-        SafeLog("[EXPORT] StatisticsCreate: Created instance #{} -> ptr: {}",
-                stats->GetInstanceId(), static_cast<void*>(stats));
-        return static_cast<void*>(stats);
+        return new Counter(initialValue);
     } catch (const std::exception& e) {
-        SafeLog("[EXPORT] StatisticsCreate: FAILED with exception: {}", e.what());
+        std::println("[ERROR] CounterCreate failed: {}", e.what());
         return nullptr;
     }
 }
 
-extern "C"
-PLUGIN_API void* StatisticsCreateWithCapacity(const plg::string& name, int32_t capacity) {
+PLUGIN_API void* CounterCreateZero() {
     try {
-        auto stats = new Statistics(name, capacity);
-        SafeLog("[EXPORT] StatisticsCreateWithCapacity: Created instance #{} -> ptr: {}",
-                stats->GetInstanceId(), static_cast<void*>(stats));
-        return static_cast<void*>(stats);
+        return new Counter(0);
     } catch (const std::exception& e) {
-        SafeLog("[EXPORT] StatisticsCreateWithCapacity: FAILED with exception: {}", e.what());
+        std::println("[ERROR] CounterCreateZero failed: {}", e.what());
         return nullptr;
     }
 }
 
-extern "C"
-PLUGIN_API void StatisticsIncrement(void* statistics) {
-    if (!statistics) return;
-    reinterpret_cast<Statistics*>(statistics)->Increment();
+PLUGIN_API int64_t CounterGetValue(void* counter) {
+    if (!counter) {
+        std::println("[ERROR] CounterGetValue: counter is null");
+        return 0;
+    }
+    return static_cast<Counter*>(counter)->value;
 }
 
-extern "C"
-PLUGIN_API void StatisticsIncrementBy(void* statistics, int32_t amount) {
-    if (!statistics) return;
-    reinterpret_cast<Statistics*>(statistics)->IncrementBy(amount);
+PLUGIN_API void CounterSetValue(void* counter, int64_t value) {
+    if (!counter) {
+        std::println("[ERROR] CounterSetValue: counter is null");
+        return;
+    }
+    auto* cnt = static_cast<Counter*>(counter);
+    std::println("[COUNTER] Counter value changed: {} -> {}", cnt->value, value);
+    cnt->value = value;
 }
 
-extern "C"
-PLUGIN_API void StatisticsDecrement(void* statistics) {
-    if (!statistics) return;
-    reinterpret_cast<Statistics*>(statistics)->Decrement();
+PLUGIN_API void CounterIncrement(void* counter) {
+    if (!counter) {
+        std::println("[ERROR] CounterIncrement: counter is null");
+        return;
+    }
+    auto* cnt = static_cast<Counter*>(counter);
+    cnt->value++;
+    std::println("[COUNTER] Counter incremented to: {}", cnt->value);
 }
 
-extern "C"
-PLUGIN_API int32_t StatisticsGetCount(void* statistics) {
-    if (!statistics) return 0;
-    return reinterpret_cast<Statistics*>(statistics)->GetCount();
+PLUGIN_API void CounterDecrement(void* counter) {
+    if (!counter) {
+        std::println("[ERROR] CounterDecrement: counter is null");
+        return;
+    }
+    auto* cnt = static_cast<Counter*>(counter);
+    cnt->value--;
+    std::println("[COUNTER] Counter decremented to: {}", cnt->value);
 }
 
-extern "C"
-PLUGIN_API void StatisticsReset(void* statistics) {
-    if (!statistics) return;
-    reinterpret_cast<Statistics*>(statistics)->Reset();
+PLUGIN_API void CounterAdd(void* counter, int64_t amount) {
+    if (!counter) {
+        std::println("[ERROR] CounterAdd: counter is null");
+        return;
+    }
+    auto* cnt = static_cast<Counter*>(counter);
+    cnt->value += amount;
+    std::println("[COUNTER] Counter added {}, new value: {}", amount, cnt->value);
 }
 
-extern "C"
-PLUGIN_API plg::string StatisticsGetName(void* statistics) {
-    if (!statistics) return "";
-    return reinterpret_cast<Statistics*>(statistics)->GetName();
+PLUGIN_API void CounterReset(void* counter) {
+    if (!counter) {
+        std::println("[ERROR] CounterReset: counter is null");
+        return;
+    }
+    auto* cnt = static_cast<Counter*>(counter);
+    std::println("[COUNTER] Counter reset from {} to 0", cnt->value);
+    cnt->value = 0;
 }
 
-extern "C"
-PLUGIN_API void StatisticsAddValue(void* statistics, double value) {
-    if (!statistics) return;
-    reinterpret_cast<Statistics*>(statistics)->AddValue(value);
+PLUGIN_API bool CounterIsPositive(void* counter) {
+    if (!counter) {
+        std::println("[ERROR] CounterIsPositive: counter is null");
+        return false;
+    }
+    return static_cast<Counter*>(counter)->value > 0;
 }
 
-extern "C"
-PLUGIN_API double StatisticsGetAverage(void* statistics) {
-    if (!statistics) return 0.0;
-    return reinterpret_cast<Statistics*>(statistics)->GetAverage();
+PLUGIN_API int32_t CounterCompare(int64_t value1, int64_t value2) {
+    if (value1 < value2) return -1;
+    if (value1 > value2) return 1;
+    return 0;
 }
 
-extern "C"
-PLUGIN_API double StatisticsGetMin(void* statistics) {
-    if (!statistics) return 0.0;
-    return reinterpret_cast<Statistics*>(statistics)->GetMin();
-}
-
-extern "C"
-PLUGIN_API double StatisticsGetMax(void* statistics) {
-    if (!statistics) return 0.0;
-    return reinterpret_cast<Statistics*>(statistics)->GetMax();
-}
-
-extern "C"
-PLUGIN_API int32_t StatisticsGetGlobalCount() {
-    int created = g_statistics_create_count.load();
-    int active = g_statistics_active_count.load();
-    SafeLog("[EXPORT] StatisticsGetGlobalCount: Total Created = {}, Active = {}", created, active);
-    return created;
+PLUGIN_API int64_t CounterSum(const plg::vector<int64_t>& values) {
+    return std::accumulate(values.begin(), values.end(), int64_t{0});
 }
 
 PLUGIFY_WARN_POP()
