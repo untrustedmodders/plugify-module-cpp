@@ -1,11 +1,18 @@
 ﻿#include "simple_tests.hpp"
-#include <cstdint>
-#include <limits>
 #include <plugin_export.h>
 #include <plg/plugin.hpp>
 #include <plg/formatter.hpp>
 #include <pps/cross_call_worker.hpp>
+
+#include <cstdint>
+#include <limits>
+#include <memory>
+#include <vector>
+#include <atomic>
+#include <limits>
 #include <numeric>
+#include <mutex>
+#include <print>
 
 #define TEST_NO_PARAM_ONLY_RETURN_PRIMITIVES (1 << 0)
 #define TEST_NO_PARAM_ONLY_RETURN_OBJECTS (1 << 1)
@@ -575,6 +582,7 @@ public:
         ReverseParamsVariants();
         ReverseParamsFunctions();
         _tests.Run();
+
     }
 
     void OnPluginEnd() final {
@@ -4846,6 +4854,392 @@ PLUGIN_API plg::string CallFuncEnumCallback(cross_call_worker::FuncEnum func) {
     plg::vector<Example> p2 = {Example::Second};
     auto ret = func(p1, p2);
     return std::format("{}|{}", ret, p2);
+}
+
+// classes
+
+// Global counters for tracking lifecycle
+static std::atomic<int> g_connection_create_count{0};
+static std::atomic<int> g_connection_destroy_count{0};
+static std::atomic<int> g_connection_active_count{0};
+
+static std::atomic<int> g_statistics_create_count{0};
+static std::atomic<int> g_statistics_active_count{0};
+
+// Mutex for thread-safe logging
+static std::mutex g_log_mutex;
+
+// Helper function for thread-safe logging
+template<typename... Args>
+void SafeLog(std::format_string<Args...> fmt, Args&&... args) {
+    std::lock_guard<std::mutex> lock(g_log_mutex);
+    std::println(fmt, std::forward<Args>(args)...);
+}
+
+//=============================================================================
+// Connection Class - WITH DESTRUCTOR
+//=============================================================================
+class Connection {
+private:
+    plg::string m_host;
+    int32_t m_port;
+    bool m_useSsl;
+    bool m_connected;
+    int m_instanceId;
+    plg::string m_receiveBuffer;
+
+public:
+    Connection(const plg::string& host, int32_t port, bool useSsl = false)
+        : m_host(host), m_port(port), m_useSsl(useSsl), m_connected(false) {
+
+        m_instanceId = ++g_connection_create_count;
+        ++g_connection_active_count;
+
+        SafeLog("[Connection] Constructor called: Instance #{} | Host: {} | Port: {} | SSL: {} | Active: {}",
+                m_instanceId, m_host, m_port, m_useSsl, g_connection_active_count.load());
+    }
+
+    ~Connection() {
+        ++g_connection_destroy_count;
+        --g_connection_active_count;
+
+        SafeLog("[Connection] Destructor called: Instance #{} | Host: {} | Port: {} | Destroyed: {} | Active: {}",
+                m_instanceId, m_host, m_port, g_connection_destroy_count.load(), g_connection_active_count.load());
+
+        if (m_connected) {
+            SafeLog("[Connection] Warning: Instance #{} destroyed while still connected!", m_instanceId);
+        }
+    }
+
+    bool Connect() {
+        if (m_connected) {
+            SafeLog("[Connection] Instance #{} already connected", m_instanceId);
+            return true;
+        }
+
+        SafeLog("[Connection] Instance #{} connecting to {}:{}...", m_instanceId, m_host, m_port);
+        m_connected = true;
+        m_receiveBuffer = std::format("Welcome to {}:{}", m_host, m_port);
+        SafeLog("[Connection] Instance #{} connected successfully", m_instanceId);
+        return true;
+    }
+
+    void Disconnect() {
+        if (!m_connected) {
+            SafeLog("[Connection] Instance #{} already disconnected", m_instanceId);
+            return;
+        }
+
+        SafeLog("[Connection] Instance #{} disconnecting from {}:{}...", m_instanceId, m_host, m_port);
+        m_connected = false;
+        m_receiveBuffer.clear();
+        SafeLog("[Connection] Instance #{} disconnected", m_instanceId);
+    }
+
+    bool IsConnected() const {
+        return m_connected;
+    }
+
+    int32_t SendData(const plg::string& data) {
+        if (!m_connected) {
+            SafeLog("[Connection] Instance #{} ERROR: Cannot send, not connected", m_instanceId);
+            return -1;
+        }
+
+        SafeLog("[Connection] Instance #{} sending {} bytes: '{}'", m_instanceId, data.size(), data);
+        // Simulate sending data and update receive buffer
+        m_receiveBuffer = std::format("Echo: {}", data);
+        return static_cast<int32_t>(data.size());
+    }
+
+    plg::string ReceiveData() {
+        if (!m_connected) {
+            SafeLog("[Connection] Instance #{} ERROR: Cannot receive, not connected", m_instanceId);
+            return "";
+        }
+
+        plg::string data = m_receiveBuffer;
+        m_receiveBuffer.clear();
+        SafeLog("[Connection] Instance #{} received {} bytes", m_instanceId, data.size());
+        return data;
+    }
+
+    const plg::string& GetHost() const { return m_host; }
+    int32_t GetPort() const { return m_port; }
+    int GetInstanceId() const { return m_instanceId; }
+};
+
+//=============================================================================
+// Statistics Class - WITHOUT DESTRUCTOR (lightweight)
+//=============================================================================
+class Statistics {
+private:
+    plg::string m_name;
+    int32_t m_count;
+    int m_instanceId;
+    std::vector<double> m_values;
+
+public:
+    Statistics(const plg::string& name, int32_t capacity = 100)
+        : m_name(name), m_count(0) {
+
+        m_instanceId = ++g_statistics_create_count;
+        ++g_statistics_active_count;
+        m_values.reserve(capacity);
+
+        SafeLog("[Statistics] Constructor called: Instance #{} | Name: '{}' | Capacity: {} | Active: {}",
+                m_instanceId, m_name, capacity, g_statistics_active_count.load());
+    }
+
+    // Note: No destructor in manifest, but we can still track in C++
+    ~Statistics() {
+        --g_statistics_active_count;
+        SafeLog("[Statistics] Destructor called (C++ cleanup): Instance #{} | Name: '{}' | Final Count: {} | Active: {}",
+                m_instanceId, m_name, m_count, g_statistics_active_count.load());
+    }
+
+    void Increment() {
+        ++m_count;
+        SafeLog("[Statistics] Instance #{} incremented: Count = {}", m_instanceId, m_count);
+    }
+
+    void IncrementBy(int32_t amount) {
+        m_count += amount;
+        SafeLog("[Statistics] Instance #{} incremented by {}: Count = {}", m_instanceId, amount, m_count);
+    }
+
+    void Decrement() {
+        --m_count;
+        SafeLog("[Statistics] Instance #{} decremented: Count = {}", m_instanceId, m_count);
+    }
+
+    int32_t GetCount() const {
+        return m_count;
+    }
+
+    void Reset() {
+        SafeLog("[Statistics] Instance #{} reset: {} -> 0", m_instanceId, m_count);
+        m_count = 0;
+        m_values.clear();
+    }
+
+    const plg::string& GetName() const {
+        return m_name;
+    }
+
+    void AddValue(double value) {
+        m_values.push_back(value);
+        SafeLog("[Statistics] Instance #{} added value: {} (total values: {})", m_instanceId, value, m_values.size());
+    }
+
+    double GetAverage() const {
+        if (m_values.empty()) return 0.0;
+        double sum = std::accumulate(m_values.begin(), m_values.end(), 0.0);
+        return sum / m_values.size();
+    }
+
+    double GetMin() const {
+        if (m_values.empty()) return 0.0;
+        return *std::min_element(m_values.begin(), m_values.end());
+    }
+
+    double GetMax() const {
+        if (m_values.empty()) return 0.0;
+        return *std::max_element(m_values.begin(), m_values.end());
+    }
+
+    int GetInstanceId() const { return m_instanceId; }
+};
+
+//=============================================================================
+// Connection Exported Functions
+//=============================================================================
+
+extern "C"
+PLUGIN_API void* ConnectionCreate(const plg::string& host, int32_t port) {
+    try {
+        auto conn = new Connection(host, port, false);
+        SafeLog("[EXPORT] ConnectionCreate: Created instance #{} -> ptr: {}",
+                conn->GetInstanceId(), static_cast<void*>(conn));
+        return static_cast<void*>(conn);
+    } catch (const std::exception& e) {
+        SafeLog("[EXPORT] ConnectionCreate: FAILED with exception: {}", e.what());
+        return nullptr;
+    }
+}
+
+extern "C"
+PLUGIN_API void* ConnectionCreateSecure(const plg::string& host, int32_t port, bool useSsl) {
+    try {
+        auto conn = new Connection(host, port, useSsl);
+        SafeLog("[EXPORT] ConnectionCreateSecure: Created instance #{} -> ptr: {}",
+                conn->GetInstanceId(), static_cast<void*>(conn));
+        return static_cast<void*>(conn);
+    } catch (const std::exception& e) {
+        SafeLog("[EXPORT] ConnectionCreateSecure: FAILED with exception: {}", e.what());
+        return nullptr;
+    }
+}
+
+extern "C"
+PLUGIN_API void ConnectionDestroy(void* connection) {
+    if (!connection) {
+        SafeLog("[EXPORT] ConnectionDestroy: Called with nullptr!");
+        return;
+    }
+
+    auto conn = reinterpret_cast<Connection*>(connection);
+    int id = conn->GetInstanceId();
+    SafeLog("[EXPORT] ConnectionDestroy: Destroying instance #{} at ptr: {}", id, connection);
+    delete conn;
+    SafeLog("[EXPORT] ConnectionDestroy: Instance #{} destroyed successfully", id);
+}
+
+extern "C"
+PLUGIN_API bool ConnectionConnect(void* connection) {
+    if (!connection) return false;
+    return reinterpret_cast<Connection*>(connection)->Connect();
+}
+
+extern "C"
+PLUGIN_API void ConnectionDisconnect(void* connection) {
+    if (!connection) return;
+    reinterpret_cast<Connection*>(connection)->Disconnect();
+}
+
+extern "C"
+PLUGIN_API bool ConnectionIsConnected(void* connection) {
+    if (!connection) return false;
+    return reinterpret_cast<Connection*>(connection)->IsConnected();
+}
+
+extern "C"
+PLUGIN_API int32_t ConnectionSendData(void* connection, const plg::string& data) {
+    if (!connection) return -1;
+    return reinterpret_cast<Connection*>(connection)->SendData(data);
+}
+
+extern "C"
+PLUGIN_API plg::string ConnectionReceiveData(void* connection) {
+    if (!connection) return "";
+    return reinterpret_cast<Connection*>(connection)->ReceiveData();
+}
+
+extern "C"
+PLUGIN_API plg::string ConnectionGetHost(void* connection) {
+    if (!connection) return "";
+    return reinterpret_cast<Connection*>(connection)->GetHost();
+}
+
+extern "C"
+PLUGIN_API int32_t ConnectionGetPort(void* connection) {
+    if (!connection) return -1;
+    return reinterpret_cast<Connection*>(connection)->GetPort();
+}
+
+extern "C"
+PLUGIN_API int32_t ConnectionGetTotalConnections() {
+    int active = g_connection_active_count.load();
+    SafeLog("[EXPORT] ConnectionGetTotalConnections: Active = {}", active);
+    return active;
+}
+
+//=============================================================================
+// Statistics Exported Functions
+//=============================================================================
+
+extern "C"
+PLUGIN_API void* StatisticsCreate(const plg::string& name) {
+    try {
+        auto stats = new Statistics(name);
+        SafeLog("[EXPORT] StatisticsCreate: Created instance #{} -> ptr: {}",
+                stats->GetInstanceId(), static_cast<void*>(stats));
+        return static_cast<void*>(stats);
+    } catch (const std::exception& e) {
+        SafeLog("[EXPORT] StatisticsCreate: FAILED with exception: {}", e.what());
+        return nullptr;
+    }
+}
+
+extern "C"
+PLUGIN_API void* StatisticsCreateWithCapacity(const plg::string& name, int32_t capacity) {
+    try {
+        auto stats = new Statistics(name, capacity);
+        SafeLog("[EXPORT] StatisticsCreateWithCapacity: Created instance #{} -> ptr: {}",
+                stats->GetInstanceId(), static_cast<void*>(stats));
+        return static_cast<void*>(stats);
+    } catch (const std::exception& e) {
+        SafeLog("[EXPORT] StatisticsCreateWithCapacity: FAILED with exception: {}", e.what());
+        return nullptr;
+    }
+}
+
+extern "C"
+PLUGIN_API void StatisticsIncrement(void* statistics) {
+    if (!statistics) return;
+    reinterpret_cast<Statistics*>(statistics)->Increment();
+}
+
+extern "C"
+PLUGIN_API void StatisticsIncrementBy(void* statistics, int32_t amount) {
+    if (!statistics) return;
+    reinterpret_cast<Statistics*>(statistics)->IncrementBy(amount);
+}
+
+extern "C"
+PLUGIN_API void StatisticsDecrement(void* statistics) {
+    if (!statistics) return;
+    reinterpret_cast<Statistics*>(statistics)->Decrement();
+}
+
+extern "C"
+PLUGIN_API int32_t StatisticsGetCount(void* statistics) {
+    if (!statistics) return 0;
+    return reinterpret_cast<Statistics*>(statistics)->GetCount();
+}
+
+extern "C"
+PLUGIN_API void StatisticsReset(void* statistics) {
+    if (!statistics) return;
+    reinterpret_cast<Statistics*>(statistics)->Reset();
+}
+
+extern "C"
+PLUGIN_API plg::string StatisticsGetName(void* statistics) {
+    if (!statistics) return "";
+    return reinterpret_cast<Statistics*>(statistics)->GetName();
+}
+
+extern "C"
+PLUGIN_API void StatisticsAddValue(void* statistics, double value) {
+    if (!statistics) return;
+    reinterpret_cast<Statistics*>(statistics)->AddValue(value);
+}
+
+extern "C"
+PLUGIN_API double StatisticsGetAverage(void* statistics) {
+    if (!statistics) return 0.0;
+    return reinterpret_cast<Statistics*>(statistics)->GetAverage();
+}
+
+extern "C"
+PLUGIN_API double StatisticsGetMin(void* statistics) {
+    if (!statistics) return 0.0;
+    return reinterpret_cast<Statistics*>(statistics)->GetMin();
+}
+
+extern "C"
+PLUGIN_API double StatisticsGetMax(void* statistics) {
+    if (!statistics) return 0.0;
+    return reinterpret_cast<Statistics*>(statistics)->GetMax();
+}
+
+extern "C"
+PLUGIN_API int32_t StatisticsGetGlobalCount() {
+    int created = g_statistics_create_count.load();
+    int active = g_statistics_active_count.load();
+    SafeLog("[EXPORT] StatisticsGetGlobalCount: Total Created = {}, Active = {}", created, active);
+    return created;
 }
 
 PLUGIFY_WARN_POP()

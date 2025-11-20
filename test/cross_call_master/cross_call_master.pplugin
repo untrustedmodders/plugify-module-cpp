@@ -4408,6 +4408,557 @@
 			"retType": {
 				"type": "string"
 			}
+		},
+
+		// classes
+		{
+			"name": "ConnectionCreate",
+			"funcName": "ConnectionCreate",
+			"description": "Creates a new Connection with specified host and port.",
+			"paramTypes": [
+				{
+					"name": "host",
+					"type": "string",
+					"ref": false,
+					"description": "The host address to connect to."
+				},
+				{
+					"name": "port",
+					"type": "int32",
+					"ref": false,
+					"description": "The port number."
+				}
+			],
+			"retType": {
+				"type": "ptr64",
+				"description": "A handle to the created Connection."
+			}
+		},
+		{
+			"name": "ConnectionCreateSecure",
+			"funcName": "ConnectionCreateSecure",
+			"description": "Creates a new secure Connection with SSL/TLS.",
+			"paramTypes": [
+				{
+					"name": "host",
+					"type": "string",
+					"ref": false,
+					"description": "The host address to connect to."
+				},
+				{
+					"name": "port",
+					"type": "int32",
+					"ref": false,
+					"description": "The port number."
+				},
+				{
+					"name": "useSsl",
+					"type": "bool",
+					"ref": false,
+					"description": "Whether to use SSL/TLS encryption."
+				}
+			],
+			"retType": {
+				"type": "ptr64",
+				"description": "A handle to the created secure Connection."
+			}
+		},
+		{
+			"name": "ConnectionDestroy",
+			"funcName": "ConnectionDestroy",
+			"description": "Destroys a Connection and releases its resources.",
+			"paramTypes": [
+				{
+					"name": "connection",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Connection handle to destroy."
+				}
+			],
+			"retType": {
+				"type": "void"
+			}
+		},
+		{
+			"name": "ConnectionConnect",
+			"funcName": "ConnectionConnect",
+			"description": "Establishes the connection.",
+			"paramTypes": [
+				{
+					"name": "connection",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Connection handle."
+				}
+			],
+			"retType": {
+				"type": "bool",
+				"description": "True if connection was successful, false otherwise."
+			}
+		},
+		{
+			"name": "ConnectionDisconnect",
+			"funcName": "ConnectionDisconnect",
+			"description": "Closes the connection.",
+			"paramTypes": [
+				{
+					"name": "connection",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Connection handle."
+				}
+			],
+			"retType": {
+				"type": "void"
+			}
+		},
+		{
+			"name": "ConnectionIsConnected",
+			"funcName": "ConnectionIsConnected",
+			"description": "Checks if the connection is currently active.",
+			"paramTypes": [
+				{
+					"name": "connection",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Connection handle."
+				}
+			],
+			"retType": {
+				"type": "bool",
+				"description": "True if connected, false otherwise."
+			}
+		},
+		{
+			"name": "ConnectionSendData",
+			"funcName": "ConnectionSendData",
+			"description": "Sends data through the connection.",
+			"paramTypes": [
+				{
+					"name": "connection",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Connection handle."
+				},
+				{
+					"name": "data",
+					"type": "string",
+					"ref": false,
+					"description": "The data to send."
+				}
+			],
+			"retType": {
+				"type": "int32",
+				"description": "Number of bytes sent, or -1 on error."
+			}
+		},
+		{
+			"name": "ConnectionReceiveData",
+			"funcName": "ConnectionReceiveData",
+			"description": "Receives data from the connection.",
+			"paramTypes": [
+				{
+					"name": "connection",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Connection handle."
+				}
+			],
+			"retType": {
+				"type": "string",
+				"description": "The received data, or empty string if no data available."
+			}
+		},
+		{
+			"name": "ConnectionGetHost",
+			"funcName": "ConnectionGetHost",
+			"description": "Gets the host address of the connection.",
+			"paramTypes": [
+				{
+					"name": "connection",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Connection handle."
+				}
+			],
+			"retType": {
+				"type": "string",
+				"description": "The host address."
+			}
+		},
+		{
+			"name": "ConnectionGetPort",
+			"funcName": "ConnectionGetPort",
+			"description": "Gets the port number of the connection.",
+			"paramTypes": [
+				{
+					"name": "connection",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Connection handle."
+				}
+			],
+			"retType": {
+				"type": "int32",
+				"description": "The port number."
+			}
+		},
+		{
+			"name": "ConnectionGetTotalConnections",
+			"funcName": "ConnectionGetTotalConnections",
+			"description": "Gets the total number of active connections (static utility).",
+			"paramTypes": [],
+			"retType": {
+				"type": "int32",
+				"description": "The number of active connections."
+			}
+		},
+		{
+			"name": "StatisticsCreate",
+			"funcName": "StatisticsCreate",
+			"description": "Creates a new Statistics tracker.",
+			"paramTypes": [
+				{
+					"name": "name",
+					"type": "string",
+					"ref": false,
+					"description": "The name of the statistics tracker."
+				}
+			],
+			"retType": {
+				"type": "ptr64",
+				"description": "A handle to the created Statistics."
+			}
+		},
+		{
+			"name": "StatisticsCreateWithCapacity",
+			"funcName": "StatisticsCreateWithCapacity",
+			"description": "Creates a new Statistics tracker with initial capacity.",
+			"paramTypes": [
+				{
+					"name": "name",
+					"type": "string",
+					"ref": false,
+					"description": "The name of the statistics tracker."
+				},
+				{
+					"name": "capacity",
+					"type": "int32",
+					"ref": false,
+					"description": "Initial capacity for data storage."
+				}
+			],
+			"retType": {
+				"type": "ptr64",
+				"description": "A handle to the created Statistics."
+			}
+		},
+		{
+			"name": "StatisticsIncrement",
+			"funcName": "StatisticsIncrement",
+			"description": "Increments the counter by one.",
+			"paramTypes": [
+				{
+					"name": "statistics",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Statistics handle."
+				}
+			],
+			"retType": {
+				"type": "void"
+			}
+		},
+		{
+			"name": "StatisticsIncrementBy",
+			"funcName": "StatisticsIncrementBy",
+			"description": "Increments the counter by a specific amount.",
+			"paramTypes": [
+				{
+					"name": "statistics",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Statistics handle."
+				},
+				{
+					"name": "amount",
+					"type": "int32",
+					"ref": false,
+					"description": "The amount to increment by."
+				}
+			],
+			"retType": {
+				"type": "void"
+			}
+		},
+		{
+			"name": "StatisticsDecrement",
+			"funcName": "StatisticsDecrement",
+			"description": "Decrements the counter by one.",
+			"paramTypes": [
+				{
+					"name": "statistics",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Statistics handle."
+				}
+			],
+			"retType": {
+				"type": "void"
+			}
+		},
+		{
+			"name": "StatisticsGetCount",
+			"funcName": "StatisticsGetCount",
+			"description": "Gets the current count value.",
+			"paramTypes": [
+				{
+					"name": "statistics",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Statistics handle."
+				}
+			],
+			"retType": {
+				"type": "int32",
+				"description": "The current count."
+			}
+		},
+		{
+			"name": "StatisticsReset",
+			"funcName": "StatisticsReset",
+			"description": "Resets the counter to zero.",
+			"paramTypes": [
+				{
+					"name": "statistics",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Statistics handle."
+				}
+			],
+			"retType": {
+				"type": "void"
+			}
+		},
+		{
+			"name": "StatisticsGetName",
+			"funcName": "StatisticsGetName",
+			"description": "Gets the name of the statistics tracker.",
+			"paramTypes": [
+				{
+					"name": "statistics",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Statistics handle."
+				}
+			],
+			"retType": {
+				"type": "string",
+				"description": "The name of the tracker."
+			}
+		},
+		{
+			"name": "StatisticsAddValue",
+			"funcName": "StatisticsAddValue",
+			"description": "Adds a value to the statistics dataset.",
+			"paramTypes": [
+				{
+					"name": "statistics",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Statistics handle."
+				},
+				{
+					"name": "value",
+					"type": "double",
+					"ref": false,
+					"description": "The value to add."
+				}
+			],
+			"retType": {
+				"type": "void"
+			}
+		},
+		{
+			"name": "StatisticsGetAverage",
+			"funcName": "StatisticsGetAverage",
+			"description": "Calculates the average of all values.",
+			"paramTypes": [
+				{
+					"name": "statistics",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Statistics handle."
+				}
+			],
+			"retType": {
+				"type": "double",
+				"description": "The average value."
+			}
+		},
+		{
+			"name": "StatisticsGetMin",
+			"funcName": "StatisticsGetMin",
+			"description": "Gets the minimum value.",
+			"paramTypes": [
+				{
+					"name": "statistics",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Statistics handle."
+				}
+			],
+			"retType": {
+				"type": "double",
+				"description": "The minimum value."
+			}
+		},
+		{
+			"name": "StatisticsGetMax",
+			"funcName": "StatisticsGetMax",
+			"description": "Gets the maximum value.",
+			"paramTypes": [
+				{
+					"name": "statistics",
+					"type": "ptr64",
+					"ref": false,
+					"description": "The Statistics handle."
+				}
+			],
+			"retType": {
+				"type": "double",
+				"description": "The maximum value."
+			}
+		},
+		{
+			"name": "StatisticsGetGlobalCount",
+			"funcName": "StatisticsGetGlobalCount",
+			"description": "Gets the total number of Statistics instances created (static utility).",
+			"paramTypes": [],
+			"retType": {
+				"type": "int32",
+				"description": "The total number of Statistics instances."
+			}
+		}
+	],
+	"classes": [
+		{
+			"name": "Connection",
+			"description": "RAII wrapper for network Connection handle. Manages connection lifecycle with automatic cleanup on disposal.",
+			"handleType": "ptr64",
+			"constructors": [
+				"ConnectionCreate",
+				"ConnectionCreateSecure"
+			],
+			"destructor": "ConnectionDestroy",
+			"bindings": [
+				{
+					"name": "Connect",
+					"method": "ConnectionConnect",
+					"bindSelf": true
+				},
+				{
+					"name": "Disconnect",
+					"method": "ConnectionDisconnect",
+					"bindSelf": true
+				},
+				{
+					"name": "IsConnected",
+					"method": "ConnectionIsConnected",
+					"bindSelf": true
+				},
+				{
+					"name": "SendData",
+					"method": "ConnectionSendData",
+					"bindSelf": true
+				},
+				{
+					"name": "ReceiveData",
+					"method": "ConnectionReceiveData",
+					"bindSelf": true
+				},
+				{
+					"name": "GetHost",
+					"method": "ConnectionGetHost",
+					"bindSelf": true
+				},
+				{
+					"name": "GetPort",
+					"method": "ConnectionGetPort",
+					"bindSelf": true
+				},
+				{
+					"name": "GetTotalConnections",
+					"method": "ConnectionGetTotalConnections",
+					"bindSelf": false
+				}
+			]
+		},
+		{
+			"name": "Statistics",
+			"description": "Lightweight wrapper for statistics tracking. Does not require explicit cleanup as it manages no external resources.",
+			"handleType": "ptr64",
+			"constructors": [
+				"StatisticsCreate",
+				"StatisticsCreateWithCapacity"
+			],
+			"bindings": [
+				{
+					"name": "Increment",
+					"method": "StatisticsIncrement",
+					"bindSelf": true
+				},
+				{
+					"name": "IncrementBy",
+					"method": "StatisticsIncrementBy",
+					"bindSelf": true
+				},
+				{
+					"name": "Decrement",
+					"method": "StatisticsDecrement",
+					"bindSelf": true
+				},
+				{
+					"name": "GetCount",
+					"method": "StatisticsGetCount",
+					"bindSelf": true
+				},
+				{
+					"name": "Reset",
+					"method": "StatisticsReset",
+					"bindSelf": true
+				},
+				{
+					"name": "GetName",
+					"method": "StatisticsGetName",
+					"bindSelf": true
+				},
+				{
+					"name": "AddValue",
+					"method": "StatisticsAddValue",
+					"bindSelf": true
+				},
+				{
+					"name": "GetAverage",
+					"method": "StatisticsGetAverage",
+					"bindSelf": true
+				},
+				{
+					"name": "GetMin",
+					"method": "StatisticsGetMin",
+					"bindSelf": true
+				},
+				{
+					"name": "GetMax",
+					"method": "StatisticsGetMax",
+					"bindSelf": true
+				},
+				{
+					"name": "GetGlobalCount",
+					"method": "StatisticsGetGlobalCount",
+					"bindSelf": false
+				}
+			]
 		}
 	]
 }
