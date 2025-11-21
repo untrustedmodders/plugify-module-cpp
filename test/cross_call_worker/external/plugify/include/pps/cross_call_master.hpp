@@ -3,6 +3,7 @@
 #include <plg/plugin.hpp>
 #include <plg/any.hpp>
 #include <cstdint>
+#include <stdexcept>
 
 // Generated from cross_call_master.pplugin
 
@@ -167,7 +168,7 @@ namespace cross_call_master {
 
   using Func33 = void (*)(plg::any&);
 
-  using FuncEnum = plg::vector<Example> (*)(Example, plg::vector<Example>);
+  using FuncEnum = plg::vector<Example> (*)(Example, plg::vector<Example>&);
 
 
   /**
@@ -1960,5 +1961,571 @@ namespace cross_call_master {
     if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CallFuncEnumCallback", reinterpret_cast<void**>(&__func));
     return __func(func);
   }
+
+  /**
+   * @function ResourceHandleCreate
+   * @param id (int32)
+   * @param name (string)
+   * @return ptr64
+   */
+  inline void* ResourceHandleCreate(int32_t id, const plg::string& name) {
+    using ResourceHandleCreateFn = void* (*)(int32_t, const plg::string&);
+    static ResourceHandleCreateFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ResourceHandleCreate", reinterpret_cast<void**>(&__func));
+    return __func(id, name);
+  }
+
+  /**
+   * @function ResourceHandleCreateDefault
+   * @return ptr64
+   */
+  inline void* ResourceHandleCreateDefault() {
+    using ResourceHandleCreateDefaultFn = void* (*)();
+    static ResourceHandleCreateDefaultFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ResourceHandleCreateDefault", reinterpret_cast<void**>(&__func));
+    return __func();
+  }
+
+  /**
+   * @function ResourceHandleDestroy
+   * @param handle (ptr64)
+   */
+  inline void ResourceHandleDestroy(void* handle) {
+    using ResourceHandleDestroyFn = void (*)(void*);
+    static ResourceHandleDestroyFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ResourceHandleDestroy", reinterpret_cast<void**>(&__func));
+    __func(handle);
+  }
+
+  /**
+   * @function ResourceHandleGetId
+   * @param handle (ptr64)
+   * @return int32
+   */
+  inline int32_t ResourceHandleGetId(void* handle) {
+    using ResourceHandleGetIdFn = int32_t (*)(void*);
+    static ResourceHandleGetIdFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ResourceHandleGetId", reinterpret_cast<void**>(&__func));
+    return __func(handle);
+  }
+
+  /**
+   * @function ResourceHandleGetName
+   * @param handle (ptr64)
+   * @return string
+   */
+  inline plg::string ResourceHandleGetName(void* handle) {
+    using ResourceHandleGetNameFn = plg::string (*)(void*);
+    static ResourceHandleGetNameFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ResourceHandleGetName", reinterpret_cast<void**>(&__func));
+    return __func(handle);
+  }
+
+  /**
+   * @function ResourceHandleSetName
+   * @param handle (ptr64)
+   * @param name (string)
+   */
+  inline void ResourceHandleSetName(void* handle, const plg::string& name) {
+    using ResourceHandleSetNameFn = void (*)(void*, const plg::string&);
+    static ResourceHandleSetNameFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ResourceHandleSetName", reinterpret_cast<void**>(&__func));
+    __func(handle, name);
+  }
+
+  /**
+   * @function ResourceHandleIncrementCounter
+   * @param handle (ptr64)
+   */
+  inline void ResourceHandleIncrementCounter(void* handle) {
+    using ResourceHandleIncrementCounterFn = void (*)(void*);
+    static ResourceHandleIncrementCounterFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ResourceHandleIncrementCounter", reinterpret_cast<void**>(&__func));
+    __func(handle);
+  }
+
+  /**
+   * @function ResourceHandleGetCounter
+   * @param handle (ptr64)
+   * @return int32
+   */
+  inline int32_t ResourceHandleGetCounter(void* handle) {
+    using ResourceHandleGetCounterFn = int32_t (*)(void*);
+    static ResourceHandleGetCounterFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ResourceHandleGetCounter", reinterpret_cast<void**>(&__func));
+    return __func(handle);
+  }
+
+  /**
+   * @function ResourceHandleAddData
+   * @param handle (ptr64)
+   * @param value (float)
+   */
+  inline void ResourceHandleAddData(void* handle, float value) {
+    using ResourceHandleAddDataFn = void (*)(void*, float);
+    static ResourceHandleAddDataFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ResourceHandleAddData", reinterpret_cast<void**>(&__func));
+    __func(handle, value);
+  }
+
+  /**
+   * @function ResourceHandleGetData
+   * @param handle (ptr64)
+   * @return float[]
+   */
+  inline plg::vector<float> ResourceHandleGetData(void* handle) {
+    using ResourceHandleGetDataFn = plg::vector<float> (*)(void*);
+    static ResourceHandleGetDataFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ResourceHandleGetData", reinterpret_cast<void**>(&__func));
+    return __func(handle);
+  }
+
+  /**
+   * @function ResourceHandleGetAliveCount
+   * @return int32
+   */
+  inline int32_t ResourceHandleGetAliveCount() {
+    using ResourceHandleGetAliveCountFn = int32_t (*)();
+    static ResourceHandleGetAliveCountFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ResourceHandleGetAliveCount", reinterpret_cast<void**>(&__func));
+    return __func();
+  }
+
+  /**
+   * @function ResourceHandleGetTotalCreated
+   * @return int32
+   */
+  inline int32_t ResourceHandleGetTotalCreated() {
+    using ResourceHandleGetTotalCreatedFn = int32_t (*)();
+    static ResourceHandleGetTotalCreatedFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ResourceHandleGetTotalCreated", reinterpret_cast<void**>(&__func));
+    return __func();
+  }
+
+  /**
+   * @function ResourceHandleGetTotalDestroyed
+   * @return int32
+   */
+  inline int32_t ResourceHandleGetTotalDestroyed() {
+    using ResourceHandleGetTotalDestroyedFn = int32_t (*)();
+    static ResourceHandleGetTotalDestroyedFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.ResourceHandleGetTotalDestroyed", reinterpret_cast<void**>(&__func));
+    return __func();
+  }
+
+  /**
+   * @function CounterCreate
+   * @param initialValue (int64)
+   * @return ptr64
+   */
+  inline void* CounterCreate(int64_t initialValue) {
+    using CounterCreateFn = void* (*)(int64_t);
+    static CounterCreateFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CounterCreate", reinterpret_cast<void**>(&__func));
+    return __func(initialValue);
+  }
+
+  /**
+   * @function CounterCreateZero
+   * @return ptr64
+   */
+  inline void* CounterCreateZero() {
+    using CounterCreateZeroFn = void* (*)();
+    static CounterCreateZeroFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CounterCreateZero", reinterpret_cast<void**>(&__func));
+    return __func();
+  }
+
+  /**
+   * @function CounterGetValue
+   * @param counter (ptr64)
+   * @return int64
+   */
+  inline int64_t CounterGetValue(void* counter) {
+    using CounterGetValueFn = int64_t (*)(void*);
+    static CounterGetValueFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CounterGetValue", reinterpret_cast<void**>(&__func));
+    return __func(counter);
+  }
+
+  /**
+   * @function CounterSetValue
+   * @param counter (ptr64)
+   * @param value (int64)
+   */
+  inline void CounterSetValue(void* counter, int64_t value) {
+    using CounterSetValueFn = void (*)(void*, int64_t);
+    static CounterSetValueFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CounterSetValue", reinterpret_cast<void**>(&__func));
+    __func(counter, value);
+  }
+
+  /**
+   * @function CounterIncrement
+   * @param counter (ptr64)
+   */
+  inline void CounterIncrement(void* counter) {
+    using CounterIncrementFn = void (*)(void*);
+    static CounterIncrementFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CounterIncrement", reinterpret_cast<void**>(&__func));
+    __func(counter);
+  }
+
+  /**
+   * @function CounterDecrement
+   * @param counter (ptr64)
+   */
+  inline void CounterDecrement(void* counter) {
+    using CounterDecrementFn = void (*)(void*);
+    static CounterDecrementFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CounterDecrement", reinterpret_cast<void**>(&__func));
+    __func(counter);
+  }
+
+  /**
+   * @function CounterAdd
+   * @param counter (ptr64)
+   * @param amount (int64)
+   */
+  inline void CounterAdd(void* counter, int64_t amount) {
+    using CounterAddFn = void (*)(void*, int64_t);
+    static CounterAddFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CounterAdd", reinterpret_cast<void**>(&__func));
+    __func(counter, amount);
+  }
+
+  /**
+   * @function CounterReset
+   * @param counter (ptr64)
+   */
+  inline void CounterReset(void* counter) {
+    using CounterResetFn = void (*)(void*);
+    static CounterResetFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CounterReset", reinterpret_cast<void**>(&__func));
+    __func(counter);
+  }
+
+  /**
+   * @function CounterIsPositive
+   * @param counter (ptr64)
+   * @return bool
+   */
+  inline bool CounterIsPositive(void* counter) {
+    using CounterIsPositiveFn = bool (*)(void*);
+    static CounterIsPositiveFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CounterIsPositive", reinterpret_cast<void**>(&__func));
+    return __func(counter);
+  }
+
+  /**
+   * @function CounterCompare
+   * @param value1 (int64)
+   * @param value2 (int64)
+   * @return int32
+   */
+  inline int32_t CounterCompare(int64_t value1, int64_t value2) {
+    using CounterCompareFn = int32_t (*)(int64_t, int64_t);
+    static CounterCompareFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CounterCompare", reinterpret_cast<void**>(&__func));
+    return __func(value1, value2);
+  }
+
+  /**
+   * @function CounterSum
+   * @param values (int64[])
+   * @return int64
+   */
+  inline int64_t CounterSum(const plg::vector<int64_t>& values) {
+    using CounterSumFn = int64_t (*)(const plg::vector<int64_t>&);
+    static CounterSumFn __func = nullptr;
+    if (__func == nullptr) plg::GetMethodPtr2("cross_call_master.CounterSum", reinterpret_cast<void**>(&__func));
+    return __func(values);
+  }
+
+  enum class Ownership : bool { Borrowed, Owned };
+
+  /**
+   * @brief RAII wrapper for ResourceHandle pointer
+   */
+  class ResourceHandle final {
+  public:
+    //ResourceHandle() = default;
+
+    /**
+     * @param id (int32)
+     * @param name (string)
+     */
+    explicit ResourceHandle(int32_t id, const plg::string& name)
+      : ResourceHandle(ResourceHandleCreate(id, name), Ownership::Owned) {}
+
+    /**
+     */
+    explicit ResourceHandle()
+      : ResourceHandle(ResourceHandleCreateDefault(), Ownership::Owned) {}
+
+    ~ResourceHandle() {
+      destroy();
+    }
+
+    ResourceHandle(const ResourceHandle&) = delete;
+    ResourceHandle& operator=(const ResourceHandle&) = delete;
+
+    ResourceHandle(ResourceHandle&& other) noexcept
+      : _handle(other._handle)
+      , _ownership(other._ownership) {
+      other.nullify();
+    }
+
+    ResourceHandle& operator=(ResourceHandle&& other) noexcept {
+      if (this != &other) {
+        destroy();
+        _handle = other._handle;
+        _ownership = other._ownership;
+        other.nullify();
+      }
+      return *this;
+    }
+
+    ResourceHandle(void* handle, Ownership ownership) : _handle(handle), _ownership(ownership) {}
+
+    [[nodiscard]] auto get() const noexcept { return _handle; }
+
+    [[nodiscard]] auto release() noexcept {
+      auto handle = _handle;
+      nullify();
+      return handle;
+    }
+
+    void reset() noexcept {
+      destroy();
+      nullify();
+    }
+
+    void swap(ResourceHandle& other) noexcept {
+      using std::swap;
+      swap(_handle, other._handle);
+      swap(_ownership, other._ownership);
+    }
+
+    friend void swap(ResourceHandle& lhs, ResourceHandle& rhs) noexcept { lhs.swap(rhs); }
+
+    explicit operator bool() const noexcept { return _handle != nullptr; }
+    [[nodiscard]] auto operator<=>(const ResourceHandle& other) const noexcept { return _handle <=> other._handle; }
+    [[nodiscard]] bool operator==(const ResourceHandle& other) const noexcept { return _handle == other._handle; }
+
+    /**
+     * @return int32
+     */
+    int32_t GetId() {
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      return ResourceHandleGetId(_handle);
+    }
+
+    /**
+     * @return string
+     */
+    plg::string GetName() {
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      return ResourceHandleGetName(_handle);
+    }
+
+    /**
+     * @param name (string)
+     */
+    void SetName(const plg::string& name) {
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      ResourceHandleSetName(_handle, name);
+    }
+
+    /**
+     */
+    void IncrementCounter() {
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      ResourceHandleIncrementCounter(_handle);
+    }
+
+    /**
+     * @return int32
+     */
+    int32_t GetCounter() {
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      return ResourceHandleGetCounter(_handle);
+    }
+
+    /**
+     * @param value (float)
+     */
+    void AddData(float value) {
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      ResourceHandleAddData(_handle, value);
+    }
+
+    /**
+     * @return float[]
+     */
+    plg::vector<float> GetData() {
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      return ResourceHandleGetData(_handle);
+    }
+
+    /**
+     * @return int32
+     */
+    static int32_t GetAliveCount() {
+      return ResourceHandleGetAliveCount();
+    }
+
+    /**
+     * @return int32
+     */
+    static int32_t GetTotalCreated() {
+      return ResourceHandleGetTotalCreated();
+    }
+
+    /**
+     * @return int32
+     */
+    static int32_t GetTotalDestroyed() {
+      return ResourceHandleGetTotalDestroyed();
+    }
+
+  private:
+    void destroy() const noexcept {
+      if (_handle != nullptr && _ownership == Ownership::Owned) {
+        ResourceHandleDestroy(_handle);
+      }
+    }
+
+    void nullify() noexcept {
+      _handle = nullptr;
+      _ownership = Ownership::Borrowed;
+    }
+
+    void* _handle{nullptr};
+    Ownership _ownership{Ownership::Borrowed};
+  };
+
+
+  /**
+   */
+  class Counter final {
+  public:
+    //Counter() = default;
+
+    /**
+     * @param initialValue (int64)
+     */
+    explicit Counter(int64_t initialValue)
+      : Counter(CounterCreate(initialValue), Ownership::Owned) {}
+
+    /**
+     */
+    explicit Counter()
+      : Counter(CounterCreateZero(), Ownership::Owned) {}
+
+    Counter(const Counter&) = default;
+    Counter& operator=(const Counter&) = default;
+    Counter(Counter&&) noexcept = default;
+    Counter& operator=(Counter&&) noexcept = default;
+    ~Counter() = default;
+
+    explicit Counter(void* handle, Ownership) : _handle(handle) {}
+
+    [[nodiscard]] auto get() const noexcept { return _handle; }
+
+    [[nodiscard]] auto release() noexcept {
+      auto handle = _handle;
+      _handle = nullptr;
+      return handle;
+    }
+
+    void reset() noexcept {
+      _handle = nullptr;
+    }
+
+    void swap(Counter& other) noexcept {
+      using std::swap;
+      swap(_handle, other._handle);
+    }
+
+    friend void swap(Counter& lhs, Counter& rhs) noexcept { lhs.swap(rhs); }
+
+    explicit operator bool() const noexcept { return _handle != nullptr; }
+    [[nodiscard]] auto operator<=>(const Counter& other) const noexcept { return _handle <=> other._handle; }
+    [[nodiscard]] bool operator==(const Counter& other) const noexcept { return _handle == other._handle; }
+
+    /**
+     * @return int64
+     */
+    int64_t GetValue() {
+      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      return CounterGetValue(_handle);
+    }
+
+    /**
+     * @param value (int64)
+     */
+    void SetValue(int64_t value) {
+      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      CounterSetValue(_handle, value);
+    }
+
+    /**
+     */
+    void Increment() {
+      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      CounterIncrement(_handle);
+    }
+
+    /**
+     */
+    void Decrement() {
+      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      CounterDecrement(_handle);
+    }
+
+    /**
+     * @param amount (int64)
+     */
+    void Add(int64_t amount) {
+      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      CounterAdd(_handle, amount);
+    }
+
+    /**
+     */
+    void Reset() {
+      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      CounterReset(_handle);
+    }
+
+    /**
+     * @return bool
+     */
+    bool IsPositive() {
+      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      return CounterIsPositive(_handle);
+    }
+
+    /**
+     * @param value1 (int64)
+     * @param value2 (int64)
+     * @return int32
+     */
+    static int32_t Compare(int64_t value1, int64_t value2) {
+      return CounterCompare(value1, value2);
+    }
+
+    /**
+     * @param values (int64[])
+     * @return int64
+     */
+    static int64_t Sum(const plg::vector<int64_t>& values) {
+      return CounterSum(values);
+    }
+
+  private:
+    void* _handle{nullptr};
+  };
 
 } // namespace cross_call_master

@@ -4635,7 +4635,7 @@
 				"ResourceHandleCreateDefault"
 			],
 			"destructor": "ResourceHandleDestroy",
-			"methods": [
+			"bindings": [
 				{ "name": "GetId", "method": "ResourceHandleGetId", "bindSelf": true },
 				{ "name": "GetName", "method": "ResourceHandleGetName", "bindSelf": true },
 				{ "name": "SetName", "method": "ResourceHandleSetName", "bindSelf": true },
@@ -4656,7 +4656,7 @@
 				"CounterCreateZero"
 			],
 			"destructor": null,
-			"methods": [
+			"bindings": [
 				{ "name": "GetValue", "method": "CounterGetValue", "bindSelf": true },
 				{ "name": "SetValue", "method": "CounterSetValue", "bindSelf": true },
 				{ "name": "Increment", "method": "CounterIncrement", "bindSelf": true },

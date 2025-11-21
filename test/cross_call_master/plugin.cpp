@@ -33,6 +33,7 @@
 #define TEST_REVERSE_PARAMS_ALL_PRIMITIVES (1 << 23)
 #define TEST_REVERSE_PARAMS_VARIANTS (1 << 24)
 #define TEST_REVERSE_PARAMS_FUNCTIONS (1 << 25)
+#define TEST_REVERSE_CLASSES_WRAPPERS (1 << 26)
 #define TEST_ALL 0xFFFFFFFF
 #ifndef TEST_CASES
 #define TEST_CASES TEST_ALL
@@ -581,6 +582,7 @@ public:
         ReverseParamsAllPrimitives();
         ReverseParamsVariants();
         ReverseParamsFunctions();
+        ReverseClassesWrappers();
         _tests.Run();
 
     }
@@ -3558,6 +3560,80 @@ public:
 #endif// TEST_CASES & TEST_REVERSE_PARAMS_FUNCTIONS
     }
 
+	void ReverseClassesWrappers() {
+#if TEST_CASES & TEST_REVERSE_CLASSES_WRAPPERS
+		_tests.Add("ReverseClassBasicLifecycle", [&](SimpleTests::Test &test) {
+            const plg::string returnExpected = "true";
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("ClassBasicLifecycle");
+            if (!_reverseReturn) {
+                test.Fail("Return not set");
+            } else if (*_reverseReturn != returnExpected) {
+                test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
+            }
+        });
+		_tests.Add("ReverseClassStateManagement", [&](SimpleTests::Test &test) {
+            const plg::string returnExpected = "true";
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("ClassStateManagement");
+            if (!_reverseReturn) {
+                test.Fail("Return not set");
+            } else if (*_reverseReturn != returnExpected) {
+                test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
+            }
+        });
+		_tests.Add("ReverseClassMultipleInstances", [&](SimpleTests::Test &test) {
+            const plg::string returnExpected = "true";
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("ClassMultipleInstances");
+            if (!_reverseReturn) {
+                test.Fail("Return not set");
+            } else if (*_reverseReturn != returnExpected) {
+                test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
+            }
+        });
+		_tests.Add("ReverseClassCounterWithoutDestructor", [&](SimpleTests::Test &test) {
+            const plg::string returnExpected = "true";
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("ClassCounterWithoutDestructor");
+            if (!_reverseReturn) {
+                test.Fail("Return not set");
+            } else if (*_reverseReturn != returnExpected) {
+                test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
+            }
+        });
+		_tests.Add("ReverseClassStaticMethods", [&](SimpleTests::Test &test) {
+            const plg::string returnExpected = "true";
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("ClassStaticMethods");
+            if (!_reverseReturn) {
+                test.Fail("Return not set");
+            } else if (*_reverseReturn != returnExpected) {
+                test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
+            }
+        });
+		_tests.Add("ReverseClassMemoryLeakDetection", [&](SimpleTests::Test &test) {
+            const plg::string returnExpected = "true";
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("ClassMemoryLeakDetection");
+            if (!_reverseReturn) {
+                test.Fail("Return not set");
+            } else if (*_reverseReturn != returnExpected) {
+                test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
+            }
+        });
+		_tests.Add("ReverseClassExceptionHandling", [&](SimpleTests::Test &test) {
+            const plg::string returnExpected = "true";
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("ClassExceptionHandling");
+            if (!_reverseReturn) {
+                test.Fail("Return not set");
+            } else if (*_reverseReturn != returnExpected) {
+                test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
+            }
+        });
+#endif// TEST_CASES & TEST_REVERSE_PARAMS_VARIANTS
+	}
 public:
     void ReverseReturn(const plg::string &returnString) {
         _reverseReturn = {returnString};
@@ -4900,6 +4976,7 @@ std::atomic<int32_t> ResourceHandle::s_totalDestroyed{0};
 std::mutex ResourceHandle::s_mutex;
 
 // ResourceHandle exported functions
+extern "C"
 PLUGIN_API void* ResourceHandleCreate(int32_t id, const plg::string& name) {
     try {
         return new ResourceHandle(id, name);
@@ -4909,6 +4986,7 @@ PLUGIN_API void* ResourceHandleCreate(int32_t id, const plg::string& name) {
     }
 }
 
+extern "C"
 PLUGIN_API void* ResourceHandleCreateDefault() {
     static std::atomic<int32_t> nextId{1000};
     int32_t id = nextId++;
@@ -4920,6 +4998,7 @@ PLUGIN_API void* ResourceHandleCreateDefault() {
     }
 }
 
+extern "C"
 PLUGIN_API void ResourceHandleDestroy(void* handle) {
     if (handle) {
         delete static_cast<ResourceHandle*>(handle);
@@ -4928,6 +5007,7 @@ PLUGIN_API void ResourceHandleDestroy(void* handle) {
     }
 }
 
+extern "C"
 PLUGIN_API int32_t ResourceHandleGetId(void* handle) {
     if (!handle) {
         std::println("[ERROR] ResourceHandleGetId: handle is null");
@@ -4936,6 +5016,7 @@ PLUGIN_API int32_t ResourceHandleGetId(void* handle) {
     return static_cast<ResourceHandle*>(handle)->id;
 }
 
+extern "C"
 PLUGIN_API plg::string ResourceHandleGetName(void* handle) {
     if (!handle) {
         std::println("[ERROR] ResourceHandleGetName: handle is null");
@@ -4944,6 +5025,7 @@ PLUGIN_API plg::string ResourceHandleGetName(void* handle) {
     return static_cast<ResourceHandle*>(handle)->name;
 }
 
+extern "C"
 PLUGIN_API void ResourceHandleSetName(void* handle, const plg::string& name) {
     if (!handle) {
         std::println("[ERROR] ResourceHandleSetName: handle is null");
@@ -4955,6 +5037,7 @@ PLUGIN_API void ResourceHandleSetName(void* handle, const plg::string& name) {
     res->name = name;
 }
 
+extern "C"
 PLUGIN_API void ResourceHandleIncrementCounter(void* handle) {
     if (!handle) {
         std::println("[ERROR] ResourceHandleIncrementCounter: handle is null");
@@ -4965,6 +5048,7 @@ PLUGIN_API void ResourceHandleIncrementCounter(void* handle) {
     std::println("[ACTION] ResourceHandle ID={}: Counter incremented to {}", res->id, res->counter);
 }
 
+extern "C"
 PLUGIN_API int32_t ResourceHandleGetCounter(void* handle) {
     if (!handle) {
         std::println("[ERROR] ResourceHandleGetCounter: handle is null");
@@ -4973,6 +5057,7 @@ PLUGIN_API int32_t ResourceHandleGetCounter(void* handle) {
     return static_cast<ResourceHandle*>(handle)->counter;
 }
 
+extern "C"
 PLUGIN_API void ResourceHandleAddData(void* handle, float value) {
     if (!handle) {
         std::println("[ERROR] ResourceHandleAddData: handle is null");
@@ -4984,6 +5069,7 @@ PLUGIN_API void ResourceHandleAddData(void* handle, float value) {
                  res->id, value, res->data.size());
 }
 
+extern "C"
 PLUGIN_API plg::vector<float> ResourceHandleGetData(void* handle) {
     if (!handle) {
         std::println("[ERROR] ResourceHandleGetData: handle is null");
@@ -4993,18 +5079,21 @@ PLUGIN_API plg::vector<float> ResourceHandleGetData(void* handle) {
     return plg::vector<float>(res->data.begin(), res->data.end());
 }
 
+extern "C"
 PLUGIN_API int32_t ResourceHandleGetAliveCount() {
     int32_t count = ResourceHandle::s_aliveCount.load();
     std::println("[STATS] ResourceHandle: {} instances currently alive", count);
     return count;
 }
 
+extern "C"
 PLUGIN_API int32_t ResourceHandleGetTotalCreated() {
     int32_t count = ResourceHandle::s_totalCreated.load();
     std::println("[STATS] ResourceHandle: {} total instances created", count);
     return count;
 }
 
+extern "C"
 PLUGIN_API int32_t ResourceHandleGetTotalDestroyed() {
     int32_t count = ResourceHandle::s_totalDestroyed.load();
     std::println("[STATS] ResourceHandle: {} total instances destroyed", count);
@@ -5021,29 +5110,32 @@ struct Counter {
     explicit Counter(int64_t val) : value(val) {
         std::println("[COUNTER] Counter created with value: {}", value);
     }
-
-    // Note: No destructor logging since this is a lightweight wrapper
 };
 
+static std::vector<std::unique_ptr<Counter>> pool;
+
 // Counter exported functions
+extern "C"
 PLUGIN_API void* CounterCreate(int64_t initialValue) {
     try {
-        return new Counter(initialValue);
+		return pool.emplace_back(std::make_unique<Counter>(initialValue)).get();
     } catch (const std::exception& e) {
         std::println("[ERROR] CounterCreate failed: {}", e.what());
         return nullptr;
     }
 }
 
+extern "C"
 PLUGIN_API void* CounterCreateZero() {
     try {
-        return new Counter(0);
+        return pool.emplace_back(std::make_unique<Counter>(0)).get();
     } catch (const std::exception& e) {
         std::println("[ERROR] CounterCreateZero failed: {}", e.what());
         return nullptr;
     }
 }
 
+extern "C"
 PLUGIN_API int64_t CounterGetValue(void* counter) {
     if (!counter) {
         std::println("[ERROR] CounterGetValue: counter is null");
@@ -5052,6 +5144,7 @@ PLUGIN_API int64_t CounterGetValue(void* counter) {
     return static_cast<Counter*>(counter)->value;
 }
 
+extern "C"
 PLUGIN_API void CounterSetValue(void* counter, int64_t value) {
     if (!counter) {
         std::println("[ERROR] CounterSetValue: counter is null");
@@ -5062,6 +5155,7 @@ PLUGIN_API void CounterSetValue(void* counter, int64_t value) {
     cnt->value = value;
 }
 
+extern "C"
 PLUGIN_API void CounterIncrement(void* counter) {
     if (!counter) {
         std::println("[ERROR] CounterIncrement: counter is null");
@@ -5072,6 +5166,7 @@ PLUGIN_API void CounterIncrement(void* counter) {
     std::println("[COUNTER] Counter incremented to: {}", cnt->value);
 }
 
+extern "C"
 PLUGIN_API void CounterDecrement(void* counter) {
     if (!counter) {
         std::println("[ERROR] CounterDecrement: counter is null");
@@ -5082,6 +5177,7 @@ PLUGIN_API void CounterDecrement(void* counter) {
     std::println("[COUNTER] Counter decremented to: {}", cnt->value);
 }
 
+extern "C"
 PLUGIN_API void CounterAdd(void* counter, int64_t amount) {
     if (!counter) {
         std::println("[ERROR] CounterAdd: counter is null");
@@ -5092,6 +5188,7 @@ PLUGIN_API void CounterAdd(void* counter, int64_t amount) {
     std::println("[COUNTER] Counter added {}, new value: {}", amount, cnt->value);
 }
 
+extern "C"
 PLUGIN_API void CounterReset(void* counter) {
     if (!counter) {
         std::println("[ERROR] CounterReset: counter is null");
@@ -5102,6 +5199,7 @@ PLUGIN_API void CounterReset(void* counter) {
     cnt->value = 0;
 }
 
+extern "C"
 PLUGIN_API bool CounterIsPositive(void* counter) {
     if (!counter) {
         std::println("[ERROR] CounterIsPositive: counter is null");
@@ -5110,12 +5208,14 @@ PLUGIN_API bool CounterIsPositive(void* counter) {
     return static_cast<Counter*>(counter)->value > 0;
 }
 
+extern "C"
 PLUGIN_API int32_t CounterCompare(int64_t value1, int64_t value2) {
     if (value1 < value2) return -1;
     if (value1 > value2) return 1;
     return 0;
 }
 
+extern "C"
 PLUGIN_API int64_t CounterSum(const plg::vector<int64_t>& values) {
     return std::accumulate(values.begin(), values.end(), int64_t{0});
 }

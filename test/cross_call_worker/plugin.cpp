@@ -1837,6 +1837,209 @@ plg::vector<cross_call_master::Example> MockFuncEnum(cross_call_master::Example 
     return {p1, cross_call_master::Example::Forth};
 }
 
+class TestClass {
+private:
+    // Conditional logging - only in debug builds
+    static void Log([[maybe_unused]] const plg::string& message) {
+#ifdef DEBUG
+        std::println("{}", message);
+#endif
+    }
+public:
+    static plg::string BasicLifecycle() {
+        Log("TEST 1: Basic Lifecycle");
+        Log("_______________________");
+
+        int32_t initialAlive = cross_call_master::ResourceHandle::GetAliveCount();
+        int32_t initialCreated = cross_call_master::ResourceHandle::GetTotalCreated();
+
+        {
+            cross_call_master::ResourceHandle resource(1, "Test1");
+
+            Log(std::format("v Created ResourceHandle ID: {}", resource.GetId()));
+            Log(std::format("v Alive count increased: {}", cross_call_master::ResourceHandle::GetAliveCount()));
+        }
+
+        int32_t finalAlive = cross_call_master::ResourceHandle::GetAliveCount();
+        int32_t finalCreated = cross_call_master::ResourceHandle::GetTotalCreated();
+        int32_t finalDestroyed = cross_call_master::ResourceHandle::GetTotalDestroyed();
+
+        Log(std::format("v Destructor called, alive count: {}", finalAlive));
+        Log(std::format("v Total created: {}", finalCreated - initialCreated));
+        Log(std::format("v Total destroyed: {}", finalDestroyed));
+
+        if (finalAlive == initialAlive && finalCreated == finalDestroyed) {
+            Log("v TEST 1 PASSED: Lifecycle working correctly\n");
+            return "true";
+        } else {
+            Log("x TEST 1 FAILED: Lifecycle mismatch!\n");
+            return "false";
+        }
+    }
+
+    static plg::string StateManagement() {
+        Log("TEST 2: State Management");
+        Log("________________________");
+
+        cross_call_master::ResourceHandle resource(2, "StateTest");
+
+        resource.IncrementCounter();
+        resource.IncrementCounter();
+        resource.IncrementCounter();
+        int32_t counter = resource.GetCounter();
+        Log(std::format("v Counter incremented 3 times: {}", counter));
+
+        resource.SetName("StateTestModified");
+        plg::string newName = resource.GetName();
+        Log(std::format("v Name changed to: {}", newName));
+
+        resource.AddData(1.1f);
+        resource.AddData(2.2f);
+        resource.AddData(3.3f);
+        plg::vector<float> data = resource.GetData();
+        Log(std::format("v Added {} data points", data.size()));
+
+        if (counter == 3 && newName == "StateTestModified" && data.size() == 3) {
+            Log("v TEST 2 PASSED: State management working\n");
+            return "true";
+        } else {
+            Log("x TEST 2 FAILED: State not preserved!\n");
+            return "false";
+        }
+    }
+
+    static plg::string MultipleInstances() {
+        Log("TEST 3: Multiple Instances");
+        Log("__________________________");
+
+        int32_t beforeAlive = cross_call_master::ResourceHandle::GetAliveCount();
+
+        {
+            cross_call_master::ResourceHandle r1(10, "Instance1");
+            cross_call_master::ResourceHandle r2(20, "Instance2");
+            cross_call_master::ResourceHandle r3;
+
+            int32_t duringAlive = cross_call_master::ResourceHandle::GetAliveCount();
+            Log(std::format("v Created 3 instances, alive: {}", duringAlive));
+            Log(std::format("v R1 ID: {}, R2 ID: {}, R3 ID: {}", r1.GetId(), r2.GetId(), r3.GetId()));
+
+            if (duringAlive - beforeAlive == 3) {
+                Log("v All 3 instances tracked correctly");
+            }
+        }
+
+        int32_t afterAlive = cross_call_master::ResourceHandle::GetAliveCount();
+
+        if (afterAlive == beforeAlive) {
+            Log("v TEST 3 PASSED: All instances destroyed properly\n");
+            return "true";
+        } else {
+            Log(std::format("x TEST 3 FAILED: Leak detected! Before: {}, After: {}\n", beforeAlive, afterAlive));
+            return "false";
+        }
+    }
+
+    static plg::string CounterWithoutDestructor() {
+        Log("TEST 4: Counter (No Destructor)");
+        Log("________________________________");
+
+        cross_call_master::Counter counter(100);
+        Log(std::format("v Created Counter with value: {}", counter.GetValue()));
+
+        counter.Increment();
+        counter.Increment();
+        counter.Add(50);
+        int64_t value = counter.GetValue();
+        Log(std::format("v After operations, value: {}", value));
+
+        bool isPositive = counter.IsPositive();
+        Log(std::format("v Is positive: {}", isPositive));
+
+        if (value == 152 && isPositive) {
+            Log("v TEST 4 PASSED: Counter operations working\n");
+            return "true";
+        } else {
+            Log("x TEST 4 FAILED: Counter operations incorrect\n");
+            return "false";
+        }
+    }
+
+    static plg::string StaticMethods() {
+        Log("TEST 5: Static Methods");
+        Log("______________________");
+
+        int32_t alive = cross_call_master::ResourceHandle::GetAliveCount();
+        int32_t created = cross_call_master::ResourceHandle::GetTotalCreated();
+        int32_t destroyed = cross_call_master::ResourceHandle::GetTotalDestroyed();
+        Log(std::format("v ResourceHandle stats - Alive: {}, Created: {}, Destroyed: {}", alive, created, destroyed));
+
+        int32_t cmp1 = cross_call_master::Counter::Compare(100, 50);
+        int32_t cmp2 = cross_call_master::Counter::Compare(50, 100);
+        int32_t cmp3 = cross_call_master::Counter::Compare(50, 50);
+        Log(std::format("v Counter.Compare(100, 50) = {} (expected 1)", cmp1));
+        Log(std::format("v Counter.Compare(50, 100) = {} (expected -1)", cmp2));
+        Log(std::format("v Counter.Compare(50, 50) = {} (expected 0)", cmp3));
+
+        plg::vector<int64_t> values = {1, 2, 3, 4, 5};
+        int64_t sum = cross_call_master::Counter::Sum(values);
+        Log(std::format("v Counter.Sum([1,2,3,4,5]) = {} (expected 15)", sum));
+
+        if (cmp1 == 1 && cmp2 == -1 && cmp3 == 0 && sum == 15) {
+            Log("v TEST 5 PASSED: Static methods working\n");
+            return "true";
+        } else {
+            Log("x TEST 5 FAILED: Static methods incorrect\n");
+            return "false";
+        }
+    }
+
+    static plg::string MemoryLeakDetection() {
+        Log("TEST 6: Memory Leak Detection");
+        Log("______________________________");
+
+        Log("!   Creating resource and releasing ownership (intentional leak test)");
+
+        int32_t beforeAlive = cross_call_master::ResourceHandle::GetAliveCount();
+
+        {
+            cross_call_master::ResourceHandle leaked(999, "IntentionalLeak");
+            Log(std::format("v Created resource ID: {}", leaked.GetId()));
+        }
+
+        int32_t afterAlive = cross_call_master::ResourceHandle::GetAliveCount();
+
+        Log(std::format("v Before leak test: {} alive", beforeAlive));
+        Log(std::format("v After release: {} alive", afterAlive));
+
+        if (afterAlive == beforeAlive + 1) {
+            Log("!   TEST 6: Resource intentionally leaked\n");
+            Log("    This is expected behavior - resource released without destruction\n");
+            return "true";
+        } else {
+            Log("x TEST 6 FAILED: Unexpected alive count\n");
+            return "false";
+        }
+    }
+
+    static plg::string ExceptionHandling() {
+        Log("TEST 7: Exception Handling");
+        Log("__________________________");
+
+        try {
+            cross_call_master::ResourceHandle resource(777, "ExceptionTest");
+            resource.reset();
+            resource.GetId();
+            Log("x TEST 7 FAILED: No exception thrown!\n");
+            return "false";
+        }
+        catch (const std::runtime_error& ex) {
+            Log(std::format("v Caught expected exception: {}", ex.what()));
+            Log("v TEST 7 PASSED: Exception handling working\n");
+            return "true";
+        }
+    }
+};
+
 extern "C"
 PLUGIN_API void ReverseCall(const plg::string &test) {
     static std::unordered_map<plg::string, void(*)()> tests{
@@ -2791,7 +2994,49 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
                 const auto result = cross_call_master::CallFuncEnumCallback(&MockFuncEnum);
                 cross_call_master::ReverseReturn(result);
             }
-        }
+        },
+		{ 
+			"ClassBasicLifecycle", []() {
+				const auto result = TestClass::BasicLifecycle();
+				cross_call_master::ReverseReturn(result);
+			}
+		},
+		{ 
+			"ClassStateManagement", []() {
+				const auto result = TestClass::StateManagement();
+				cross_call_master::ReverseReturn(result);
+			}
+		},
+		{ 
+			"ClassMultipleInstances", []() {
+				const auto result = TestClass::MultipleInstances();
+				cross_call_master::ReverseReturn(result);
+			}
+		},
+		{ 
+			"ClassCounterWithoutDestructor", []() {
+				const auto result = TestClass::CounterWithoutDestructor();
+				cross_call_master::ReverseReturn(result);
+			}
+		},
+		{ 
+			"ClassStaticMethods", []() {
+				const auto result = TestClass::StaticMethods();
+				cross_call_master::ReverseReturn(result);
+			}
+		},
+		{ 
+			"ClassMemoryLeakDetection", []() {
+				const auto result = TestClass::MemoryLeakDetection();
+				cross_call_master::ReverseReturn(result);
+			}
+		},
+		{ 
+			"ClassExceptionHandling", []() {
+				const auto result = TestClass::ExceptionHandling();
+				cross_call_master::ReverseReturn(result);
+			}
+		}
     };
     auto it = tests.find(test);
     if (it != tests.end()) {
