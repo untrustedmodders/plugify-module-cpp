@@ -1841,7 +1841,7 @@ class TestClass {
 private:
     // Conditional logging - only in debug builds
     static void Log([[maybe_unused]] const plg::string& message) {
-#ifdef DEBUG
+#ifdef VERBOSE
         std::println("{}", message);
 #endif
     }
@@ -1997,8 +1997,6 @@ public:
         Log("TEST 6: Memory Leak Detection");
         Log("______________________________");
 
-        Log("!   Creating resource and releasing ownership (intentional leak test)");
-
         int32_t beforeAlive = cross_call_master::ResourceHandle::GetAliveCount();
 
         {
@@ -2011,12 +2009,11 @@ public:
         Log(std::format("v Before leak test: {} alive", beforeAlive));
         Log(std::format("v After release: {} alive", afterAlive));
 
-        if (afterAlive == beforeAlive + 1) {
-            Log("!   TEST 6: Resource intentionally leaked\n");
-            Log("    This is expected behavior - resource released without destruction\n");
+        if (afterAlive == beforeAlive) {
+    		Log("v TEST 6 PASSED: Destructor cleaned up leaked resource\n");
             return "true";
         } else {
-            Log("x TEST 6 FAILED: Unexpected alive count\n");
+    		Log("x TEST 6 FAILED: Resource still alive (FATAL)\n");
             return "false";
         }
     }
@@ -2037,6 +2034,54 @@ public:
             Log("v TEST 7 PASSED: Exception handling working\n");
             return "true";
         }
+    }
+
+	static plg::string OwnershipTransfer() {
+    	Log("TEST 7: Ownership Transfer (get + release)");
+    	Log("─────────────────────────────────────────");
+
+    	int initial_alive = cross_call_master::ResourceHandle::GetAliveCount();
+    	int initial_created = cross_call_master::ResourceHandle::GetTotalCreated();
+
+    	cross_call_master::ResourceHandle resource(42, "OwnershipTest");
+    	Log(std::format("✓ Created ResourceHandle ID: {}", resource.GetId()));
+
+    	// Get internal wrapper (simulate internal pointer access)
+    	auto* wrapper = resource.get();
+    	Log(std::format("✓ get() returned internal wrapper: {}",
+						reinterpret_cast<uintptr_t>(wrapper)));
+
+    	// Release ownership
+    	auto* handle = resource.release();
+    	Log(std::format("✓ release() returned handle: {}",
+						reinterpret_cast<uintptr_t>(handle)));
+
+    	if (wrapper != handle) {
+    		Log("✗ TEST 7 FAILED: get() did not return internal wrapper");
+    		return "false";
+    	}
+
+    	try {
+    		resource.GetId();
+    		Log("✗ TEST 7 FAILED: ResourceHandle still accessible after release()");
+    		return "false";
+    	} catch (const std::exception& e) {
+    		Log("✓ ResourceHandle is invalid after release()");
+    	}
+
+    	// Check that handle is now owned externally and alive count updated correctly
+    	int alive_after_release = cross_call_master::ResourceHandle::GetAliveCount();
+    	if (alive_after_release != initial_alive + 1) {
+    		Log(std::format("✗ TEST 7 FAILED: Alive count mismatch after release. "
+							"Expected {}, got {}",
+							initial_alive + 1, alive_after_release));
+    		return "false";
+    	}
+
+    	cross_call_master::ResourceHandleDestroy(handle);
+
+    	Log("✓ TEST 7 PASSED: Ownership transfer working correctly\n");
+    	return "true";
     }
 };
 
@@ -3034,6 +3079,12 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
 		{ 
 			"ClassExceptionHandling", []() {
 				const auto result = TestClass::ExceptionHandling();
+				cross_call_master::ReverseReturn(result);
+			}
+		},
+		{
+			"ClassOwnershipTransfer", []() {
+				const auto result = TestClass::OwnershipTransfer();
 				cross_call_master::ReverseReturn(result);
 			}
 		}

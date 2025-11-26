@@ -3632,6 +3632,16 @@ public:
                 test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
             }
         });
+		_tests.Add("ReverseClassOwnershipTransfer", [&](SimpleTests::Test &test) {
+            const plg::string returnExpected = "true";
+            _reverseReturn.reset();
+            cross_call_worker::ReverseCall("ClassOwnershipTransfer");
+            if (!_reverseReturn) {
+                test.Fail("Return not set");
+            } else if (*_reverseReturn != returnExpected) {
+                test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
+            }
+        });
 #endif// TEST_CASES & TEST_REVERSE_PARAMS_VARIANTS
 	}
 public:
@@ -4934,6 +4944,14 @@ PLUGIN_API plg::string CallFuncEnumCallback(cross_call_worker::FuncEnum func) {
 
 // classes
 
+// Conditional logging - only in debug builds
+template <typename... Args>
+void Log([[maybe_unused]] std::format_string<Args...> fmt, [[maybe_unused]] Args&&... args) {
+#if VERBOSE
+	std::println(fmt, std::forward<Args>(args)...);
+#endif
+}
+
 class ResourceHandle {
 public:
     int32_t id;
@@ -4949,18 +4967,18 @@ public:
 
     ResourceHandle(int32_t id, const plg::string& name)
         : id(id), name(name), counter(0) {
-        s_aliveCount++;
-        s_totalCreated++;
+		++s_aliveCount;
+        ++s_totalCreated;
         std::lock_guard<std::mutex> lock(s_mutex);
-        std::println("[LIFECYCLE] ResourceHandle CREATED: ID={}, Name='{}', Alive={}, TotalCreated={}",
+        Log("[LIFECYCLE] ResourceHandle CREATED: ID={}, Name='{}', Alive={}, TotalCreated={}",
                      id, name, s_aliveCount.load(), s_totalCreated.load());
     }
 
     ~ResourceHandle() {
-        s_aliveCount--;
-        s_totalDestroyed++;
+        --s_aliveCount;
+        ++s_totalDestroyed;
         std::lock_guard<std::mutex> lock(s_mutex);
-        std::println("[LIFECYCLE] ResourceHandle DESTROYED: ID={}, Name='{}', Counter={}, DataSize={}, Alive={}, TotalDestroyed={}",
+        Log("[LIFECYCLE] ResourceHandle DESTROYED: ID={}, Name='{}', Counter={}, DataSize={}, Alive={}, TotalDestroyed={}",
                      id, name, counter, data.size(), s_aliveCount.load(), s_totalDestroyed.load());
     }
 
@@ -4981,7 +4999,7 @@ PLUGIN_API void* ResourceHandleCreate(int32_t id, const plg::string& name) {
     try {
         return new ResourceHandle(id, name);
     } catch (const std::exception& e) {
-        std::println("[ERROR] ResourceHandleCreate failed: {}", e.what());
+        Log("[ERROR] ResourceHandleCreate failed: {}", e.what());
         return nullptr;
     }
 }
@@ -4993,7 +5011,7 @@ PLUGIN_API void* ResourceHandleCreateDefault() {
     try {
         return new ResourceHandle(id, std::format("Resource_{}", id));
     } catch (const std::exception& e) {
-        std::println("[ERROR] ResourceHandleCreateDefault failed: {}", e.what());
+        Log("[ERROR] ResourceHandleCreateDefault failed: {}", e.what());
         return nullptr;
     }
 }
@@ -5003,14 +5021,14 @@ PLUGIN_API void ResourceHandleDestroy(void* handle) {
     if (handle) {
         delete static_cast<ResourceHandle*>(handle);
     } else {
-        std::println("[WARNING] ResourceHandleDestroy called with nullptr");
+        Log("[WARNING] ResourceHandleDestroy called with nullptr");
     }
 }
 
 extern "C"
 PLUGIN_API int32_t ResourceHandleGetId(void* handle) {
     if (!handle) {
-        std::println("[ERROR] ResourceHandleGetId: handle is null");
+        Log("[ERROR] ResourceHandleGetId: handle is null");
         return -1;
     }
     return static_cast<ResourceHandle*>(handle)->id;
@@ -5019,7 +5037,7 @@ PLUGIN_API int32_t ResourceHandleGetId(void* handle) {
 extern "C"
 PLUGIN_API plg::string ResourceHandleGetName(void* handle) {
     if (!handle) {
-        std::println("[ERROR] ResourceHandleGetName: handle is null");
+        Log("[ERROR] ResourceHandleGetName: handle is null");
         return "";
     }
     return static_cast<ResourceHandle*>(handle)->name;
@@ -5028,11 +5046,11 @@ PLUGIN_API plg::string ResourceHandleGetName(void* handle) {
 extern "C"
 PLUGIN_API void ResourceHandleSetName(void* handle, const plg::string& name) {
     if (!handle) {
-        std::println("[ERROR] ResourceHandleSetName: handle is null");
+        Log("[ERROR] ResourceHandleSetName: handle is null");
         return;
     }
     auto* res = static_cast<ResourceHandle*>(handle);
-    std::println("[ACTION] ResourceHandle ID={}: Name changed from '{}' to '{}'",
+    Log("[ACTION] ResourceHandle ID={}: Name changed from '{}' to '{}'",
                  res->id, res->name, name);
     res->name = name;
 }
@@ -5040,18 +5058,18 @@ PLUGIN_API void ResourceHandleSetName(void* handle, const plg::string& name) {
 extern "C"
 PLUGIN_API void ResourceHandleIncrementCounter(void* handle) {
     if (!handle) {
-        std::println("[ERROR] ResourceHandleIncrementCounter: handle is null");
+        Log("[ERROR] ResourceHandleIncrementCounter: handle is null");
         return;
     }
     auto* res = static_cast<ResourceHandle*>(handle);
     res->counter++;
-    std::println("[ACTION] ResourceHandle ID={}: Counter incremented to {}", res->id, res->counter);
+    Log("[ACTION] ResourceHandle ID={}: Counter incremented to {}", res->id, res->counter);
 }
 
 extern "C"
 PLUGIN_API int32_t ResourceHandleGetCounter(void* handle) {
     if (!handle) {
-        std::println("[ERROR] ResourceHandleGetCounter: handle is null");
+        Log("[ERROR] ResourceHandleGetCounter: handle is null");
         return -1;
     }
     return static_cast<ResourceHandle*>(handle)->counter;
@@ -5060,19 +5078,19 @@ PLUGIN_API int32_t ResourceHandleGetCounter(void* handle) {
 extern "C"
 PLUGIN_API void ResourceHandleAddData(void* handle, float value) {
     if (!handle) {
-        std::println("[ERROR] ResourceHandleAddData: handle is null");
+        Log("[ERROR] ResourceHandleAddData: handle is null");
         return;
     }
     auto* res = static_cast<ResourceHandle*>(handle);
     res->data.push_back(value);
-    std::println("[ACTION] ResourceHandle ID={}: Added data value {}, total data points: {}",
+    Log("[ACTION] ResourceHandle ID={}: Added data value {}, total data points: {}",
                  res->id, value, res->data.size());
 }
 
 extern "C"
 PLUGIN_API plg::vector<float> ResourceHandleGetData(void* handle) {
     if (!handle) {
-        std::println("[ERROR] ResourceHandleGetData: handle is null");
+        Log("[ERROR] ResourceHandleGetData: handle is null");
         return {};
     }
     auto* res = static_cast<ResourceHandle*>(handle);
@@ -5082,21 +5100,21 @@ PLUGIN_API plg::vector<float> ResourceHandleGetData(void* handle) {
 extern "C"
 PLUGIN_API int32_t ResourceHandleGetAliveCount() {
     int32_t count = ResourceHandle::s_aliveCount.load();
-    std::println("[STATS] ResourceHandle: {} instances currently alive", count);
+    Log("[STATS] ResourceHandle: {} instances currently alive", count);
     return count;
 }
 
 extern "C"
 PLUGIN_API int32_t ResourceHandleGetTotalCreated() {
     int32_t count = ResourceHandle::s_totalCreated.load();
-    std::println("[STATS] ResourceHandle: {} total instances created", count);
+    Log("[STATS] ResourceHandle: {} total instances created", count);
     return count;
 }
 
 extern "C"
 PLUGIN_API int32_t ResourceHandleGetTotalDestroyed() {
     int32_t count = ResourceHandle::s_totalDestroyed.load();
-    std::println("[STATS] ResourceHandle: {} total instances destroyed", count);
+    Log("[STATS] ResourceHandle: {} total instances destroyed", count);
     return count;
 }
 
@@ -5108,7 +5126,7 @@ struct Counter {
     int64_t value;
 
     explicit Counter(int64_t val) : value(val) {
-        std::println("[COUNTER] Counter created with value: {}", value);
+        Log("[COUNTER] Counter created with value: {}", value);
     }
 };
 
@@ -5120,7 +5138,7 @@ PLUGIN_API void* CounterCreate(int64_t initialValue) {
     try {
 		return pool.emplace_back(std::make_unique<Counter>(initialValue)).get();
     } catch (const std::exception& e) {
-        std::println("[ERROR] CounterCreate failed: {}", e.what());
+        Log("[ERROR] CounterCreate failed: {}", e.what());
         return nullptr;
     }
 }
@@ -5130,7 +5148,7 @@ PLUGIN_API void* CounterCreateZero() {
     try {
         return pool.emplace_back(std::make_unique<Counter>(0)).get();
     } catch (const std::exception& e) {
-        std::println("[ERROR] CounterCreateZero failed: {}", e.what());
+        Log("[ERROR] CounterCreateZero failed: {}", e.what());
         return nullptr;
     }
 }
@@ -5138,7 +5156,7 @@ PLUGIN_API void* CounterCreateZero() {
 extern "C"
 PLUGIN_API int64_t CounterGetValue(void* counter) {
     if (!counter) {
-        std::println("[ERROR] CounterGetValue: counter is null");
+        Log("[ERROR] CounterGetValue: counter is null");
         return 0;
     }
     return static_cast<Counter*>(counter)->value;
@@ -5147,62 +5165,62 @@ PLUGIN_API int64_t CounterGetValue(void* counter) {
 extern "C"
 PLUGIN_API void CounterSetValue(void* counter, int64_t value) {
     if (!counter) {
-        std::println("[ERROR] CounterSetValue: counter is null");
+        Log("[ERROR] CounterSetValue: counter is null");
         return;
     }
     auto* cnt = static_cast<Counter*>(counter);
-    std::println("[COUNTER] Counter value changed: {} -> {}", cnt->value, value);
+    Log("[COUNTER] Counter value changed: {} -> {}", cnt->value, value);
     cnt->value = value;
 }
 
 extern "C"
 PLUGIN_API void CounterIncrement(void* counter) {
     if (!counter) {
-        std::println("[ERROR] CounterIncrement: counter is null");
+        Log("[ERROR] CounterIncrement: counter is null");
         return;
     }
     auto* cnt = static_cast<Counter*>(counter);
     cnt->value++;
-    std::println("[COUNTER] Counter incremented to: {}", cnt->value);
+    Log("[COUNTER] Counter incremented to: {}", cnt->value);
 }
 
 extern "C"
 PLUGIN_API void CounterDecrement(void* counter) {
     if (!counter) {
-        std::println("[ERROR] CounterDecrement: counter is null");
+        Log("[ERROR] CounterDecrement: counter is null");
         return;
     }
     auto* cnt = static_cast<Counter*>(counter);
     cnt->value--;
-    std::println("[COUNTER] Counter decremented to: {}", cnt->value);
+    Log("[COUNTER] Counter decremented to: {}", cnt->value);
 }
 
 extern "C"
 PLUGIN_API void CounterAdd(void* counter, int64_t amount) {
     if (!counter) {
-        std::println("[ERROR] CounterAdd: counter is null");
+        Log("[ERROR] CounterAdd: counter is null");
         return;
     }
     auto* cnt = static_cast<Counter*>(counter);
     cnt->value += amount;
-    std::println("[COUNTER] Counter added {}, new value: {}", amount, cnt->value);
+    Log("[COUNTER] Counter added {}, new value: {}", amount, cnt->value);
 }
 
 extern "C"
 PLUGIN_API void CounterReset(void* counter) {
     if (!counter) {
-        std::println("[ERROR] CounterReset: counter is null");
+        Log("[ERROR] CounterReset: counter is null");
         return;
     }
     auto* cnt = static_cast<Counter*>(counter);
-    std::println("[COUNTER] Counter reset from {} to 0", cnt->value);
+    Log("[COUNTER] Counter reset from {} to 0", cnt->value);
     cnt->value = 0;
 }
 
 extern "C"
 PLUGIN_API bool CounterIsPositive(void* counter) {
     if (!counter) {
-        std::println("[ERROR] CounterIsPositive: counter is null");
+        Log("[ERROR] CounterIsPositive: counter is null");
         return false;
     }
     return static_cast<Counter*>(counter)->value > 0;
