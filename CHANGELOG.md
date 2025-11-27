@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.1.5](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.4...v2.1.5) (2025-11-27)
+
+
+### Bug Fixes
+
+* add clang doc parser ([5b3ee8d](https://github.com/untrustedmodders/plugify-module-cpp/commit/5b3ee8d2114367317b4785e6ff0797dc3ac5f24f))
+* add clang doc parser ([95afaff](https://github.com/untrustedmodders/plugify-module-cpp/commit/95afaff4590ac1f73df5f14be9749559f6fe4f40))
+* add clang doc parser ([4248438](https://github.com/untrustedmodders/plugify-module-cpp/commit/4248438f85e2d6332527765c9723781547f26b07))
+* add initial class testing ([dd35f35](https://github.com/untrustedmodders/plugify-module-cpp/commit/dd35f352d44b86cb901873be1867f5b4e9aa8530))
+* add new class tests ([26dd531](https://github.com/untrustedmodders/plugify-module-cpp/commit/26dd5310591427657271fd27a513ea703d49bdf4))
+* change success/fail symbols ([67d2ff7](https://github.com/untrustedmodders/plugify-module-cpp/commit/67d2ff739cc0cb809d08f3029f90bf3dd12a4e4a))
+* move tools to separate folders ([cf9fdbf](https://github.com/untrustedmodders/plugify-module-cpp/commit/cf9fdbfe9f55c8f666f5c0664f1ee6b7313d22c9))
+* remove assume_valid from string ([f63b395](https://github.com/untrustedmodders/plugify-module-cpp/commit/f63b39504307fdc26267febc74578a81e6f33366))
+* some improvements for test ([bc3086b](https://github.com/untrustedmodders/plugify-module-cpp/commit/bc3086b6943ad16230f321dc7e6d5799d93b4a55))
+* update deps ([0bc30cb](https://github.com/untrustedmodders/plugify-module-cpp/commit/0bc30cbaf46f58a80aa18775a2728b3f4961a776))
+* update deps ([401ec2c](https://github.com/untrustedmodders/plugify-module-cpp/commit/401ec2caf368c5616fbb63908e9ddc09b2b13e1b))
+* update notify ([62f2bac](https://github.com/untrustedmodders/plugify-module-cpp/commit/62f2baca2affbfa530bcf4be2e7b7fdbf13bb8b4))
+* update plg includes ([1201020](https://github.com/untrustedmodders/plugify-module-cpp/commit/1201020e00ea55970749f8457b33d9d969f88e4f))
+* update test for classes ([e44e0dd](https://github.com/untrustedmodders/plugify-module-cpp/commit/e44e0dd752a4608f0822f8ebc3c9f2e9195ffe25))
+
 ## [2.1.4](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.3...v2.1.4) (2025-10-06)
 
 
