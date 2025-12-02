@@ -313,7 +313,10 @@ def main(input_folder, output_file):
             file_contents = remove_specific_lines(file.read())
         contents = file_contents.replace('extern "C"', '').replace('PLUGIN_API', '')
         file_name = os.path.splitext(os.path.basename(cpp_file))[0]
-        parsed = simple.parse_string(contents, options=None)
+        try:
+            parsed = simple.parse_string(contents, options=None)
+        except:
+            pass
         exported_methods = process_functions(parsed, file_name, file_contents)
         all_exported_methods.extend(exported_methods)
 
