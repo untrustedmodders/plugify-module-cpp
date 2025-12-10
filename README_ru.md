@@ -91,6 +91,10 @@ public:
 		std::cout << "Example Start!" << std::endl;
 	}
 
+	void OnPluginUpdate() override {
+		std::cout << "Example Update!" << std::endl;
+	}
+
 	void OnPluginEnd() override {
 		std::cout << "Example End!" << std::endl;
 	}
