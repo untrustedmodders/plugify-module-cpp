@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.2.0](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.5...v2.2.0) (2025-12-13)
+
+
+### Features
+
+* rework native system ([4fa9ff2](https://github.com/untrustedmodders/plugify-module-cpp/commit/4fa9ff2ac29e1d276dffe800369c461bf43f358d))
+
+
+### Bug Fixes
+
+* add try catch to legacy parser ([de5c457](https://github.com/untrustedmodders/plugify-module-cpp/commit/de5c457ef1edf1fadb9e73c58efd0da79bf29a02))
+* update plugify ([ddb7712](https://github.com/untrustedmodders/plugify-module-cpp/commit/ddb771255bb06c3b85b2325c238a1b8374dad33f))
+* update tests ([ab8aa81](https://github.com/untrustedmodders/plugify-module-cpp/commit/ab8aa8168b8c981aa54cd38f7a95c6cdc4b04777))
+
 ## [2.1.5](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.4...v2.1.5) (2025-11-27)
 
 
