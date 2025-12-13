@@ -30,7 +30,7 @@ include(CompatFormat)
 #
 # Plugin
 #
-set(PLUGIN_SOURCES "plugin.cpp")
+set(PLUGIN_SOURCES "plugin.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/external/plugify/include/cross_call_master/cross_call_master.cpp")
 
 add_library(${PROJECT_NAME} SHARED ${PLUGIN_SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/external/plugify/include")

@@ -1,0 +1,340 @@
+#include "cross_call_master.hpp"
+
+cross_call_master::_ReverseReturn __cross_call_master_ReverseReturn = nullptr;
+
+cross_call_master::_NoParamReturnVoidCallback __cross_call_master_NoParamReturnVoidCallback = nullptr;
+
+cross_call_master::_NoParamReturnBoolCallback __cross_call_master_NoParamReturnBoolCallback = nullptr;
+
+cross_call_master::_NoParamReturnChar8Callback __cross_call_master_NoParamReturnChar8Callback = nullptr;
+
+cross_call_master::_NoParamReturnChar16Callback __cross_call_master_NoParamReturnChar16Callback = nullptr;
+
+cross_call_master::_NoParamReturnInt8Callback __cross_call_master_NoParamReturnInt8Callback = nullptr;
+
+cross_call_master::_NoParamReturnInt16Callback __cross_call_master_NoParamReturnInt16Callback = nullptr;
+
+cross_call_master::_NoParamReturnInt32Callback __cross_call_master_NoParamReturnInt32Callback = nullptr;
+
+cross_call_master::_NoParamReturnInt64Callback __cross_call_master_NoParamReturnInt64Callback = nullptr;
+
+cross_call_master::_NoParamReturnUInt8Callback __cross_call_master_NoParamReturnUInt8Callback = nullptr;
+
+cross_call_master::_NoParamReturnUInt16Callback __cross_call_master_NoParamReturnUInt16Callback = nullptr;
+
+cross_call_master::_NoParamReturnUInt32Callback __cross_call_master_NoParamReturnUInt32Callback = nullptr;
+
+cross_call_master::_NoParamReturnUInt64Callback __cross_call_master_NoParamReturnUInt64Callback = nullptr;
+
+cross_call_master::_NoParamReturnPointerCallback __cross_call_master_NoParamReturnPointerCallback = nullptr;
+
+cross_call_master::_NoParamReturnFloatCallback __cross_call_master_NoParamReturnFloatCallback = nullptr;
+
+cross_call_master::_NoParamReturnDoubleCallback __cross_call_master_NoParamReturnDoubleCallback = nullptr;
+
+cross_call_master::_NoParamReturnFunctionCallback __cross_call_master_NoParamReturnFunctionCallback = nullptr;
+
+cross_call_master::_NoParamReturnStringCallback __cross_call_master_NoParamReturnStringCallback = nullptr;
+
+cross_call_master::_NoParamReturnAnyCallback __cross_call_master_NoParamReturnAnyCallback = nullptr;
+
+cross_call_master::_NoParamReturnArrayBoolCallback __cross_call_master_NoParamReturnArrayBoolCallback = nullptr;
+
+cross_call_master::_NoParamReturnArrayChar8Callback __cross_call_master_NoParamReturnArrayChar8Callback = nullptr;
+
+cross_call_master::_NoParamReturnArrayChar16Callback __cross_call_master_NoParamReturnArrayChar16Callback = nullptr;
+
+cross_call_master::_NoParamReturnArrayInt8Callback __cross_call_master_NoParamReturnArrayInt8Callback = nullptr;
+
+cross_call_master::_NoParamReturnArrayInt16Callback __cross_call_master_NoParamReturnArrayInt16Callback = nullptr;
+
+cross_call_master::_NoParamReturnArrayInt32Callback __cross_call_master_NoParamReturnArrayInt32Callback = nullptr;
+
+cross_call_master::_NoParamReturnArrayInt64Callback __cross_call_master_NoParamReturnArrayInt64Callback = nullptr;
+
+cross_call_master::_NoParamReturnArrayUInt8Callback __cross_call_master_NoParamReturnArrayUInt8Callback = nullptr;
+
+cross_call_master::_NoParamReturnArrayUInt16Callback __cross_call_master_NoParamReturnArrayUInt16Callback = nullptr;
+
+cross_call_master::_NoParamReturnArrayUInt32Callback __cross_call_master_NoParamReturnArrayUInt32Callback = nullptr;
+
+cross_call_master::_NoParamReturnArrayUInt64Callback __cross_call_master_NoParamReturnArrayUInt64Callback = nullptr;
+
+cross_call_master::_NoParamReturnArrayPointerCallback __cross_call_master_NoParamReturnArrayPointerCallback = nullptr;
+
+cross_call_master::_NoParamReturnArrayFloatCallback __cross_call_master_NoParamReturnArrayFloatCallback = nullptr;
+
+cross_call_master::_NoParamReturnArrayDoubleCallback __cross_call_master_NoParamReturnArrayDoubleCallback = nullptr;
+
+cross_call_master::_NoParamReturnArrayStringCallback __cross_call_master_NoParamReturnArrayStringCallback = nullptr;
+
+cross_call_master::_NoParamReturnArrayAnyCallback __cross_call_master_NoParamReturnArrayAnyCallback = nullptr;
+
+cross_call_master::_NoParamReturnArrayVector2Callback __cross_call_master_NoParamReturnArrayVector2Callback = nullptr;
+
+cross_call_master::_NoParamReturnArrayVector3Callback __cross_call_master_NoParamReturnArrayVector3Callback = nullptr;
+
+cross_call_master::_NoParamReturnArrayVector4Callback __cross_call_master_NoParamReturnArrayVector4Callback = nullptr;
+
+cross_call_master::_NoParamReturnArrayMatrix4x4Callback __cross_call_master_NoParamReturnArrayMatrix4x4Callback = nullptr;
+
+cross_call_master::_NoParamReturnVector2Callback __cross_call_master_NoParamReturnVector2Callback = nullptr;
+
+cross_call_master::_NoParamReturnVector3Callback __cross_call_master_NoParamReturnVector3Callback = nullptr;
+
+cross_call_master::_NoParamReturnVector4Callback __cross_call_master_NoParamReturnVector4Callback = nullptr;
+
+cross_call_master::_NoParamReturnMatrix4x4Callback __cross_call_master_NoParamReturnMatrix4x4Callback = nullptr;
+
+cross_call_master::_Param1Callback __cross_call_master_Param1Callback = nullptr;
+
+cross_call_master::_Param2Callback __cross_call_master_Param2Callback = nullptr;
+
+cross_call_master::_Param3Callback __cross_call_master_Param3Callback = nullptr;
+
+cross_call_master::_Param4Callback __cross_call_master_Param4Callback = nullptr;
+
+cross_call_master::_Param5Callback __cross_call_master_Param5Callback = nullptr;
+
+cross_call_master::_Param6Callback __cross_call_master_Param6Callback = nullptr;
+
+cross_call_master::_Param7Callback __cross_call_master_Param7Callback = nullptr;
+
+cross_call_master::_Param8Callback __cross_call_master_Param8Callback = nullptr;
+
+cross_call_master::_Param9Callback __cross_call_master_Param9Callback = nullptr;
+
+cross_call_master::_Param10Callback __cross_call_master_Param10Callback = nullptr;
+
+cross_call_master::_ParamRef1Callback __cross_call_master_ParamRef1Callback = nullptr;
+
+cross_call_master::_ParamRef2Callback __cross_call_master_ParamRef2Callback = nullptr;
+
+cross_call_master::_ParamRef3Callback __cross_call_master_ParamRef3Callback = nullptr;
+
+cross_call_master::_ParamRef4Callback __cross_call_master_ParamRef4Callback = nullptr;
+
+cross_call_master::_ParamRef5Callback __cross_call_master_ParamRef5Callback = nullptr;
+
+cross_call_master::_ParamRef6Callback __cross_call_master_ParamRef6Callback = nullptr;
+
+cross_call_master::_ParamRef7Callback __cross_call_master_ParamRef7Callback = nullptr;
+
+cross_call_master::_ParamRef8Callback __cross_call_master_ParamRef8Callback = nullptr;
+
+cross_call_master::_ParamRef9Callback __cross_call_master_ParamRef9Callback = nullptr;
+
+cross_call_master::_ParamRef10Callback __cross_call_master_ParamRef10Callback = nullptr;
+
+cross_call_master::_ParamRefVectorsCallback __cross_call_master_ParamRefVectorsCallback = nullptr;
+
+cross_call_master::_ParamAllPrimitivesCallback __cross_call_master_ParamAllPrimitivesCallback = nullptr;
+
+cross_call_master::_ParamEnumCallback __cross_call_master_ParamEnumCallback = nullptr;
+
+cross_call_master::_ParamEnumRefCallback __cross_call_master_ParamEnumRefCallback = nullptr;
+
+cross_call_master::_ParamVariantCallback __cross_call_master_ParamVariantCallback = nullptr;
+
+cross_call_master::_ParamVariantRefCallback __cross_call_master_ParamVariantRefCallback = nullptr;
+
+cross_call_master::_CallFuncVoidCallback __cross_call_master_CallFuncVoidCallback = nullptr;
+
+cross_call_master::_CallFuncBoolCallback __cross_call_master_CallFuncBoolCallback = nullptr;
+
+cross_call_master::_CallFuncChar8Callback __cross_call_master_CallFuncChar8Callback = nullptr;
+
+cross_call_master::_CallFuncChar16Callback __cross_call_master_CallFuncChar16Callback = nullptr;
+
+cross_call_master::_CallFuncInt8Callback __cross_call_master_CallFuncInt8Callback = nullptr;
+
+cross_call_master::_CallFuncInt16Callback __cross_call_master_CallFuncInt16Callback = nullptr;
+
+cross_call_master::_CallFuncInt32Callback __cross_call_master_CallFuncInt32Callback = nullptr;
+
+cross_call_master::_CallFuncInt64Callback __cross_call_master_CallFuncInt64Callback = nullptr;
+
+cross_call_master::_CallFuncUInt8Callback __cross_call_master_CallFuncUInt8Callback = nullptr;
+
+cross_call_master::_CallFuncUInt16Callback __cross_call_master_CallFuncUInt16Callback = nullptr;
+
+cross_call_master::_CallFuncUInt32Callback __cross_call_master_CallFuncUInt32Callback = nullptr;
+
+cross_call_master::_CallFuncUInt64Callback __cross_call_master_CallFuncUInt64Callback = nullptr;
+
+cross_call_master::_CallFuncPtrCallback __cross_call_master_CallFuncPtrCallback = nullptr;
+
+cross_call_master::_CallFuncFloatCallback __cross_call_master_CallFuncFloatCallback = nullptr;
+
+cross_call_master::_CallFuncDoubleCallback __cross_call_master_CallFuncDoubleCallback = nullptr;
+
+cross_call_master::_CallFuncStringCallback __cross_call_master_CallFuncStringCallback = nullptr;
+
+cross_call_master::_CallFuncAnyCallback __cross_call_master_CallFuncAnyCallback = nullptr;
+
+cross_call_master::_CallFuncFunctionCallback __cross_call_master_CallFuncFunctionCallback = nullptr;
+
+cross_call_master::_CallFuncBoolVectorCallback __cross_call_master_CallFuncBoolVectorCallback = nullptr;
+
+cross_call_master::_CallFuncChar8VectorCallback __cross_call_master_CallFuncChar8VectorCallback = nullptr;
+
+cross_call_master::_CallFuncChar16VectorCallback __cross_call_master_CallFuncChar16VectorCallback = nullptr;
+
+cross_call_master::_CallFuncInt8VectorCallback __cross_call_master_CallFuncInt8VectorCallback = nullptr;
+
+cross_call_master::_CallFuncInt16VectorCallback __cross_call_master_CallFuncInt16VectorCallback = nullptr;
+
+cross_call_master::_CallFuncInt32VectorCallback __cross_call_master_CallFuncInt32VectorCallback = nullptr;
+
+cross_call_master::_CallFuncInt64VectorCallback __cross_call_master_CallFuncInt64VectorCallback = nullptr;
+
+cross_call_master::_CallFuncUInt8VectorCallback __cross_call_master_CallFuncUInt8VectorCallback = nullptr;
+
+cross_call_master::_CallFuncUInt16VectorCallback __cross_call_master_CallFuncUInt16VectorCallback = nullptr;
+
+cross_call_master::_CallFuncUInt32VectorCallback __cross_call_master_CallFuncUInt32VectorCallback = nullptr;
+
+cross_call_master::_CallFuncUInt64VectorCallback __cross_call_master_CallFuncUInt64VectorCallback = nullptr;
+
+cross_call_master::_CallFuncPtrVectorCallback __cross_call_master_CallFuncPtrVectorCallback = nullptr;
+
+cross_call_master::_CallFuncFloatVectorCallback __cross_call_master_CallFuncFloatVectorCallback = nullptr;
+
+cross_call_master::_CallFuncDoubleVectorCallback __cross_call_master_CallFuncDoubleVectorCallback = nullptr;
+
+cross_call_master::_CallFuncStringVectorCallback __cross_call_master_CallFuncStringVectorCallback = nullptr;
+
+cross_call_master::_CallFuncAnyVectorCallback __cross_call_master_CallFuncAnyVectorCallback = nullptr;
+
+cross_call_master::_CallFuncVec2VectorCallback __cross_call_master_CallFuncVec2VectorCallback = nullptr;
+
+cross_call_master::_CallFuncVec3VectorCallback __cross_call_master_CallFuncVec3VectorCallback = nullptr;
+
+cross_call_master::_CallFuncVec4VectorCallback __cross_call_master_CallFuncVec4VectorCallback = nullptr;
+
+cross_call_master::_CallFuncMat4x4VectorCallback __cross_call_master_CallFuncMat4x4VectorCallback = nullptr;
+
+cross_call_master::_CallFuncVec2Callback __cross_call_master_CallFuncVec2Callback = nullptr;
+
+cross_call_master::_CallFuncVec3Callback __cross_call_master_CallFuncVec3Callback = nullptr;
+
+cross_call_master::_CallFuncVec4Callback __cross_call_master_CallFuncVec4Callback = nullptr;
+
+cross_call_master::_CallFuncMat4x4Callback __cross_call_master_CallFuncMat4x4Callback = nullptr;
+
+cross_call_master::_CallFunc1Callback __cross_call_master_CallFunc1Callback = nullptr;
+
+cross_call_master::_CallFunc2Callback __cross_call_master_CallFunc2Callback = nullptr;
+
+cross_call_master::_CallFunc3Callback __cross_call_master_CallFunc3Callback = nullptr;
+
+cross_call_master::_CallFunc4Callback __cross_call_master_CallFunc4Callback = nullptr;
+
+cross_call_master::_CallFunc5Callback __cross_call_master_CallFunc5Callback = nullptr;
+
+cross_call_master::_CallFunc6Callback __cross_call_master_CallFunc6Callback = nullptr;
+
+cross_call_master::_CallFunc7Callback __cross_call_master_CallFunc7Callback = nullptr;
+
+cross_call_master::_CallFunc8Callback __cross_call_master_CallFunc8Callback = nullptr;
+
+cross_call_master::_CallFunc9Callback __cross_call_master_CallFunc9Callback = nullptr;
+
+cross_call_master::_CallFunc10Callback __cross_call_master_CallFunc10Callback = nullptr;
+
+cross_call_master::_CallFunc11Callback __cross_call_master_CallFunc11Callback = nullptr;
+
+cross_call_master::_CallFunc12Callback __cross_call_master_CallFunc12Callback = nullptr;
+
+cross_call_master::_CallFunc13Callback __cross_call_master_CallFunc13Callback = nullptr;
+
+cross_call_master::_CallFunc14Callback __cross_call_master_CallFunc14Callback = nullptr;
+
+cross_call_master::_CallFunc15Callback __cross_call_master_CallFunc15Callback = nullptr;
+
+cross_call_master::_CallFunc16Callback __cross_call_master_CallFunc16Callback = nullptr;
+
+cross_call_master::_CallFunc17Callback __cross_call_master_CallFunc17Callback = nullptr;
+
+cross_call_master::_CallFunc18Callback __cross_call_master_CallFunc18Callback = nullptr;
+
+cross_call_master::_CallFunc19Callback __cross_call_master_CallFunc19Callback = nullptr;
+
+cross_call_master::_CallFunc20Callback __cross_call_master_CallFunc20Callback = nullptr;
+
+cross_call_master::_CallFunc21Callback __cross_call_master_CallFunc21Callback = nullptr;
+
+cross_call_master::_CallFunc22Callback __cross_call_master_CallFunc22Callback = nullptr;
+
+cross_call_master::_CallFunc23Callback __cross_call_master_CallFunc23Callback = nullptr;
+
+cross_call_master::_CallFunc24Callback __cross_call_master_CallFunc24Callback = nullptr;
+
+cross_call_master::_CallFunc25Callback __cross_call_master_CallFunc25Callback = nullptr;
+
+cross_call_master::_CallFunc26Callback __cross_call_master_CallFunc26Callback = nullptr;
+
+cross_call_master::_CallFunc27Callback __cross_call_master_CallFunc27Callback = nullptr;
+
+cross_call_master::_CallFunc28Callback __cross_call_master_CallFunc28Callback = nullptr;
+
+cross_call_master::_CallFunc29Callback __cross_call_master_CallFunc29Callback = nullptr;
+
+cross_call_master::_CallFunc30Callback __cross_call_master_CallFunc30Callback = nullptr;
+
+cross_call_master::_CallFunc31Callback __cross_call_master_CallFunc31Callback = nullptr;
+
+cross_call_master::_CallFunc32Callback __cross_call_master_CallFunc32Callback = nullptr;
+
+cross_call_master::_CallFunc33Callback __cross_call_master_CallFunc33Callback = nullptr;
+
+cross_call_master::_CallFuncEnumCallback __cross_call_master_CallFuncEnumCallback = nullptr;
+
+cross_call_master::_ResourceHandleCreate __cross_call_master_ResourceHandleCreate = nullptr;
+
+cross_call_master::_ResourceHandleCreateDefault __cross_call_master_ResourceHandleCreateDefault = nullptr;
+
+cross_call_master::_ResourceHandleDestroy __cross_call_master_ResourceHandleDestroy = nullptr;
+
+cross_call_master::_ResourceHandleGetId __cross_call_master_ResourceHandleGetId = nullptr;
+
+cross_call_master::_ResourceHandleGetName __cross_call_master_ResourceHandleGetName = nullptr;
+
+cross_call_master::_ResourceHandleSetName __cross_call_master_ResourceHandleSetName = nullptr;
+
+cross_call_master::_ResourceHandleIncrementCounter __cross_call_master_ResourceHandleIncrementCounter = nullptr;
+
+cross_call_master::_ResourceHandleGetCounter __cross_call_master_ResourceHandleGetCounter = nullptr;
+
+cross_call_master::_ResourceHandleAddData __cross_call_master_ResourceHandleAddData = nullptr;
+
+cross_call_master::_ResourceHandleGetData __cross_call_master_ResourceHandleGetData = nullptr;
+
+cross_call_master::_ResourceHandleGetAliveCount __cross_call_master_ResourceHandleGetAliveCount = nullptr;
+
+cross_call_master::_ResourceHandleGetTotalCreated __cross_call_master_ResourceHandleGetTotalCreated = nullptr;
+
+cross_call_master::_ResourceHandleGetTotalDestroyed __cross_call_master_ResourceHandleGetTotalDestroyed = nullptr;
+
+cross_call_master::_CounterCreate __cross_call_master_CounterCreate = nullptr;
+
+cross_call_master::_CounterCreateZero __cross_call_master_CounterCreateZero = nullptr;
+
+cross_call_master::_CounterGetValue __cross_call_master_CounterGetValue = nullptr;
+
+cross_call_master::_CounterSetValue __cross_call_master_CounterSetValue = nullptr;
+
+cross_call_master::_CounterIncrement __cross_call_master_CounterIncrement = nullptr;
+
+cross_call_master::_CounterDecrement __cross_call_master_CounterDecrement = nullptr;
+
+cross_call_master::_CounterAdd __cross_call_master_CounterAdd = nullptr;
+
+cross_call_master::_CounterReset __cross_call_master_CounterReset = nullptr;
+
+cross_call_master::_CounterIsPositive __cross_call_master_CounterIsPositive = nullptr;
+
+cross_call_master::_CounterCompare __cross_call_master_CounterCompare = nullptr;
+
+cross_call_master::_CounterSum __cross_call_master_CounterSum = nullptr;
+

@@ -6,7 +6,7 @@
 #include <plg/plugin.hpp>
 #include <plg/formatter.hpp>
 #include <plugin_export.h>
-#include <pps/cross_call_master.hpp>
+#include <cross_call_master/cross_call_master.hpp>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -2038,10 +2038,10 @@ public:
 
 	static plg::string OwnershipTransfer() {
     	Log("TEST 7: Ownership Transfer (get + release)");
-    	Log("─────────────────────────────────────────");
+    	Log("_________________________________________");
 
     	int initial_alive = cross_call_master::ResourceHandle::GetAliveCount();
-    	int initial_created = cross_call_master::ResourceHandle::GetTotalCreated();
+    	[[maybe_unused]] int initial_created = cross_call_master::ResourceHandle::GetTotalCreated();
 
     	cross_call_master::ResourceHandle resource(42, "OwnershipTest");
     	Log(std::format("v Created ResourceHandle ID: {}", resource.GetId()));
@@ -2065,7 +2065,7 @@ public:
     		resource.GetId();
     		Log("x TEST 7 FAILED: ResourceHandle still accessible after release()");
     		return "false";
-    	} catch (const std::exception& e) {
+    	} catch (const std::exception&) {
     		Log("v ResourceHandle is invalid after release()");
     	}
 

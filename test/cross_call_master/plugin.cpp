@@ -2,7 +2,7 @@
 #include <plugin_export.h>
 #include <plg/plugin.hpp>
 #include <plg/formatter.hpp>
-#include <pps/cross_call_worker.hpp>
+#include <cross_call_worker/cross_call_worker.hpp>
 
 #include <cstdint>
 #include <limits>
