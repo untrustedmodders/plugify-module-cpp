@@ -15,7 +15,7 @@
 using namespace plugify;
 
 namespace cpplm {
-	using InitFunc = int (*)(void**, int, const void*);
+	using InitFunc = int (*)(void**, size_t, int, const void*);
 	using StartFunc = void (*)();
 	using UpdateFunc = void (*)(std::chrono::milliseconds);
 	using EndFunc = void (*)();
@@ -45,18 +45,12 @@ namespace cpplm {
 		bool IsDebugBuild() override;
 
 		const std::unique_ptr<Provider>& GetProvider() const { return _provider; }
-		MemAddr GetNativeMethod(std::string_view methodName) const;
-		void GetNativeMethod(std::string_view methodName, MemAddr* addressDest);
 
 	private:
 		std::unique_ptr<Provider> _provider;
-		
 		std::vector<std::unique_ptr<AssemblyHolder>> _assemblies;
-		std::unordered_map<std::string, MemAddr, plg::string_hash, std::equal_to<>> _nativesMap;
-		
-		std::vector<MemAddr*> _addresses;
 
-		static std::array<void*, 18> _pluginApi;
+		static std::array<void*, 16> _pluginApi;
 	};
 
 	extern CppLanguageModule g_cpplm;

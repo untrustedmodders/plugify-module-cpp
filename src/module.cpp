@@ -20,11 +20,6 @@ Result<InitData> CppLanguageModule::Initialize(const Provider& provider, [[maybe
 }
 
 void CppLanguageModule::Shutdown() {
-	for (MemAddr* addr : _addresses) {
-		*addr = nullptr;
-	}
-	_nativesMap.clear();
-	_addresses.clear();
 	_assemblies.clear();
 	_provider.reset();
 }
@@ -38,10 +33,13 @@ bool CppLanguageModule::IsDebugBuild() {
 }
 
 void CppLanguageModule::OnMethodExport(const Extension& plugin) {
-	const auto& methods = plugin.GetMethodsData();
-	_nativesMap.reserve(_nativesMap.size() + methods.size());
-	for (const auto& [method, addr] : methods) {
-		_nativesMap.try_emplace(std::format("{}.{}", plugin.GetName(), method.GetName()), addr);
+	for (const auto& [method, addr] : plugin.GetMethodsData()) {
+		auto variableName = std::format("__{}_{}", plugin.GetName(), method.GetName());
+		for (const auto& assembly : _assemblies) {
+			if (auto function = assembly->assembly->GetSymbol(variableName)) {
+				*function->RCast<MemAddr*>() = addr;
+			}
+		}
 	}
 }
 
@@ -110,7 +108,7 @@ Result<LoadData> CppLanguageModule::OnPluginLoad(const Extension& plugin) {
 		return MakeError("Invalid methods:\n{}", plg::join(errors, "\n"));
 	}
 
-	const int requiredVersion = initFunc(_pluginApi.data(), plg::kApiVersion, static_cast<const void *>(&plugin));
+	const int requiredVersion = initFunc(_pluginApi.data(), _pluginApi.size(), plg::kApiVersion, static_cast<const void *>(&plugin));
 	if (requiredVersion != 0) {
 		return MakeError("Not supported plugin api {}, max supported {}", requiredVersion, plg::kApiVersion);
 	}
@@ -142,34 +140,8 @@ void CppLanguageModule::OnPluginEnd(const Extension& plugin) {
 	plugin.GetUserData().RCast<AssemblyHolder*>()->endFunc();
 }
 
-// Plugin API methods
-MemAddr CppLanguageModule::GetNativeMethod(std::string_view methodName) const {
-	if (const auto it = _nativesMap.find(methodName); it != _nativesMap.end()) {
-		return std::get<MemAddr>(*it);
-	}
-	_provider->Log(std::format(LOG_PREFIX "GetNativeMethod failed to find {}", methodName), Severity::Fatal);
-	return nullptr;
-}
-
-void CppLanguageModule::GetNativeMethod(std::string_view methodName, MemAddr* addressDest) {
-	if (const auto it = _nativesMap.find(methodName); it != _nativesMap.end()) {
-		*addressDest = std::get<MemAddr>(*it);
-		_addresses.emplace_back(addressDest);
-		return;
-	}
-	_provider->Log(std::format(LOG_PREFIX "GetNativeMethod failed to find: '{}'", methodName), Severity::Fatal);
-}
-
 namespace cpplm {
 	CppLanguageModule g_cpplm;
-}
-
-void* GetMethodPtr(std::string_view name) {
-	return g_cpplm.GetNativeMethod(name);
-}
-
-void GetMethodPtr2(std::string_view name, MemAddr* dest) {
-	g_cpplm.GetNativeMethod(name, dest);
 }
 
 plg::string GetBaseDir() {
@@ -252,9 +224,7 @@ std::vector<Dependent> GetPluginDependencies(const Extension& plugin) {
 	return deps;
 }
 
-std::array<void*, 18> CppLanguageModule::_pluginApi = {
-		reinterpret_cast<void*>(&::GetMethodPtr),
-		reinterpret_cast<void*>(&::GetMethodPtr2),
+std::array<void*, 16> CppLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetBaseDir),
 		reinterpret_cast<void*>(&::GetExtensionsDir),
 		reinterpret_cast<void*>(&::GetConfigsDir),
