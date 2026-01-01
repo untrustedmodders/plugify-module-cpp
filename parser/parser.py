@@ -569,6 +569,13 @@ def build_function_prototype(typedef_name: str, typedefs_map: dict, enums_map: d
         if enum_struct:
             ret_type['enum'] = enum_struct
 
+    # Check if return is a function pointer typedef and add prototype
+    elif base_return_type in typedefs_map and typedefs_map[base_return_type].get('IsFunctionPointer'):
+        ret_type['type'] = 'function'
+        prototype = build_function_prototype(base_return_type, typedefs_map, enums_map)
+        if prototype:
+            ret_type['prototype'] = prototype
+
     prototype['retType'] = ret_type
 
     return prototype
@@ -658,6 +665,13 @@ def process_function(function, enums_map, typedefs_map, group_name=None):
         enum_struct = build_enum_structure(base_return_type, enums_map)
         if enum_struct:
             ret_type['enum'] = enum_struct
+
+    # Check if return is a function pointer typedef and add prototype
+    elif base_return_type in typedefs_map and typedefs_map[base_return_type].get('IsFunctionPointer'):
+        ret_type['type'] = 'function'
+        prototype = build_function_prototype(base_return_type, typedefs_map, enums_map)
+        if prototype:
+            ret_type['prototype'] = prototype
 
     # Build final function data
     function_data = {
