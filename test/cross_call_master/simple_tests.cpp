@@ -1,3 +1,5 @@
+#include <chrono>
+
 #include "simple_tests.hpp"
 #include <iostream>
 #include <numeric>
@@ -33,6 +35,9 @@ void SimpleTests::Add(std::string name, std::function<void(Test &)> func) {
 }
 
 void SimpleTests::Run() {
+	using clock = std::chrono::steady_clock;
+	using ms = std::chrono::duration<double, std::milli>;
+
     const size_t count = _tests.size();
     const auto count_len = std::to_string(count).length();
     const std::string number_template = std::format("[{{:0{}d}}/{{}}]", count_len);
@@ -44,29 +49,40 @@ void SimpleTests::Run() {
     const std::string name_template = std::format("{{:{}s}}", name_max_length);
 
     size_t success = 0, failed = 0;
+    ms total_time{0};
 
-    for (size_t i = 0; i < count; ++i) {
-        Test &test = *_tests[i];
-        const auto n = i + 1;
-        const auto number = std::vformat(number_template, std::make_format_args(n, count));
-        const auto name = test.GetName();
-        const auto formatted_name = std::vformat(name_template, std::make_format_args(name));
-        std::cout << std::format("{} {}    ", number, formatted_name) << std::flush;
-        test.Run();
-        if (test.IsFailed()) {
-            ++failed;
-            std::cerr << "Failed\n";
-            for (const auto &error: test.GetErrors()) {
-                std::cerr << "    " << error << "\n";
-            }
-            std::cerr << std::flush;
-        } else {
-            ++success;
-            std::cout << "Success" << std::endl;
-        }
-    }
+	for (size_t i = 0; i < count; ++i) {
+		Test& test = *_tests[i];
+		const auto n = i + 1;
+		const auto number = std::vformat(number_template, std::make_format_args(n, count));
+		const auto name = test.GetName();
+		const auto formatted_name = std::vformat(name_template, std::make_format_args(name));
 
-    std::cout << std::format("Tests finished: {} success, {} failed, {} total", success, failed, count) << std::endl;
+		std::cout << std::format("{} {}    ", number, formatted_name) << std::flush;
+
+		const auto start = clock::now();
+		test.Run();
+		const auto end = clock::now();
+		const ms elapsed = end - start;
+		total_time += elapsed;
+
+		if (test.IsFailed()) {
+			++failed;
+			std::cerr << std::format("Failed ({:.3f} ms)\n", elapsed.count());
+			for (const auto& error : test.GetErrors()) {
+				std::cerr << "    " << error << "\n";
+			}
+			std::cerr << std::flush;
+		} else {
+			++success;
+			std::cout << std::format("Success ({:.3f} ms)\n", elapsed.count());
+		}
+	}
+
+	std::cout << std::format(
+		"Tests finished: {} success, {} failed, {} total, {:.3f} ms total",
+		success, failed, count, total_time.count()
+	) << std::endl;
 }
 
 void SimpleTests::Reset() {

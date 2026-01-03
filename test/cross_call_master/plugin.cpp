@@ -585,6 +585,8 @@ public:
         ReverseClassesWrappers();
         _tests.Run();
 
+        _tests.Run();
+
     }
 
     void OnPluginEnd() final {
