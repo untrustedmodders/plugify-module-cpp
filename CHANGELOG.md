@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.1](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.2.0...v2.2.1) (2026-01-03)
+
+
+### Bug Fixes
+
+* add build type to configure step ([cc5d6cd](https://github.com/untrustedmodders/plugify-module-cpp/commit/cc5d6cd17b06a28d896a0efd09acf69e94d37e60))
+* add time measure to tests ([311a09c](https://github.com/untrustedmodders/plugify-module-cpp/commit/311a09c7f716fa2aa012f7de8846e55c9ce1986b))
+
 ## [2.2.0](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.1.5...v2.2.0) (2025-12-13)
 
 
