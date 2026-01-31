@@ -1263,6 +1263,88 @@
 			}
 		},
 		{
+			"name": "ParamAllAliasesCallback",
+			"funcName": "ParamAllAliasesCallback",
+			"paramTypes": [
+				{ "name": "aBool",      "type": "bool",        "ref": false, "alias": { "name": "AliasBool" } },
+				{ "name": "aChar8",     "type": "char8",       "ref": false, "alias": { "name": "AliasChar8" } },
+				{ "name": "aChar16",    "type": "char16",      "ref": false, "alias": { "name": "AliasChar16" } },
+				{ "name": "aInt8",      "type": "int8",        "ref": false, "alias": { "name": "AliasInt8" } },
+				{ "name": "aInt16",     "type": "int16",       "ref": false, "alias": { "name": "AliasInt16" } },
+				{ "name": "aInt32",     "type": "int32",       "ref": false, "alias": { "name": "AliasInt32" } },
+				{ "name": "aInt64",     "type": "int64",       "ref": false, "alias": { "name": "AliasInt64" } },
+				{ "name": "aPtr",       "type": "ptr64",       "ref": false, "alias": { "name": "AliasPtr" } },
+				{ "name": "aFloat",     "type": "float",       "ref": false, "alias": { "name": "AliasFloat" } },
+				{ "name": "aDouble",    "type": "double",      "ref": false, "alias": { "name": "AliasDouble" } },
+				{ "name": "aString",    "type": "string",      "ref": false, "alias": { "name": "AliasString" } },
+				{ "name": "aAny",       "type": "any",         "ref": false, "alias": { "name": "AliasAny" } },
+				{ "name": "aVec2",      "type": "vec2",        "ref": false, "alias": { "name": "AliasVec2" } },
+				{ "name": "aVec3",      "type": "vec3",        "ref": false, "alias": { "name": "AliasVec3" } },
+				{ "name": "aVec4",      "type": "vec4",        "ref": false, "alias": { "name": "AliasVec4" } },
+				{ "name": "aMat4x4",    "type": "mat4x4",      "ref": false, "alias": { "name": "AliasMat4x4" } },
+				{ "name": "aBoolVec",   "type": "bool[]",      "ref": false, "alias": { "name": "AliasBoolVector" } },
+				{ "name": "aChar8Vec",  "type": "char8[]",     "ref": false, "alias": { "name": "AliasChar8Vector" } },
+				{ "name": "aChar16Vec", "type": "char16[]",    "ref": false, "alias": { "name": "AliasChar16Vector" } },
+				{ "name": "aInt8Vec",   "type": "int8[]",      "ref": false, "alias": { "name": "AliasInt8Vector" } },
+				{ "name": "aInt16Vec",  "type": "int16[]",     "ref": false, "alias": { "name": "AliasInt16Vector" } },
+				{ "name": "aInt32Vec",  "type": "int32[]",     "ref": false, "alias": { "name": "AliasInt32Vector" } },
+				{ "name": "aInt64Vec",  "type": "int64[]",     "ref": false, "alias": { "name": "AliasInt64Vector" } },
+				{ "name": "aPtrVec",    "type": "ptr64[]",     "ref": false, "alias": { "name": "AliasPtrVector" } },
+				{ "name": "aFloatVec",  "type": "float[]",     "ref": false, "alias": { "name": "AliasFloatVector" } },
+				{ "name": "aDoubleVec", "type": "double[]",    "ref": false, "alias": { "name": "AliasDoubleVector" } },
+				{ "name": "aStringVec", "type": "string[]",    "ref": false, "alias": { "name": "AliasStringVector" } },
+				{ "name": "aAnyVec",    "type": "any[]",       "ref": false, "alias": { "name": "AliasAnyVector" } },
+				{ "name": "aVec2Vec",   "type": "vec2[]",      "ref": false, "alias": { "name": "AliasVec2Vector" } },
+				{ "name": "aVec3Vec",   "type": "vec3[]",      "ref": false, "alias": { "name": "AliasVec3Vector" } },
+				{ "name": "aVec4Vec",   "type": "vec4[]",      "ref": false, "alias": { "name": "AliasVec4Vector" } },
+				{ "name": "aaMat4x4Vec", "type": "mat4x4[]",   "ref": false, "alias": { "name": "AliasMat4x4Vector" } }
+			],
+			"retType": {
+				"type": "int32"
+			}
+		},
+		{
+			"name": "ParamAllRefAliasesCallback",
+			"funcName": "ParamAllRefAliasesCallback",
+			"paramTypes": [
+				{ "name": "aBool",      "type": "bool",        "ref": true, "alias": { "name": "AliasBool" } },
+				{ "name": "aChar8",     "type": "char8",       "ref": true, "alias": { "name": "AliasChar8" } },
+				{ "name": "aChar16",    "type": "char16",      "ref": true, "alias": { "name": "AliasChar16" } },
+				{ "name": "aInt8",      "type": "int8",        "ref": true, "alias": { "name": "AliasInt8" } },
+				{ "name": "aInt16",     "type": "int16",       "ref": true, "alias": { "name": "AliasInt16" } },
+				{ "name": "aInt32",     "type": "int32",       "ref": true, "alias": { "name": "AliasInt32" } },
+				{ "name": "aInt64",     "type": "int64",       "ref": true, "alias": { "name": "AliasInt64" } },
+				{ "name": "aPtr",       "type": "ptr64",       "ref": true, "alias": { "name": "AliasPtr" } },
+				{ "name": "aFloat",     "type": "float",       "ref": true, "alias": { "name": "AliasFloat" } },
+				{ "name": "aDouble",    "type": "double",      "ref": true, "alias": { "name": "AliasDouble" } },
+				{ "name": "aString",    "type": "string",      "ref": true, "alias": { "name": "AliasString" } },
+				{ "name": "aAny",       "type": "any",         "ref": true, "alias": { "name": "AliasAny" } },
+				{ "name": "aVec2",      "type": "vec2",        "ref": true, "alias": { "name": "AliasVec2" } },
+				{ "name": "aVec3",      "type": "vec3",        "ref": true, "alias": { "name": "AliasVec3" } },
+				{ "name": "aVec4",      "type": "vec4",        "ref": true, "alias": { "name": "AliasVec4" } },
+				{ "name": "aMat4x4",    "type": "mat4x4",      "ref": true, "alias": { "name": "AliasMat4x4" } },
+				{ "name": "aBoolVec",   "type": "bool[]",      "ref": true, "alias": { "name": "AliasBoolVector" } },
+				{ "name": "aChar8Vec",  "type": "char8[]",     "ref": true, "alias": { "name": "AliasChar8Vector" } },
+				{ "name": "aChar16Vec", "type": "char16[]",    "ref": true, "alias": { "name": "AliasChar16Vector" } },
+				{ "name": "aInt8Vec",   "type": "int8[]",      "ref": true, "alias": { "name": "AliasInt8Vector" } },
+				{ "name": "aInt16Vec",  "type": "int16[]",     "ref": true, "alias": { "name": "AliasInt16Vector" } },
+				{ "name": "aInt32Vec",  "type": "int32[]",     "ref": true, "alias": { "name": "AliasInt32Vector" } },
+				{ "name": "aInt64Vec",  "type": "int64[]",     "ref": true, "alias": { "name": "AliasInt64Vector" } },
+				{ "name": "aPtrVec",    "type": "ptr64[]",     "ref": true, "alias": { "name": "AliasPtrVector" } },
+				{ "name": "aFloatVec",  "type": "float[]",     "ref": true, "alias": { "name": "AliasFloatVector" } },
+				{ "name": "aDoubleVec", "type": "double[]",    "ref": true, "alias": { "name": "AliasDoubleVector" } },
+				{ "name": "aStringVec", "type": "string[]",    "ref": true, "alias": { "name": "AliasStringVector" } },
+				{ "name": "aAnyVec",    "type": "any[]",       "ref": true, "alias": { "name": "AliasAnyVector" } },
+				{ "name": "aVec2Vec",   "type": "vec2[]",      "ref": true, "alias": { "name": "AliasVec2Vector" } },
+				{ "name": "aVec3Vec",   "type": "vec3[]",      "ref": true, "alias": { "name": "AliasVec3Vector" } },
+				{ "name": "aVec4Vec",   "type": "vec4[]",      "ref": true, "alias": { "name": "AliasVec4Vector" } },
+				{ "name": "aaMat4x4Vec", "type": "mat4x4[]",   "ref": true, "alias": { "name": "AliasMat4x4Vector" } }
+			],
+			"retType": {
+				"type": "int64"
+			}
+		},
+		{
 			"name": "ParamEnumCallback",
 			"funcName": "ParamEnumCallback",
 			"paramTypes": [
@@ -2277,6 +2359,1194 @@
 				"type": "mat4x4"
 			}
 		},
+		{
+            "name": "CallFuncAliasBoolCallback",
+            "funcName": "CallFuncAliasBoolCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasBool",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "bool",
+                            "alias": {
+                                "name": "AliasBool"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "bool",
+                "alias": {
+                    "name": "AliasBool"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasChar8Callback",
+            "funcName": "CallFuncAliasChar8Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasChar8",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "char8",
+                            "alias": {
+                                "name": "AliasChar8"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "char8",
+                "alias": {
+                    "name": "AliasChar8"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasChar16Callback",
+            "funcName": "CallFuncAliasChar16Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasChar16",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "char16",
+                            "alias": {
+                                "name": "AliasChar16"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "char16",
+                "alias": {
+                    "name": "AliasChar16"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasInt8Callback",
+            "funcName": "CallFuncAliasInt8Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasInt8",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "int8",
+                            "alias": {
+                                "name": "AliasInt8"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "int8",
+                "alias": {
+                    "name": "AliasInt8"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasInt16Callback",
+            "funcName": "CallFuncAliasInt16Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasInt16",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "int16",
+                            "alias": {
+                                "name": "AliasInt16"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "int16",
+                "alias": {
+                    "name": "AliasInt16"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasInt32Callback",
+            "funcName": "CallFuncAliasInt32Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasInt32",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "int32",
+                            "alias": {
+                                "name": "AliasInt32"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "int32",
+                "alias": {
+                    "name": "AliasInt32"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasInt64Callback",
+            "funcName": "CallFuncAliasInt64Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasInt64",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "int64",
+                            "alias": {
+                                "name": "AliasInt64"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "int64",
+                "alias": {
+                    "name": "AliasInt64"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasUInt8Callback",
+            "funcName": "CallFuncAliasUInt8Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasUInt8",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "uint8",
+                            "alias": {
+                                "name": "AliasUInt8"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "uint8",
+                "alias": {
+                    "name": "AliasUInt8"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasUInt16Callback",
+            "funcName": "CallFuncAliasUInt16Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasUInt16",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "uint16",
+                            "alias": {
+                                "name": "AliasUInt16"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "uint16",
+                "alias": {
+                    "name": "AliasUInt16"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasUInt32Callback",
+            "funcName": "CallFuncAliasUInt32Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasUInt32",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "uint32",
+                            "alias": {
+                                "name": "AliasUInt32"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "uint32",
+                "alias": {
+                    "name": "AliasUInt32"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasUInt64Callback",
+            "funcName": "CallFuncAliasUInt64Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasUInt64",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "uint64",
+                            "alias": {
+                                "name": "AliasUInt64"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "uint64",
+                "alias": {
+                    "name": "AliasUInt64"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasPtrCallback",
+            "funcName": "CallFuncAliasPtrCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasPtr",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "ptr64",
+                            "alias": {
+                                "name": "AliasPtr"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "ptr64",
+                "alias": {
+                    "name": "AliasPtr"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasFloatCallback",
+            "funcName": "CallFuncAliasFloatCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasFloat",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "float",
+                            "alias": {
+                                "name": "AliasFloat"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "float",
+                "alias": {
+                    "name": "AliasFloat"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasDoubleCallback",
+            "funcName": "CallFuncAliasDoubleCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasDouble",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "double",
+                            "alias": {
+                                "name": "AliasDouble"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "double",
+                "alias": {
+                    "name": "AliasDouble"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasStringCallback",
+            "funcName": "CallFuncAliasStringCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasString",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "string",
+                            "alias": {
+                                "name": "AliasString"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "string",
+                "alias": {
+                    "name": "AliasString"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasAnyCallback",
+            "funcName": "CallFuncAliasAnyCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasAny",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "any",
+                            "alias": {
+                                "name": "AliasAny"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "any",
+                "alias": {
+                    "name": "AliasAny"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasFunctionCallback",
+            "funcName": "CallFuncAliasFunctionCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasFunction",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "function",
+                            "prototype": {
+                                "name": "FuncAliasFunctionInner",
+                                "paramTypes": [
+                                ],
+                                "retType": {
+                                    "type": "void"
+                                }
+                            },
+                            "alias": {
+                                "name": "AliasFunction"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "ptr64",
+                "alias": {
+                    "name": "AliasFunction"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasBoolVectorCallback",
+            "funcName": "CallFuncAliasBoolVectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasBoolVector",
+                        "paramTypes": [
+                        ],
+                        "retType": {
+                            "type": "bool[]",
+                            "alias": {
+                                "name": "AliasBoolVector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "bool[]",
+                "alias": {
+                    "name": "AliasBoolVector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasChar8VectorCallback",
+            "funcName": "CallFuncAliasChar8VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasChar8Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "char8[]",
+                            "alias": {
+                                "name": "AliasChar8Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "char8[]",
+                "alias": {
+                    "name": "AliasChar8Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasChar16VectorCallback",
+            "funcName": "CallFuncAliasChar16VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasChar16Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "char16[]",
+                            "alias": {
+                                "name": "AliasChar16Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "char16[]",
+                "alias": {
+                    "name": "AliasChar16Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasInt8VectorCallback",
+            "funcName": "CallFuncAliasInt8VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasInt8Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "int8[]",
+                            "alias": {
+                                "name": "AliasInt8Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "int8[]",
+                "alias": {
+                    "name": "AliasInt8Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasInt16VectorCallback",
+            "funcName": "CallFuncAliasInt16VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasInt16Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "int16[]",
+                            "alias": {
+                                "name": "AliasInt16Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "int16[]",
+                "alias": {
+                    "name": "AliasInt16Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasInt32VectorCallback",
+            "funcName": "CallFuncAliasInt32VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasInt32Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "int32[]",
+                            "alias": {
+                                "name": "AliasInt32Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "int32[]",
+                "alias": {
+                    "name": "AliasInt32Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasInt64VectorCallback",
+            "funcName": "CallFuncAliasInt64VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasInt64Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "int64[]",
+                            "alias": {
+                                "name": "AliasInt64Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "int64[]",
+                "alias": {
+                    "name": "AliasInt64Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasUInt8VectorCallback",
+            "funcName": "CallFuncAliasUInt8VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasUInt8Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "uint8[]",
+                            "alias": {
+                                "name": "AliasUInt8Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "uint8[]",
+                "alias": {
+                    "name": "AliasUInt8Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasUInt16VectorCallback",
+            "funcName": "CallFuncAliasUInt16VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasUInt16Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "uint16[]",
+                            "alias": {
+                                "name": "AliasUInt16Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "uint16[]",
+                "alias": {
+                    "name": "AliasUInt16Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasUInt32VectorCallback",
+            "funcName": "CallFuncAliasUInt32VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasUInt32Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "uint32[]",
+                            "alias": {
+                                "name": "AliasUInt32Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "uint32[]",
+                "alias": {
+                    "name": "AliasUInt32Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasUInt64VectorCallback",
+            "funcName": "CallFuncAliasUInt64VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasUInt64Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "uint64[]",
+                            "alias": {
+                                "name": "AliasUInt64Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "uint64[]",
+                "alias": {
+                    "name": "AliasUInt64Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasPtrVectorCallback",
+            "funcName": "CallFuncAliasPtrVectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasPtrVector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "ptr64[]",
+                            "alias": {
+                                "name": "AliasPtrVector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "ptr64[]",
+                "alias": {
+                    "name": "AliasPtrVector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasFloatVectorCallback",
+            "funcName": "CallFuncAliasFloatVectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasFloatVector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "float[]",
+                            "alias": {
+                                "name": "AliasFloatVector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "float[]",
+                "alias": {
+                    "name": "AliasFloatVector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasDoubleVectorCallback",
+            "funcName": "CallFuncAliasDoubleVectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasDoubleVector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "double[]",
+                            "alias": {
+                                "name": "AliasDoubleVector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "double[]",
+                "alias": {
+                    "name": "AliasDoubleVector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasStringVectorCallback",
+            "funcName": "CallFuncAliasStringVectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasStringVector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "string[]",
+                            "alias": {
+                                "name": "AliasStringVector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "string[]",
+                "alias": {
+                    "name": "AliasStringVector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasAnyVectorCallback",
+            "funcName": "CallFuncAliasAnyVectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasAnyVector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "any[]",
+                            "alias": {
+                                "name": "AliasAnyVector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "any[]",
+                "alias": {
+                    "name": "AliasAnyVector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasVec2VectorCallback",
+            "funcName": "CallFuncAliasVec2VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasVec2Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "vec2[]",
+                            "alias": {
+                                "name": "AliasVec2Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "vec2[]",
+                "alias": {
+                    "name": "AliasVec2Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasVec3VectorCallback",
+            "funcName": "CallFuncAliasVec3VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasVec3Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "vec3[]",
+                            "alias": {
+                                "name": "AliasVec3Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "vec3[]",
+                "alias": {
+                    "name": "AliasVec3Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasVec4VectorCallback",
+            "funcName": "CallFuncAliasVec4VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasVec4Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "vec4[]",
+                            "alias": {
+                                "name": "AliasVec4Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "vec4[]",
+                "alias": {
+                    "name": "AliasVec4Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasMat4x4VectorCallback",
+            "funcName": "CallFuncAliasMat4x4VectorCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasMat4x4Vector",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "mat4x4[]",
+                            "alias": {
+                                "name": "AliasMat4x4Vector"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "mat4x4[]",
+                "alias": {
+                    "name": "AliasMat4x4Vector"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasVec2Callback",
+            "funcName": "CallFuncAliasVec2Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasVec2",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "vec2",
+                            "alias": {
+                                "name": "AliasVec2"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "vec2",
+                "alias": {
+                    "name": "AliasVec2"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasVec3Callback",
+            "funcName": "CallFuncAliasVec3Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasVec3",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "vec3",
+                            "alias": {
+                                "name": "AliasVec3"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "vec3",
+                "alias": {
+                    "name": "AliasVec3"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasVec4Callback",
+            "funcName": "CallFuncAliasVec4Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasVec4",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "vec4",
+                            "alias": {
+                                "name": "AliasVec4"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "vec4",
+                "alias": {
+                    "name": "AliasVec4"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasMat4x4Callback",
+            "funcName": "CallFuncAliasMat4x4Callback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasMat4x4",
+                        "paramTypes": [],
+                        "retType": {
+                            "type": "mat4x4",
+                            "alias": {
+                                "name": "AliasMat4x4"
+                            }
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "mat4x4",
+                "alias": {
+                    "name": "AliasMat4x4"
+                }
+            }
+        },
+        {
+            "name": "CallFuncAliasAllCallback",
+            "funcName": "CallFuncAliasAllCallback",
+            "paramTypes": [
+                {
+                    "name": "func",
+                    "type": "function",
+                    "ref": false,
+                    "prototype": {
+                        "name": "FuncAliasAll",
+						"paramTypes": [
+							{ "name": "aBool",      "type": "bool",        "ref": false, "alias": { "name": "AliasBool" } },
+							{ "name": "aChar8",     "type": "char8",       "ref": false, "alias": { "name": "AliasChar8" } },
+							{ "name": "aChar16",    "type": "char16",      "ref": false, "alias": { "name": "AliasChar16" } },
+							{ "name": "aInt8",      "type": "int8",        "ref": false, "alias": { "name": "AliasInt8" } },
+							{ "name": "aInt16",     "type": "int16",       "ref": false, "alias": { "name": "AliasInt16" } },
+							{ "name": "aInt32",     "type": "int32",       "ref": false, "alias": { "name": "AliasInt32" } },
+							{ "name": "aInt64",     "type": "int64",       "ref": false, "alias": { "name": "AliasInt64" } },
+							{ "name": "aPtr",       "type": "ptr64",       "ref": false, "alias": { "name": "AliasPtr" } },
+							{ "name": "aFloat",     "type": "float",       "ref": false, "alias": { "name": "AliasFloat" } },
+							{ "name": "aDouble",    "type": "double",      "ref": false, "alias": { "name": "AliasDouble" } },
+							{ "name": "aString",    "type": "string",      "ref": false, "alias": { "name": "AliasString" } },
+							{ "name": "aAny",       "type": "any",         "ref": false, "alias": { "name": "AliasAny" } },
+							{ "name": "aVec2",      "type": "vec2",        "ref": false, "alias": { "name": "AliasVec2" } },
+							{ "name": "aVec3",      "type": "vec3",        "ref": false, "alias": { "name": "AliasVec3" } },
+							{ "name": "aVec4",      "type": "vec4",        "ref": false, "alias": { "name": "AliasVec4" } },
+							{ "name": "aMat4x4",    "type": "mat4x4",      "ref": false, "alias": { "name": "AliasMat4x4" } },
+							{ "name": "aBoolVec",   "type": "bool[]",      "ref": false, "alias": { "name": "AliasBoolVector" } },
+							{ "name": "aChar8Vec",  "type": "char8[]",     "ref": false, "alias": { "name": "AliasChar8Vector" } },
+							{ "name": "aChar16Vec", "type": "char16[]",    "ref": false, "alias": { "name": "AliasChar16Vector" } },
+							{ "name": "aInt8Vec",   "type": "int8[]",      "ref": false, "alias": { "name": "AliasInt8Vector" } },
+							{ "name": "aInt16Vec",  "type": "int16[]",     "ref": false, "alias": { "name": "AliasInt16Vector" } },
+							{ "name": "aInt32Vec",  "type": "int32[]",     "ref": false, "alias": { "name": "AliasInt32Vector" } },
+							{ "name": "aInt64Vec",  "type": "int64[]",     "ref": false, "alias": { "name": "AliasInt64Vector" } },
+							{ "name": "aPtrVec",    "type": "ptr64[]",     "ref": false, "alias": { "name": "AliasPtrVector" } },
+							{ "name": "aFloatVec",  "type": "float[]",     "ref": false, "alias": { "name": "AliasFloatVector" } },
+							{ "name": "aDoubleVec", "type": "double[]",    "ref": false, "alias": { "name": "AliasDoubleVector" } },
+							{ "name": "aStringVec", "type": "string[]",    "ref": false, "alias": { "name": "AliasStringVector" } },
+							{ "name": "aAnyVec",    "type": "any[]",       "ref": false, "alias": { "name": "AliasAnyVector" } },
+							{ "name": "aVec2Vec",   "type": "vec2[]",      "ref": false, "alias": { "name": "AliasVec2Vector" } },
+							{ "name": "aVec3Vec",   "type": "vec3[]",      "ref": false, "alias": { "name": "AliasVec3Vector" } },
+							{ "name": "aVec4Vec",   "type": "vec4[]",      "ref": false, "alias": { "name": "AliasVec4Vector" } },
+							{ "name": "aaMat4x4Vec", "type": "mat4x4[]",    "ref": false, "alias": { "name": "AliasMat4x4Vector" } }
+						],
+                        "retType": {
+                            "type": "string"
+                        }
+                    }
+                }
+            ],
+            "retType": {
+                "type": "string"
+            }
+        },
+
 		{
 			"name": "CallFunc1Callback",
 			"funcName": "CallFunc1Callback",

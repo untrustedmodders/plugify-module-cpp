@@ -1,9 +1,10 @@
 #pragma once
 
+#include "enums.hpp"
+#include "aliases.hpp"
+#include "delegates.hpp"
 #include <plugin_export.h>
 
-#include "enums.hpp"
-#include "delegates.hpp"
 // Generated from cross_call_master.pplugin (group: resource)
 
 namespace cross_call_master {

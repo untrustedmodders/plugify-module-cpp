@@ -130,6 +130,10 @@ cross_call_master::_ParamRefVectorsCallback __cross_call_master_ParamRefVectorsC
 
 cross_call_master::_ParamAllPrimitivesCallback __cross_call_master_ParamAllPrimitivesCallback = nullptr;
 
+cross_call_master::_ParamAllAliasesCallback __cross_call_master_ParamAllAliasesCallback = nullptr;
+
+cross_call_master::_ParamAllRefAliasesCallback __cross_call_master_ParamAllRefAliasesCallback = nullptr;
+
 cross_call_master::_ParamEnumCallback __cross_call_master_ParamEnumCallback = nullptr;
 
 cross_call_master::_ParamEnumRefCallback __cross_call_master_ParamEnumRefCallback = nullptr;
@@ -221,6 +225,90 @@ cross_call_master::_CallFuncVec3Callback __cross_call_master_CallFuncVec3Callbac
 cross_call_master::_CallFuncVec4Callback __cross_call_master_CallFuncVec4Callback = nullptr;
 
 cross_call_master::_CallFuncMat4x4Callback __cross_call_master_CallFuncMat4x4Callback = nullptr;
+
+cross_call_master::_CallFuncAliasBoolCallback __cross_call_master_CallFuncAliasBoolCallback = nullptr;
+
+cross_call_master::_CallFuncAliasChar8Callback __cross_call_master_CallFuncAliasChar8Callback = nullptr;
+
+cross_call_master::_CallFuncAliasChar16Callback __cross_call_master_CallFuncAliasChar16Callback = nullptr;
+
+cross_call_master::_CallFuncAliasInt8Callback __cross_call_master_CallFuncAliasInt8Callback = nullptr;
+
+cross_call_master::_CallFuncAliasInt16Callback __cross_call_master_CallFuncAliasInt16Callback = nullptr;
+
+cross_call_master::_CallFuncAliasInt32Callback __cross_call_master_CallFuncAliasInt32Callback = nullptr;
+
+cross_call_master::_CallFuncAliasInt64Callback __cross_call_master_CallFuncAliasInt64Callback = nullptr;
+
+cross_call_master::_CallFuncAliasUInt8Callback __cross_call_master_CallFuncAliasUInt8Callback = nullptr;
+
+cross_call_master::_CallFuncAliasUInt16Callback __cross_call_master_CallFuncAliasUInt16Callback = nullptr;
+
+cross_call_master::_CallFuncAliasUInt32Callback __cross_call_master_CallFuncAliasUInt32Callback = nullptr;
+
+cross_call_master::_CallFuncAliasUInt64Callback __cross_call_master_CallFuncAliasUInt64Callback = nullptr;
+
+cross_call_master::_CallFuncAliasPtrCallback __cross_call_master_CallFuncAliasPtrCallback = nullptr;
+
+cross_call_master::_CallFuncAliasFloatCallback __cross_call_master_CallFuncAliasFloatCallback = nullptr;
+
+cross_call_master::_CallFuncAliasDoubleCallback __cross_call_master_CallFuncAliasDoubleCallback = nullptr;
+
+cross_call_master::_CallFuncAliasStringCallback __cross_call_master_CallFuncAliasStringCallback = nullptr;
+
+cross_call_master::_CallFuncAliasAnyCallback __cross_call_master_CallFuncAliasAnyCallback = nullptr;
+
+cross_call_master::_CallFuncAliasFunctionCallback __cross_call_master_CallFuncAliasFunctionCallback = nullptr;
+
+cross_call_master::_CallFuncAliasBoolVectorCallback __cross_call_master_CallFuncAliasBoolVectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasChar8VectorCallback __cross_call_master_CallFuncAliasChar8VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasChar16VectorCallback __cross_call_master_CallFuncAliasChar16VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasInt8VectorCallback __cross_call_master_CallFuncAliasInt8VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasInt16VectorCallback __cross_call_master_CallFuncAliasInt16VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasInt32VectorCallback __cross_call_master_CallFuncAliasInt32VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasInt64VectorCallback __cross_call_master_CallFuncAliasInt64VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasUInt8VectorCallback __cross_call_master_CallFuncAliasUInt8VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasUInt16VectorCallback __cross_call_master_CallFuncAliasUInt16VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasUInt32VectorCallback __cross_call_master_CallFuncAliasUInt32VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasUInt64VectorCallback __cross_call_master_CallFuncAliasUInt64VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasPtrVectorCallback __cross_call_master_CallFuncAliasPtrVectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasFloatVectorCallback __cross_call_master_CallFuncAliasFloatVectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasDoubleVectorCallback __cross_call_master_CallFuncAliasDoubleVectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasStringVectorCallback __cross_call_master_CallFuncAliasStringVectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasAnyVectorCallback __cross_call_master_CallFuncAliasAnyVectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasVec2VectorCallback __cross_call_master_CallFuncAliasVec2VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasVec3VectorCallback __cross_call_master_CallFuncAliasVec3VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasVec4VectorCallback __cross_call_master_CallFuncAliasVec4VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasMat4x4VectorCallback __cross_call_master_CallFuncAliasMat4x4VectorCallback = nullptr;
+
+cross_call_master::_CallFuncAliasVec2Callback __cross_call_master_CallFuncAliasVec2Callback = nullptr;
+
+cross_call_master::_CallFuncAliasVec3Callback __cross_call_master_CallFuncAliasVec3Callback = nullptr;
+
+cross_call_master::_CallFuncAliasVec4Callback __cross_call_master_CallFuncAliasVec4Callback = nullptr;
+
+cross_call_master::_CallFuncAliasMat4x4Callback __cross_call_master_CallFuncAliasMat4x4Callback = nullptr;
+
+cross_call_master::_CallFuncAliasAllCallback __cross_call_master_CallFuncAliasAllCallback = nullptr;
 
 cross_call_master::_CallFunc1Callback __cross_call_master_CallFunc1Callback = nullptr;
 

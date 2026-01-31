@@ -8,10 +8,6 @@
 #include <api.hpp>
 #include <module_export.h>
 
-#include <unordered_map>
-#include <map>
-#include <array>
-
 using namespace plugify;
 
 namespace cpplm {

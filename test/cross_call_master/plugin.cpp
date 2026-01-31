@@ -22,7 +22,8 @@
 #define TEST_PARAMS_WITH_REFS (1 << 5)
 #define TEST_PARAMS_REF_ARRAYS (1 << 6)
 #define TEST_PARAMS_ALL_PRIMITIVES (1 << 7)
-#define TEST_PARAMS_FUNCTIONS (1 << 8)
+#define TEST_PARAMS_VARIANTS (1 << 8)
+#define TEST_PARAMS_FUNCTIONS (1 << 9)
 #define TEST_REVERSE_NO_PARAM_ONLY_RETURN_PRIMITIVES (1 << 16)
 #define TEST_REVERSE_NO_PARAM_ONLY_RETURN_OBJECTS (1 << 17)
 #define TEST_REVERSE_NO_PARAM_ONLY_RETURN_ARRAYS (1 << 18)
@@ -566,6 +567,170 @@ plg::vector<Example> MockFuncEnum(Example p1, plg::vector<Example> &p2) {
     return {p1, Example::First};
 }
 
+cross_call_worker::AliasBool MockFuncAliasBool() { return true; }
+cross_call_worker::AliasChar8 MockFuncAliasChar8() { return 'Z'; }
+cross_call_worker::AliasChar16 MockFuncAliasChar16() { return u'X'; }
+cross_call_worker::AliasInt8 MockFuncAliasInt8() { return -8; }
+cross_call_worker::AliasInt16 MockFuncAliasInt16() { return -160; }
+cross_call_worker::AliasInt32 MockFuncAliasInt32() { return -3200; }
+cross_call_worker::AliasInt64 MockFuncAliasInt64() { return -64000; }
+cross_call_worker::AliasUInt8 MockFuncAliasUInt8() { return 200; }
+cross_call_worker::AliasUInt16 MockFuncAliasUInt16() { return 42000; }
+cross_call_worker::AliasUInt32 MockFuncAliasUInt32() { return 123456; }
+cross_call_worker::AliasUInt64 MockFuncAliasUInt64() { return 987654321ULL; }
+cross_call_worker::AliasPtr MockFuncAliasPtr() { return reinterpret_cast<void*>(0x10); }
+cross_call_worker::AliasFloat MockFuncAliasFloat() { return -1.25f; }
+cross_call_worker::AliasDouble MockFuncAliasDouble() { return 42.4242; }
+cross_call_worker::AliasFunction MockFuncAliasFunction() { return reinterpret_cast<cross_call_worker::AliasFunction>(0x20); }
+cross_call_worker::AliasString MockFuncAliasString() { return "Replaced value"; }
+cross_call_worker::AliasAny MockFuncAliasAny() { return 0xCAFEBABE; }
+
+cross_call_worker::AliasBoolVector MockFuncAliasBoolVector() { return {true, false, true}; }
+cross_call_worker::AliasChar8Vector MockFuncAliasChar8Vector() { return {'X', 'Y', 'Z'}; }
+cross_call_worker::AliasChar16Vector MockFuncAliasChar16Vector() { return {u'X', u'Y'}; }
+cross_call_worker::AliasInt8Vector MockFuncAliasInt8Vector() { return {-1, 0, 1}; }
+cross_call_worker::AliasInt16Vector MockFuncAliasInt16Vector() { return {-500, 0, 500}; }
+cross_call_worker::AliasInt32Vector MockFuncAliasInt32Vector() { return {-10000, 0, 10000}; }
+cross_call_worker::AliasInt64Vector MockFuncAliasInt64Vector() { return {-100000, 0, 100000}; }
+cross_call_worker::AliasUInt8Vector MockFuncAliasUInt8Vector() { return {0, 128, 255}; }
+cross_call_worker::AliasUInt16Vector MockFuncAliasUInt16Vector() { return {0, 32768, 65535}; }
+cross_call_worker::AliasUInt32Vector MockFuncAliasUInt32Vector() { return {1, 100000, 4000000000U}; }
+cross_call_worker::AliasUInt64Vector MockFuncAliasUInt64Vector() { return {1ULL, 5000000000ULL}; }
+cross_call_worker::AliasPtrVector MockFuncAliasPtrVector() {
+    return {
+        reinterpret_cast<void*>(0x100),
+        reinterpret_cast<void*>(0x200)
+    };
+}
+cross_call_worker::AliasFloatVector MockFuncAliasFloatVector() { return {-0.5f, 0.0f, 0.5f}; }
+cross_call_worker::AliasDoubleVector MockFuncAliasDoubleVector() { return {-3.14, 0.0, 3.14}; }
+cross_call_worker::AliasStringVector MockFuncAliasStringVector() { return {"Alpha", "Beta", "Gamma"}; }
+
+cross_call_worker::AliasVec2Vector MockFuncAliasVec2Vector() {
+    return {
+        {-1.0f, 1.0f},
+        {10.0f, -10.0f},
+        {0.5f, 0.25f}
+    };
+}
+
+cross_call_worker::AliasVec3Vector MockFuncAliasVec3Vector() {
+    return {
+        {1.0f, 0.0f, -1.0f},
+        {9.9f, 8.8f, 7.7f},
+        {0.0f, 1.0f, 0.0f}
+    };
+}
+
+cross_call_worker::AliasVec4Vector MockFuncAliasVec4Vector() {
+    return {
+        {1.0f, 1.0f, 1.0f, 1.0f},
+        {-1.0f, -1.0f, -1.0f, -1.0f},
+        {0.25f, 0.5f, 0.75f, 1.0f}
+    };
+}
+
+cross_call_worker::AliasMat4x4Vector MockFuncAliasMat4x4Vector() {
+    return {
+        {
+            0.0f, 1.0f, 0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f
+        },
+        {
+            3.0f, 1.0f, 4.0f, 1.0f,
+            5.0f, 9.0f, 2.0f, 6.0f,
+            5.0f, 3.0f, 5.0f, 8.0f,
+            9.0f, 7.0f, 9.0f, 3.0f
+        }
+    };
+}
+
+cross_call_worker::AliasVec2 MockFuncAliasVec2() { return {-2.0f, 8.0f}; }
+cross_call_worker::AliasVec3 MockFuncAliasVec3() { return {6.0f, -3.0f, 1.0f}; }
+cross_call_worker::AliasVec4 MockFuncAliasVec4() { return {0.1f, 0.2f, 0.3f, 0.4f}; }
+
+cross_call_worker::AliasMat4x4 MockFuncAliasMat4x4() {
+    return {
+        1.0f, 2.0f, 3.0f, 4.0f,
+        5.0f, 6.0f, 7.0f, 8.0f,
+        9.0f, 10.0f, 11.0f, 12.0f,
+        13.0f, 14.0f, 15.0f, 16.0f
+    };
+}
+
+plg::string MockFuncAliasAll(
+    const cross_call_worker::AliasBool          aBool,
+    const cross_call_worker::AliasChar8         aChar8,
+    const cross_call_worker::AliasChar16        aChar16,
+    const cross_call_worker::AliasInt8          aInt8,
+    const cross_call_worker::AliasInt16         aInt16,
+    const cross_call_worker::AliasInt32         aInt32,
+    const cross_call_worker::AliasInt64         aInt64,
+    const cross_call_worker::AliasPtr           aPtr,
+    const cross_call_worker::AliasFloat         aFloat,
+    const cross_call_worker::AliasDouble        aDouble,
+    const cross_call_worker::AliasString&       aString,
+    const cross_call_worker::AliasAny&          aAny,
+    const cross_call_worker::AliasVec2&         aVec2,
+    const cross_call_worker::AliasVec3&         aVec3,
+    const cross_call_worker::AliasVec4&         aVec4,
+    const cross_call_worker::AliasMat4x4&       aMat4x4,
+    const cross_call_worker::AliasBoolVector&   aBoolVec,
+    const cross_call_worker::AliasChar8Vector&  aChar8Vec,
+    const cross_call_worker::AliasChar16Vector& aChar16Vec,
+    const cross_call_worker::AliasInt8Vector&   aInt8Vec,
+    const cross_call_worker::AliasInt16Vector&  aInt16Vec,
+    const cross_call_worker::AliasInt32Vector&  aInt32Vec,
+    const cross_call_worker::AliasInt64Vector&  aInt64Vec,
+    const cross_call_worker::AliasPtrVector&    aPtrVec,
+    const cross_call_worker::AliasFloatVector&  aFloatVec,
+    const cross_call_worker::AliasDoubleVector& aDoubleVec,
+    const cross_call_worker::AliasStringVector& aStringVec,
+    const cross_call_worker::AliasAnyVector&    aAnyVec,
+    const cross_call_worker::AliasVec2Vector&   aVec2Vec,
+    const cross_call_worker::AliasVec3Vector&   aVec3Vec,
+    const cross_call_worker::AliasVec4Vector&   aVec4Vec,
+    const cross_call_worker::AliasMat4x4Vector& aMat4x4Vec
+) {
+    return std::format(
+        "{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}",
+        aBool,
+        aChar8,
+        static_cast<uint16_t>(aChar16),
+        aInt8,
+        aInt16,
+        aInt32,
+        aInt64,
+        aPtr,
+        aFloat,
+        aDouble,
+        aString,
+        aAny,
+        aVec2,
+        aVec3,
+        aVec4,
+        aMat4x4,
+        aBoolVec,
+        aChar8Vec,
+        aChar16Vec,
+        aInt8Vec,
+        aInt16Vec,
+        aInt32Vec,
+        aInt64Vec,
+        aPtrVec,
+        aFloatVec,
+        aDoubleVec,
+        aStringVec,
+        aAnyVec,
+        aVec2Vec,
+        aVec3Vec,
+        aVec4Vec,
+        aMat4x4Vec
+    );
+}
+
 class CrossCallMaster final : public plg::IPluginEntry {
 public:
     void OnPluginStart() final {
@@ -574,6 +739,7 @@ public:
         ParamsWithRefs();
         ParamsRefVectors();
         ParamsAllPrimitives();
+        ParamsVariants();
         ParamsFunctions();
         ReverseNoParamOnlyReturn();
         ReverseParamsNoRefs();
@@ -1443,6 +1609,212 @@ public:
                 test.Fail(std::format("Wrong return {}, expected {}", result, expected));
             }
         });
+        _tests.Add("ParamAllAliases", [](SimpleTests::Test &test) {
+        	const auto expected = int32_t{-1};
+        	cross_call_worker::AliasBool aBool = {};
+			cross_call_worker::AliasChar8 aChar8 = {};
+			cross_call_worker::AliasChar16 aChar16 = {};
+			cross_call_worker::AliasInt8 aInt8 = {};
+			cross_call_worker::AliasInt16 aInt16 = {};
+			cross_call_worker::AliasInt32 aInt32 = {};
+			cross_call_worker::AliasInt64 aInt64 = {};
+			cross_call_worker::AliasPtr aPtr = {};
+			cross_call_worker::AliasFloat aFloat = {};
+			cross_call_worker::AliasDouble aDouble = {};
+			cross_call_worker::AliasString aString = {};
+			cross_call_worker::AliasAny aAny = {};
+			cross_call_worker::AliasVec2 aVec2 = {};
+			cross_call_worker::AliasVec3 aVec3 = {};
+			cross_call_worker::AliasVec4 aVec4 = {};
+			cross_call_worker::AliasMat4x4 aMat4x4 = {};
+			cross_call_worker::AliasBoolVector aBoolVec = {aBool};
+			cross_call_worker::AliasChar8Vector aChar8Vec = {aChar8};
+			cross_call_worker::AliasChar16Vector aChar16Vec = {aChar16};
+			cross_call_worker::AliasInt8Vector aInt8Vec = {aInt8};
+			cross_call_worker::AliasInt16Vector aInt16Vec = {aInt16};
+			cross_call_worker::AliasInt32Vector aInt32Vec = {aInt32};
+			cross_call_worker::AliasInt64Vector aInt64Vec = {aInt64};
+			cross_call_worker::AliasPtrVector aPtrVec = {aPtr};
+			cross_call_worker::AliasFloatVector aFloatVec = {aFloat};
+			cross_call_worker::AliasDoubleVector aDoubleVec = {aDouble};
+			cross_call_worker::AliasStringVector aStringVec = {aString};
+			cross_call_worker::AliasAnyVector aAnyVec = {aAny};
+			cross_call_worker::AliasVec2Vector aVec2Vec = {aVec2};
+			cross_call_worker::AliasVec3Vector aVec3Vec = {aVec3};
+			cross_call_worker::AliasVec4Vector aVec4Vec = {aVec4};
+			cross_call_worker::AliasMat4x4Vector aMat4x4Vec = {aMat4x4};
+			const auto result = cross_call_worker::ParamAllAliases(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aMat4x4Vec);
+			if (result != expected) {
+				test.Fail(std::format("Wrong return {}, expected {}", result, expected));
+			}
+        });
+        _tests.Add("ParamAllRefAliases", [](SimpleTests::Test &test) {
+        	const auto expected = int32_t{24};
+        	cross_call_worker::AliasBool expectedBool{true};
+			cross_call_worker::AliasChar8 expectedChar8{'A'};
+			cross_call_worker::AliasChar16 expectedChar16{u'0'};
+			cross_call_worker::AliasInt8 expectedInt8{1};
+			cross_call_worker::AliasInt16 expectedInt16{2};
+			cross_call_worker::AliasInt32 expectedInt32{3};
+			cross_call_worker::AliasInt64 expectedInt64{4};
+			cross_call_worker::AliasPtr expectedPtr{};
+			cross_call_worker::AliasFloat expectedFloat{5.0f};
+			cross_call_worker::AliasDouble expectedDouble{5.0};
+			cross_call_worker::AliasString expectedString{"seven"};
+			cross_call_worker::AliasAny expectedAny{"six"};
+			cross_call_worker::AliasVec2 expectedVec2{0.1f, 0.2f};
+			cross_call_worker::AliasVec3 expectedVec3{0.3f, 0.4f, 0.5f};
+			cross_call_worker::AliasVec4 expectedVec4{0.6f, 0.7f, 0.8f, 0.9f};
+			cross_call_worker::AliasMat4x4 expectedMat4x4{1.4f, 1.1f, 1.2f, 1.3f, 2.4f, 2.1f, 2.2f, 2.3f, 3.4f, 3.1f, 3.2f, 3.3f, 4.4f, 4.1f, 4.2f, 4.3f};
+			cross_call_worker::AliasBoolVector expectedBoolVec{expectedBool};
+			cross_call_worker::AliasChar8Vector expectedChar8Vec{expectedChar8};
+			cross_call_worker::AliasChar16Vector expectedChar16Vec{expectedChar16};
+			cross_call_worker::AliasInt8Vector expectedInt8Vec{expectedInt8};
+			cross_call_worker::AliasInt16Vector expectedInt16Vec{expectedInt16};
+			cross_call_worker::AliasInt32Vector expectedInt32Vec{expectedInt32};
+			cross_call_worker::AliasInt64Vector expectedInt64Vec{expectedInt64};
+			cross_call_worker::AliasPtrVector expectedPtrVec{expectedPtr};
+			cross_call_worker::AliasFloatVector expectedFloatVec{expectedFloat};
+			cross_call_worker::AliasDoubleVector expectedDoubleVec{expectedDouble};
+			cross_call_worker::AliasStringVector expectedStringVec{expectedString};
+			cross_call_worker::AliasAnyVector expectedAnyVec{expectedAny};
+			cross_call_worker::AliasVec2Vector expectedVec2Vec{expectedVec2};
+			cross_call_worker::AliasVec3Vector expectedVec3Vec{expectedVec3};
+			cross_call_worker::AliasVec4Vector expectedVec4Vec{expectedVec4};
+			cross_call_worker::AliasMat4x4Vector expectedMat4x4Vec{expectedMat4x4};
+        	cross_call_worker::AliasBool aBool = {};
+			cross_call_worker::AliasChar8 aChar8 = {};
+			cross_call_worker::AliasChar16 aChar16 = {};
+			cross_call_worker::AliasInt8 aInt8 = {};
+			cross_call_worker::AliasInt16 aInt16 = {};
+			cross_call_worker::AliasInt32 aInt32 = {};
+			cross_call_worker::AliasInt64 aInt64 = {};
+			cross_call_worker::AliasPtr aPtr = {};
+			cross_call_worker::AliasFloat aFloat = {};
+			cross_call_worker::AliasDouble aDouble = {};
+			cross_call_worker::AliasString aString = {};
+			cross_call_worker::AliasAny aAny = {};
+			cross_call_worker::AliasVec2 aVec2 = {};
+			cross_call_worker::AliasVec3 aVec3 = {};
+			cross_call_worker::AliasVec4 aVec4 = {};
+			cross_call_worker::AliasMat4x4 aMat4x4 = {};
+			cross_call_worker::AliasBoolVector aBoolVec = {aBool};
+			cross_call_worker::AliasChar8Vector aChar8Vec = {aChar8};
+			cross_call_worker::AliasChar16Vector aChar16Vec = {aChar16};
+			cross_call_worker::AliasInt8Vector aInt8Vec = {aInt8};
+			cross_call_worker::AliasInt16Vector aInt16Vec = {aInt16};
+			cross_call_worker::AliasInt32Vector aInt32Vec = {aInt32};
+			cross_call_worker::AliasInt64Vector aInt64Vec = {aInt64};
+			cross_call_worker::AliasPtrVector aPtrVec = {aPtr};
+			cross_call_worker::AliasFloatVector aFloatVec = {aFloat};
+			cross_call_worker::AliasDoubleVector aDoubleVec = {aDouble};
+			cross_call_worker::AliasStringVector aStringVec = {aString};
+			cross_call_worker::AliasAnyVector aAnyVec = {aAny};
+			cross_call_worker::AliasVec2Vector aVec2Vec = {aVec2};
+			cross_call_worker::AliasVec3Vector aVec3Vec = {aVec3};
+			cross_call_worker::AliasVec4Vector aVec4Vec = {aVec4};
+			cross_call_worker::AliasMat4x4Vector aMat4x4Vec = {aMat4x4};
+        	const auto result = cross_call_worker::ParamAllRefAliases(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aMat4x4Vec);
+			if (result != expected) {
+				test.Fail(std::format("Wrong return {}, expected {}", result, expected));
+			}
+        	if (aBool != expectedBool) {
+				test.Fail(std::format("Wrong bool param {}, expected {}", aBool, expectedBool));
+			}
+        	if (aChar8 != expectedChar8) {
+				test.Fail(std::format("Wrong char8 param {}, expected {}", aChar8, expectedChar8));
+			}
+			if (aChar16 != expectedChar16) {
+				test.Fail(std::format("Wrong char16 param {}, expected {}", aChar16, expectedChar16));
+			}
+			if (aInt8 != expectedInt8) {
+				test.Fail(std::format("Wrong int8 param {}, expected {}", aInt8, expectedInt8));
+			}
+			if (aInt16 != expectedInt16) {
+				test.Fail(std::format("Wrong int16 param {}, expected {}", aInt16, expectedInt16));
+			}
+			if (aInt32 != expectedInt32) {
+				test.Fail(std::format("Wrong int32 param {}, expected {}", aInt32, expectedInt32));
+			}
+			if (aInt64 != expectedInt64) {
+				test.Fail(std::format("Wrong int64 param {}, expected {}", aInt64, expectedInt64));
+			}
+			if (aPtr != expectedPtr) {
+				test.Fail(std::format("Wrong ptr param {}, expected {}", aPtr, expectedPtr));
+			}
+			if (aFloat != expectedFloat) {
+				test.Fail(std::format("Wrong float param {}, expected {}", aFloat, expectedFloat));
+			}
+			if (aDouble != expectedDouble) {
+				test.Fail(std::format("Wrong double param {}, expected {}", aDouble, expectedDouble));
+			}
+			if (aString != expectedString) {
+				test.Fail(std::format("Wrong string param {}, expected {}", aString, expectedString));
+			}
+			if (std::format("{}", aAny) != std::format("{}", expectedAny)) {
+				test.Fail(std::format("Wrong any param {}, expected {}", aAny, expectedAny));
+			}
+			if (aVec2 != expectedVec2) {
+				test.Fail(std::format("Wrong vec2 param {}, expected {}", aVec2, expectedVec2));
+			}
+			if (aVec3 != expectedVec3) {
+				test.Fail(std::format("Wrong vec3 param {}, expected {}", aVec3, expectedVec3));
+			}
+			if (aVec4 != expectedVec4) {
+				test.Fail(std::format("Wrong vec4 param {}, expected {}", aVec4, expectedVec4));
+			}
+			if (aMat4x4 != expectedMat4x4) {
+				test.Fail(std::format("Wrong mat4x4 param {}, expected {}", aMat4x4, expectedMat4x4));
+			}
+        	if (aBoolVec != expectedBoolVec) {
+				test.Fail(std::format("Wrong bool vec param {}, expected {}", aBoolVec, expectedBoolVec));
+			}
+			if (aChar8Vec != expectedChar8Vec) {
+				test.Fail(std::format("Wrong char8 vec param {}, expected {}", aChar8Vec, expectedChar8Vec));
+			}
+			if (aChar16Vec != expectedChar16Vec) {
+				test.Fail(std::format("Wrong char16 vec param {}, expected {}", aChar16Vec, expectedChar16Vec));
+			}
+			if (aInt8Vec != expectedInt8Vec) {
+				test.Fail(std::format("Wrong int8 vec param {}, expected {}", aInt8Vec, expectedInt8Vec));
+			}
+			if (aInt16Vec != expectedInt16Vec) {
+				test.Fail(std::format("Wrong int16 vec param {}, expected {}", aInt16Vec, expectedInt16Vec));
+			}
+			if (aInt32Vec != expectedInt32Vec) {
+				test.Fail(std::format("Wrong int32 vec param {}, expected {}", aInt32Vec, expectedInt32Vec));
+			}
+			if (aInt64Vec != expectedInt64Vec) {
+				test.Fail(std::format("Wrong int64 vec param {}, expected {}", aInt64Vec, expectedInt64Vec));
+			}
+			if (aPtrVec != expectedPtrVec) {
+				test.Fail(std::format("Wrong ptr vec param {}, expected {}", aPtrVec, expectedPtrVec));
+			}
+			if (aFloatVec != expectedFloatVec) {
+				test.Fail(std::format("Wrong float vec param {}, expected {}", aFloatVec, expectedFloatVec));
+			}
+			if (aDoubleVec != expectedDoubleVec) {
+				test.Fail(std::format("Wrong double vec param {}, expected {}", aDoubleVec, expectedDoubleVec));
+			}
+			if (aStringVec != expectedStringVec) {
+				test.Fail(std::format("Wrong string vec param {}, expected {}", aStringVec, expectedStringVec));
+			}
+			if (std::format("{}", aAnyVec) != std::format("{}", expectedAnyVec)) {
+				test.Fail(std::format("Wrong any vec param {}, expected {}", aAnyVec, expectedAnyVec));
+			}
+			if (aVec2Vec != expectedVec2Vec) {
+				test.Fail(std::format("Wrong vec2 vec param {}, expected {}", aVec2Vec, expectedVec2Vec));
+			}
+			if (aVec3Vec != expectedVec3Vec) {
+				test.Fail(std::format("Wrong vec3 vec param {}, expected {}", aVec3Vec, expectedVec3Vec));
+			}
+			if (aVec4Vec != expectedVec4Vec) {
+				test.Fail(std::format("Wrong vec4 vec param {}, expected {}", aVec4Vec, expectedVec4Vec));
+			}
+			if (aMat4x4Vec != expectedMat4x4Vec) {
+				test.Fail(std::format("Wrong mat4x4 vec param {}, expected {}", aMat4x4Vec, expectedMat4x4Vec));
+			}
+        });
         _tests.Add("ParamEnum", [](SimpleTests::Test &test) {
             const auto expected = int64_t{10};
             const auto enumValue = Example::Forth;
@@ -1471,6 +1843,32 @@ public:
             }
         });
 #endif// TEST_CASES & TEST_PARAMS_ALL_PRIMITIVES
+    }
+
+	void ParamsVariants() {
+#if TEST_CASES & TEST_PARAMS_VARIANTS
+    	_tests.Add("ParamVariant", [&](SimpleTests::Test &) {
+    		plg::any p1 = "my custom string with enough chars";
+			plg::vector<plg::any> p2{
+				'X', u'☢', -1, -1000, -1000000, -1000000000000LL, 200, 50000, 3000000000LL, 9999999999LL,
+				reinterpret_cast<void *>(0xfedcbaabcdefLL), 0.001f, 987654.456789
+			};
+			cross_call_worker::ParamVariant(p1, p2);
+		});
+    	_tests.Add("ParamVariantRef", [&](SimpleTests::Test &test) {
+    		const plg::any p1Expected = 'Z';
+    		const plg::vector<plg::any> p2Expected = {false, 6.28, plg::vector<double>{1, 2, 3}, nullptr, 123456789};
+    		plg::any p1{};
+			plg::vector<plg::any> p2{};
+			cross_call_worker::ParamVariantRef(p1, p2);
+    		if (std::format("{}", p1) != std::format("{}", p1Expected)) {
+				test.Fail(std::format("Wrong p1 {}, expected {}", p1, p1Expected));
+			}
+			if (std::format("{}", p2) != std::format("{}", p2Expected)) {
+				test.Fail(std::format("Wrong p2 array {}, expected {}", p2, p2Expected));
+			};
+		});
+#endif// TEST_CASES & TEST_PARAMS_VARIANTS
     }
 
     void ParamsFunctions() {
@@ -2130,6 +2528,328 @@ public:
                 test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
             }
         });
+    	_tests.Add("CallFuncAliasBool", [](SimpleTests::Test &test) {
+            const bool expected = MockFuncAliasBool(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasBool(&MockFuncAliasBool);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasChar8", [](SimpleTests::Test &test) {
+            const char expected = MockFuncAliasChar8(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasChar8(&MockFuncAliasChar8);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasChar16", [](SimpleTests::Test &test) {
+            const char16_t expected = MockFuncAliasChar16(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasChar16(&MockFuncAliasChar16);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", static_cast<uint16_t>(result),
+                                      static_cast<uint16_t>(expected)));
+            }
+        });
+        _tests.Add("CallFuncAliasInt8", [](SimpleTests::Test &test) {
+            const int8_t expected = MockFuncAliasInt8(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasInt8(&MockFuncAliasInt8);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasInt16", [](SimpleTests::Test &test) {
+            const int16_t expected = MockFuncAliasInt16(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasInt16(&MockFuncAliasInt16);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasInt32", [](SimpleTests::Test &test) {
+            const int32_t expected = MockFuncAliasInt32(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasInt32(&MockFuncAliasInt32);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasInt64", [](SimpleTests::Test &test) {
+            const int64_t expected = MockFuncAliasInt64(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasInt64(&MockFuncAliasInt64);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasUInt8", [](SimpleTests::Test &test) {
+            const uint8_t expected = MockFuncAliasUInt8(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasUInt8(&MockFuncAliasUInt8);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasUInt16", [](SimpleTests::Test &test) {
+            const uint16_t expected = MockFuncAliasUInt16(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasUInt16(&MockFuncAliasUInt16);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasUInt32", [](SimpleTests::Test &test) {
+            const uint32_t expected = MockFuncAliasUInt32(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasUInt32(&MockFuncAliasUInt32);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasUInt64", [](SimpleTests::Test &test) {
+            const uint64_t expected = MockFuncAliasUInt64(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasUInt64(&MockFuncAliasUInt64);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasPtr", [](SimpleTests::Test &test) {
+            const void *expected = MockFuncAliasPtr(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasPtr(&MockFuncAliasPtr);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasFloat", [](SimpleTests::Test &test) {
+            const float expected = MockFuncAliasFloat(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasFloat(&MockFuncAliasFloat);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasDouble", [](SimpleTests::Test &test) {
+            const double expected = MockFuncAliasDouble(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasDouble(&MockFuncAliasDouble);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasString", [](SimpleTests::Test &test) {
+            const plg::string expected = MockFuncAliasString(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasString(&MockFuncAliasString);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasAny", [](SimpleTests::Test &test) {
+            const plg::any expected = MockFuncAliasAny(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasAny(&MockFuncAliasAny);
+            if (result.index() != expected.index() && std::format("{}", result) != std::format("{}", expected)) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        /*_tests.Add("CallFuncAliasFunction", [&](SimpleTests::Test& test) {
+            const plg::string expected = "0x0"; // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasFunction();
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });*/
+        _tests.Add("CallFuncAliasBoolVector", [](SimpleTests::Test &test) {
+            const plg::vector<bool> expected = MockFuncAliasBoolVector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasBoolVector(&MockFuncAliasBoolVector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasChar8Vector", [](SimpleTests::Test &test) {
+            const plg::vector<char> expected = MockFuncAliasChar8Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasChar8Vector(&MockFuncAliasChar8Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasChar16Vector", [](SimpleTests::Test &test) {
+            const plg::vector<char16_t> expected = MockFuncAliasChar16Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasChar16Vector(&MockFuncAliasChar16Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasInt8Vector", [](SimpleTests::Test &test) {
+            const plg::vector<int8_t> expected = MockFuncAliasInt8Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasInt8Vector(&MockFuncAliasInt8Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasInt16Vector", [](SimpleTests::Test &test) {
+            const plg::vector<int16_t> expected = MockFuncAliasInt16Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasInt16Vector(&MockFuncAliasInt16Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasInt32Vector", [](SimpleTests::Test &test) {
+            const plg::vector<int32_t> expected = MockFuncAliasInt32Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasInt32Vector(&MockFuncAliasInt32Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasInt64Vector", [](SimpleTests::Test &test) {
+            const plg::vector<int64_t> expected = MockFuncAliasInt64Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasInt64Vector(&MockFuncAliasInt64Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasUInt8Vector", [](SimpleTests::Test &test) {
+            const plg::vector<uint8_t> expected = MockFuncAliasUInt8Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasUInt8Vector(&MockFuncAliasUInt8Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasUInt16Vector", [](SimpleTests::Test &test) {
+            const plg::vector<uint16_t> expected = MockFuncAliasUInt16Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasUInt16Vector(&MockFuncAliasUInt16Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasUInt32Vector", [](SimpleTests::Test &test) {
+            const plg::vector<uint32_t> expected = MockFuncAliasUInt32Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasUInt32Vector(&MockFuncAliasUInt32Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasUInt64Vector", [](SimpleTests::Test &test) {
+            const plg::vector<uint64_t> expected = MockFuncAliasUInt64Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasUInt64Vector(&MockFuncAliasUInt64Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasPtrVector", [](SimpleTests::Test &test) {
+            const plg::vector<void *> expected = MockFuncAliasPtrVector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasPtrVector(&MockFuncAliasPtrVector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasFloatVector", [](SimpleTests::Test &test) {
+            const plg::vector<float> expected = MockFuncAliasFloatVector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasFloatVector(&MockFuncAliasFloatVector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasDoubleVector", [](SimpleTests::Test &test) {
+            const plg::vector<double> expected = MockFuncAliasDoubleVector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasDoubleVector(&MockFuncAliasDoubleVector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasStringVector", [](SimpleTests::Test &test) {
+            const plg::vector<plg::string> expected = MockFuncAliasStringVector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasStringVector(&MockFuncAliasStringVector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasVec2Vector", [](SimpleTests::Test &test) {
+            const plg::vector<plg::vec2> expected = MockFuncAliasVec2Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasVec2Vector(&MockFuncAliasVec2Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasVec3Vector", [](SimpleTests::Test &test) {
+            const plg::vector<plg::vec3> expected = MockFuncAliasVec3Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasVec3Vector(&MockFuncAliasVec3Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasVec4Vector", [](SimpleTests::Test &test) {
+            const plg::vector<plg::vec4> expected = MockFuncAliasVec4Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasVec4Vector(&MockFuncAliasVec4Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasMat4x4Vector", [](SimpleTests::Test &test) {
+            const plg::vector<plg::mat4x4> expected = MockFuncAliasMat4x4Vector(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasMat4x4Vector(&MockFuncAliasMat4x4Vector);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasVec2", [](SimpleTests::Test &test) {
+            const plg::vec2 expected = MockFuncAliasVec2(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasVec2(&MockFuncAliasVec2);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasVec3", [](SimpleTests::Test &test) {
+            const plg::vec3 expected = MockFuncAliasVec3(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasVec3(&MockFuncAliasVec3);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasVec4", [](SimpleTests::Test &test) {
+            const plg::vec4 expected = MockFuncAliasVec4(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasVec4(&MockFuncAliasVec4);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasMat4x4", [](SimpleTests::Test &test) {
+            const plg::mat4x4 expected = MockFuncAliasMat4x4(); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasMat4x4(&MockFuncAliasMat4x4);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+        _tests.Add("CallFuncAliasAll", [](SimpleTests::Test &test) {
+        	cross_call_worker::AliasBool aBool{true};
+			cross_call_worker::AliasChar8 aChar8{'A'};
+			cross_call_worker::AliasChar16 aChar16{u'0'};
+			cross_call_worker::AliasInt8 aInt8{1};
+			cross_call_worker::AliasInt16 aInt16{2};
+			cross_call_worker::AliasInt32 aInt32{3};
+			cross_call_worker::AliasInt64 aInt64{4};
+			cross_call_worker::AliasPtr aPtr{};
+			cross_call_worker::AliasFloat aFloat{5.5f};
+			cross_call_worker::AliasDouble aDouble{6.6};
+			cross_call_worker::AliasString aString{"seven"};
+			cross_call_worker::AliasAny aAny{"six"};
+			cross_call_worker::AliasVec2 aVec2{0.1f, 0.2f};
+			cross_call_worker::AliasVec3 aVec3{0.3f, 0.4f, 0.5f};
+			cross_call_worker::AliasVec4 aVec4{0.6f, 0.7f, 0.8f, 0.9f};
+			cross_call_worker::AliasMat4x4 aMat4x4{1.4f, 1.1f, 1.2f, 1.3f, 2.4f, 2.1f, 2.2f, 2.3f, 3.4f, 3.1f, 3.2f, 3.3f, 4.4f, 4.1f, 4.2f, 4.3f};
+			cross_call_worker::AliasBoolVector aBoolVec{aBool};
+			cross_call_worker::AliasChar8Vector aChar8Vec{aChar8};
+			cross_call_worker::AliasChar16Vector aChar16Vec{aChar16};
+			cross_call_worker::AliasInt8Vector aInt8Vec{aInt8};
+			cross_call_worker::AliasInt16Vector aInt16Vec{aInt16};
+			cross_call_worker::AliasInt32Vector aInt32Vec{aInt32};
+			cross_call_worker::AliasInt64Vector aInt64Vec{aInt64};
+			cross_call_worker::AliasPtrVector aPtrVec{aPtr};
+			cross_call_worker::AliasFloatVector aFloatVec{aFloat};
+			cross_call_worker::AliasDoubleVector aDoubleVec{aDouble};
+			cross_call_worker::AliasStringVector aStringVec{aString};
+			cross_call_worker::AliasAnyVector aAnyVec{aAny};
+			cross_call_worker::AliasVec2Vector aVec2Vec{aVec2};
+			cross_call_worker::AliasVec3Vector aVec3Vec{aVec3};
+			cross_call_worker::AliasVec4Vector aVec4Vec{aVec4};
+			cross_call_worker::AliasMat4x4Vector aMat4x4Vec{aMat4x4};
+
+        	const plg::string expected = MockFuncAliasAll(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aMat4x4Vec); // Adjust this if needed
+            const auto result = cross_call_worker::CallFuncAliasAll(&MockFuncAliasAll);
+            if (result != expected) {
+                test.Fail(std::format("Wrong ref params return {}, expected {}", result, expected));
+            }
+        });
+
 #endif// TEST_CASES & TEST_PARAMS_FUNCTIONS
     }
 
@@ -2741,8 +3461,7 @@ public:
 #if TEST_CASES & TEST_REVERSE_PARAMS_ALL_PRIMITIVES
         _tests.Add("ReverseParamAllPrimitives", [&](SimpleTests::Test &test) {
             const plg::string returnExpected = "65";
-            const plg::string paramsExpected =
-                    "true|37|9762|-1|-1000|-1000000|-1000000000000|200|50000|3000000000|9999999999|0xfedcbaabcdef|0.001|987654.456789";
+            const plg::string paramsExpected = "true|37|9762|-1|-1000|-1000000|-1000000000000|200|50000|3000000000|9999999999|0xfedcbaabcdef|0.001|987654.456789";
             _reverseReturn.reset();
             _reverseParams.reset();
             cross_call_worker::ReverseCall("ParamAllPrimitives");
@@ -2757,6 +3476,34 @@ public:
                 test.Fail(std::format("Wrong param values {}, expected {}", *_reverseParams, paramsExpected));
             }
         });
+    	_tests.Add("ReverseParamAllAliases", [&](SimpleTests::Test &test) {
+            const plg::string returnExpected = "-1";
+			const plg::string paramsExpected = "true|A|48|1|2|3|4|0x0|5.5|6.6|seven|six|{0.1, 0.2}|{0.3, 0.4, 0.5}|{0.6, 0.7, 0.8, 0.9}|{{1.4, 1.1, 1.2, 1.3}, {2.4, 2.1, 2.2, 2.3}, {3.4, 3.1, 3.2, 3.3}, {4.4, 4.1, 4.2, 4.3}}|{true}|{A}|{48}|{1}|{2}|{3}|{4}|{0x0}|{5.5}|{6.6}|{'seven'}|{six}|{{0.1, 0.2}}|{{0.3, 0.4, 0.5}}|{{0.6, 0.7, 0.8, 0.9}}|{{{1.4, 1.1, 1.2, 1.3}, {2.4, 2.1, 2.2, 2.3}, {3.4, 3.1, 3.2, 3.3}, {4.4, 4.1, 4.2, 4.3}}}";
+    		_reverseReturn.reset();
+			_reverseParams.reset();
+			cross_call_worker::ReverseCall("ParamAllAliases");
+			if (!_reverseReturn) {
+				test.Fail("Return not set");
+			} else if (*_reverseReturn != returnExpected) {
+				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
+			}
+			if (!_reverseParams) {
+				test.Fail("Params not set");
+			} else if (*_reverseParams != paramsExpected) {
+				test.Fail(std::format("Wrong param values {}, expected {}", *_reverseParams, paramsExpected));
+			}
+		});
+    	_tests.Add("ReverseParamAllRefAliases", [&](SimpleTests::Test &test) {
+            const plg::string returnExpected = "24";
+    		const plg::string paramsExpected = "true|A|48|1|2|3|4|0x0|5.5|6.6|seven|six|{0.1, 0.2}|{0.3, 0.4, 0.5}|{0.6, 0.7, 0.8, 0.9}|{{1.4, 1.1, 1.2, 1.3}, {2.4, 2.1, 2.2, 2.3}, {3.4, 3.1, 3.2, 3.3}, {4.4, 4.1, 4.2, 4.3}}|{true}|{A}|{48}|{1}|{2}|{3}|{4}|{0x0}|{5.5}|{6.6}|{'seven'}|{six}|{{0.1, 0.2}}|{{0.3, 0.4, 0.5}}|{{0.6, 0.7, 0.8, 0.9}}|{{{1.4, 1.1, 1.2, 1.3}, {2.4, 2.1, 2.2, 2.3}, {3.4, 3.1, 3.2, 3.3}, {4.4, 4.1, 4.2, 4.3}}}";
+    		_reverseReturn.reset();
+			cross_call_worker::ReverseCall("ParamAllRefAliases");
+			if (!_reverseReturn) {
+				test.Fail("Return not set");
+			} else if (*_reverseReturn != returnExpected) {
+				test.Fail(std::format("Wrong return {}, expected {}", *_reverseReturn, returnExpected));
+			}
+		});
         _tests.Add("ReverseParamEnum", [&](SimpleTests::Test &test) {
             const plg::string returnExpected = "10";
             _reverseReturn.reset();
@@ -2815,7 +3562,7 @@ public:
             }
         });
         _tests.Add("ReverseCallFuncChar8", [&](SimpleTests::Test &test) {
-            const plg::string expected = "65"; // Adjust this if needed
+            const plg::string expected = "A"; // Adjust this if needed
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncChar8");
             if (!_reverseReturn) {
@@ -2955,7 +3702,7 @@ public:
             }
         });
         _tests.Add("ReverseCallFuncAny", [&](SimpleTests::Test &test) {
-            const plg::string expected = "A";
+            const plg::string expected = "65";
             _reverseReturn.reset();
             cross_call_worker::ReverseCall("CallFuncAny");
             if (!_reverseReturn) {
@@ -4142,6 +4889,149 @@ PLUGIN_API int64_t ParamAllPrimitivesCallback(bool p1, char p2, char16_t p3, int
 }
 
 extern "C"
+PLUGIN_API int32_t ParamAllAliasesCallback(
+	const cross_call_worker::AliasBool          aBool,
+	const cross_call_worker::AliasChar8         aChar8,
+	const cross_call_worker::AliasChar16        aChar16,
+	const cross_call_worker::AliasInt8          aInt8,
+	const cross_call_worker::AliasInt16         aInt16,
+	const cross_call_worker::AliasInt32         aInt32,
+	const cross_call_worker::AliasInt64         aInt64,
+	const cross_call_worker::AliasPtr           aPtr,
+	const cross_call_worker::AliasFloat         aFloat,
+	const cross_call_worker::AliasDouble        aDouble,
+	const cross_call_worker::AliasString&       aString,
+	const cross_call_worker::AliasAny&          aAny,
+	const cross_call_worker::AliasVec2&         aVec2,
+	const cross_call_worker::AliasVec3&         aVec3,
+	const cross_call_worker::AliasVec4&         aVec4,
+	const cross_call_worker::AliasMat4x4&       aMat4x4,
+	const cross_call_worker::AliasBoolVector&   aBoolVec,
+	const cross_call_worker::AliasChar8Vector&  aChar8Vec,
+	const cross_call_worker::AliasChar16Vector& aChar16Vec,
+	const cross_call_worker::AliasInt8Vector&   aInt8Vec,
+	const cross_call_worker::AliasInt16Vector&  aInt16Vec,
+	const cross_call_worker::AliasInt32Vector&  aInt32Vec,
+	const cross_call_worker::AliasInt64Vector&  aInt64Vec,
+	const cross_call_worker::AliasPtrVector&    aPtrVec,
+	const cross_call_worker::AliasFloatVector&  aFloatVec,
+	const cross_call_worker::AliasDoubleVector& aDoubleVec,
+	const cross_call_worker::AliasStringVector& aStringVec,
+	const cross_call_worker::AliasAnyVector&    aAnyVec,
+	const cross_call_worker::AliasVec2Vector&   aVec2Vec,
+	const cross_call_worker::AliasVec3Vector&   aVec3Vec,
+	const cross_call_worker::AliasVec4Vector&   aVec4Vec,
+	const cross_call_worker::AliasMat4x4Vector& aMat4x4Vec
+) {
+	g_plugin.ReverseParams(std::format(
+		"{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}",
+		aBool,
+		aChar8,
+		static_cast<uint16_t>(aChar16),
+		aInt8,
+		aInt16,
+		aInt32,
+		aInt64,
+		aPtr,
+		aFloat,
+		aDouble,
+		aString,
+		aAny,
+		aVec2,
+		aVec3,
+		aVec4,
+		aMat4x4,
+		aBoolVec,
+		aChar8Vec,
+		aChar16Vec,
+		aInt8Vec,
+		aInt16Vec,
+		aInt32Vec,
+		aInt64Vec,
+		aPtrVec,
+		aFloatVec,
+		aDoubleVec,
+		aStringVec,
+		aAnyVec,
+		aVec2Vec,
+		aVec3Vec,
+		aVec4Vec,
+		aMat4x4Vec
+	));
+	return -1;
+}
+
+extern "C"
+PLUGIN_API int64_t ParamAllRefAliasesCallback(
+	cross_call_worker::AliasBool&         aBool,
+	cross_call_worker::AliasChar8&        aChar8,
+	cross_call_worker::AliasChar16&       aChar16,
+	cross_call_worker::AliasInt8&         aInt8,
+	cross_call_worker::AliasInt16&        aInt16,
+	cross_call_worker::AliasInt32&        aInt32,
+	cross_call_worker::AliasInt64&        aInt64,
+	cross_call_worker::AliasPtr&          aPtr,
+	cross_call_worker::AliasFloat&        aFloat,
+	cross_call_worker::AliasDouble&       aDouble,
+	cross_call_worker::AliasString&       aString,
+	cross_call_worker::AliasAny&          aAny,
+	cross_call_worker::AliasVec2&         aVec2,
+	cross_call_worker::AliasVec3&         aVec3,
+	cross_call_worker::AliasVec4&         aVec4,
+	cross_call_worker::AliasMat4x4&       aMat4x4,
+	cross_call_worker::AliasBoolVector&   aBoolVec,
+	cross_call_worker::AliasChar8Vector&  aChar8Vec,
+	cross_call_worker::AliasChar16Vector& aChar16Vec,
+	cross_call_worker::AliasInt8Vector&   aInt8Vec,
+	cross_call_worker::AliasInt16Vector&  aInt16Vec,
+	cross_call_worker::AliasInt32Vector&  aInt32Vec,
+	cross_call_worker::AliasInt64Vector&  aInt64Vec,
+	cross_call_worker::AliasPtrVector&    aPtrVec,
+	cross_call_worker::AliasFloatVector&  aFloatVec,
+	cross_call_worker::AliasDoubleVector& aDoubleVec,
+	cross_call_worker::AliasStringVector& aStringVec,
+	cross_call_worker::AliasAnyVector&    aAnyVec,
+	cross_call_worker::AliasVec2Vector&   aVec2Vec,
+	cross_call_worker::AliasVec3Vector&   aVec3Vec,
+	cross_call_worker::AliasVec4Vector&   aVec4Vec,
+	cross_call_worker::AliasMat4x4Vector& aMat4x4Vec
+) {
+	aBool = true;
+	aChar8 = 'A';
+	aChar16 = u'0';
+	aInt8 = 1;
+	aInt16 = 2;
+	aInt32 = 3;
+	aInt64 = 4;
+	aPtr = nullptr;
+	aFloat = 5.0f;
+	aDouble = 5.0;
+	aString = "seven";
+	aAny = "six";
+	aVec2 = {0.1f, 0.2f};
+	aVec3 = {0.3f, 0.4f, 0.5f};
+	aVec4 = {0.6f, 0.7f, 0.8f, 0.9f};
+	aMat4x4 = {1.4f, 1.1f, 1.2f, 1.3f, 2.4f, 2.1f, 2.2f, 2.3f, 3.4f, 3.1f, 3.2f, 3.3f, 4.4f, 4.1f, 4.2f, 4.3f};
+	aBoolVec = {aBool};
+	aChar8Vec = {aChar8};
+	aChar16Vec = {aChar16};
+	aInt8Vec = {aInt8};
+	aInt16Vec = {aInt16};
+	aInt32Vec = {aInt32};
+	aInt64Vec = {aInt64};
+	aPtrVec = {aPtr};
+	aFloatVec = {aFloat};
+	aDoubleVec = {aDouble};
+	aStringVec = {aString};
+	aAnyVec = {aAny};
+	aVec2Vec = {aVec2};
+	aVec3Vec = {aVec3};
+	aVec4Vec = {aVec4};
+	aMat4x4Vec = {aMat4x4};
+	return 24;
+}
+
+extern "C"
 PLUGIN_API int32_t ParamEnumCallback(Example p1, const plg::vector<Example> &p2) {
     return static_cast<int32_t>(p1) + std::accumulate(p2.begin(), p2.end(), int32_t{0},
                                                       [](int32_t sum, const Example &e) {
@@ -4425,6 +5315,294 @@ extern "C"
 PLUGIN_API plg::mat4x4 CallFuncMat4x4Callback(cross_call_worker::FuncMat4x4 func) {
     plg::mat4x4 result = func();
     return result;
+}
+
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasBool CallFuncAliasBoolCallback(cross_call_worker::FuncAliasBool func) {
+    cross_call_worker::AliasBool result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasChar8 CallFuncAliasChar8Callback(cross_call_worker::FuncAliasChar8 func) {
+    cross_call_worker::AliasChar8 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasChar16 CallFuncAliasChar16Callback(cross_call_worker::FuncAliasChar16 func) {
+    cross_call_worker::AliasChar16 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasInt8 CallFuncAliasInt8Callback(cross_call_worker::FuncAliasInt8 func) {
+    cross_call_worker::AliasInt8 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasInt16 CallFuncAliasInt16Callback(cross_call_worker::FuncAliasInt16 func) {
+    cross_call_worker::AliasInt16 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasInt32 CallFuncAliasInt32Callback(cross_call_worker::FuncAliasInt32 func) {
+    cross_call_worker::AliasInt32 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasInt64 CallFuncAliasInt64Callback(cross_call_worker::FuncAliasInt64 func) {
+    cross_call_worker::AliasInt64 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasUInt8 CallFuncAliasUInt8Callback(cross_call_worker::FuncAliasUInt8 func) {
+    cross_call_worker::AliasUInt8 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasUInt16 CallFuncAliasUInt16Callback(cross_call_worker::FuncAliasUInt16 func) {
+    cross_call_worker::AliasUInt16 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasUInt32 CallFuncAliasUInt32Callback(cross_call_worker::FuncAliasUInt32 func) {
+    cross_call_worker::AliasUInt32 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasUInt64 CallFuncAliasUInt64Callback(cross_call_worker::FuncAliasUInt64 func) {
+    cross_call_worker::AliasUInt64 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasPtr CallFuncAliasPtrCallback(cross_call_worker::FuncAliasPtr func) {
+    cross_call_worker::AliasPtr result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasFloat CallFuncAliasFloatCallback(cross_call_worker::FuncAliasFloat func) {
+    cross_call_worker::AliasFloat result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasDouble CallFuncAliasDoubleCallback(cross_call_worker::FuncAliasDouble func) {
+    cross_call_worker::AliasDouble result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasFunction CallFuncAliasFunctionCallback(cross_call_worker::FuncAliasFunction func) {
+    cross_call_worker::AliasFunction result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasString CallFuncAliasStringCallback(cross_call_worker::FuncAliasString func) {
+    cross_call_worker::AliasString result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasAny CallFuncAliasAnyCallback(cross_call_worker::FuncAliasAny func) {
+    cross_call_worker::AliasAny result = func();
+    return result;
+}
+
+// Call functions for vector return types
+extern "C"
+PLUGIN_API cross_call_worker::AliasBoolVector CallFuncAliasBoolVectorCallback(cross_call_worker::FuncAliasBoolVector func) {
+    cross_call_worker::AliasBoolVector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasChar8Vector CallFuncAliasChar8VectorCallback(cross_call_worker::FuncAliasChar8Vector func) {
+    cross_call_worker::AliasChar8Vector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasChar16Vector CallFuncAliasChar16VectorCallback(cross_call_worker::FuncAliasChar16Vector func) {
+    cross_call_worker::AliasChar16Vector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasInt8Vector CallFuncAliasInt8VectorCallback(cross_call_worker::FuncAliasInt8Vector func) {
+    cross_call_worker::AliasInt8Vector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasInt16Vector CallFuncAliasInt16VectorCallback(cross_call_worker::FuncAliasInt16Vector func) {
+    cross_call_worker::AliasInt16Vector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasInt32Vector CallFuncAliasInt32VectorCallback(cross_call_worker::FuncAliasInt32Vector func) {
+    cross_call_worker::AliasInt32Vector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasInt64Vector CallFuncAliasInt64VectorCallback(cross_call_worker::FuncAliasInt64Vector func) {
+    cross_call_worker::AliasInt64Vector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasUInt8Vector CallFuncAliasUInt8VectorCallback(cross_call_worker::FuncAliasUInt8Vector func) {
+    cross_call_worker::AliasUInt8Vector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasUInt16Vector CallFuncAliasUInt16VectorCallback(cross_call_worker::FuncAliasUInt16Vector func) {
+    cross_call_worker::AliasUInt16Vector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasUInt32Vector CallFuncAliasUInt32VectorCallback(cross_call_worker::FuncAliasUInt32Vector func) {
+    cross_call_worker::AliasUInt32Vector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasUInt64Vector CallFuncAliasUInt64VectorCallback(cross_call_worker::FuncAliasUInt64Vector func) {
+    cross_call_worker::AliasUInt64Vector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasPtrVector CallFuncAliasPtrVectorCallback(cross_call_worker::FuncAliasPtrVector func) {
+    cross_call_worker::AliasPtrVector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasFloatVector CallFuncAliasFloatVectorCallback(cross_call_worker::FuncAliasFloatVector func) {
+    cross_call_worker::AliasFloatVector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasDoubleVector CallFuncAliasDoubleVectorCallback(cross_call_worker::FuncAliasDoubleVector func) {
+    cross_call_worker::AliasDoubleVector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasStringVector CallFuncAliasStringVectorCallback(cross_call_worker::FuncAliasStringVector func) {
+    cross_call_worker::AliasStringVector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasAnyVector CallFuncAliasAnyVectorCallback(cross_call_worker::FuncAliasAnyVector func) {
+    cross_call_worker::AliasAnyVector result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasVec2Vector CallFuncAliasVec2VectorCallback(cross_call_worker::FuncAliasVec2Vector func) {
+    cross_call_worker::AliasVec2Vector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasVec3Vector CallFuncAliasVec3VectorCallback(cross_call_worker::FuncAliasVec3Vector func) {
+    cross_call_worker::AliasVec3Vector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasVec4Vector CallFuncAliasVec4VectorCallback(cross_call_worker::FuncAliasVec4Vector func) {
+    cross_call_worker::AliasVec4Vector result = func();
+    return std::move(result);
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasMat4x4Vector CallFuncAliasMat4x4VectorCallback(cross_call_worker::FuncAliasMat4x4Vector func) {
+    cross_call_worker::AliasMat4x4Vector result = func();
+    return std::move(result);
+}
+
+// Call functions for vector return types
+extern "C"
+PLUGIN_API cross_call_worker::AliasVec2 CallFuncAliasVec2Callback(cross_call_worker::FuncAliasVec2 func) {
+    cross_call_worker::AliasVec2 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasVec3 CallFuncAliasVec3Callback(cross_call_worker::FuncAliasVec3 func) {
+    cross_call_worker::AliasVec3 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasVec4 CallFuncAliasVec4Callback(cross_call_worker::FuncAliasVec4 func) {
+    cross_call_worker::AliasVec4 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API cross_call_worker::AliasMat4x4 CallFuncAliasMat4x4Callback(cross_call_worker::FuncAliasMat4x4 func) {
+    cross_call_worker::AliasMat4x4 result = func();
+    return result;
+}
+
+extern "C"
+PLUGIN_API plg::string CallFuncAliasAllCallback(cross_call_worker::FuncAliasAll func) {
+	cross_call_worker::AliasBool aBool{true};
+	cross_call_worker::AliasChar8 aChar8{'A'};
+	cross_call_worker::AliasChar16 aChar16{u'0'};
+	cross_call_worker::AliasInt8 aInt8{1};
+	cross_call_worker::AliasInt16 aInt16{2};
+	cross_call_worker::AliasInt32 aInt32{3};
+	cross_call_worker::AliasInt64 aInt64{4};
+	cross_call_worker::AliasPtr aPtr{};
+	cross_call_worker::AliasFloat aFloat{5.5f};
+	cross_call_worker::AliasDouble aDouble{6.6};
+	cross_call_worker::AliasString aString{"seven"};
+	cross_call_worker::AliasAny aAny{"six"};
+	cross_call_worker::AliasVec2 aVec2{0.1f, 0.2f};
+	cross_call_worker::AliasVec3 aVec3{0.3f, 0.4f, 0.5f};
+	cross_call_worker::AliasVec4 aVec4{0.6f, 0.7f, 0.8f, 0.9f};
+	cross_call_worker::AliasMat4x4 aMat4x4{1.4f, 1.1f, 1.2f, 1.3f, 2.4f, 2.1f, 2.2f, 2.3f, 3.4f, 3.1f, 3.2f, 3.3f, 4.4f, 4.1f, 4.2f, 4.3f};
+	cross_call_worker::AliasBoolVector aBoolVec{aBool};
+	cross_call_worker::AliasChar8Vector aChar8Vec{aChar8};
+	cross_call_worker::AliasChar16Vector aChar16Vec{aChar16};
+	cross_call_worker::AliasInt8Vector aInt8Vec{aInt8};
+	cross_call_worker::AliasInt16Vector aInt16Vec{aInt16};
+	cross_call_worker::AliasInt32Vector aInt32Vec{aInt32};
+	cross_call_worker::AliasInt64Vector aInt64Vec{aInt64};
+	cross_call_worker::AliasPtrVector aPtrVec{aPtr};
+	cross_call_worker::AliasFloatVector aFloatVec{aFloat};
+	cross_call_worker::AliasDoubleVector aDoubleVec{aDouble};
+	cross_call_worker::AliasStringVector aStringVec{aString};
+	cross_call_worker::AliasAnyVector aAnyVec{aAny};
+	cross_call_worker::AliasVec2Vector aVec2Vec{aVec2};
+	cross_call_worker::AliasVec3Vector aVec3Vec{aVec3};
+	cross_call_worker::AliasVec4Vector aVec4Vec{aVec4};
+	cross_call_worker::AliasMat4x4Vector aMat4x4Vec{aMat4x4};
+
+	plg::string result = func(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aMat4x4Vec);
+	return result;
 }
 
 // 1 parameter

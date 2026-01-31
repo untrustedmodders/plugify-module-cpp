@@ -128,6 +128,10 @@ cross_call_worker::_ParamRefVectors __cross_call_worker_ParamRefVectors = nullpt
 
 cross_call_worker::_ParamAllPrimitives __cross_call_worker_ParamAllPrimitives = nullptr;
 
+cross_call_worker::_ParamAllAliases __cross_call_worker_ParamAllAliases = nullptr;
+
+cross_call_worker::_ParamAllRefAliases __cross_call_worker_ParamAllRefAliases = nullptr;
+
 cross_call_worker::_ParamVariant __cross_call_worker_ParamVariant = nullptr;
 
 cross_call_worker::_ParamEnum __cross_call_worker_ParamEnum = nullptr;
@@ -219,6 +223,90 @@ cross_call_worker::_CallFuncVec3 __cross_call_worker_CallFuncVec3 = nullptr;
 cross_call_worker::_CallFuncVec4 __cross_call_worker_CallFuncVec4 = nullptr;
 
 cross_call_worker::_CallFuncMat4x4 __cross_call_worker_CallFuncMat4x4 = nullptr;
+
+cross_call_worker::_CallFuncAliasBool __cross_call_worker_CallFuncAliasBool = nullptr;
+
+cross_call_worker::_CallFuncAliasChar8 __cross_call_worker_CallFuncAliasChar8 = nullptr;
+
+cross_call_worker::_CallFuncAliasChar16 __cross_call_worker_CallFuncAliasChar16 = nullptr;
+
+cross_call_worker::_CallFuncAliasInt8 __cross_call_worker_CallFuncAliasInt8 = nullptr;
+
+cross_call_worker::_CallFuncAliasInt16 __cross_call_worker_CallFuncAliasInt16 = nullptr;
+
+cross_call_worker::_CallFuncAliasInt32 __cross_call_worker_CallFuncAliasInt32 = nullptr;
+
+cross_call_worker::_CallFuncAliasInt64 __cross_call_worker_CallFuncAliasInt64 = nullptr;
+
+cross_call_worker::_CallFuncAliasUInt8 __cross_call_worker_CallFuncAliasUInt8 = nullptr;
+
+cross_call_worker::_CallFuncAliasUInt16 __cross_call_worker_CallFuncAliasUInt16 = nullptr;
+
+cross_call_worker::_CallFuncAliasUInt32 __cross_call_worker_CallFuncAliasUInt32 = nullptr;
+
+cross_call_worker::_CallFuncAliasUInt64 __cross_call_worker_CallFuncAliasUInt64 = nullptr;
+
+cross_call_worker::_CallFuncAliasPtr __cross_call_worker_CallFuncAliasPtr = nullptr;
+
+cross_call_worker::_CallFuncAliasFloat __cross_call_worker_CallFuncAliasFloat = nullptr;
+
+cross_call_worker::_CallFuncAliasDouble __cross_call_worker_CallFuncAliasDouble = nullptr;
+
+cross_call_worker::_CallFuncAliasString __cross_call_worker_CallFuncAliasString = nullptr;
+
+cross_call_worker::_CallFuncAliasAny __cross_call_worker_CallFuncAliasAny = nullptr;
+
+cross_call_worker::_CallFuncAliasFunction __cross_call_worker_CallFuncAliasFunction = nullptr;
+
+cross_call_worker::_CallFuncAliasBoolVector __cross_call_worker_CallFuncAliasBoolVector = nullptr;
+
+cross_call_worker::_CallFuncAliasChar8Vector __cross_call_worker_CallFuncAliasChar8Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasChar16Vector __cross_call_worker_CallFuncAliasChar16Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasInt8Vector __cross_call_worker_CallFuncAliasInt8Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasInt16Vector __cross_call_worker_CallFuncAliasInt16Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasInt32Vector __cross_call_worker_CallFuncAliasInt32Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasInt64Vector __cross_call_worker_CallFuncAliasInt64Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasUInt8Vector __cross_call_worker_CallFuncAliasUInt8Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasUInt16Vector __cross_call_worker_CallFuncAliasUInt16Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasUInt32Vector __cross_call_worker_CallFuncAliasUInt32Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasUInt64Vector __cross_call_worker_CallFuncAliasUInt64Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasPtrVector __cross_call_worker_CallFuncAliasPtrVector = nullptr;
+
+cross_call_worker::_CallFuncAliasFloatVector __cross_call_worker_CallFuncAliasFloatVector = nullptr;
+
+cross_call_worker::_CallFuncAliasDoubleVector __cross_call_worker_CallFuncAliasDoubleVector = nullptr;
+
+cross_call_worker::_CallFuncAliasStringVector __cross_call_worker_CallFuncAliasStringVector = nullptr;
+
+cross_call_worker::_CallFuncAliasAnyVector __cross_call_worker_CallFuncAliasAnyVector = nullptr;
+
+cross_call_worker::_CallFuncAliasVec2Vector __cross_call_worker_CallFuncAliasVec2Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasVec3Vector __cross_call_worker_CallFuncAliasVec3Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasVec4Vector __cross_call_worker_CallFuncAliasVec4Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasMat4x4Vector __cross_call_worker_CallFuncAliasMat4x4Vector = nullptr;
+
+cross_call_worker::_CallFuncAliasVec2 __cross_call_worker_CallFuncAliasVec2 = nullptr;
+
+cross_call_worker::_CallFuncAliasVec3 __cross_call_worker_CallFuncAliasVec3 = nullptr;
+
+cross_call_worker::_CallFuncAliasVec4 __cross_call_worker_CallFuncAliasVec4 = nullptr;
+
+cross_call_worker::_CallFuncAliasMat4x4 __cross_call_worker_CallFuncAliasMat4x4 = nullptr;
+
+cross_call_worker::_CallFuncAliasAll __cross_call_worker_CallFuncAliasAll = nullptr;
 
 cross_call_worker::_CallFunc1 __cross_call_worker_CallFunc1 = nullptr;
 

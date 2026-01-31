@@ -1,9 +1,10 @@
 #pragma once
 
+#include "enums.hpp"
+#include "aliases.hpp"
+#include "delegates.hpp"
 #include <plugin_export.h>
 
-#include "enums.hpp"
-#include "delegates.hpp"
 #include "resource.hpp"
 #include "counter.hpp"
 
@@ -843,6 +844,92 @@ namespace cross_call_master {
     return __cross_call_master_ParamAllPrimitivesCallback(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
   }
 
+  using _ParamAllAliasesCallback = int32_t (*)(AliasBool, AliasChar8, AliasChar16, AliasInt8, AliasInt16, AliasInt32, AliasInt64, AliasPtr, AliasFloat, AliasDouble, const AliasString&, const AliasAny&, const AliasVec2&, const AliasVec3&, const AliasVec4&, const AliasMat4x4&, const AliasBoolVector&, const AliasChar8Vector&, const AliasChar16Vector&, const AliasInt8Vector&, const AliasInt16Vector&, const AliasInt32Vector&, const AliasInt64Vector&, const AliasPtrVector&, const AliasFloatVector&, const AliasDoubleVector&, const AliasStringVector&, const AliasAnyVector&, const AliasVec2Vector&, const AliasVec3Vector&, const AliasVec4Vector&, const AliasMat4x4Vector&);
+}
+extern "C" PLUGIN_API cross_call_master::_ParamAllAliasesCallback __cross_call_master_ParamAllAliasesCallback;
+namespace cross_call_master {
+  /**
+   * @param aBool (bool)
+   * @param aChar8 (char8)
+   * @param aChar16 (char16)
+   * @param aInt8 (int8)
+   * @param aInt16 (int16)
+   * @param aInt32 (int32)
+   * @param aInt64 (int64)
+   * @param aPtr (ptr64)
+   * @param aFloat (float)
+   * @param aDouble (double)
+   * @param aString (string)
+   * @param aAny (any)
+   * @param aVec2 (vec2)
+   * @param aVec3 (vec3)
+   * @param aVec4 (vec4)
+   * @param aMat4x4 (mat4x4)
+   * @param aBoolVec (bool[])
+   * @param aChar8Vec (char8[])
+   * @param aChar16Vec (char16[])
+   * @param aInt8Vec (int8[])
+   * @param aInt16Vec (int16[])
+   * @param aInt32Vec (int32[])
+   * @param aInt64Vec (int64[])
+   * @param aPtrVec (ptr64[])
+   * @param aFloatVec (float[])
+   * @param aDoubleVec (double[])
+   * @param aStringVec (string[])
+   * @param aAnyVec (any[])
+   * @param aVec2Vec (vec2[])
+   * @param aVec3Vec (vec3[])
+   * @param aVec4Vec (vec4[])
+   * @param aaMat4x4Vec (mat4x4[])
+   * @return int32
+   */
+  inline int32_t ParamAllAliasesCallback(AliasBool aBool, AliasChar8 aChar8, AliasChar16 aChar16, AliasInt8 aInt8, AliasInt16 aInt16, AliasInt32 aInt32, AliasInt64 aInt64, AliasPtr aPtr, AliasFloat aFloat, AliasDouble aDouble, const AliasString& aString, const AliasAny& aAny, const AliasVec2& aVec2, const AliasVec3& aVec3, const AliasVec4& aVec4, const AliasMat4x4& aMat4x4, const AliasBoolVector& aBoolVec, const AliasChar8Vector& aChar8Vec, const AliasChar16Vector& aChar16Vec, const AliasInt8Vector& aInt8Vec, const AliasInt16Vector& aInt16Vec, const AliasInt32Vector& aInt32Vec, const AliasInt64Vector& aInt64Vec, const AliasPtrVector& aPtrVec, const AliasFloatVector& aFloatVec, const AliasDoubleVector& aDoubleVec, const AliasStringVector& aStringVec, const AliasAnyVector& aAnyVec, const AliasVec2Vector& aVec2Vec, const AliasVec3Vector& aVec3Vec, const AliasVec4Vector& aVec4Vec, const AliasMat4x4Vector& aaMat4x4Vec) {
+    return __cross_call_master_ParamAllAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aaMat4x4Vec);
+  }
+
+  using _ParamAllRefAliasesCallback = int64_t (*)(AliasBool&, AliasChar8&, AliasChar16&, AliasInt8&, AliasInt16&, AliasInt32&, AliasInt64&, AliasPtr&, AliasFloat&, AliasDouble&, AliasString&, AliasAny&, AliasVec2&, AliasVec3&, AliasVec4&, AliasMat4x4&, AliasBoolVector&, AliasChar8Vector&, AliasChar16Vector&, AliasInt8Vector&, AliasInt16Vector&, AliasInt32Vector&, AliasInt64Vector&, AliasPtrVector&, AliasFloatVector&, AliasDoubleVector&, AliasStringVector&, AliasAnyVector&, AliasVec2Vector&, AliasVec3Vector&, AliasVec4Vector&, AliasMat4x4Vector&);
+}
+extern "C" PLUGIN_API cross_call_master::_ParamAllRefAliasesCallback __cross_call_master_ParamAllRefAliasesCallback;
+namespace cross_call_master {
+  /**
+   * @param aBool (bool&)
+   * @param aChar8 (char8&)
+   * @param aChar16 (char16&)
+   * @param aInt8 (int8&)
+   * @param aInt16 (int16&)
+   * @param aInt32 (int32&)
+   * @param aInt64 (int64&)
+   * @param aPtr (ptr64&)
+   * @param aFloat (float&)
+   * @param aDouble (double&)
+   * @param aString (string&)
+   * @param aAny (any&)
+   * @param aVec2 (vec2&)
+   * @param aVec3 (vec3&)
+   * @param aVec4 (vec4&)
+   * @param aMat4x4 (mat4x4&)
+   * @param aBoolVec (bool[]&)
+   * @param aChar8Vec (char8[]&)
+   * @param aChar16Vec (char16[]&)
+   * @param aInt8Vec (int8[]&)
+   * @param aInt16Vec (int16[]&)
+   * @param aInt32Vec (int32[]&)
+   * @param aInt64Vec (int64[]&)
+   * @param aPtrVec (ptr64[]&)
+   * @param aFloatVec (float[]&)
+   * @param aDoubleVec (double[]&)
+   * @param aStringVec (string[]&)
+   * @param aAnyVec (any[]&)
+   * @param aVec2Vec (vec2[]&)
+   * @param aVec3Vec (vec3[]&)
+   * @param aVec4Vec (vec4[]&)
+   * @param aaMat4x4Vec (mat4x4[]&)
+   * @return int64
+   */
+  inline int64_t ParamAllRefAliasesCallback(AliasBool& aBool, AliasChar8& aChar8, AliasChar16& aChar16, AliasInt8& aInt8, AliasInt16& aInt16, AliasInt32& aInt32, AliasInt64& aInt64, AliasPtr& aPtr, AliasFloat& aFloat, AliasDouble& aDouble, AliasString& aString, AliasAny& aAny, AliasVec2& aVec2, AliasVec3& aVec3, AliasVec4& aVec4, AliasMat4x4& aMat4x4, AliasBoolVector& aBoolVec, AliasChar8Vector& aChar8Vec, AliasChar16Vector& aChar16Vec, AliasInt8Vector& aInt8Vec, AliasInt16Vector& aInt16Vec, AliasInt32Vector& aInt32Vec, AliasInt64Vector& aInt64Vec, AliasPtrVector& aPtrVec, AliasFloatVector& aFloatVec, AliasDoubleVector& aDoubleVec, AliasStringVector& aStringVec, AliasAnyVector& aAnyVec, AliasVec2Vector& aVec2Vec, AliasVec3Vector& aVec3Vec, AliasVec4Vector& aVec4Vec, AliasMat4x4Vector& aaMat4x4Vec) {
+    return __cross_call_master_ParamAllRefAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aaMat4x4Vec);
+  }
+
   using _ParamEnumCallback = int32_t (*)(Example, const plg::vector<Example>&);
 }
 extern "C" PLUGIN_API cross_call_master::_ParamEnumCallback __cross_call_master_ParamEnumCallback;
@@ -1396,6 +1483,510 @@ namespace cross_call_master {
     return __cross_call_master_CallFuncMat4x4Callback(func);
   }
 
+  using _CallFuncAliasBoolCallback = AliasBool (*)(FuncAliasBool);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasBoolCallback __cross_call_master_CallFuncAliasBoolCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return bool
+   */
+  inline AliasBool CallFuncAliasBoolCallback(FuncAliasBool func) {
+    return __cross_call_master_CallFuncAliasBoolCallback(func);
+  }
+
+  using _CallFuncAliasChar8Callback = AliasChar8 (*)(FuncAliasChar8);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasChar8Callback __cross_call_master_CallFuncAliasChar8Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return char8
+   */
+  inline AliasChar8 CallFuncAliasChar8Callback(FuncAliasChar8 func) {
+    return __cross_call_master_CallFuncAliasChar8Callback(func);
+  }
+
+  using _CallFuncAliasChar16Callback = AliasChar16 (*)(FuncAliasChar16);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasChar16Callback __cross_call_master_CallFuncAliasChar16Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return char16
+   */
+  inline AliasChar16 CallFuncAliasChar16Callback(FuncAliasChar16 func) {
+    return __cross_call_master_CallFuncAliasChar16Callback(func);
+  }
+
+  using _CallFuncAliasInt8Callback = AliasInt8 (*)(FuncAliasInt8);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasInt8Callback __cross_call_master_CallFuncAliasInt8Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return int8
+   */
+  inline AliasInt8 CallFuncAliasInt8Callback(FuncAliasInt8 func) {
+    return __cross_call_master_CallFuncAliasInt8Callback(func);
+  }
+
+  using _CallFuncAliasInt16Callback = AliasInt16 (*)(FuncAliasInt16);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasInt16Callback __cross_call_master_CallFuncAliasInt16Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return int16
+   */
+  inline AliasInt16 CallFuncAliasInt16Callback(FuncAliasInt16 func) {
+    return __cross_call_master_CallFuncAliasInt16Callback(func);
+  }
+
+  using _CallFuncAliasInt32Callback = AliasInt32 (*)(FuncAliasInt32);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasInt32Callback __cross_call_master_CallFuncAliasInt32Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return int32
+   */
+  inline AliasInt32 CallFuncAliasInt32Callback(FuncAliasInt32 func) {
+    return __cross_call_master_CallFuncAliasInt32Callback(func);
+  }
+
+  using _CallFuncAliasInt64Callback = AliasInt64 (*)(FuncAliasInt64);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasInt64Callback __cross_call_master_CallFuncAliasInt64Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return int64
+   */
+  inline AliasInt64 CallFuncAliasInt64Callback(FuncAliasInt64 func) {
+    return __cross_call_master_CallFuncAliasInt64Callback(func);
+  }
+
+  using _CallFuncAliasUInt8Callback = AliasUInt8 (*)(FuncAliasUInt8);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasUInt8Callback __cross_call_master_CallFuncAliasUInt8Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return uint8
+   */
+  inline AliasUInt8 CallFuncAliasUInt8Callback(FuncAliasUInt8 func) {
+    return __cross_call_master_CallFuncAliasUInt8Callback(func);
+  }
+
+  using _CallFuncAliasUInt16Callback = AliasUInt16 (*)(FuncAliasUInt16);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasUInt16Callback __cross_call_master_CallFuncAliasUInt16Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return uint16
+   */
+  inline AliasUInt16 CallFuncAliasUInt16Callback(FuncAliasUInt16 func) {
+    return __cross_call_master_CallFuncAliasUInt16Callback(func);
+  }
+
+  using _CallFuncAliasUInt32Callback = AliasUInt32 (*)(FuncAliasUInt32);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasUInt32Callback __cross_call_master_CallFuncAliasUInt32Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return uint32
+   */
+  inline AliasUInt32 CallFuncAliasUInt32Callback(FuncAliasUInt32 func) {
+    return __cross_call_master_CallFuncAliasUInt32Callback(func);
+  }
+
+  using _CallFuncAliasUInt64Callback = AliasUInt64 (*)(FuncAliasUInt64);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasUInt64Callback __cross_call_master_CallFuncAliasUInt64Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return uint64
+   */
+  inline AliasUInt64 CallFuncAliasUInt64Callback(FuncAliasUInt64 func) {
+    return __cross_call_master_CallFuncAliasUInt64Callback(func);
+  }
+
+  using _CallFuncAliasPtrCallback = AliasPtr (*)(FuncAliasPtr);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasPtrCallback __cross_call_master_CallFuncAliasPtrCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return ptr64
+   */
+  inline AliasPtr CallFuncAliasPtrCallback(FuncAliasPtr func) {
+    return __cross_call_master_CallFuncAliasPtrCallback(func);
+  }
+
+  using _CallFuncAliasFloatCallback = AliasFloat (*)(FuncAliasFloat);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasFloatCallback __cross_call_master_CallFuncAliasFloatCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return float
+   */
+  inline AliasFloat CallFuncAliasFloatCallback(FuncAliasFloat func) {
+    return __cross_call_master_CallFuncAliasFloatCallback(func);
+  }
+
+  using _CallFuncAliasDoubleCallback = AliasDouble (*)(FuncAliasDouble);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasDoubleCallback __cross_call_master_CallFuncAliasDoubleCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return double
+   */
+  inline AliasDouble CallFuncAliasDoubleCallback(FuncAliasDouble func) {
+    return __cross_call_master_CallFuncAliasDoubleCallback(func);
+  }
+
+  using _CallFuncAliasStringCallback = AliasString (*)(FuncAliasString);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasStringCallback __cross_call_master_CallFuncAliasStringCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return string
+   */
+  inline AliasString CallFuncAliasStringCallback(FuncAliasString func) {
+    return __cross_call_master_CallFuncAliasStringCallback(func);
+  }
+
+  using _CallFuncAliasAnyCallback = AliasAny (*)(FuncAliasAny);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasAnyCallback __cross_call_master_CallFuncAliasAnyCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return any
+   */
+  inline AliasAny CallFuncAliasAnyCallback(FuncAliasAny func) {
+    return __cross_call_master_CallFuncAliasAnyCallback(func);
+  }
+
+  using _CallFuncAliasFunctionCallback = AliasFunction (*)(FuncAliasFunction);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasFunctionCallback __cross_call_master_CallFuncAliasFunctionCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return ptr64
+   */
+  inline AliasFunction CallFuncAliasFunctionCallback(FuncAliasFunction func) {
+    return __cross_call_master_CallFuncAliasFunctionCallback(func);
+  }
+
+  using _CallFuncAliasBoolVectorCallback = AliasBoolVector (*)(FuncAliasBoolVector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasBoolVectorCallback __cross_call_master_CallFuncAliasBoolVectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return bool[]
+   */
+  inline AliasBoolVector CallFuncAliasBoolVectorCallback(FuncAliasBoolVector func) {
+    return __cross_call_master_CallFuncAliasBoolVectorCallback(func);
+  }
+
+  using _CallFuncAliasChar8VectorCallback = AliasChar8Vector (*)(FuncAliasChar8Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasChar8VectorCallback __cross_call_master_CallFuncAliasChar8VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return char8[]
+   */
+  inline AliasChar8Vector CallFuncAliasChar8VectorCallback(FuncAliasChar8Vector func) {
+    return __cross_call_master_CallFuncAliasChar8VectorCallback(func);
+  }
+
+  using _CallFuncAliasChar16VectorCallback = AliasChar16Vector (*)(FuncAliasChar16Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasChar16VectorCallback __cross_call_master_CallFuncAliasChar16VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return char16[]
+   */
+  inline AliasChar16Vector CallFuncAliasChar16VectorCallback(FuncAliasChar16Vector func) {
+    return __cross_call_master_CallFuncAliasChar16VectorCallback(func);
+  }
+
+  using _CallFuncAliasInt8VectorCallback = AliasInt8Vector (*)(FuncAliasInt8Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasInt8VectorCallback __cross_call_master_CallFuncAliasInt8VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return int8[]
+   */
+  inline AliasInt8Vector CallFuncAliasInt8VectorCallback(FuncAliasInt8Vector func) {
+    return __cross_call_master_CallFuncAliasInt8VectorCallback(func);
+  }
+
+  using _CallFuncAliasInt16VectorCallback = AliasInt16Vector (*)(FuncAliasInt16Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasInt16VectorCallback __cross_call_master_CallFuncAliasInt16VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return int16[]
+   */
+  inline AliasInt16Vector CallFuncAliasInt16VectorCallback(FuncAliasInt16Vector func) {
+    return __cross_call_master_CallFuncAliasInt16VectorCallback(func);
+  }
+
+  using _CallFuncAliasInt32VectorCallback = AliasInt32Vector (*)(FuncAliasInt32Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasInt32VectorCallback __cross_call_master_CallFuncAliasInt32VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return int32[]
+   */
+  inline AliasInt32Vector CallFuncAliasInt32VectorCallback(FuncAliasInt32Vector func) {
+    return __cross_call_master_CallFuncAliasInt32VectorCallback(func);
+  }
+
+  using _CallFuncAliasInt64VectorCallback = AliasInt64Vector (*)(FuncAliasInt64Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasInt64VectorCallback __cross_call_master_CallFuncAliasInt64VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return int64[]
+   */
+  inline AliasInt64Vector CallFuncAliasInt64VectorCallback(FuncAliasInt64Vector func) {
+    return __cross_call_master_CallFuncAliasInt64VectorCallback(func);
+  }
+
+  using _CallFuncAliasUInt8VectorCallback = AliasUInt8Vector (*)(FuncAliasUInt8Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasUInt8VectorCallback __cross_call_master_CallFuncAliasUInt8VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return uint8[]
+   */
+  inline AliasUInt8Vector CallFuncAliasUInt8VectorCallback(FuncAliasUInt8Vector func) {
+    return __cross_call_master_CallFuncAliasUInt8VectorCallback(func);
+  }
+
+  using _CallFuncAliasUInt16VectorCallback = AliasUInt16Vector (*)(FuncAliasUInt16Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasUInt16VectorCallback __cross_call_master_CallFuncAliasUInt16VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return uint16[]
+   */
+  inline AliasUInt16Vector CallFuncAliasUInt16VectorCallback(FuncAliasUInt16Vector func) {
+    return __cross_call_master_CallFuncAliasUInt16VectorCallback(func);
+  }
+
+  using _CallFuncAliasUInt32VectorCallback = AliasUInt32Vector (*)(FuncAliasUInt32Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasUInt32VectorCallback __cross_call_master_CallFuncAliasUInt32VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return uint32[]
+   */
+  inline AliasUInt32Vector CallFuncAliasUInt32VectorCallback(FuncAliasUInt32Vector func) {
+    return __cross_call_master_CallFuncAliasUInt32VectorCallback(func);
+  }
+
+  using _CallFuncAliasUInt64VectorCallback = AliasUInt64Vector (*)(FuncAliasUInt64Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasUInt64VectorCallback __cross_call_master_CallFuncAliasUInt64VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return uint64[]
+   */
+  inline AliasUInt64Vector CallFuncAliasUInt64VectorCallback(FuncAliasUInt64Vector func) {
+    return __cross_call_master_CallFuncAliasUInt64VectorCallback(func);
+  }
+
+  using _CallFuncAliasPtrVectorCallback = AliasPtrVector (*)(FuncAliasPtrVector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasPtrVectorCallback __cross_call_master_CallFuncAliasPtrVectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return ptr64[]
+   */
+  inline AliasPtrVector CallFuncAliasPtrVectorCallback(FuncAliasPtrVector func) {
+    return __cross_call_master_CallFuncAliasPtrVectorCallback(func);
+  }
+
+  using _CallFuncAliasFloatVectorCallback = AliasFloatVector (*)(FuncAliasFloatVector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasFloatVectorCallback __cross_call_master_CallFuncAliasFloatVectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return float[]
+   */
+  inline AliasFloatVector CallFuncAliasFloatVectorCallback(FuncAliasFloatVector func) {
+    return __cross_call_master_CallFuncAliasFloatVectorCallback(func);
+  }
+
+  using _CallFuncAliasDoubleVectorCallback = AliasDoubleVector (*)(FuncAliasDoubleVector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasDoubleVectorCallback __cross_call_master_CallFuncAliasDoubleVectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return double[]
+   */
+  inline AliasDoubleVector CallFuncAliasDoubleVectorCallback(FuncAliasDoubleVector func) {
+    return __cross_call_master_CallFuncAliasDoubleVectorCallback(func);
+  }
+
+  using _CallFuncAliasStringVectorCallback = AliasStringVector (*)(FuncAliasStringVector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasStringVectorCallback __cross_call_master_CallFuncAliasStringVectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return string[]
+   */
+  inline AliasStringVector CallFuncAliasStringVectorCallback(FuncAliasStringVector func) {
+    return __cross_call_master_CallFuncAliasStringVectorCallback(func);
+  }
+
+  using _CallFuncAliasAnyVectorCallback = AliasAnyVector (*)(FuncAliasAnyVector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasAnyVectorCallback __cross_call_master_CallFuncAliasAnyVectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return any[]
+   */
+  inline AliasAnyVector CallFuncAliasAnyVectorCallback(FuncAliasAnyVector func) {
+    return __cross_call_master_CallFuncAliasAnyVectorCallback(func);
+  }
+
+  using _CallFuncAliasVec2VectorCallback = AliasVec2Vector (*)(FuncAliasVec2Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasVec2VectorCallback __cross_call_master_CallFuncAliasVec2VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return vec2[]
+   */
+  inline AliasVec2Vector CallFuncAliasVec2VectorCallback(FuncAliasVec2Vector func) {
+    return __cross_call_master_CallFuncAliasVec2VectorCallback(func);
+  }
+
+  using _CallFuncAliasVec3VectorCallback = AliasVec3Vector (*)(FuncAliasVec3Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasVec3VectorCallback __cross_call_master_CallFuncAliasVec3VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return vec3[]
+   */
+  inline AliasVec3Vector CallFuncAliasVec3VectorCallback(FuncAliasVec3Vector func) {
+    return __cross_call_master_CallFuncAliasVec3VectorCallback(func);
+  }
+
+  using _CallFuncAliasVec4VectorCallback = AliasVec4Vector (*)(FuncAliasVec4Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasVec4VectorCallback __cross_call_master_CallFuncAliasVec4VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return vec4[]
+   */
+  inline AliasVec4Vector CallFuncAliasVec4VectorCallback(FuncAliasVec4Vector func) {
+    return __cross_call_master_CallFuncAliasVec4VectorCallback(func);
+  }
+
+  using _CallFuncAliasMat4x4VectorCallback = AliasMat4x4Vector (*)(FuncAliasMat4x4Vector);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasMat4x4VectorCallback __cross_call_master_CallFuncAliasMat4x4VectorCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return mat4x4[]
+   */
+  inline AliasMat4x4Vector CallFuncAliasMat4x4VectorCallback(FuncAliasMat4x4Vector func) {
+    return __cross_call_master_CallFuncAliasMat4x4VectorCallback(func);
+  }
+
+  using _CallFuncAliasVec2Callback = AliasVec2 (*)(FuncAliasVec2);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasVec2Callback __cross_call_master_CallFuncAliasVec2Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return vec2
+   */
+  inline AliasVec2 CallFuncAliasVec2Callback(FuncAliasVec2 func) {
+    return __cross_call_master_CallFuncAliasVec2Callback(func);
+  }
+
+  using _CallFuncAliasVec3Callback = AliasVec3 (*)(FuncAliasVec3);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasVec3Callback __cross_call_master_CallFuncAliasVec3Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return vec3
+   */
+  inline AliasVec3 CallFuncAliasVec3Callback(FuncAliasVec3 func) {
+    return __cross_call_master_CallFuncAliasVec3Callback(func);
+  }
+
+  using _CallFuncAliasVec4Callback = AliasVec4 (*)(FuncAliasVec4);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasVec4Callback __cross_call_master_CallFuncAliasVec4Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return vec4
+   */
+  inline AliasVec4 CallFuncAliasVec4Callback(FuncAliasVec4 func) {
+    return __cross_call_master_CallFuncAliasVec4Callback(func);
+  }
+
+  using _CallFuncAliasMat4x4Callback = AliasMat4x4 (*)(FuncAliasMat4x4);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasMat4x4Callback __cross_call_master_CallFuncAliasMat4x4Callback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return mat4x4
+   */
+  inline AliasMat4x4 CallFuncAliasMat4x4Callback(FuncAliasMat4x4 func) {
+    return __cross_call_master_CallFuncAliasMat4x4Callback(func);
+  }
+
+  using _CallFuncAliasAllCallback = plg::string (*)(FuncAliasAll);
+}
+extern "C" PLUGIN_API cross_call_master::_CallFuncAliasAllCallback __cross_call_master_CallFuncAliasAllCallback;
+namespace cross_call_master {
+  /**
+   * @param func (function)
+   * @return string
+   */
+  inline plg::string CallFuncAliasAllCallback(FuncAliasAll func) {
+    return __cross_call_master_CallFuncAliasAllCallback(func);
+  }
+
   using _CallFunc1Callback = int32_t (*)(Func1);
 }
 extern "C" PLUGIN_API cross_call_master::_CallFunc1Callback __cross_call_master_CallFunc1Callback;
@@ -1804,17 +2395,20 @@ namespace cross_call_master {
 
   /**
    * @brief RAII wrapper for ResourceHandle pointer
+   * @return 
    */
   class ResourceHandle final {
   public:
     /**
      * @param id (int32)
      * @param name (string)
+     * @return 
      */
     explicit ResourceHandle(int32_t id, const plg::string& name)
       : ResourceHandle(ResourceHandleCreate(id, name), Ownership::Owned) {}
 
     /**
+     * @return 
      */
     explicit ResourceHandle()
       : ResourceHandle(ResourceHandleCreateDefault(), Ownership::Owned) {}
@@ -1873,7 +2467,7 @@ namespace cross_call_master {
      * @return int32
      */
     int32_t GetId() {
-      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: empty handle");
       return cross_call_master::ResourceHandleGetId(_handle);
     }
 
@@ -1881,7 +2475,7 @@ namespace cross_call_master {
      * @return string
      */
     plg::string GetName() {
-      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: empty handle");
       return cross_call_master::ResourceHandleGetName(_handle);
     }
 
@@ -1889,14 +2483,14 @@ namespace cross_call_master {
      * @param name (string)
      */
     void SetName(const plg::string& name) {
-      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: empty handle");
       cross_call_master::ResourceHandleSetName(_handle, name);
     }
 
     /**
      */
     void IncrementCounter() {
-      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: empty handle");
       cross_call_master::ResourceHandleIncrementCounter(_handle);
     }
 
@@ -1904,7 +2498,7 @@ namespace cross_call_master {
      * @return int32
      */
     int32_t GetCounter() {
-      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: empty handle");
       return cross_call_master::ResourceHandleGetCounter(_handle);
     }
 
@@ -1912,7 +2506,7 @@ namespace cross_call_master {
      * @param value (float)
      */
     void AddData(float value) {
-      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: empty handle");
       cross_call_master::ResourceHandleAddData(_handle, value);
     }
 
@@ -1920,7 +2514,7 @@ namespace cross_call_master {
      * @return float[]
      */
     plg::vector<float> GetData() {
-      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("ResourceHandle: empty handle");
       return cross_call_master::ResourceHandleGetData(_handle);
     }
 
@@ -1963,16 +2557,19 @@ namespace cross_call_master {
 
 
   /**
+   * @return 
    */
   class Counter final {
   public:
     /**
      * @param initialValue (int64)
+     * @return 
      */
     explicit Counter(int64_t initialValue)
       : Counter(CounterCreate(initialValue), Ownership::Owned) {}
 
     /**
+     * @return 
      */
     explicit Counter()
       : Counter(CounterCreateZero(), Ownership::Owned) {}
@@ -2012,7 +2609,7 @@ namespace cross_call_master {
      * @return int64
      */
     int64_t GetValue() {
-      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("Counter: empty handle");
       return cross_call_master::CounterGetValue(_handle);
     }
 
@@ -2020,21 +2617,21 @@ namespace cross_call_master {
      * @param value (int64)
      */
     void SetValue(int64_t value) {
-      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("Counter: empty handle");
       cross_call_master::CounterSetValue(_handle, value);
     }
 
     /**
      */
     void Increment() {
-      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("Counter: empty handle");
       cross_call_master::CounterIncrement(_handle);
     }
 
     /**
      */
     void Decrement() {
-      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("Counter: empty handle");
       cross_call_master::CounterDecrement(_handle);
     }
 
@@ -2042,14 +2639,14 @@ namespace cross_call_master {
      * @param amount (int64)
      */
     void Add(int64_t amount) {
-      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("Counter: empty handle");
       cross_call_master::CounterAdd(_handle, amount);
     }
 
     /**
      */
     void Reset() {
-      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("Counter: empty handle");
       cross_call_master::CounterReset(_handle);
     }
 
@@ -2057,7 +2654,7 @@ namespace cross_call_master {
      * @return bool
      */
     bool IsPositive() {
-      if (_handle == nullptr) throw std::runtime_error("Counter: Empty handle");
+      if (_handle == nullptr) throw std::runtime_error("Counter: empty handle");
       return cross_call_master::CounterIsPositive(_handle);
     }
 

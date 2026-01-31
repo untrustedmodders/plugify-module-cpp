@@ -1,9 +1,10 @@
 #pragma once
 
+#include "enums.hpp"
+#include "aliases.hpp"
+#include "delegates.hpp"
 #include <plugin_export.h>
 
-#include "enums.hpp"
-#include "delegates.hpp"
 // Generated from cross_call_worker.pplugin (group: core)
 
 namespace cross_call_worker {
@@ -829,6 +830,92 @@ namespace cross_call_worker {
     return __cross_call_worker_ParamAllPrimitives(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
   }
 
+  using _ParamAllAliases = int32_t (*)(AliasBool, AliasChar8, AliasChar16, AliasInt8, AliasInt16, AliasInt32, AliasInt64, AliasPtr, AliasFloat, AliasDouble, const AliasString&, const AliasAny&, const AliasVec2&, const AliasVec3&, const AliasVec4&, const AliasMat4x4&, const AliasBoolVector&, const AliasChar8Vector&, const AliasChar16Vector&, const AliasInt8Vector&, const AliasInt16Vector&, const AliasInt32Vector&, const AliasInt64Vector&, const AliasPtrVector&, const AliasFloatVector&, const AliasDoubleVector&, const AliasStringVector&, const AliasAnyVector&, const AliasVec2Vector&, const AliasVec3Vector&, const AliasVec4Vector&, const AliasMat4x4Vector&);
+}
+extern "C" PLUGIN_API cross_call_worker::_ParamAllAliases __cross_call_worker_ParamAllAliases;
+namespace cross_call_worker {
+  /**
+   * @param aBool (bool)
+   * @param aChar8 (char8)
+   * @param aChar16 (char16)
+   * @param aInt8 (int8)
+   * @param aInt16 (int16)
+   * @param aInt32 (int32)
+   * @param aInt64 (int64)
+   * @param aPtr (ptr64)
+   * @param aFloat (float)
+   * @param aDouble (double)
+   * @param aString (string)
+   * @param aAny (any)
+   * @param aVec2 (vec2)
+   * @param aVec3 (vec3)
+   * @param aVec4 (vec4)
+   * @param aMat4x4 (mat4x4)
+   * @param aBoolVec (bool[])
+   * @param aChar8Vec (char8[])
+   * @param aChar16Vec (char16[])
+   * @param aInt8Vec (int8[])
+   * @param aInt16Vec (int16[])
+   * @param aInt32Vec (int32[])
+   * @param aInt64Vec (int64[])
+   * @param aPtrVec (ptr64[])
+   * @param aFloatVec (float[])
+   * @param aDoubleVec (double[])
+   * @param aStringVec (string[])
+   * @param aAnyVec (any[])
+   * @param aVec2Vec (vec2[])
+   * @param aVec3Vec (vec3[])
+   * @param aVec4Vec (vec4[])
+   * @param aaMat4x4Vec (mat4x4[])
+   * @return int32
+   */
+  inline int32_t ParamAllAliases(AliasBool aBool, AliasChar8 aChar8, AliasChar16 aChar16, AliasInt8 aInt8, AliasInt16 aInt16, AliasInt32 aInt32, AliasInt64 aInt64, AliasPtr aPtr, AliasFloat aFloat, AliasDouble aDouble, const AliasString& aString, const AliasAny& aAny, const AliasVec2& aVec2, const AliasVec3& aVec3, const AliasVec4& aVec4, const AliasMat4x4& aMat4x4, const AliasBoolVector& aBoolVec, const AliasChar8Vector& aChar8Vec, const AliasChar16Vector& aChar16Vec, const AliasInt8Vector& aInt8Vec, const AliasInt16Vector& aInt16Vec, const AliasInt32Vector& aInt32Vec, const AliasInt64Vector& aInt64Vec, const AliasPtrVector& aPtrVec, const AliasFloatVector& aFloatVec, const AliasDoubleVector& aDoubleVec, const AliasStringVector& aStringVec, const AliasAnyVector& aAnyVec, const AliasVec2Vector& aVec2Vec, const AliasVec3Vector& aVec3Vec, const AliasVec4Vector& aVec4Vec, const AliasMat4x4Vector& aaMat4x4Vec) {
+    return __cross_call_worker_ParamAllAliases(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aaMat4x4Vec);
+  }
+
+  using _ParamAllRefAliases = int64_t (*)(AliasBool&, AliasChar8&, AliasChar16&, AliasInt8&, AliasInt16&, AliasInt32&, AliasInt64&, AliasPtr&, AliasFloat&, AliasDouble&, AliasString&, AliasAny&, AliasVec2&, AliasVec3&, AliasVec4&, AliasMat4x4&, AliasBoolVector&, AliasChar8Vector&, AliasChar16Vector&, AliasInt8Vector&, AliasInt16Vector&, AliasInt32Vector&, AliasInt64Vector&, AliasPtrVector&, AliasFloatVector&, AliasDoubleVector&, AliasStringVector&, AliasAnyVector&, AliasVec2Vector&, AliasVec3Vector&, AliasVec4Vector&, AliasMat4x4Vector&);
+}
+extern "C" PLUGIN_API cross_call_worker::_ParamAllRefAliases __cross_call_worker_ParamAllRefAliases;
+namespace cross_call_worker {
+  /**
+   * @param aBool (bool&)
+   * @param aChar8 (char8&)
+   * @param aChar16 (char16&)
+   * @param aInt8 (int8&)
+   * @param aInt16 (int16&)
+   * @param aInt32 (int32&)
+   * @param aInt64 (int64&)
+   * @param aPtr (ptr64&)
+   * @param aFloat (float&)
+   * @param aDouble (double&)
+   * @param aString (string&)
+   * @param aAny (any&)
+   * @param aVec2 (vec2&)
+   * @param aVec3 (vec3&)
+   * @param aVec4 (vec4&)
+   * @param aMat4x4 (mat4x4&)
+   * @param aBoolVec (bool[]&)
+   * @param aChar8Vec (char8[]&)
+   * @param aChar16Vec (char16[]&)
+   * @param aInt8Vec (int8[]&)
+   * @param aInt16Vec (int16[]&)
+   * @param aInt32Vec (int32[]&)
+   * @param aInt64Vec (int64[]&)
+   * @param aPtrVec (ptr64[]&)
+   * @param aFloatVec (float[]&)
+   * @param aDoubleVec (double[]&)
+   * @param aStringVec (string[]&)
+   * @param aAnyVec (any[]&)
+   * @param aVec2Vec (vec2[]&)
+   * @param aVec3Vec (vec3[]&)
+   * @param aVec4Vec (vec4[]&)
+   * @param aaMat4x4Vec (mat4x4[]&)
+   * @return int64
+   */
+  inline int64_t ParamAllRefAliases(AliasBool& aBool, AliasChar8& aChar8, AliasChar16& aChar16, AliasInt8& aInt8, AliasInt16& aInt16, AliasInt32& aInt32, AliasInt64& aInt64, AliasPtr& aPtr, AliasFloat& aFloat, AliasDouble& aDouble, AliasString& aString, AliasAny& aAny, AliasVec2& aVec2, AliasVec3& aVec3, AliasVec4& aVec4, AliasMat4x4& aMat4x4, AliasBoolVector& aBoolVec, AliasChar8Vector& aChar8Vec, AliasChar16Vector& aChar16Vec, AliasInt8Vector& aInt8Vec, AliasInt16Vector& aInt16Vec, AliasInt32Vector& aInt32Vec, AliasInt64Vector& aInt64Vec, AliasPtrVector& aPtrVec, AliasFloatVector& aFloatVec, AliasDoubleVector& aDoubleVec, AliasStringVector& aStringVec, AliasAnyVector& aAnyVec, AliasVec2Vector& aVec2Vec, AliasVec3Vector& aVec3Vec, AliasVec4Vector& aVec4Vec, AliasMat4x4Vector& aaMat4x4Vec) {
+    return __cross_call_worker_ParamAllRefAliases(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aaMat4x4Vec);
+  }
+
   using _ParamVariant = void (*)(const plg::any&, const plg::vector<plg::any>&);
 }
 extern "C" PLUGIN_API cross_call_worker::_ParamVariant __cross_call_worker_ParamVariant;
@@ -1380,6 +1467,510 @@ namespace cross_call_worker {
    */
   inline plg::mat4x4 CallFuncMat4x4(FuncMat4x4 func) {
     return __cross_call_worker_CallFuncMat4x4(func);
+  }
+
+  using _CallFuncAliasBool = AliasBool (*)(FuncAliasBool);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasBool __cross_call_worker_CallFuncAliasBool;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return bool
+   */
+  inline AliasBool CallFuncAliasBool(FuncAliasBool func) {
+    return __cross_call_worker_CallFuncAliasBool(func);
+  }
+
+  using _CallFuncAliasChar8 = AliasChar8 (*)(FuncAliasChar8);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasChar8 __cross_call_worker_CallFuncAliasChar8;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return char8
+   */
+  inline AliasChar8 CallFuncAliasChar8(FuncAliasChar8 func) {
+    return __cross_call_worker_CallFuncAliasChar8(func);
+  }
+
+  using _CallFuncAliasChar16 = AliasChar16 (*)(FuncAliasChar16);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasChar16 __cross_call_worker_CallFuncAliasChar16;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return char16
+   */
+  inline AliasChar16 CallFuncAliasChar16(FuncAliasChar16 func) {
+    return __cross_call_worker_CallFuncAliasChar16(func);
+  }
+
+  using _CallFuncAliasInt8 = AliasInt8 (*)(FuncAliasInt8);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasInt8 __cross_call_worker_CallFuncAliasInt8;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return int8
+   */
+  inline AliasInt8 CallFuncAliasInt8(FuncAliasInt8 func) {
+    return __cross_call_worker_CallFuncAliasInt8(func);
+  }
+
+  using _CallFuncAliasInt16 = AliasInt16 (*)(FuncAliasInt16);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasInt16 __cross_call_worker_CallFuncAliasInt16;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return int16
+   */
+  inline AliasInt16 CallFuncAliasInt16(FuncAliasInt16 func) {
+    return __cross_call_worker_CallFuncAliasInt16(func);
+  }
+
+  using _CallFuncAliasInt32 = AliasInt32 (*)(FuncAliasInt32);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasInt32 __cross_call_worker_CallFuncAliasInt32;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return int32
+   */
+  inline AliasInt32 CallFuncAliasInt32(FuncAliasInt32 func) {
+    return __cross_call_worker_CallFuncAliasInt32(func);
+  }
+
+  using _CallFuncAliasInt64 = AliasInt64 (*)(FuncAliasInt64);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasInt64 __cross_call_worker_CallFuncAliasInt64;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return int64
+   */
+  inline AliasInt64 CallFuncAliasInt64(FuncAliasInt64 func) {
+    return __cross_call_worker_CallFuncAliasInt64(func);
+  }
+
+  using _CallFuncAliasUInt8 = AliasUInt8 (*)(FuncAliasUInt8);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasUInt8 __cross_call_worker_CallFuncAliasUInt8;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return uint8
+   */
+  inline AliasUInt8 CallFuncAliasUInt8(FuncAliasUInt8 func) {
+    return __cross_call_worker_CallFuncAliasUInt8(func);
+  }
+
+  using _CallFuncAliasUInt16 = AliasUInt16 (*)(FuncAliasUInt16);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasUInt16 __cross_call_worker_CallFuncAliasUInt16;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return uint16
+   */
+  inline AliasUInt16 CallFuncAliasUInt16(FuncAliasUInt16 func) {
+    return __cross_call_worker_CallFuncAliasUInt16(func);
+  }
+
+  using _CallFuncAliasUInt32 = AliasUInt32 (*)(FuncAliasUInt32);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasUInt32 __cross_call_worker_CallFuncAliasUInt32;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return uint32
+   */
+  inline AliasUInt32 CallFuncAliasUInt32(FuncAliasUInt32 func) {
+    return __cross_call_worker_CallFuncAliasUInt32(func);
+  }
+
+  using _CallFuncAliasUInt64 = AliasUInt64 (*)(FuncAliasUInt64);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasUInt64 __cross_call_worker_CallFuncAliasUInt64;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return uint64
+   */
+  inline AliasUInt64 CallFuncAliasUInt64(FuncAliasUInt64 func) {
+    return __cross_call_worker_CallFuncAliasUInt64(func);
+  }
+
+  using _CallFuncAliasPtr = AliasPtr (*)(FuncAliasPtr);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasPtr __cross_call_worker_CallFuncAliasPtr;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return ptr64
+   */
+  inline AliasPtr CallFuncAliasPtr(FuncAliasPtr func) {
+    return __cross_call_worker_CallFuncAliasPtr(func);
+  }
+
+  using _CallFuncAliasFloat = AliasFloat (*)(FuncAliasFloat);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasFloat __cross_call_worker_CallFuncAliasFloat;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return float
+   */
+  inline AliasFloat CallFuncAliasFloat(FuncAliasFloat func) {
+    return __cross_call_worker_CallFuncAliasFloat(func);
+  }
+
+  using _CallFuncAliasDouble = AliasDouble (*)(FuncAliasDouble);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasDouble __cross_call_worker_CallFuncAliasDouble;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return double
+   */
+  inline AliasDouble CallFuncAliasDouble(FuncAliasDouble func) {
+    return __cross_call_worker_CallFuncAliasDouble(func);
+  }
+
+  using _CallFuncAliasString = AliasString (*)(FuncAliasString);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasString __cross_call_worker_CallFuncAliasString;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return string
+   */
+  inline AliasString CallFuncAliasString(FuncAliasString func) {
+    return __cross_call_worker_CallFuncAliasString(func);
+  }
+
+  using _CallFuncAliasAny = AliasAny (*)(FuncAliasAny);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasAny __cross_call_worker_CallFuncAliasAny;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return any
+   */
+  inline AliasAny CallFuncAliasAny(FuncAliasAny func) {
+    return __cross_call_worker_CallFuncAliasAny(func);
+  }
+
+  using _CallFuncAliasFunction = void* (*)(FuncAliasFunction);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasFunction __cross_call_worker_CallFuncAliasFunction;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return ptr64
+   */
+  inline void* CallFuncAliasFunction(FuncAliasFunction func) {
+    return __cross_call_worker_CallFuncAliasFunction(func);
+  }
+
+  using _CallFuncAliasBoolVector = AliasBoolVector (*)(FuncAliasBoolVector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasBoolVector __cross_call_worker_CallFuncAliasBoolVector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return bool[]
+   */
+  inline AliasBoolVector CallFuncAliasBoolVector(FuncAliasBoolVector func) {
+    return __cross_call_worker_CallFuncAliasBoolVector(func);
+  }
+
+  using _CallFuncAliasChar8Vector = AliasChar8Vector (*)(FuncAliasChar8Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasChar8Vector __cross_call_worker_CallFuncAliasChar8Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return char8[]
+   */
+  inline AliasChar8Vector CallFuncAliasChar8Vector(FuncAliasChar8Vector func) {
+    return __cross_call_worker_CallFuncAliasChar8Vector(func);
+  }
+
+  using _CallFuncAliasChar16Vector = AliasChar16Vector (*)(FuncAliasChar16Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasChar16Vector __cross_call_worker_CallFuncAliasChar16Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return char16[]
+   */
+  inline AliasChar16Vector CallFuncAliasChar16Vector(FuncAliasChar16Vector func) {
+    return __cross_call_worker_CallFuncAliasChar16Vector(func);
+  }
+
+  using _CallFuncAliasInt8Vector = AliasInt8Vector (*)(FuncAliasInt8Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasInt8Vector __cross_call_worker_CallFuncAliasInt8Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return int8[]
+   */
+  inline AliasInt8Vector CallFuncAliasInt8Vector(FuncAliasInt8Vector func) {
+    return __cross_call_worker_CallFuncAliasInt8Vector(func);
+  }
+
+  using _CallFuncAliasInt16Vector = AliasInt16Vector (*)(FuncAliasInt16Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasInt16Vector __cross_call_worker_CallFuncAliasInt16Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return int16[]
+   */
+  inline AliasInt16Vector CallFuncAliasInt16Vector(FuncAliasInt16Vector func) {
+    return __cross_call_worker_CallFuncAliasInt16Vector(func);
+  }
+
+  using _CallFuncAliasInt32Vector = AliasInt32Vector (*)(FuncAliasInt32Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasInt32Vector __cross_call_worker_CallFuncAliasInt32Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return int32[]
+   */
+  inline AliasInt32Vector CallFuncAliasInt32Vector(FuncAliasInt32Vector func) {
+    return __cross_call_worker_CallFuncAliasInt32Vector(func);
+  }
+
+  using _CallFuncAliasInt64Vector = AliasInt64Vector (*)(FuncAliasInt64Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasInt64Vector __cross_call_worker_CallFuncAliasInt64Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return int64[]
+   */
+  inline AliasInt64Vector CallFuncAliasInt64Vector(FuncAliasInt64Vector func) {
+    return __cross_call_worker_CallFuncAliasInt64Vector(func);
+  }
+
+  using _CallFuncAliasUInt8Vector = AliasUInt8Vector (*)(FuncAliasUInt8Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasUInt8Vector __cross_call_worker_CallFuncAliasUInt8Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return uint8[]
+   */
+  inline AliasUInt8Vector CallFuncAliasUInt8Vector(FuncAliasUInt8Vector func) {
+    return __cross_call_worker_CallFuncAliasUInt8Vector(func);
+  }
+
+  using _CallFuncAliasUInt16Vector = AliasUInt16Vector (*)(FuncAliasUInt16Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasUInt16Vector __cross_call_worker_CallFuncAliasUInt16Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return uint16[]
+   */
+  inline AliasUInt16Vector CallFuncAliasUInt16Vector(FuncAliasUInt16Vector func) {
+    return __cross_call_worker_CallFuncAliasUInt16Vector(func);
+  }
+
+  using _CallFuncAliasUInt32Vector = AliasUInt32Vector (*)(FuncAliasUInt32Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasUInt32Vector __cross_call_worker_CallFuncAliasUInt32Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return uint32[]
+   */
+  inline AliasUInt32Vector CallFuncAliasUInt32Vector(FuncAliasUInt32Vector func) {
+    return __cross_call_worker_CallFuncAliasUInt32Vector(func);
+  }
+
+  using _CallFuncAliasUInt64Vector = AliasUInt64Vector (*)(FuncAliasUInt64Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasUInt64Vector __cross_call_worker_CallFuncAliasUInt64Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return uint64[]
+   */
+  inline AliasUInt64Vector CallFuncAliasUInt64Vector(FuncAliasUInt64Vector func) {
+    return __cross_call_worker_CallFuncAliasUInt64Vector(func);
+  }
+
+  using _CallFuncAliasPtrVector = AliasPtrVector (*)(FuncAliasPtrVector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasPtrVector __cross_call_worker_CallFuncAliasPtrVector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return ptr64[]
+   */
+  inline AliasPtrVector CallFuncAliasPtrVector(FuncAliasPtrVector func) {
+    return __cross_call_worker_CallFuncAliasPtrVector(func);
+  }
+
+  using _CallFuncAliasFloatVector = AliasFloatVector (*)(FuncAliasFloatVector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasFloatVector __cross_call_worker_CallFuncAliasFloatVector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return float[]
+   */
+  inline AliasFloatVector CallFuncAliasFloatVector(FuncAliasFloatVector func) {
+    return __cross_call_worker_CallFuncAliasFloatVector(func);
+  }
+
+  using _CallFuncAliasDoubleVector = AliasDoubleVector (*)(FuncAliasDoubleVector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasDoubleVector __cross_call_worker_CallFuncAliasDoubleVector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return double[]
+   */
+  inline AliasDoubleVector CallFuncAliasDoubleVector(FuncAliasDoubleVector func) {
+    return __cross_call_worker_CallFuncAliasDoubleVector(func);
+  }
+
+  using _CallFuncAliasStringVector = AliasStringVector (*)(FuncAliasStringVector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasStringVector __cross_call_worker_CallFuncAliasStringVector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return string[]
+   */
+  inline AliasStringVector CallFuncAliasStringVector(FuncAliasStringVector func) {
+    return __cross_call_worker_CallFuncAliasStringVector(func);
+  }
+
+  using _CallFuncAliasAnyVector = AliasAnyVector (*)(FuncAliasAnyVector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasAnyVector __cross_call_worker_CallFuncAliasAnyVector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return any[]
+   */
+  inline AliasAnyVector CallFuncAliasAnyVector(FuncAliasAnyVector func) {
+    return __cross_call_worker_CallFuncAliasAnyVector(func);
+  }
+
+  using _CallFuncAliasVec2Vector = AliasVec2Vector (*)(FuncAliasVec2Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasVec2Vector __cross_call_worker_CallFuncAliasVec2Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return vec2[]
+   */
+  inline AliasVec2Vector CallFuncAliasVec2Vector(FuncAliasVec2Vector func) {
+    return __cross_call_worker_CallFuncAliasVec2Vector(func);
+  }
+
+  using _CallFuncAliasVec3Vector = AliasVec3Vector (*)(FuncAliasVec3Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasVec3Vector __cross_call_worker_CallFuncAliasVec3Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return vec3[]
+   */
+  inline AliasVec3Vector CallFuncAliasVec3Vector(FuncAliasVec3Vector func) {
+    return __cross_call_worker_CallFuncAliasVec3Vector(func);
+  }
+
+  using _CallFuncAliasVec4Vector = AliasVec4Vector (*)(FuncAliasVec4Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasVec4Vector __cross_call_worker_CallFuncAliasVec4Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return vec4[]
+   */
+  inline AliasVec4Vector CallFuncAliasVec4Vector(FuncAliasVec4Vector func) {
+    return __cross_call_worker_CallFuncAliasVec4Vector(func);
+  }
+
+  using _CallFuncAliasMat4x4Vector = AliasMat4x4Vector (*)(FuncAliasMat4x4Vector);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasMat4x4Vector __cross_call_worker_CallFuncAliasMat4x4Vector;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return mat4x4[]
+   */
+  inline AliasMat4x4Vector CallFuncAliasMat4x4Vector(FuncAliasMat4x4Vector func) {
+    return __cross_call_worker_CallFuncAliasMat4x4Vector(func);
+  }
+
+  using _CallFuncAliasVec2 = AliasVec2 (*)(FuncAliasVec2);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasVec2 __cross_call_worker_CallFuncAliasVec2;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return vec2
+   */
+  inline AliasVec2 CallFuncAliasVec2(FuncAliasVec2 func) {
+    return __cross_call_worker_CallFuncAliasVec2(func);
+  }
+
+  using _CallFuncAliasVec3 = AliasVec3 (*)(FuncAliasVec3);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasVec3 __cross_call_worker_CallFuncAliasVec3;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return vec3
+   */
+  inline AliasVec3 CallFuncAliasVec3(FuncAliasVec3 func) {
+    return __cross_call_worker_CallFuncAliasVec3(func);
+  }
+
+  using _CallFuncAliasVec4 = AliasVec4 (*)(FuncAliasVec4);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasVec4 __cross_call_worker_CallFuncAliasVec4;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return vec4
+   */
+  inline AliasVec4 CallFuncAliasVec4(FuncAliasVec4 func) {
+    return __cross_call_worker_CallFuncAliasVec4(func);
+  }
+
+  using _CallFuncAliasMat4x4 = AliasMat4x4 (*)(FuncAliasMat4x4);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasMat4x4 __cross_call_worker_CallFuncAliasMat4x4;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return mat4x4
+   */
+  inline AliasMat4x4 CallFuncAliasMat4x4(FuncAliasMat4x4 func) {
+    return __cross_call_worker_CallFuncAliasMat4x4(func);
+  }
+
+  using _CallFuncAliasAll = plg::string (*)(FuncAliasAll);
+}
+extern "C" PLUGIN_API cross_call_worker::_CallFuncAliasAll __cross_call_worker_CallFuncAliasAll;
+namespace cross_call_worker {
+  /**
+   * @param func (function)
+   * @return string
+   */
+  inline plg::string CallFuncAliasAll(FuncAliasAll func) {
+    return __cross_call_worker_CallFuncAliasAll(func);
   }
 
   using _CallFunc1 = int32_t (*)(Func1);

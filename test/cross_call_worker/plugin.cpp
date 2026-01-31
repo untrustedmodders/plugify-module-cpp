@@ -500,6 +500,149 @@ PLUGIN_API int64_t ParamAllPrimitives(bool p1, char p2, char16_t p3, int8_t p4, 
 }
 
 extern "C"
+PLUGIN_API int32_t ParamAllAliases(
+	const cross_call_master::AliasBool          aBool,
+	const cross_call_master::AliasChar8         aChar8,
+	const cross_call_master::AliasChar16        aChar16,
+	const cross_call_master::AliasInt8          aInt8,
+	const cross_call_master::AliasInt16         aInt16,
+	const cross_call_master::AliasInt32         aInt32,
+	const cross_call_master::AliasInt64         aInt64,
+	const cross_call_master::AliasPtr           aPtr,
+	const cross_call_master::AliasFloat         aFloat,
+	const cross_call_master::AliasDouble        aDouble,
+	const cross_call_master::AliasString&       aString,
+	const cross_call_master::AliasAny&          aAny,
+	const cross_call_master::AliasVec2&         aVec2,
+	const cross_call_master::AliasVec3&         aVec3,
+	const cross_call_master::AliasVec4&         aVec4,
+	const cross_call_master::AliasMat4x4&       aMat4x4,
+	const cross_call_master::AliasBoolVector&   aBoolVec,
+	const cross_call_master::AliasChar8Vector&  aChar8Vec,
+	const cross_call_master::AliasChar16Vector& aChar16Vec,
+	const cross_call_master::AliasInt8Vector&   aInt8Vec,
+	const cross_call_master::AliasInt16Vector&  aInt16Vec,
+	const cross_call_master::AliasInt32Vector&  aInt32Vec,
+	const cross_call_master::AliasInt64Vector&  aInt64Vec,
+	const cross_call_master::AliasPtrVector&    aPtrVec,
+	const cross_call_master::AliasFloatVector&  aFloatVec,
+	const cross_call_master::AliasDoubleVector& aDoubleVec,
+	const cross_call_master::AliasStringVector& aStringVec,
+	const cross_call_master::AliasAnyVector&    aAnyVec,
+	const cross_call_master::AliasVec2Vector&   aVec2Vec,
+	const cross_call_master::AliasVec3Vector&   aVec3Vec,
+	const cross_call_master::AliasVec4Vector&   aVec4Vec,
+	const cross_call_master::AliasMat4x4Vector& aMat4x4Vec
+) {
+	const auto buffer = std::format(
+		"{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}",
+		aBool,
+		aChar8,
+		static_cast<uint16_t>(aChar16),
+		aInt8,
+		aInt16,
+		aInt32,
+		aInt64,
+		aPtr,
+		aFloat,
+		aDouble,
+		aString,
+		aAny,
+		aVec2,
+		aVec3,
+		aVec4,
+		aMat4x4,
+		aBoolVec,
+		aChar8Vec,
+		aChar16Vec,
+		aInt8Vec,
+		aInt16Vec,
+		aInt32Vec,
+		aInt64Vec,
+		aPtrVec,
+		aFloatVec,
+		aDoubleVec,
+		aStringVec,
+		aAnyVec,
+		aVec2Vec,
+		aVec3Vec,
+		aVec4Vec,
+		aMat4x4Vec
+	);
+	return -1;
+}
+
+extern "C"
+PLUGIN_API int64_t ParamAllRefAliases(
+	cross_call_master::AliasBool&         aBool,
+	cross_call_master::AliasChar8&        aChar8,
+	cross_call_master::AliasChar16&       aChar16,
+	cross_call_master::AliasInt8&         aInt8,
+	cross_call_master::AliasInt16&        aInt16,
+	cross_call_master::AliasInt32&        aInt32,
+	cross_call_master::AliasInt64&        aInt64,
+	cross_call_master::AliasPtr&          aPtr,
+	cross_call_master::AliasFloat&        aFloat,
+	cross_call_master::AliasDouble&       aDouble,
+	cross_call_master::AliasString&       aString,
+	cross_call_master::AliasAny&          aAny,
+	cross_call_master::AliasVec2&         aVec2,
+	cross_call_master::AliasVec3&         aVec3,
+	cross_call_master::AliasVec4&         aVec4,
+	cross_call_master::AliasMat4x4&       aMat4x4,
+	cross_call_master::AliasBoolVector&   aBoolVec,
+	cross_call_master::AliasChar8Vector&  aChar8Vec,
+	cross_call_master::AliasChar16Vector& aChar16Vec,
+	cross_call_master::AliasInt8Vector&   aInt8Vec,
+	cross_call_master::AliasInt16Vector&  aInt16Vec,
+	cross_call_master::AliasInt32Vector&  aInt32Vec,
+	cross_call_master::AliasInt64Vector&  aInt64Vec,
+	cross_call_master::AliasPtrVector&    aPtrVec,
+	cross_call_master::AliasFloatVector&  aFloatVec,
+	cross_call_master::AliasDoubleVector& aDoubleVec,
+	cross_call_master::AliasStringVector& aStringVec,
+	cross_call_master::AliasAnyVector&    aAnyVec,
+	cross_call_master::AliasVec2Vector&   aVec2Vec,
+	cross_call_master::AliasVec3Vector&   aVec3Vec,
+	cross_call_master::AliasVec4Vector&   aVec4Vec,
+	cross_call_master::AliasMat4x4Vector& aMat4x4Vec
+) {
+	aBool = true;
+	aChar8 = 'A';
+	aChar16 = u'0';
+	aInt8 = 1;
+	aInt16 = 2;
+	aInt32 = 3;
+	aInt64 = 4;
+	aPtr = nullptr;
+	aFloat = 5.0f;
+	aDouble = 5.0;
+	aString = "seven";
+	aAny = "six";
+	aVec2 = {0.1f, 0.2f};
+	aVec3 = {0.3f, 0.4f, 0.5f};
+	aVec4 = {0.6f, 0.7f, 0.8f, 0.9f};
+	aMat4x4 = {1.4f, 1.1f, 1.2f, 1.3f, 2.4f, 2.1f, 2.2f, 2.3f, 3.4f, 3.1f, 3.2f, 3.3f, 4.4f, 4.1f, 4.2f, 4.3f};
+	aBoolVec = {aBool};
+	aChar8Vec = {aChar8};
+	aChar16Vec = {aChar16};
+	aInt8Vec = {aInt8};
+	aInt16Vec = {aInt16};
+	aInt32Vec = {aInt32};
+	aInt64Vec = {aInt64};
+	aPtrVec = {aPtr};
+	aFloatVec = {aFloat};
+	aDoubleVec = {aDouble};
+	aStringVec = {aString};
+	aAnyVec = {aAny};
+	aVec2Vec = {aVec2};
+	aVec3Vec = {aVec3};
+	aVec4Vec = {aVec4};
+	aMat4x4Vec = {aMat4x4};
+	return 24;
+}
+
+extern "C"
 PLUGIN_API int32_t ParamEnum(Example p1, const plg::vector<Example> &p2) {
     return static_cast<int32_t>(p1) + std::accumulate(p2.begin(), p2.end(), int32_t{0},
                                                       [](int32_t sum, const Example &e) {
@@ -1308,6 +1451,169 @@ PLUGIN_API plg::string CallFuncEnum(cross_call_master::FuncEnum func) {
     return std::format("{}|{}", ret, p2);
 }
 
+// aliases
+
+extern "C"
+PLUGIN_API cross_call_master::AliasBool CallFuncAliasBool(cross_call_master::FuncAliasBool func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasChar8 CallFuncAliasChar8(cross_call_master::FuncAliasChar8 func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasChar16 CallFuncAliasChar16(cross_call_master::FuncAliasChar16 func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasInt8 CallFuncAliasInt8(cross_call_master::FuncAliasInt8 func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasInt16 CallFuncAliasInt16(cross_call_master::FuncAliasInt16 func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasInt32 CallFuncAliasInt32(cross_call_master::FuncAliasInt32 func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasInt64 CallFuncAliasInt64(cross_call_master::FuncAliasInt64 func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasUInt8 CallFuncAliasUInt8(cross_call_master::FuncAliasUInt8 func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasUInt16 CallFuncAliasUInt16(cross_call_master::FuncAliasUInt16 func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasUInt32 CallFuncAliasUInt32(cross_call_master::FuncAliasUInt32 func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasUInt64 CallFuncAliasUInt64(cross_call_master::FuncAliasUInt64 func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasPtr CallFuncAliasPtr(cross_call_master::FuncAliasPtr func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasFloat CallFuncAliasFloat(cross_call_master::FuncAliasFloat func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasDouble CallFuncAliasDouble(cross_call_master::FuncAliasDouble func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasFunction CallFuncAliasFunction(cross_call_master::FuncAliasFunction func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasString CallFuncAliasString(cross_call_master::FuncAliasString func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasAny CallFuncAliasAny(cross_call_master::FuncAliasAny func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasBoolVector CallFuncAliasBoolVector(cross_call_master::FuncAliasBoolVector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasChar8Vector CallFuncAliasChar8Vector(cross_call_master::FuncAliasChar8Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasChar16Vector CallFuncAliasChar16Vector(cross_call_master::FuncAliasChar16Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasInt8Vector CallFuncAliasInt8Vector(cross_call_master::FuncAliasInt8Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasInt16Vector CallFuncAliasInt16Vector(cross_call_master::FuncAliasInt16Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasInt32Vector CallFuncAliasInt32Vector(cross_call_master::FuncAliasInt32Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasInt64Vector CallFuncAliasInt64Vector(cross_call_master::FuncAliasInt64Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasUInt8Vector CallFuncAliasUInt8Vector(cross_call_master::FuncAliasUInt8Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasUInt16Vector CallFuncAliasUInt16Vector(cross_call_master::FuncAliasUInt16Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasUInt32Vector CallFuncAliasUInt32Vector(cross_call_master::FuncAliasUInt32Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasUInt64Vector CallFuncAliasUInt64Vector(cross_call_master::FuncAliasUInt64Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasPtrVector CallFuncAliasPtrVector(cross_call_master::FuncAliasPtrVector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasFloatVector CallFuncAliasFloatVector(cross_call_master::FuncAliasFloatVector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasDoubleVector CallFuncAliasDoubleVector(cross_call_master::FuncAliasDoubleVector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasStringVector CallFuncAliasStringVector(cross_call_master::FuncAliasStringVector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasAnyVector CallFuncAliasAnyVector(cross_call_master::FuncAliasAnyVector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasVec2Vector CallFuncAliasVec2Vector(cross_call_master::FuncAliasVec2Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasVec3Vector CallFuncAliasVec3Vector(cross_call_master::FuncAliasVec3Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasVec4Vector CallFuncAliasVec4Vector(cross_call_master::FuncAliasVec4Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasMat4x4Vector CallFuncAliasMat4x4Vector(cross_call_master::FuncAliasMat4x4Vector func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasVec2 CallFuncAliasVec2(cross_call_master::FuncAliasVec2 func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasVec3 CallFuncAliasVec3(cross_call_master::FuncAliasVec3 func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasVec4 CallFuncAliasVec4(cross_call_master::FuncAliasVec4 func) { return func(); }
+
+extern "C"
+PLUGIN_API cross_call_master::AliasMat4x4 CallFuncAliasMat4x4(cross_call_master::FuncAliasMat4x4 func) { return func(); }
+
+extern "C"
+PLUGIN_API plg::string CallFuncAliasAll(cross_call_master::FuncAliasAll func) {
+	cross_call_master::AliasBool aBool{true};
+	cross_call_master::AliasChar8 aChar8{'A'};
+	cross_call_master::AliasChar16 aChar16{u'0'};
+	cross_call_master::AliasInt8 aInt8{1};
+	cross_call_master::AliasInt16 aInt16{2};
+	cross_call_master::AliasInt32 aInt32{3};
+	cross_call_master::AliasInt64 aInt64{4};
+	cross_call_master::AliasPtr aPtr{};
+	cross_call_master::AliasFloat aFloat{5.5f};
+	cross_call_master::AliasDouble aDouble{6.6};
+	cross_call_master::AliasString aString{"seven"};
+	cross_call_master::AliasAny aAny{"six"};
+	cross_call_master::AliasVec2 aVec2{0.1f, 0.2f};
+	cross_call_master::AliasVec3 aVec3{0.3f, 0.4f, 0.5f};
+	cross_call_master::AliasVec4 aVec4{0.6f, 0.7f, 0.8f, 0.9f};
+	cross_call_master::AliasMat4x4 aMat4x4{1.4f, 1.1f, 1.2f, 1.3f, 2.4f, 2.1f, 2.2f, 2.3f, 3.4f, 3.1f, 3.2f, 3.3f, 4.4f, 4.1f, 4.2f, 4.3f};
+	cross_call_master::AliasBoolVector aBoolVec{aBool};
+	cross_call_master::AliasChar8Vector aChar8Vec{aChar8};
+	cross_call_master::AliasChar16Vector aChar16Vec{aChar16};
+	cross_call_master::AliasInt8Vector aInt8Vec{aInt8};
+	cross_call_master::AliasInt16Vector aInt16Vec{aInt16};
+	cross_call_master::AliasInt32Vector aInt32Vec{aInt32};
+	cross_call_master::AliasInt64Vector aInt64Vec{aInt64};
+	cross_call_master::AliasPtrVector aPtrVec{aPtr};
+	cross_call_master::AliasFloatVector aFloatVec{aFloat};
+	cross_call_master::AliasDoubleVector aDoubleVec{aDouble};
+	cross_call_master::AliasStringVector aStringVec{aString};
+	cross_call_master::AliasAnyVector aAnyVec{aAny};
+	cross_call_master::AliasVec2Vector aVec2Vec{aVec2};
+	cross_call_master::AliasVec3Vector aVec3Vec{aVec3};
+	cross_call_master::AliasVec4Vector aVec4Vec{aVec4};
+	cross_call_master::AliasMat4x4Vector aMat4x4Vec{aMat4x4};
+	plg::string result = func(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aMat4x4Vec);
+	return result;
+}
+
 // Mock Functions for the typedefs
 
 void MockVoid() {
@@ -1837,6 +2143,186 @@ plg::vector<cross_call_master::Example> MockFuncEnum(cross_call_master::Example 
     return {p1, cross_call_master::Example::Forth};
 }
 
+// Mock implementation for alias parameters functions
+
+
+cross_call_master::AliasBool MockFuncAliasBool() { return true; }
+cross_call_master::AliasChar8 MockFuncAliasChar8() { return 'A'; }
+cross_call_master::AliasChar16 MockFuncAliasChar16() { return u'Z'; }
+cross_call_master::AliasInt8 MockFuncAliasInt8() { return 10; }
+cross_call_master::AliasInt16 MockFuncAliasInt16() { return 100; }
+cross_call_master::AliasInt32 MockFuncAliasInt32() { return 1000; }
+cross_call_master::AliasInt64 MockFuncAliasInt64() { return 10000; }
+cross_call_master::AliasUInt8 MockFuncAliasUInt8() { return 20; }
+cross_call_master::AliasUInt16 MockFuncAliasUInt16() { return 200; }
+cross_call_master::AliasUInt32 MockFuncAliasUInt32() { return 2000; }
+cross_call_master::AliasUInt64 MockFuncAliasUInt64() { return 20000; }
+cross_call_master::AliasPtr MockFuncAliasPtr() { return nullptr; }
+cross_call_master::AliasFloat MockFuncAliasFloat() { return 3.14f; }
+cross_call_master::AliasDouble MockFuncAliasDouble() { return 6.28; }
+cross_call_master::AliasFunction MockFuncAliasFunction() { return nullptr; }
+cross_call_master::AliasString MockFuncAliasString() { return "Test string"; }
+cross_call_master::AliasAny MockFuncAliasAny() { return L'A'; }
+
+cross_call_master::AliasBoolVector MockFuncAliasBoolVector() { return {true, false}; }
+cross_call_master::AliasChar8Vector MockFuncAliasChar8Vector() { return {'A', 'B'}; }
+cross_call_master::AliasChar16Vector MockFuncAliasChar16Vector() { return {u'A', u'B'}; }
+cross_call_master::AliasInt8Vector MockFuncAliasInt8Vector() { return {10, 20}; }
+cross_call_master::AliasInt16Vector MockFuncAliasInt16Vector() { return {100, 200}; }
+cross_call_master::AliasInt32Vector MockFuncAliasInt32Vector() { return {1000, 2000}; }
+cross_call_master::AliasInt64Vector MockFuncAliasInt64Vector() { return {10000, 20000}; }
+cross_call_master::AliasUInt8Vector MockFuncAliasUInt8Vector() { return {20, 30}; }
+cross_call_master::AliasUInt16Vector MockFuncAliasUInt16Vector() { return {200, 300}; }
+cross_call_master::AliasUInt32Vector MockFuncAliasUInt32Vector() { return {2000, 3000}; }
+cross_call_master::AliasUInt64Vector MockFuncAliasUInt64Vector() { return {20000, 30000}; }
+cross_call_master::AliasPtrVector MockFuncAliasPtrVector() { return {nullptr, reinterpret_cast<void *>(1)}; }
+cross_call_master::AliasFloatVector MockFuncAliasFloatVector() { return {1.1f, 2.2f}; }
+cross_call_master::AliasDoubleVector MockFuncAliasDoubleVector() { return {3.3, 4.4}; }
+cross_call_master::AliasStringVector MockFuncAliasStringVector() { return {"Hello", "World"}; }
+cross_call_master::AliasAnyVector MockFuncAliasAnyVector() { return {"Hello", 3.14f, 6.28, 1, 0xDEADBEAF}; }
+
+cross_call_master::AliasVec2Vector MockFuncAliasVec2Vector() {
+    return {
+        {0.5f, -1.2f},
+        {3.4f, 7.8f},
+        {-6.7f, 2.3f},
+        {8.9f, -4.5f},
+        {0.0f, 0.0f}
+    };
+}
+
+cross_call_master::AliasVec3Vector MockFuncAliasVec3Vector() {
+    return {
+        {2.1f, 3.2f, 4.3f},
+        {-5.4f, 6.5f, -7.6f},
+        {8.7f, 9.8f, 0.1f},
+        {1.2f, -3.3f, 4.4f},
+        {-5.5f, 6.6f, -7.7f}
+    };
+}
+
+cross_call_master::AliasVec4Vector MockFuncAliasVec4Vector() {
+    return {
+        {0.1f, 1.2f, 2.3f, 3.4f},
+        {-4.5f, 5.6f, 6.7f, -7.8f},
+        {8.9f, -9.0f, 10.1f, -11.2f},
+        {12.3f, 13.4f, 14.5f, 15.6f},
+        {-16.7f, 17.8f, 18.9f, -19.0f}
+    };
+}
+
+cross_call_master::AliasMat4x4Vector MockFuncAliasMat4x4Vector() {
+    return {
+        // Identity matrix
+        {
+            1.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f
+        },
+        // Random matrix #1
+        {
+            0.5f, 1.0f, 1.5f, 2.0f,
+            2.5f, 3.0f, 3.5f, 4.0f,
+            4.5f, 5.0f, 5.5f, 6.0f,
+            6.5f, 7.0f, 7.5f, 8.0f
+        },
+        // Random matrix #2
+        {
+            -1.0f, -2.0f, -3.0f, -4.0f,
+            -5.0f, -6.0f, -7.0f, -8.0f,
+            -9.0f, -10.0f, -11.0f, -12.0f,
+            -13.0f, -14.0f, -15.0f, -16.0f
+        },
+        // Random matrix #3
+        {
+            1.1f, 2.2f, 3.3f, 4.4f,
+            5.5f, 6.6f, 7.7f, 8.8f,
+            9.9f, 10.0f, 11.1f, 12.2f,
+            13.3f, 14.4f, 15.5f, 16.6f
+        }
+    };
+}
+
+cross_call_master::AliasVec2 MockFuncAliasVec2() { return {1.0f, 2.0f}; }
+cross_call_master::AliasVec3 MockFuncAliasVec3() { return {1.0f, 2.0f, 3.0f}; }
+cross_call_master::AliasVec4 MockFuncAliasVec4() { return {1.0f, 2.0f, 3.0f, 4.0f}; }
+
+cross_call_master::AliasMat4x4 MockFuncAliasMat4x4() {
+    return {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+}
+
+plg::string MockFuncAliasAll(
+    cross_call_master::AliasBool          aBool,
+    cross_call_master::AliasChar8         aChar8,
+    cross_call_master::AliasChar16        aChar16,
+    cross_call_master::AliasInt8          aInt8,
+    cross_call_master::AliasInt16         aInt16,
+    cross_call_master::AliasInt32         aInt32,
+    cross_call_master::AliasInt64         aInt64,
+    cross_call_master::AliasPtr           aPtr,
+    cross_call_master::AliasFloat         aFloat,
+    cross_call_master::AliasDouble        aDouble,
+    const cross_call_master::AliasString&       aString,
+    const cross_call_master::AliasAny&          aAny,
+    const cross_call_master::AliasVec2&         aVec2,
+    const cross_call_master::AliasVec3&         aVec3,
+    const cross_call_master::AliasVec4&         aVec4,
+    const cross_call_master::AliasMat4x4&       aMat4x4,
+    const cross_call_master::AliasBoolVector&   aBoolVec,
+    const cross_call_master::AliasChar8Vector&  aChar8Vec,
+    const cross_call_master::AliasChar16Vector& aChar16Vec,
+    const cross_call_master::AliasInt8Vector&   aInt8Vec,
+    const cross_call_master::AliasInt16Vector&  aInt16Vec,
+    const cross_call_master::AliasInt32Vector&  aInt32Vec,
+    const cross_call_master::AliasInt64Vector&  aInt64Vec,
+    const cross_call_master::AliasPtrVector&    aPtrVec,
+    const cross_call_master::AliasFloatVector&  aFloatVec,
+    const cross_call_master::AliasDoubleVector& aDoubleVec,
+    const cross_call_master::AliasStringVector& aStringVec,
+    const cross_call_master::AliasAnyVector&    aAnyVec,
+    const cross_call_master::AliasVec2Vector&   aVec2Vec,
+    const cross_call_master::AliasVec3Vector&   aVec3Vec,
+    const cross_call_master::AliasVec4Vector&   aVec4Vec,
+    const cross_call_master::AliasMat4x4Vector& aMat4x4Vec
+) {
+    return std::format(
+        "{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}",
+        aBool,
+        aChar8,
+        static_cast<uint16_t>(aChar16),
+        aInt8,
+        aInt16,
+        aInt32,
+        aInt64,
+        aPtr,
+        aFloat,
+        aDouble,
+        aString,
+        aAny,
+        aVec2,
+        aVec3,
+        aVec4,
+        aMat4x4,
+        aBoolVec,
+        aChar8Vec,
+        aChar16Vec,
+        aInt8Vec,
+        aInt16Vec,
+        aInt32Vec,
+        aInt64Vec,
+        aPtrVec,
+        aFloatVec,
+        aDoubleVec,
+        aStringVec,
+        aAnyVec,
+        aVec2Vec,
+        aVec3Vec,
+        aVec4Vec,
+        aMat4x4Vec
+    );
+}
+
 class TestClass {
 private:
     // Conditional logging - only in debug builds
@@ -2089,12 +2575,12 @@ extern "C"
 PLUGIN_API void ReverseCall(const plg::string &test) {
     static std::unordered_map<plg::string, void(*)()> tests{
         {
-            "NoParamReturnVoid", []() {
+            "NoParamReturnVoid", [] {
                 cross_call_master::NoParamReturnVoidCallback();
             }
         },
         {
-            "NoParamReturnBool", []() {
+            "NoParamReturnBool", [] {
                 const auto result = cross_call_master::NoParamReturnBoolCallback();
                 cross_call_master::ReverseReturn(result == true
                                                      ? "true"
@@ -2102,310 +2588,310 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "NoParamReturnChar8", []() {
+            "NoParamReturnChar8", [] {
                 const auto result = cross_call_master::NoParamReturnChar8Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnChar16", []() {
+            "NoParamReturnChar16", [] {
                 const auto result = cross_call_master::NoParamReturnChar16Callback();
                 cross_call_master::ReverseReturn(std::format("{}", static_cast<uint16_t>(result)));
             }
         },
         {
-            "NoParamReturnInt8", []() {
+            "NoParamReturnInt8", [] {
                 const auto result = cross_call_master::NoParamReturnInt8Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnInt16", []() {
+            "NoParamReturnInt16", [] {
                 const auto result = cross_call_master::NoParamReturnInt16Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnInt32", []() {
+            "NoParamReturnInt32", [] {
                 const auto result = cross_call_master::NoParamReturnInt32Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnInt64", []() {
+            "NoParamReturnInt64", [] {
                 const auto result = cross_call_master::NoParamReturnInt64Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnUInt8", []() {
+            "NoParamReturnUInt8", [] {
                 const auto result = cross_call_master::NoParamReturnUInt8Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnUInt16", []() {
+            "NoParamReturnUInt16", [] {
                 const auto result = cross_call_master::NoParamReturnUInt16Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnUInt32", []() {
+            "NoParamReturnUInt32", [] {
                 const auto result = cross_call_master::NoParamReturnUInt32Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnUInt64", []() {
+            "NoParamReturnUInt64", [] {
                 const auto result = cross_call_master::NoParamReturnUInt64Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnPointer", []() {
+            "NoParamReturnPointer", [] {
                 const auto result = cross_call_master::NoParamReturnPointerCallback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnFloat", []() {
+            "NoParamReturnFloat", [] {
                 const auto result = cross_call_master::NoParamReturnFloatCallback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnDouble", []() {
+            "NoParamReturnDouble", [] {
                 const auto result = cross_call_master::NoParamReturnDoubleCallback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnFunction", []() {
+            "NoParamReturnFunction", [] {
                 const auto result = cross_call_master::NoParamReturnFunctionCallback();
                 cross_call_master::ReverseReturn(result ? std::format("{}", result()) : "<null function pointer>");
             }
         },
         {
-            "NoParamReturnString", []() {
+            "NoParamReturnString", [] {
                 const auto result = cross_call_master::NoParamReturnStringCallback();
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "NoParamReturnAny", []() {
+            "NoParamReturnAny", [] {
                 const auto result = cross_call_master::NoParamReturnAnyCallback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayBool", []() {
+            "NoParamReturnArrayBool", [] {
                 const auto result = cross_call_master::NoParamReturnArrayBoolCallback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayChar8", []() {
+            "NoParamReturnArrayChar8", [] {
                 const auto result = cross_call_master::NoParamReturnArrayChar8Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayChar16", []() {
+            "NoParamReturnArrayChar16", [] {
                 const auto result = cross_call_master::NoParamReturnArrayChar16Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayInt8", []() {
+            "NoParamReturnArrayInt8", [] {
                 const auto result = cross_call_master::NoParamReturnArrayInt8Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayInt16", []() {
+            "NoParamReturnArrayInt16", [] {
                 const auto result = cross_call_master::NoParamReturnArrayInt16Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayInt32", []() {
+            "NoParamReturnArrayInt32", [] {
                 const auto result = cross_call_master::NoParamReturnArrayInt32Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayInt64", []() {
+            "NoParamReturnArrayInt64", [] {
                 const auto result = cross_call_master::NoParamReturnArrayInt64Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayUInt8", []() {
+            "NoParamReturnArrayUInt8", [] {
                 const auto result = cross_call_master::NoParamReturnArrayUInt8Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayUInt16", []() {
+            "NoParamReturnArrayUInt16", [] {
                 const auto result = cross_call_master::NoParamReturnArrayUInt16Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayUInt32", []() {
+            "NoParamReturnArrayUInt32", [] {
                 const auto result = cross_call_master::NoParamReturnArrayUInt32Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayUInt64", []() {
+            "NoParamReturnArrayUInt64", [] {
                 const auto result = cross_call_master::NoParamReturnArrayUInt64Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayPointer", []() {
+            "NoParamReturnArrayPointer", [] {
                 const auto result = cross_call_master::NoParamReturnArrayPointerCallback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayFloat", []() {
+            "NoParamReturnArrayFloat", [] {
                 const auto result = cross_call_master::NoParamReturnArrayFloatCallback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayDouble", []() {
+            "NoParamReturnArrayDouble", [] {
                 const auto result = cross_call_master::NoParamReturnArrayDoubleCallback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayString", []() {
+            "NoParamReturnArrayString", [] {
                 const auto result = cross_call_master::NoParamReturnArrayStringCallback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayAny", []() {
+            "NoParamReturnArrayAny", [] {
                 const auto result = cross_call_master::NoParamReturnArrayAnyCallback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayVector2", []() {
+            "NoParamReturnArrayVector2", [] {
                 const auto result = cross_call_master::NoParamReturnArrayVector2Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayVector3", []() {
+            "NoParamReturnArrayVector3", [] {
                 const auto result = cross_call_master::NoParamReturnArrayVector3Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayVector4", []() {
+            "NoParamReturnArrayVector4", [] {
                 const auto result = cross_call_master::NoParamReturnArrayVector4Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnArrayMatrix4x4", []() {
+            "NoParamReturnArrayMatrix4x4", [] {
                 const auto result = cross_call_master::NoParamReturnArrayMatrix4x4Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnVector2", []() {
+            "NoParamReturnVector2", [] {
                 const auto result = cross_call_master::NoParamReturnVector2Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnVector3", []() {
+            "NoParamReturnVector3", [] {
                 const auto result = cross_call_master::NoParamReturnVector3Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnVector4", []() {
+            "NoParamReturnVector4", [] {
                 const auto result = cross_call_master::NoParamReturnVector4Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "NoParamReturnMatrix4x4", []() {
+            "NoParamReturnMatrix4x4", [] {
                 const auto result = cross_call_master::NoParamReturnMatrix4x4Callback();
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "Param1", []() {
+            "Param1", [] {
                 cross_call_master::Param1Callback(999);
             }
         },
         {
-            "Param2", []() {
+            "Param2", [] {
                 cross_call_master::Param2Callback(888, 9.9f);
             }
         },
         {
-            "Param3", []() {
+            "Param3", [] {
                 cross_call_master::Param3Callback(777, 8.8f, 9.8765);
             }
         },
         {
-            "Param4", []() {
+            "Param4", [] {
                 cross_call_master::Param4Callback(666, 7.7f, 8.7659, {100.1f, 200.2f, 300.3f, 400.4f});
             }
         },
         {
-            "Param5", []() {
+            "Param5", [] {
                 cross_call_master::Param5Callback(555, 6.6f, 7.6598, {-105.1f, -205.2f, -305.3f, -405.4f}, {});
             }
         },
         {
-            "Param6", []() {
+            "Param6", [] {
                 cross_call_master::Param6Callback(444, 5.5f, 6.5987, {110.1f, 210.2f, 310.3f, 410.4f},
                                                   {90000, -100, 20000}, 'A');
             }
         },
         {
-            "Param7", []() {
+            "Param7", [] {
                 cross_call_master::Param7Callback(333, 4.4f, 5.9876, {-115.1f, -215.2f, -315.3f, -415.4f},
                                                   {800000, 30000, -4000000}, 'B', "red gold");
             }
         },
         {
-            "Param8", []() {
+            "Param8", [] {
                 cross_call_master::Param8Callback(222, 3.3f, 1.2345, {120.1f, 220.2f, 320.3f, 420.4f},
                                                   {7000000, 5000000, -600000000}, 'C', "blue ice", u'Z');
             }
         },
         {
-            "Param9", []() {
+            "Param9", [] {
                 cross_call_master::Param9Callback(111, 2.2f, 5.1234, {-125.1f, -225.2f, -325.3f, -425.4f},
                                                   {60000000, -700000000, 80000000000}, 'D', "pink metal", u'Y', -100);
             }
         },
         {
-            "Param10", []() {
+            "Param10", [] {
                 cross_call_master::Param10Callback(1234, 1.1f, 4.5123, {130.1f, 230.2f, 330.3f, 430.4f},
                                                    {500000000, 90000000000, 1000000000000}, 'E', "green wood", u'X',
                                                    -200, reinterpret_cast<void *>(0xabebaLL));
             }
         },
         {
-            "ParamRef1", []() {
+            "ParamRef1", [] {
                 int32_t a{};
                 cross_call_master::ParamRef1Callback(a);
                 cross_call_master::ReverseReturn(std::format("{}", a));
             }
         },
         {
-            "ParamRef2", []() {
+            "ParamRef2", [] {
                 int32_t a{};
                 float b{};
                 cross_call_master::ParamRef2Callback(a, b);
@@ -2413,7 +2899,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamRef3", []() {
+            "ParamRef3", [] {
                 int32_t a{};
                 float b{};
                 double c{};
@@ -2422,7 +2908,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamRef4", []() {
+            "ParamRef4", [] {
                 int32_t a{};
                 float b{};
                 double c{};
@@ -2432,7 +2918,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamRef5", []() {
+            "ParamRef5", [] {
                 int32_t a{};
                 float b{};
                 double c{};
@@ -2443,7 +2929,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamRef6", []() {
+            "ParamRef6", [] {
                 int32_t a{};
                 float b{};
                 double c{};
@@ -2456,7 +2942,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamRef7", []() {
+            "ParamRef7", [] {
                 int32_t a{};
                 float b{};
                 double c{};
@@ -2470,7 +2956,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamRef8", []() {
+            "ParamRef8", [] {
                 int32_t a{};
                 float b{};
                 double c{};
@@ -2485,7 +2971,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamRef9", []() {
+            "ParamRef9", [] {
                 int32_t a{};
                 float b{};
                 double c{};
@@ -2501,7 +2987,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamRef10", []() {
+            "ParamRef10", [] {
                 int32_t a{};
                 float b{};
                 double c{};
@@ -2519,7 +3005,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamRefArrays", []() {
+            "ParamRefArrays", [] {
                 plg::vector<bool> p1{true};
                 plg::vector<char> p2{'A'};
                 plg::vector<char16_t> p3{u'A'};
@@ -2543,7 +3029,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamAllPrimitives", []() {
+            "ParamAllPrimitives", [] {
                 const auto result = cross_call_master::ParamAllPrimitivesCallback(
                     true, '%', u'☢', -1, -1000, -1000000, -1000000000000LL, 200, 50000, 3000000000LL, 9999999999LL,
                     reinterpret_cast<void *>(0xfedcbaabcdefLL), 0.001f, 987654.456789);
@@ -2551,7 +3037,83 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamEnum", []() {
+            "ParamAllAliases", [] {
+            	cross_call_master::AliasBool aBool{true};
+            	cross_call_master::AliasChar8 aChar8{'A'};
+            	cross_call_master::AliasChar16 aChar16{u'0'};
+            	cross_call_master::AliasInt8 aInt8{1};
+            	cross_call_master::AliasInt16 aInt16{2};
+            	cross_call_master::AliasInt32 aInt32{3};
+            	cross_call_master::AliasInt64 aInt64{4};
+            	cross_call_master::AliasPtr aPtr{};
+            	cross_call_master::AliasFloat aFloat{5.5f};
+            	cross_call_master::AliasDouble aDouble{6.6};
+            	cross_call_master::AliasString aString{"seven"};
+            	cross_call_master::AliasAny aAny{"six"};
+            	cross_call_master::AliasVec2 aVec2{0.1f, 0.2f};
+            	cross_call_master::AliasVec3 aVec3{0.3f, 0.4f, 0.5f};
+            	cross_call_master::AliasVec4 aVec4{0.6f, 0.7f, 0.8f, 0.9f};
+            	cross_call_master::AliasMat4x4 aMat4x4{1.4f, 1.1f, 1.2f, 1.3f, 2.4f, 2.1f, 2.2f, 2.3f, 3.4f, 3.1f, 3.2f, 3.3f, 4.4f, 4.1f, 4.2f, 4.3f};
+            	cross_call_master::AliasBoolVector aBoolVec{aBool};
+            	cross_call_master::AliasChar8Vector aChar8Vec{aChar8};
+            	cross_call_master::AliasChar16Vector aChar16Vec{aChar16};
+            	cross_call_master::AliasInt8Vector aInt8Vec{aInt8};
+            	cross_call_master::AliasInt16Vector aInt16Vec{aInt16};
+            	cross_call_master::AliasInt32Vector aInt32Vec{aInt32};
+            	cross_call_master::AliasInt64Vector aInt64Vec{aInt64};
+            	cross_call_master::AliasPtrVector aPtrVec{aPtr};
+            	cross_call_master::AliasFloatVector aFloatVec{aFloat};
+            	cross_call_master::AliasDoubleVector aDoubleVec{aDouble};
+            	cross_call_master::AliasStringVector aStringVec{aString};
+            	cross_call_master::AliasAnyVector aAnyVec{aAny};
+            	cross_call_master::AliasVec2Vector aVec2Vec{aVec2};
+            	cross_call_master::AliasVec3Vector aVec3Vec{aVec3};
+            	cross_call_master::AliasVec4Vector aVec4Vec{aVec4};
+            	cross_call_master::AliasMat4x4Vector aMat4x4Vec{aMat4x4};
+                const auto result = cross_call_master::ParamAllAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aMat4x4Vec);
+                cross_call_master::ReverseReturn(std::format("{}", result));
+            }
+        },
+        {
+            "ParamAllRefAliases", [] {
+            	cross_call_master::AliasBool aBool = {};
+            	cross_call_master::AliasChar8 aChar8 = {};
+            	cross_call_master::AliasChar16 aChar16 = {};
+            	cross_call_master::AliasInt8 aInt8 = {};
+            	cross_call_master::AliasInt16 aInt16 = {};
+            	cross_call_master::AliasInt32 aInt32 = {};
+            	cross_call_master::AliasInt64 aInt64 = {};
+            	cross_call_master::AliasPtr aPtr = {};
+            	cross_call_master::AliasFloat aFloat = {};
+            	cross_call_master::AliasDouble aDouble = {};
+            	cross_call_master::AliasString aString = {};
+            	cross_call_master::AliasAny aAny = {};
+            	cross_call_master::AliasVec2 aVec2 = {};
+            	cross_call_master::AliasVec3 aVec3 = {};
+            	cross_call_master::AliasVec4 aVec4 = {};
+            	cross_call_master::AliasMat4x4 aMat4x4 = {};
+            	cross_call_master::AliasBoolVector aBoolVec = {aBool};
+            	cross_call_master::AliasChar8Vector aChar8Vec = {aChar8};
+            	cross_call_master::AliasChar16Vector aChar16Vec = {aChar16};
+            	cross_call_master::AliasInt8Vector aInt8Vec = {aInt8};
+            	cross_call_master::AliasInt16Vector aInt16Vec = {aInt16};
+            	cross_call_master::AliasInt32Vector aInt32Vec = {aInt32};
+            	cross_call_master::AliasInt64Vector aInt64Vec = {aInt64};
+            	cross_call_master::AliasPtrVector aPtrVec = {aPtr};
+            	cross_call_master::AliasFloatVector aFloatVec = {aFloat};
+            	cross_call_master::AliasDoubleVector aDoubleVec = {aDouble};
+            	cross_call_master::AliasStringVector aStringVec = {aString};
+            	cross_call_master::AliasAnyVector aAnyVec = {aAny};
+            	cross_call_master::AliasVec2Vector aVec2Vec = {aVec2};
+            	cross_call_master::AliasVec3Vector aVec3Vec = {aVec3};
+            	cross_call_master::AliasVec4Vector aVec4Vec = {aVec4};
+            	cross_call_master::AliasMat4x4Vector aMat4x4Vec = {aMat4x4};
+                const auto result = cross_call_master::ParamAllRefAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aMat4x4Vec);
+            	cross_call_master::ReverseReturn(std::format("{}", result));
+            }
+        },
+        {
+            "ParamEnum", [] {
                 cross_call_master::Example p1 = cross_call_master::Example::Forth;
                 plg::vector<cross_call_master::Example> p2{
                     cross_call_master::Example::First, cross_call_master::Example::Second,
@@ -2562,7 +3124,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamEnumRef", []() {
+            "ParamEnumRef", [] {
                 cross_call_master::Example p1 = cross_call_master::Example::First;
                 plg::vector<cross_call_master::Example> p2{
                     cross_call_master::Example::First, cross_call_master::Example::First,
@@ -2573,7 +3135,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamVariant", []() {
+            "ParamVariant", [] {
                 plg::any p1 = "my custom string with enough chars";
                 plg::vector<plg::any> p2{
                     'X', u'☢', -1, -1000, -1000000, -1000000000000LL, 200, 50000, 3000000000LL, 9999999999LL,
@@ -2583,7 +3145,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "ParamVariantRef", []() {
+            "ParamVariantRef", [] {
                 plg::any p1 = "my custom string with enough chars";
                 plg::vector<plg::any> p2{
                     'X', u'☢', -1, -1000, -1000000, -1000000000000LL, 200, 50000, 3000000000LL, 9999999999LL,
@@ -2594,496 +3156,748 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             }
         },
         {
-            "CallFuncVoid", []() {
+            "CallFuncVoid", [] {
                 cross_call_master::CallFuncVoidCallback(&MockVoid);
             }
         },
         {
-            "CallFuncBool", []() {
+            "CallFuncBool", [] {
                 const auto result = cross_call_master::CallFuncBoolCallback(&MockBool);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncChar8", []() {
+            "CallFuncChar8", [] {
                 const auto result = cross_call_master::CallFuncChar8Callback(&MockChar8);
-                cross_call_master::ReverseReturn(std::format("{}", static_cast<uint8_t>(result)));
+                cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncChar16", []() {
+            "CallFuncChar16", [] {
                 const auto result = cross_call_master::CallFuncChar16Callback(&MockChar16);
-                cross_call_master::ReverseReturn(std::format("{}", static_cast<int16_t>(result)));
+                cross_call_master::ReverseReturn(std::format("{}", static_cast<uint16_t>(result)));
             }
         },
         {
-            "CallFuncInt8", []() {
+            "CallFuncInt8", [] {
                 const auto result = cross_call_master::CallFuncInt8Callback(&MockInt8);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncInt16", []() {
+            "CallFuncInt16", [] {
                 const auto result = cross_call_master::CallFuncInt16Callback(&MockInt16);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncInt32", []() {
+            "CallFuncInt32", [] {
                 const auto result = cross_call_master::CallFuncInt32Callback(&MockInt32);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncInt64", []() {
+            "CallFuncInt64", [] {
                 const auto result = cross_call_master::CallFuncInt64Callback(&MockInt64);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncUInt8", []() {
+            "CallFuncUInt8", [] {
                 const auto result = cross_call_master::CallFuncUInt8Callback(&MockUInt8);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncUInt16", []() {
+            "CallFuncUInt16", [] {
                 const auto result = cross_call_master::CallFuncUInt16Callback(&MockUInt16);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncUInt32", []() {
+            "CallFuncUInt32", [] {
                 const auto result = cross_call_master::CallFuncUInt32Callback(&MockUInt32);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncUInt64", []() {
+            "CallFuncUInt64", [] {
                 const auto result = cross_call_master::CallFuncUInt64Callback(&MockUInt64);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncPtr", []() {
+            "CallFuncPtr", [] {
                 const auto result = cross_call_master::CallFuncPtrCallback(&MockPtr);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncFloat", []() {
+            "CallFuncFloat", [] {
                 const auto result = cross_call_master::CallFuncFloatCallback(&MockFloat);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncDouble", []() {
+            "CallFuncDouble", [] {
                 const auto result = cross_call_master::CallFuncDoubleCallback(&MockDouble);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncString", []() {
+            "CallFuncString", [] {
                 const auto result = cross_call_master::CallFuncStringCallback(&MockString);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFuncAny", []() {
+            "CallFuncAny", [] {
                 auto result = cross_call_master::CallFuncAnyCallback(&MockAny);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncBoolVector", []() {
+            "CallFuncBoolVector", [] {
                 const auto result = cross_call_master::CallFuncBoolVectorCallback(&MockBoolVector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncChar8Vector", []() {
+            "CallFuncChar8Vector", [] {
                 const auto result = cross_call_master::CallFuncChar8VectorCallback(&MockChar8Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncChar16Vector", []() {
+            "CallFuncChar16Vector", [] {
                 const auto result = cross_call_master::CallFuncChar16VectorCallback(&MockChar16Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncInt8Vector", []() {
+            "CallFuncInt8Vector", [] {
                 const auto result = cross_call_master::CallFuncInt8VectorCallback(&MockInt8Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncInt16Vector", []() {
+            "CallFuncInt16Vector", [] {
                 const auto result = cross_call_master::CallFuncInt16VectorCallback(&MockInt16Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncInt32Vector", []() {
+            "CallFuncInt32Vector", [] {
                 const auto result = cross_call_master::CallFuncInt32VectorCallback(&MockInt32Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncInt64Vector", []() {
+            "CallFuncInt64Vector", [] {
                 const auto result = cross_call_master::CallFuncInt64VectorCallback(&MockInt64Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncUInt8Vector", []() {
+            "CallFuncUInt8Vector", [] {
                 const auto result = cross_call_master::CallFuncUInt8VectorCallback(&MockUInt8Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncUInt16Vector", []() {
+            "CallFuncUInt16Vector", [] {
                 const auto result = cross_call_master::CallFuncUInt16VectorCallback(&MockUInt16Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncUInt32Vector", []() {
+            "CallFuncUInt32Vector", [] {
                 const auto result = cross_call_master::CallFuncUInt32VectorCallback(&MockUInt32Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncUInt64Vector", []() {
+            "CallFuncUInt64Vector", [] {
                 const auto result = cross_call_master::CallFuncUInt64VectorCallback(&MockUInt64Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncPtrVector", []() {
+            "CallFuncPtrVector", [] {
                 const auto result = cross_call_master::CallFuncPtrVectorCallback(&MockPtrVector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncFloatVector", []() {
+            "CallFuncFloatVector", [] {
                 const auto result = cross_call_master::CallFuncFloatVectorCallback(&MockFloatVector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncDoubleVector", []() {
+            "CallFuncDoubleVector", [] {
                 const auto result = cross_call_master::CallFuncDoubleVectorCallback(&MockDoubleVector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncStringVector", []() {
+            "CallFuncStringVector", [] {
                 const auto result = cross_call_master::CallFuncStringVectorCallback(&MockStringVector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncAnyVector", []() {
+            "CallFuncAnyVector", [] {
                 const auto result = cross_call_master::CallFuncAnyVectorCallback(&MockAnyVector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncVec2Vector", []() {
+            "CallFuncVec2Vector", [] {
                 const auto result = cross_call_master::CallFuncVec2VectorCallback(&MockVec2Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncVec3Vector", []() {
+            "CallFuncVec3Vector", [] {
                 const auto result = cross_call_master::CallFuncVec3VectorCallback(&MockVec3Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncVec4Vector", []() {
+            "CallFuncVec4Vector", [] {
                 const auto result = cross_call_master::CallFuncVec4VectorCallback(&MockVec4Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncMat4x4Vector", []() {
+            "CallFuncMat4x4Vector", [] {
                 const auto result = cross_call_master::CallFuncMat4x4VectorCallback(&MockMat4x4Vector);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncVec2", []() {
+            "CallFuncVec2", [] {
                 const auto result = cross_call_master::CallFuncVec2Callback(&MockVec2);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncVec3", []() {
+            "CallFuncVec3", [] {
                 const auto result = cross_call_master::CallFuncVec3Callback(&MockVec3);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncVec4", []() {
+            "CallFuncVec4", [] {
                 const auto result = cross_call_master::CallFuncVec4Callback(&MockVec4);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFuncMat4x4", []() {
+            "CallFuncMat4x4", [] {
                 const auto result = cross_call_master::CallFuncMat4x4Callback(&MockMat4x4);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc1", []() {
+            "CallFunc1", [] {
                 const auto result = cross_call_master::CallFunc1Callback(&MockFunc1);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc2", []() {
+            "CallFunc2", [] {
                 const auto result = cross_call_master::CallFunc2Callback(&MockFunc2);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc3", []() {
+            "CallFunc3", [] {
                 cross_call_master::CallFunc3Callback(&MockFunc3);
             }
         },
         {
-            "CallFunc4", []() {
+            "CallFunc4", [] {
                 const auto result = cross_call_master::CallFunc4Callback(&MockFunc4);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc5", []() {
+            "CallFunc5", [] {
                 const auto result = cross_call_master::CallFunc5Callback(&MockFunc5);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc6", []() {
+            "CallFunc6", [] {
                 const auto result = cross_call_master::CallFunc6Callback(&MockFunc6);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc7", []() {
+            "CallFunc7", [] {
                 const auto result = cross_call_master::CallFunc7Callback(&MockFunc7);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc8", []() {
+            "CallFunc8", [] {
                 const auto result = cross_call_master::CallFunc8Callback(&MockFunc8);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc9", []() {
+            "CallFunc9", [] {
                 cross_call_master::CallFunc9Callback(&MockFunc9);
             }
         },
         {
-            "CallFunc10", []() {
+            "CallFunc10", [] {
                 const auto result = cross_call_master::CallFunc10Callback(&MockFunc10);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc11", []() {
+            "CallFunc11", [] {
                 const auto result = cross_call_master::CallFunc11Callback(&MockFunc11);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc12", []() {
+            "CallFunc12", [] {
                 const auto result = cross_call_master::CallFunc12Callback(&MockFunc12);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc13", []() {
+            "CallFunc13", [] {
                 const auto result = cross_call_master::CallFunc13Callback(&MockFunc13);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc14", []() {
+            "CallFunc14", [] {
                 const auto result = cross_call_master::CallFunc14Callback(&MockFunc14);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc15", []() {
+            "CallFunc15", [] {
                 const auto result = cross_call_master::CallFunc15Callback(&MockFunc15);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc16", []() {
+            "CallFunc16", [] {
                 const auto result = cross_call_master::CallFunc16Callback(&MockFunc16);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
         {
-            "CallFunc17", []() {
+            "CallFunc17", [] {
                 const auto result = cross_call_master::CallFunc17Callback(&MockFunc17);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc18", []() {
+            "CallFunc18", [] {
                 const auto result = cross_call_master::CallFunc18Callback(&MockFunc18);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc19", []() {
+            "CallFunc19", [] {
                 const auto result = cross_call_master::CallFunc19Callback(&MockFunc19);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc20", []() {
+            "CallFunc20", [] {
                 const auto result = cross_call_master::CallFunc20Callback(&MockFunc20);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc21", []() {
+            "CallFunc21", [] {
                 const auto result = cross_call_master::CallFunc21Callback(&MockFunc21);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc22", []() {
+            "CallFunc22", [] {
                 const auto result = cross_call_master::CallFunc22Callback(&MockFunc22);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc23", []() {
+            "CallFunc23", [] {
                 const auto result = cross_call_master::CallFunc23Callback(&MockFunc23);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc24", []() {
+            "CallFunc24", [] {
                 const auto result = cross_call_master::CallFunc24Callback(&MockFunc24);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc25", []() {
+            "CallFunc25", [] {
                 const auto result = cross_call_master::CallFunc25Callback(&MockFunc25);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc26", []() {
+            "CallFunc26", [] {
                 const auto result = cross_call_master::CallFunc26Callback(&MockFunc26);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc27", []() {
+            "CallFunc27", [] {
                 const auto result = cross_call_master::CallFunc27Callback(&MockFunc27);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc28", []() {
+            "CallFunc28", [] {
                 const auto result = cross_call_master::CallFunc28Callback(&MockFunc28);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc29", []() {
+            "CallFunc29", [] {
                 const auto result = cross_call_master::CallFunc29Callback(&MockFunc29);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc30", []() {
+            "CallFunc30", [] {
                 const auto result = cross_call_master::CallFunc30Callback(&MockFunc30);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc31", []() {
+            "CallFunc31", [] {
                 const auto result = cross_call_master::CallFunc31Callback(&MockFunc31);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc32", []() {
+            "CallFunc32", [] {
                 const auto result = cross_call_master::CallFunc32Callback(&MockFunc32);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFunc33", []() {
+            "CallFunc33", [] {
                 const auto result = cross_call_master::CallFunc33Callback(&MockFunc33);
                 cross_call_master::ReverseReturn(result);
             }
         },
         {
-            "CallFuncEnum", []() {
+            "CallFuncEnum", [] {
                 const auto result = cross_call_master::CallFuncEnumCallback(&MockFuncEnum);
                 cross_call_master::ReverseReturn(result);
             }
         },
+		{
+			"CallFuncAliasBool", [] {
+				const auto result = cross_call_master::CallFuncAliasBoolCallback(&MockFuncAliasBool);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasChar8", [] {
+				const auto result = cross_call_master::CallFuncAliasChar8Callback(&MockFuncAliasChar8);
+				cross_call_master::ReverseReturn(std::format("{}", static_cast<uint8_t>(result)));
+			}
+		},
+		{
+			"CallFuncAliasChar16", [] {
+				const auto result = cross_call_master::CallFuncAliasChar16Callback(&MockFuncAliasChar16);
+				cross_call_master::ReverseReturn(std::format("{}", static_cast<int16_t>(result)));
+			}
+		},
+		{
+			"CallFuncAliasInt8", [] {
+				const auto result = cross_call_master::CallFuncAliasInt8Callback(&MockFuncAliasInt8);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasInt16", [] {
+				const auto result = cross_call_master::CallFuncAliasInt16Callback(&MockFuncAliasInt16);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasInt32", [] {
+				const auto result = cross_call_master::CallFuncAliasInt32Callback(&MockFuncAliasInt32);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasInt64", [] {
+				const auto result = cross_call_master::CallFuncAliasInt64Callback(&MockFuncAliasInt64);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasUInt8", [] {
+				const auto result = cross_call_master::CallFuncAliasUInt8Callback(&MockFuncAliasUInt8);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasUInt16", [] {
+				const auto result = cross_call_master::CallFuncAliasUInt16Callback(&MockFuncAliasUInt16);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasUInt32", [] {
+				const auto result = cross_call_master::CallFuncAliasUInt32Callback(&MockFuncAliasUInt32);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasUInt64", [] {
+				const auto result = cross_call_master::CallFuncAliasUInt64Callback(&MockFuncAliasUInt64);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasPtr", [] {
+				const auto result = cross_call_master::CallFuncAliasPtrCallback(&MockFuncAliasPtr);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasFloat", [] {
+				const auto result = cross_call_master::CallFuncAliasFloatCallback(&MockFuncAliasFloat);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasDouble", [] {
+				const auto result = cross_call_master::CallFuncAliasDoubleCallback(&MockFuncAliasDouble);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasFunction", [] {
+				const auto result = cross_call_master::CallFuncAliasFunctionCallback(&MockFuncAliasFunction);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasString", [] {
+				const auto result = cross_call_master::CallFuncAliasStringCallback(&MockFuncAliasString);
+				cross_call_master::ReverseReturn(result);
+			}
+		},
+		{
+			"CallFuncAliasAny", [] {
+				const auto result = cross_call_master::CallFuncAliasAnyCallback(&MockFuncAliasAny);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasBoolVector", [] {
+				const auto result = cross_call_master::CallFuncAliasBoolVectorCallback(&MockFuncAliasBoolVector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasChar8Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasChar8VectorCallback(&MockFuncAliasChar8Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasChar16Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasChar16VectorCallback(&MockFuncAliasChar16Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasInt8Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasInt8VectorCallback(&MockFuncAliasInt8Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasInt16Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasInt16VectorCallback(&MockFuncAliasInt16Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasInt32Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasInt32VectorCallback(&MockFuncAliasInt32Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasInt64Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasInt64VectorCallback(&MockFuncAliasInt64Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasUInt8Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasUInt8VectorCallback(&MockFuncAliasUInt8Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasUInt16Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasUInt16VectorCallback(&MockFuncAliasUInt16Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasUInt32Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasUInt32VectorCallback(&MockFuncAliasUInt32Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasUInt64Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasUInt64VectorCallback(&MockFuncAliasUInt64Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasPtrVector", [] {
+				const auto result = cross_call_master::CallFuncAliasPtrVectorCallback(&MockFuncAliasPtrVector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasFloatVector", [] {
+				const auto result = cross_call_master::CallFuncAliasFloatVectorCallback(&MockFuncAliasFloatVector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasDoubleVector", [] {
+				const auto result = cross_call_master::CallFuncAliasDoubleVectorCallback(&MockFuncAliasDoubleVector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasStringVector", [] {
+				const auto result = cross_call_master::CallFuncAliasStringVectorCallback(&MockFuncAliasStringVector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasAnyVector", [] {
+				const auto result = cross_call_master::CallFuncAliasAnyVectorCallback(&MockFuncAliasAnyVector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasVec2Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasVec2VectorCallback(&MockFuncAliasVec2Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasVec3Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasVec3VectorCallback(&MockFuncAliasVec3Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasVec4Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasVec4VectorCallback(&MockFuncAliasVec4Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasMat4x4Vector", [] {
+				const auto result = cross_call_master::CallFuncAliasMat4x4VectorCallback(&MockFuncAliasMat4x4Vector);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasVec2", [] {
+				const auto result = cross_call_master::CallFuncAliasVec2Callback(&MockFuncAliasVec2);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasVec3", [] {
+				const auto result = cross_call_master::CallFuncAliasVec3Callback(&MockFuncAliasVec3);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasVec4", [] {
+				const auto result = cross_call_master::CallFuncAliasVec4Callback(&MockFuncAliasVec4);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasMat4x4", [] {
+				const auto result = cross_call_master::CallFuncAliasMat4x4Callback(&MockFuncAliasMat4x4);
+				cross_call_master::ReverseReturn(std::format("{}", result));
+			}
+		},
+		{
+			"CallFuncAliasAll", [] {
+				const auto result = cross_call_master::CallFuncAliasAllCallback(&MockFuncAliasAll);
+				cross_call_master::ReverseReturn(result);
+			}
+		},
 		{ 
-			"ClassBasicLifecycle", []() {
+			"ClassBasicLifecycle", [] {
 				const auto result = TestClass::BasicLifecycle();
 				cross_call_master::ReverseReturn(result);
 			}
 		},
 		{ 
-			"ClassStateManagement", []() {
+			"ClassStateManagement", [] {
 				const auto result = TestClass::StateManagement();
 				cross_call_master::ReverseReturn(result);
 			}
 		},
 		{ 
-			"ClassMultipleInstances", []() {
+			"ClassMultipleInstances", [] {
 				const auto result = TestClass::MultipleInstances();
 				cross_call_master::ReverseReturn(result);
 			}
 		},
 		{ 
-			"ClassCounterWithoutDestructor", []() {
+			"ClassCounterWithoutDestructor", [] {
 				const auto result = TestClass::CounterWithoutDestructor();
 				cross_call_master::ReverseReturn(result);
 			}
 		},
 		{ 
-			"ClassStaticMethods", []() {
+			"ClassStaticMethods", [] {
 				const auto result = TestClass::StaticMethods();
 				cross_call_master::ReverseReturn(result);
 			}
 		},
 		{ 
-			"ClassMemoryLeakDetection", []() {
+			"ClassMemoryLeakDetection", [] {
 				const auto result = TestClass::MemoryLeakDetection();
 				cross_call_master::ReverseReturn(result);
 			}
 		},
 		{ 
-			"ClassExceptionHandling", []() {
+			"ClassExceptionHandling", [] {
 				const auto result = TestClass::ExceptionHandling();
 				cross_call_master::ReverseReturn(result);
 			}
 		},
 		{
-			"ClassOwnershipTransfer", []() {
+			"ClassOwnershipTransfer", [] {
 				const auto result = TestClass::OwnershipTransfer();
 				cross_call_master::ReverseReturn(result);
 			}
