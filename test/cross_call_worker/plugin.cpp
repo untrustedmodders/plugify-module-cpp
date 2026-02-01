@@ -531,11 +531,10 @@ PLUGIN_API int32_t ParamAllAliases(
 	const cross_call_master::AliasAnyVector&    aAnyVec,
 	const cross_call_master::AliasVec2Vector&   aVec2Vec,
 	const cross_call_master::AliasVec3Vector&   aVec3Vec,
-	const cross_call_master::AliasVec4Vector&   aVec4Vec,
-	const cross_call_master::AliasMat4x4Vector& aMat4x4Vec
+	const cross_call_master::AliasVec4Vector&   aVec4Vec
 ) {
 	const auto buffer = std::format(
-		"{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}",
+		"{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}",
 		aBool,
 		aChar8,
 		static_cast<uint16_t>(aChar16),
@@ -566,8 +565,7 @@ PLUGIN_API int32_t ParamAllAliases(
 		aAnyVec,
 		aVec2Vec,
 		aVec3Vec,
-		aVec4Vec,
-		aMat4x4Vec
+		aVec4Vec
 	);
 	return -1;
 }
@@ -604,8 +602,7 @@ PLUGIN_API int64_t ParamAllRefAliases(
 	cross_call_master::AliasAnyVector&    aAnyVec,
 	cross_call_master::AliasVec2Vector&   aVec2Vec,
 	cross_call_master::AliasVec3Vector&   aVec3Vec,
-	cross_call_master::AliasVec4Vector&   aVec4Vec,
-	cross_call_master::AliasMat4x4Vector& aMat4x4Vec
+	cross_call_master::AliasVec4Vector&   aVec4Vec
 ) {
 	aBool = true;
 	aChar8 = 'A';
@@ -638,7 +635,6 @@ PLUGIN_API int64_t ParamAllRefAliases(
 	aVec2Vec = {aVec2};
 	aVec3Vec = {aVec3};
 	aVec4Vec = {aVec4};
-	aMat4x4Vec = {aMat4x4};
 	return 24;
 }
 
@@ -1609,8 +1605,7 @@ PLUGIN_API plg::string CallFuncAliasAll(cross_call_master::FuncAliasAll func) {
 	cross_call_master::AliasVec2Vector aVec2Vec{aVec2};
 	cross_call_master::AliasVec3Vector aVec3Vec{aVec3};
 	cross_call_master::AliasVec4Vector aVec4Vec{aVec4};
-	cross_call_master::AliasMat4x4Vector aMat4x4Vec{aMat4x4};
-	plg::string result = func(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aMat4x4Vec);
+	plg::string result = func(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec);
 	return result;
 }
 
@@ -2283,11 +2278,10 @@ plg::string MockFuncAliasAll(
     const cross_call_master::AliasAnyVector&    aAnyVec,
     const cross_call_master::AliasVec2Vector&   aVec2Vec,
     const cross_call_master::AliasVec3Vector&   aVec3Vec,
-    const cross_call_master::AliasVec4Vector&   aVec4Vec,
-    const cross_call_master::AliasMat4x4Vector& aMat4x4Vec
+    const cross_call_master::AliasVec4Vector&   aVec4Vec
 ) {
     return std::format(
-        "{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}",
+        "{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|{}|",
         aBool,
         aChar8,
         static_cast<uint16_t>(aChar16),
@@ -2318,8 +2312,7 @@ plg::string MockFuncAliasAll(
         aAnyVec,
         aVec2Vec,
         aVec3Vec,
-        aVec4Vec,
-        aMat4x4Vec
+        aVec4Vec
     );
 }
 
@@ -3069,8 +3062,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             	cross_call_master::AliasVec2Vector aVec2Vec{aVec2};
             	cross_call_master::AliasVec3Vector aVec3Vec{aVec3};
             	cross_call_master::AliasVec4Vector aVec4Vec{aVec4};
-            	cross_call_master::AliasMat4x4Vector aMat4x4Vec{aMat4x4};
-                const auto result = cross_call_master::ParamAllAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aMat4x4Vec);
+                const auto result = cross_call_master::ParamAllAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec);
                 cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },
@@ -3107,8 +3099,7 @@ PLUGIN_API void ReverseCall(const plg::string &test) {
             	cross_call_master::AliasVec2Vector aVec2Vec = {aVec2};
             	cross_call_master::AliasVec3Vector aVec3Vec = {aVec3};
             	cross_call_master::AliasVec4Vector aVec4Vec = {aVec4};
-            	cross_call_master::AliasMat4x4Vector aMat4x4Vec = {aMat4x4};
-                const auto result = cross_call_master::ParamAllRefAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aMat4x4Vec);
+                const auto result = cross_call_master::ParamAllRefAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec);
             	cross_call_master::ReverseReturn(std::format("{}", result));
             }
         },

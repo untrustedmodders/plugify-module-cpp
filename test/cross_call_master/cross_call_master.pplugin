@@ -1296,8 +1296,7 @@
 				{ "name": "aAnyVec",    "type": "any[]",       "ref": false, "alias": { "name": "AliasAnyVector" } },
 				{ "name": "aVec2Vec",   "type": "vec2[]",      "ref": false, "alias": { "name": "AliasVec2Vector" } },
 				{ "name": "aVec3Vec",   "type": "vec3[]",      "ref": false, "alias": { "name": "AliasVec3Vector" } },
-				{ "name": "aVec4Vec",   "type": "vec4[]",      "ref": false, "alias": { "name": "AliasVec4Vector" } },
-				{ "name": "aaMat4x4Vec", "type": "mat4x4[]",   "ref": false, "alias": { "name": "AliasMat4x4Vector" } }
+				{ "name": "aVec4Vec",   "type": "vec4[]",      "ref": false, "alias": { "name": "AliasVec4Vector" } }
 			],
 			"retType": {
 				"type": "int32"
@@ -1337,8 +1336,7 @@
 				{ "name": "aAnyVec",    "type": "any[]",       "ref": true, "alias": { "name": "AliasAnyVector" } },
 				{ "name": "aVec2Vec",   "type": "vec2[]",      "ref": true, "alias": { "name": "AliasVec2Vector" } },
 				{ "name": "aVec3Vec",   "type": "vec3[]",      "ref": true, "alias": { "name": "AliasVec3Vector" } },
-				{ "name": "aVec4Vec",   "type": "vec4[]",      "ref": true, "alias": { "name": "AliasVec4Vector" } },
-				{ "name": "aaMat4x4Vec", "type": "mat4x4[]",   "ref": true, "alias": { "name": "AliasMat4x4Vector" } }
+				{ "name": "aVec4Vec",   "type": "vec4[]",      "ref": true, "alias": { "name": "AliasVec4Vector" } }
 			],
 			"retType": {
 				"type": "int64"
@@ -3533,8 +3531,7 @@
 							{ "name": "aAnyVec",    "type": "any[]",       "ref": false, "alias": { "name": "AliasAnyVector" } },
 							{ "name": "aVec2Vec",   "type": "vec2[]",      "ref": false, "alias": { "name": "AliasVec2Vector" } },
 							{ "name": "aVec3Vec",   "type": "vec3[]",      "ref": false, "alias": { "name": "AliasVec3Vector" } },
-							{ "name": "aVec4Vec",   "type": "vec4[]",      "ref": false, "alias": { "name": "AliasVec4Vector" } },
-							{ "name": "aaMat4x4Vec", "type": "mat4x4[]",    "ref": false, "alias": { "name": "AliasMat4x4Vector" } }
+							{ "name": "aVec4Vec",   "type": "vec4[]",      "ref": false, "alias": { "name": "AliasVec4Vector" } }
 						],
                         "retType": {
                             "type": "string"

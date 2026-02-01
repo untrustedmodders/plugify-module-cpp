@@ -830,7 +830,7 @@ namespace cross_call_worker {
     return __cross_call_worker_ParamAllPrimitives(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
   }
 
-  using _ParamAllAliases = int32_t (*)(AliasBool, AliasChar8, AliasChar16, AliasInt8, AliasInt16, AliasInt32, AliasInt64, AliasPtr, AliasFloat, AliasDouble, const AliasString&, const AliasAny&, const AliasVec2&, const AliasVec3&, const AliasVec4&, const AliasMat4x4&, const AliasBoolVector&, const AliasChar8Vector&, const AliasChar16Vector&, const AliasInt8Vector&, const AliasInt16Vector&, const AliasInt32Vector&, const AliasInt64Vector&, const AliasPtrVector&, const AliasFloatVector&, const AliasDoubleVector&, const AliasStringVector&, const AliasAnyVector&, const AliasVec2Vector&, const AliasVec3Vector&, const AliasVec4Vector&, const AliasMat4x4Vector&);
+  using _ParamAllAliases = int32_t (*)(AliasBool, AliasChar8, AliasChar16, AliasInt8, AliasInt16, AliasInt32, AliasInt64, AliasPtr, AliasFloat, AliasDouble, const AliasString&, const AliasAny&, const AliasVec2&, const AliasVec3&, const AliasVec4&, const AliasMat4x4&, const AliasBoolVector&, const AliasChar8Vector&, const AliasChar16Vector&, const AliasInt8Vector&, const AliasInt16Vector&, const AliasInt32Vector&, const AliasInt64Vector&, const AliasPtrVector&, const AliasFloatVector&, const AliasDoubleVector&, const AliasStringVector&, const AliasAnyVector&, const AliasVec2Vector&, const AliasVec3Vector&, const AliasVec4Vector&);
 }
 extern "C" PLUGIN_API cross_call_worker::_ParamAllAliases __cross_call_worker_ParamAllAliases;
 namespace cross_call_worker {
@@ -866,14 +866,13 @@ namespace cross_call_worker {
    * @param aVec2Vec (vec2[])
    * @param aVec3Vec (vec3[])
    * @param aVec4Vec (vec4[])
-   * @param aaMat4x4Vec (mat4x4[])
    * @return int32
    */
-  inline int32_t ParamAllAliases(AliasBool aBool, AliasChar8 aChar8, AliasChar16 aChar16, AliasInt8 aInt8, AliasInt16 aInt16, AliasInt32 aInt32, AliasInt64 aInt64, AliasPtr aPtr, AliasFloat aFloat, AliasDouble aDouble, const AliasString& aString, const AliasAny& aAny, const AliasVec2& aVec2, const AliasVec3& aVec3, const AliasVec4& aVec4, const AliasMat4x4& aMat4x4, const AliasBoolVector& aBoolVec, const AliasChar8Vector& aChar8Vec, const AliasChar16Vector& aChar16Vec, const AliasInt8Vector& aInt8Vec, const AliasInt16Vector& aInt16Vec, const AliasInt32Vector& aInt32Vec, const AliasInt64Vector& aInt64Vec, const AliasPtrVector& aPtrVec, const AliasFloatVector& aFloatVec, const AliasDoubleVector& aDoubleVec, const AliasStringVector& aStringVec, const AliasAnyVector& aAnyVec, const AliasVec2Vector& aVec2Vec, const AliasVec3Vector& aVec3Vec, const AliasVec4Vector& aVec4Vec, const AliasMat4x4Vector& aaMat4x4Vec) {
-    return __cross_call_worker_ParamAllAliases(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aaMat4x4Vec);
+  inline int32_t ParamAllAliases(AliasBool aBool, AliasChar8 aChar8, AliasChar16 aChar16, AliasInt8 aInt8, AliasInt16 aInt16, AliasInt32 aInt32, AliasInt64 aInt64, AliasPtr aPtr, AliasFloat aFloat, AliasDouble aDouble, const AliasString& aString, const AliasAny& aAny, const AliasVec2& aVec2, const AliasVec3& aVec3, const AliasVec4& aVec4, const AliasMat4x4& aMat4x4, const AliasBoolVector& aBoolVec, const AliasChar8Vector& aChar8Vec, const AliasChar16Vector& aChar16Vec, const AliasInt8Vector& aInt8Vec, const AliasInt16Vector& aInt16Vec, const AliasInt32Vector& aInt32Vec, const AliasInt64Vector& aInt64Vec, const AliasPtrVector& aPtrVec, const AliasFloatVector& aFloatVec, const AliasDoubleVector& aDoubleVec, const AliasStringVector& aStringVec, const AliasAnyVector& aAnyVec, const AliasVec2Vector& aVec2Vec, const AliasVec3Vector& aVec3Vec, const AliasVec4Vector& aVec4Vec) {
+    return __cross_call_worker_ParamAllAliases(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec);
   }
 
-  using _ParamAllRefAliases = int64_t (*)(AliasBool&, AliasChar8&, AliasChar16&, AliasInt8&, AliasInt16&, AliasInt32&, AliasInt64&, AliasPtr&, AliasFloat&, AliasDouble&, AliasString&, AliasAny&, AliasVec2&, AliasVec3&, AliasVec4&, AliasMat4x4&, AliasBoolVector&, AliasChar8Vector&, AliasChar16Vector&, AliasInt8Vector&, AliasInt16Vector&, AliasInt32Vector&, AliasInt64Vector&, AliasPtrVector&, AliasFloatVector&, AliasDoubleVector&, AliasStringVector&, AliasAnyVector&, AliasVec2Vector&, AliasVec3Vector&, AliasVec4Vector&, AliasMat4x4Vector&);
+  using _ParamAllRefAliases = int64_t (*)(AliasBool&, AliasChar8&, AliasChar16&, AliasInt8&, AliasInt16&, AliasInt32&, AliasInt64&, AliasPtr&, AliasFloat&, AliasDouble&, AliasString&, AliasAny&, AliasVec2&, AliasVec3&, AliasVec4&, AliasMat4x4&, AliasBoolVector&, AliasChar8Vector&, AliasChar16Vector&, AliasInt8Vector&, AliasInt16Vector&, AliasInt32Vector&, AliasInt64Vector&, AliasPtrVector&, AliasFloatVector&, AliasDoubleVector&, AliasStringVector&, AliasAnyVector&, AliasVec2Vector&, AliasVec3Vector&, AliasVec4Vector&);
 }
 extern "C" PLUGIN_API cross_call_worker::_ParamAllRefAliases __cross_call_worker_ParamAllRefAliases;
 namespace cross_call_worker {
@@ -909,11 +908,10 @@ namespace cross_call_worker {
    * @param aVec2Vec (vec2[]&)
    * @param aVec3Vec (vec3[]&)
    * @param aVec4Vec (vec4[]&)
-   * @param aaMat4x4Vec (mat4x4[]&)
    * @return int64
    */
-  inline int64_t ParamAllRefAliases(AliasBool& aBool, AliasChar8& aChar8, AliasChar16& aChar16, AliasInt8& aInt8, AliasInt16& aInt16, AliasInt32& aInt32, AliasInt64& aInt64, AliasPtr& aPtr, AliasFloat& aFloat, AliasDouble& aDouble, AliasString& aString, AliasAny& aAny, AliasVec2& aVec2, AliasVec3& aVec3, AliasVec4& aVec4, AliasMat4x4& aMat4x4, AliasBoolVector& aBoolVec, AliasChar8Vector& aChar8Vec, AliasChar16Vector& aChar16Vec, AliasInt8Vector& aInt8Vec, AliasInt16Vector& aInt16Vec, AliasInt32Vector& aInt32Vec, AliasInt64Vector& aInt64Vec, AliasPtrVector& aPtrVec, AliasFloatVector& aFloatVec, AliasDoubleVector& aDoubleVec, AliasStringVector& aStringVec, AliasAnyVector& aAnyVec, AliasVec2Vector& aVec2Vec, AliasVec3Vector& aVec3Vec, AliasVec4Vector& aVec4Vec, AliasMat4x4Vector& aaMat4x4Vec) {
-    return __cross_call_worker_ParamAllRefAliases(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec, aaMat4x4Vec);
+  inline int64_t ParamAllRefAliases(AliasBool& aBool, AliasChar8& aChar8, AliasChar16& aChar16, AliasInt8& aInt8, AliasInt16& aInt16, AliasInt32& aInt32, AliasInt64& aInt64, AliasPtr& aPtr, AliasFloat& aFloat, AliasDouble& aDouble, AliasString& aString, AliasAny& aAny, AliasVec2& aVec2, AliasVec3& aVec3, AliasVec4& aVec4, AliasMat4x4& aMat4x4, AliasBoolVector& aBoolVec, AliasChar8Vector& aChar8Vec, AliasChar16Vector& aChar16Vec, AliasInt8Vector& aInt8Vec, AliasInt16Vector& aInt16Vec, AliasInt32Vector& aInt32Vec, AliasInt64Vector& aInt64Vec, AliasPtrVector& aPtrVec, AliasFloatVector& aFloatVec, AliasDoubleVector& aDoubleVec, AliasStringVector& aStringVec, AliasAnyVector& aAnyVec, AliasVec2Vector& aVec2Vec, AliasVec3Vector& aVec3Vec, AliasVec4Vector& aVec4Vec) {
+    return __cross_call_worker_ParamAllRefAliases(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec);
   }
 
   using _ParamVariant = void (*)(const plg::any&, const plg::vector<plg::any>&);
