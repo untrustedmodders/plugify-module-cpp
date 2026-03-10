@@ -15,7 +15,8 @@ extern "C" PLUGIN_API cross_call_worker::_NoParamReturnVoid __cross_call_worker_
 namespace cross_call_worker {
   /**
    */
-  inline void NoParamReturnVoid() {
+  inline void NoParamReturnVoid(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnVoid", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnVoid();
   }
 
@@ -26,7 +27,8 @@ namespace cross_call_worker {
   /**
    * @return bool
    */
-  inline bool NoParamReturnBool() {
+  inline bool NoParamReturnBool(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnBool", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnBool();
   }
 
@@ -37,7 +39,8 @@ namespace cross_call_worker {
   /**
    * @return char8
    */
-  inline char NoParamReturnChar8() {
+  inline char NoParamReturnChar8(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnChar8", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnChar8();
   }
 
@@ -48,7 +51,8 @@ namespace cross_call_worker {
   /**
    * @return char16
    */
-  inline char16_t NoParamReturnChar16() {
+  inline char16_t NoParamReturnChar16(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnChar16", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnChar16();
   }
 
@@ -59,7 +63,8 @@ namespace cross_call_worker {
   /**
    * @return int8
    */
-  inline int8_t NoParamReturnInt8() {
+  inline int8_t NoParamReturnInt8(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnInt8", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnInt8();
   }
 
@@ -70,7 +75,8 @@ namespace cross_call_worker {
   /**
    * @return int16
    */
-  inline int16_t NoParamReturnInt16() {
+  inline int16_t NoParamReturnInt16(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnInt16", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnInt16();
   }
 
@@ -81,7 +87,8 @@ namespace cross_call_worker {
   /**
    * @return int32
    */
-  inline int32_t NoParamReturnInt32() {
+  inline int32_t NoParamReturnInt32(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnInt32", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnInt32();
   }
 
@@ -92,7 +99,8 @@ namespace cross_call_worker {
   /**
    * @return int64
    */
-  inline int64_t NoParamReturnInt64() {
+  inline int64_t NoParamReturnInt64(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnInt64", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnInt64();
   }
 
@@ -103,7 +111,8 @@ namespace cross_call_worker {
   /**
    * @return uint8
    */
-  inline uint8_t NoParamReturnUInt8() {
+  inline uint8_t NoParamReturnUInt8(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnUInt8", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnUInt8();
   }
 
@@ -114,7 +123,8 @@ namespace cross_call_worker {
   /**
    * @return uint16
    */
-  inline uint16_t NoParamReturnUInt16() {
+  inline uint16_t NoParamReturnUInt16(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnUInt16", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnUInt16();
   }
 
@@ -125,7 +135,8 @@ namespace cross_call_worker {
   /**
    * @return uint32
    */
-  inline uint32_t NoParamReturnUInt32() {
+  inline uint32_t NoParamReturnUInt32(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnUInt32", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnUInt32();
   }
 
@@ -136,7 +147,8 @@ namespace cross_call_worker {
   /**
    * @return uint64
    */
-  inline uint64_t NoParamReturnUInt64() {
+  inline uint64_t NoParamReturnUInt64(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnUInt64", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnUInt64();
   }
 
@@ -147,7 +159,8 @@ namespace cross_call_worker {
   /**
    * @return ptr64
    */
-  inline void* NoParamReturnPointer() {
+  inline void* NoParamReturnPointer(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnPointer", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnPointer();
   }
 
@@ -158,7 +171,8 @@ namespace cross_call_worker {
   /**
    * @return float
    */
-  inline float NoParamReturnFloat() {
+  inline float NoParamReturnFloat(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnFloat", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnFloat();
   }
 
@@ -169,7 +183,8 @@ namespace cross_call_worker {
   /**
    * @return double
    */
-  inline double NoParamReturnDouble() {
+  inline double NoParamReturnDouble(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnDouble", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnDouble();
   }
 
@@ -180,7 +195,8 @@ namespace cross_call_worker {
   /**
    * @return function
    */
-  inline NoParamReturnFunctionFunc NoParamReturnFunction() {
+  inline NoParamReturnFunctionFunc NoParamReturnFunction(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnFunction", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnFunction();
   }
 
@@ -191,7 +207,8 @@ namespace cross_call_worker {
   /**
    * @return string
    */
-  inline plg::string NoParamReturnString() {
+  inline plg::string NoParamReturnString(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnString", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnString();
   }
 
@@ -202,7 +219,8 @@ namespace cross_call_worker {
   /**
    * @return any
    */
-  inline plg::any NoParamReturnAny() {
+  inline plg::any NoParamReturnAny(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnAny", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnAny();
   }
 
@@ -213,7 +231,8 @@ namespace cross_call_worker {
   /**
    * @return bool[]
    */
-  inline plg::vector<bool> NoParamReturnArrayBool() {
+  inline plg::vector<bool> NoParamReturnArrayBool(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayBool", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayBool();
   }
 
@@ -224,7 +243,8 @@ namespace cross_call_worker {
   /**
    * @return char8[]
    */
-  inline plg::vector<char> NoParamReturnArrayChar8() {
+  inline plg::vector<char> NoParamReturnArrayChar8(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayChar8", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayChar8();
   }
 
@@ -235,7 +255,8 @@ namespace cross_call_worker {
   /**
    * @return char16[]
    */
-  inline plg::vector<char16_t> NoParamReturnArrayChar16() {
+  inline plg::vector<char16_t> NoParamReturnArrayChar16(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayChar16", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayChar16();
   }
 
@@ -246,7 +267,8 @@ namespace cross_call_worker {
   /**
    * @return int8[]
    */
-  inline plg::vector<int8_t> NoParamReturnArrayInt8() {
+  inline plg::vector<int8_t> NoParamReturnArrayInt8(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayInt8", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayInt8();
   }
 
@@ -257,7 +279,8 @@ namespace cross_call_worker {
   /**
    * @return int16[]
    */
-  inline plg::vector<int16_t> NoParamReturnArrayInt16() {
+  inline plg::vector<int16_t> NoParamReturnArrayInt16(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayInt16", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayInt16();
   }
 
@@ -268,7 +291,8 @@ namespace cross_call_worker {
   /**
    * @return int32[]
    */
-  inline plg::vector<int32_t> NoParamReturnArrayInt32() {
+  inline plg::vector<int32_t> NoParamReturnArrayInt32(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayInt32", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayInt32();
   }
 
@@ -279,7 +303,8 @@ namespace cross_call_worker {
   /**
    * @return int64[]
    */
-  inline plg::vector<int64_t> NoParamReturnArrayInt64() {
+  inline plg::vector<int64_t> NoParamReturnArrayInt64(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayInt64", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayInt64();
   }
 
@@ -290,7 +315,8 @@ namespace cross_call_worker {
   /**
    * @return uint8[]
    */
-  inline plg::vector<uint8_t> NoParamReturnArrayUInt8() {
+  inline plg::vector<uint8_t> NoParamReturnArrayUInt8(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayUInt8", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayUInt8();
   }
 
@@ -301,7 +327,8 @@ namespace cross_call_worker {
   /**
    * @return uint16[]
    */
-  inline plg::vector<uint16_t> NoParamReturnArrayUInt16() {
+  inline plg::vector<uint16_t> NoParamReturnArrayUInt16(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayUInt16", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayUInt16();
   }
 
@@ -312,7 +339,8 @@ namespace cross_call_worker {
   /**
    * @return uint32[]
    */
-  inline plg::vector<uint32_t> NoParamReturnArrayUInt32() {
+  inline plg::vector<uint32_t> NoParamReturnArrayUInt32(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayUInt32", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayUInt32();
   }
 
@@ -323,7 +351,8 @@ namespace cross_call_worker {
   /**
    * @return uint64[]
    */
-  inline plg::vector<uint64_t> NoParamReturnArrayUInt64() {
+  inline plg::vector<uint64_t> NoParamReturnArrayUInt64(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayUInt64", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayUInt64();
   }
 
@@ -334,7 +363,8 @@ namespace cross_call_worker {
   /**
    * @return ptr64[]
    */
-  inline plg::vector<void*> NoParamReturnArrayPointer() {
+  inline plg::vector<void*> NoParamReturnArrayPointer(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayPointer", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayPointer();
   }
 
@@ -345,7 +375,8 @@ namespace cross_call_worker {
   /**
    * @return float[]
    */
-  inline plg::vector<float> NoParamReturnArrayFloat() {
+  inline plg::vector<float> NoParamReturnArrayFloat(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayFloat", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayFloat();
   }
 
@@ -356,7 +387,8 @@ namespace cross_call_worker {
   /**
    * @return double[]
    */
-  inline plg::vector<double> NoParamReturnArrayDouble() {
+  inline plg::vector<double> NoParamReturnArrayDouble(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayDouble", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayDouble();
   }
 
@@ -367,7 +399,8 @@ namespace cross_call_worker {
   /**
    * @return string[]
    */
-  inline plg::vector<plg::string> NoParamReturnArrayString() {
+  inline plg::vector<plg::string> NoParamReturnArrayString(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayString", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayString();
   }
 
@@ -378,7 +411,8 @@ namespace cross_call_worker {
   /**
    * @return any[]
    */
-  inline plg::vector<plg::any> NoParamReturnArrayAny() {
+  inline plg::vector<plg::any> NoParamReturnArrayAny(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayAny", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayAny();
   }
 
@@ -389,7 +423,8 @@ namespace cross_call_worker {
   /**
    * @return vec2[]
    */
-  inline plg::vector<plg::vec2> NoParamReturnArrayVector2() {
+  inline plg::vector<plg::vec2> NoParamReturnArrayVector2(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayVector2", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayVector2();
   }
 
@@ -400,7 +435,8 @@ namespace cross_call_worker {
   /**
    * @return vec3[]
    */
-  inline plg::vector<plg::vec3> NoParamReturnArrayVector3() {
+  inline plg::vector<plg::vec3> NoParamReturnArrayVector3(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayVector3", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayVector3();
   }
 
@@ -411,7 +447,8 @@ namespace cross_call_worker {
   /**
    * @return vec4[]
    */
-  inline plg::vector<plg::vec4> NoParamReturnArrayVector4() {
+  inline plg::vector<plg::vec4> NoParamReturnArrayVector4(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayVector4", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayVector4();
   }
 
@@ -422,7 +459,8 @@ namespace cross_call_worker {
   /**
    * @return mat4x4[]
    */
-  inline plg::vector<plg::mat4x4> NoParamReturnArrayMatrix4x4() {
+  inline plg::vector<plg::mat4x4> NoParamReturnArrayMatrix4x4(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnArrayMatrix4x4", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnArrayMatrix4x4();
   }
 
@@ -433,7 +471,8 @@ namespace cross_call_worker {
   /**
    * @return vec2
    */
-  inline plg::vec2 NoParamReturnVector2() {
+  inline plg::vec2 NoParamReturnVector2(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnVector2", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnVector2();
   }
 
@@ -444,7 +483,8 @@ namespace cross_call_worker {
   /**
    * @return vec3
    */
-  inline plg::vec3 NoParamReturnVector3() {
+  inline plg::vec3 NoParamReturnVector3(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnVector3", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnVector3();
   }
 
@@ -455,7 +495,8 @@ namespace cross_call_worker {
   /**
    * @return vec4
    */
-  inline plg::vec4 NoParamReturnVector4() {
+  inline plg::vec4 NoParamReturnVector4(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnVector4", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnVector4();
   }
 
@@ -466,7 +507,8 @@ namespace cross_call_worker {
   /**
    * @return mat4x4
    */
-  inline plg::mat4x4 NoParamReturnMatrix4x4() {
+  inline plg::mat4x4 NoParamReturnMatrix4x4(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::NoParamReturnMatrix4x4", plg::Severity::Trace, __location);
     return __cross_call_worker_NoParamReturnMatrix4x4();
   }
 
@@ -477,7 +519,8 @@ namespace cross_call_worker {
   /**
    * @param a (int32)
    */
-  inline void Param1(int32_t a) {
+  inline void Param1(int32_t a, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::Param1", plg::Severity::Trace, __location);
     return __cross_call_worker_Param1(a);
   }
 
@@ -489,7 +532,8 @@ namespace cross_call_worker {
    * @param a (int32)
    * @param b (float)
    */
-  inline void Param2(int32_t a, float b) {
+  inline void Param2(int32_t a, float b, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::Param2", plg::Severity::Trace, __location);
     return __cross_call_worker_Param2(a, b);
   }
 
@@ -502,7 +546,8 @@ namespace cross_call_worker {
    * @param b (float)
    * @param c (double)
    */
-  inline void Param3(int32_t a, float b, double c) {
+  inline void Param3(int32_t a, float b, double c, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::Param3", plg::Severity::Trace, __location);
     return __cross_call_worker_Param3(a, b, c);
   }
 
@@ -516,7 +561,8 @@ namespace cross_call_worker {
    * @param c (double)
    * @param d (vec4)
    */
-  inline void Param4(int32_t a, float b, double c, const plg::vec4& d) {
+  inline void Param4(int32_t a, float b, double c, const plg::vec4& d, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::Param4", plg::Severity::Trace, __location);
     return __cross_call_worker_Param4(a, b, c, d);
   }
 
@@ -531,7 +577,8 @@ namespace cross_call_worker {
    * @param d (vec4)
    * @param e (int64[])
    */
-  inline void Param5(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e) {
+  inline void Param5(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::Param5", plg::Severity::Trace, __location);
     return __cross_call_worker_Param5(a, b, c, d, e);
   }
 
@@ -547,7 +594,8 @@ namespace cross_call_worker {
    * @param e (int64[])
    * @param f (char8)
    */
-  inline void Param6(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f) {
+  inline void Param6(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::Param6", plg::Severity::Trace, __location);
     return __cross_call_worker_Param6(a, b, c, d, e, f);
   }
 
@@ -564,7 +612,8 @@ namespace cross_call_worker {
    * @param f (char8)
    * @param g (string)
    */
-  inline void Param7(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g) {
+  inline void Param7(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::Param7", plg::Severity::Trace, __location);
     return __cross_call_worker_Param7(a, b, c, d, e, f, g);
   }
 
@@ -582,7 +631,8 @@ namespace cross_call_worker {
    * @param g (string)
    * @param h (char16)
    */
-  inline void Param8(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h) {
+  inline void Param8(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::Param8", plg::Severity::Trace, __location);
     return __cross_call_worker_Param8(a, b, c, d, e, f, g, h);
   }
 
@@ -601,7 +651,8 @@ namespace cross_call_worker {
    * @param h (char16)
    * @param k (int16)
    */
-  inline void Param9(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k) {
+  inline void Param9(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::Param9", plg::Severity::Trace, __location);
     return __cross_call_worker_Param9(a, b, c, d, e, f, g, h, k);
   }
 
@@ -621,7 +672,8 @@ namespace cross_call_worker {
    * @param k (int16)
    * @param l (ptr64)
    */
-  inline void Param10(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k, void* l) {
+  inline void Param10(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k, void* l, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::Param10", plg::Severity::Trace, __location);
     return __cross_call_worker_Param10(a, b, c, d, e, f, g, h, k, l);
   }
 
@@ -632,7 +684,8 @@ namespace cross_call_worker {
   /**
    * @param a (int32&)
    */
-  inline void ParamRef1(int32_t& a) {
+  inline void ParamRef1(int32_t& a, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamRef1", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamRef1(a);
   }
 
@@ -644,7 +697,8 @@ namespace cross_call_worker {
    * @param a (int32&)
    * @param b (float&)
    */
-  inline void ParamRef2(int32_t& a, float& b) {
+  inline void ParamRef2(int32_t& a, float& b, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamRef2", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamRef2(a, b);
   }
 
@@ -657,7 +711,8 @@ namespace cross_call_worker {
    * @param b (float&)
    * @param c (double&)
    */
-  inline void ParamRef3(int32_t& a, float& b, double& c) {
+  inline void ParamRef3(int32_t& a, float& b, double& c, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamRef3", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamRef3(a, b, c);
   }
 
@@ -671,7 +726,8 @@ namespace cross_call_worker {
    * @param c (double&)
    * @param d (vec4&)
    */
-  inline void ParamRef4(int32_t& a, float& b, double& c, plg::vec4& d) {
+  inline void ParamRef4(int32_t& a, float& b, double& c, plg::vec4& d, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamRef4", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamRef4(a, b, c, d);
   }
 
@@ -686,7 +742,8 @@ namespace cross_call_worker {
    * @param d (vec4&)
    * @param e (int64[]&)
    */
-  inline void ParamRef5(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e) {
+  inline void ParamRef5(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamRef5", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamRef5(a, b, c, d, e);
   }
 
@@ -702,7 +759,8 @@ namespace cross_call_worker {
    * @param e (int64[]&)
    * @param f (char8&)
    */
-  inline void ParamRef6(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f) {
+  inline void ParamRef6(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamRef6", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamRef6(a, b, c, d, e, f);
   }
 
@@ -719,7 +777,8 @@ namespace cross_call_worker {
    * @param f (char8&)
    * @param g (string&)
    */
-  inline void ParamRef7(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g) {
+  inline void ParamRef7(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamRef7", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamRef7(a, b, c, d, e, f, g);
   }
 
@@ -737,7 +796,8 @@ namespace cross_call_worker {
    * @param g (string&)
    * @param h (char16&)
    */
-  inline void ParamRef8(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h) {
+  inline void ParamRef8(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamRef8", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamRef8(a, b, c, d, e, f, g, h);
   }
 
@@ -756,7 +816,8 @@ namespace cross_call_worker {
    * @param h (char16&)
    * @param k (int16&)
    */
-  inline void ParamRef9(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k) {
+  inline void ParamRef9(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamRef9", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamRef9(a, b, c, d, e, f, g, h, k);
   }
 
@@ -776,7 +837,8 @@ namespace cross_call_worker {
    * @param k (int16&)
    * @param l (ptr64&)
    */
-  inline void ParamRef10(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k, void*& l) {
+  inline void ParamRef10(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k, void*& l, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamRef10", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamRef10(a, b, c, d, e, f, g, h, k, l);
   }
 
@@ -801,7 +863,8 @@ namespace cross_call_worker {
    * @param p14 (double[]&)
    * @param p15 (string[]&)
    */
-  inline void ParamRefVectors(plg::vector<bool>& p1, plg::vector<char>& p2, plg::vector<char16_t>& p3, plg::vector<int8_t>& p4, plg::vector<int16_t>& p5, plg::vector<int32_t>& p6, plg::vector<int64_t>& p7, plg::vector<uint8_t>& p8, plg::vector<uint16_t>& p9, plg::vector<uint32_t>& p10, plg::vector<uint64_t>& p11, plg::vector<void*>& p12, plg::vector<float>& p13, plg::vector<double>& p14, plg::vector<plg::string>& p15) {
+  inline void ParamRefVectors(plg::vector<bool>& p1, plg::vector<char>& p2, plg::vector<char16_t>& p3, plg::vector<int8_t>& p4, plg::vector<int16_t>& p5, plg::vector<int32_t>& p6, plg::vector<int64_t>& p7, plg::vector<uint8_t>& p8, plg::vector<uint16_t>& p9, plg::vector<uint32_t>& p10, plg::vector<uint64_t>& p11, plg::vector<void*>& p12, plg::vector<float>& p13, plg::vector<double>& p14, plg::vector<plg::string>& p15, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamRefVectors", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamRefVectors(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15);
   }
 
@@ -826,7 +889,8 @@ namespace cross_call_worker {
    * @param p14 (double)
    * @return int64
    */
-  inline int64_t ParamAllPrimitives(bool p1, char p2, char16_t p3, int8_t p4, int16_t p5, int32_t p6, int64_t p7, uint8_t p8, uint16_t p9, uint32_t p10, uint64_t p11, void* p12, float p13, double p14) {
+  inline int64_t ParamAllPrimitives(bool p1, char p2, char16_t p3, int8_t p4, int16_t p5, int32_t p6, int64_t p7, uint8_t p8, uint16_t p9, uint32_t p10, uint64_t p11, void* p12, float p13, double p14, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamAllPrimitives", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamAllPrimitives(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
   }
 
@@ -868,7 +932,8 @@ namespace cross_call_worker {
    * @param aVec4Vec (vec4[])
    * @return int32
    */
-  inline int32_t ParamAllAliases(AliasBool aBool, AliasChar8 aChar8, AliasChar16 aChar16, AliasInt8 aInt8, AliasInt16 aInt16, AliasInt32 aInt32, AliasInt64 aInt64, AliasPtr aPtr, AliasFloat aFloat, AliasDouble aDouble, const AliasString& aString, const AliasAny& aAny, const AliasVec2& aVec2, const AliasVec3& aVec3, const AliasVec4& aVec4, const AliasMat4x4& aMat4x4, const AliasBoolVector& aBoolVec, const AliasChar8Vector& aChar8Vec, const AliasChar16Vector& aChar16Vec, const AliasInt8Vector& aInt8Vec, const AliasInt16Vector& aInt16Vec, const AliasInt32Vector& aInt32Vec, const AliasInt64Vector& aInt64Vec, const AliasPtrVector& aPtrVec, const AliasFloatVector& aFloatVec, const AliasDoubleVector& aDoubleVec, const AliasStringVector& aStringVec, const AliasAnyVector& aAnyVec, const AliasVec2Vector& aVec2Vec, const AliasVec3Vector& aVec3Vec, const AliasVec4Vector& aVec4Vec) {
+  inline int32_t ParamAllAliases(AliasBool aBool, AliasChar8 aChar8, AliasChar16 aChar16, AliasInt8 aInt8, AliasInt16 aInt16, AliasInt32 aInt32, AliasInt64 aInt64, AliasPtr aPtr, AliasFloat aFloat, AliasDouble aDouble, const AliasString& aString, const AliasAny& aAny, const AliasVec2& aVec2, const AliasVec3& aVec3, const AliasVec4& aVec4, const AliasMat4x4& aMat4x4, const AliasBoolVector& aBoolVec, const AliasChar8Vector& aChar8Vec, const AliasChar16Vector& aChar16Vec, const AliasInt8Vector& aInt8Vec, const AliasInt16Vector& aInt16Vec, const AliasInt32Vector& aInt32Vec, const AliasInt64Vector& aInt64Vec, const AliasPtrVector& aPtrVec, const AliasFloatVector& aFloatVec, const AliasDoubleVector& aDoubleVec, const AliasStringVector& aStringVec, const AliasAnyVector& aAnyVec, const AliasVec2Vector& aVec2Vec, const AliasVec3Vector& aVec3Vec, const AliasVec4Vector& aVec4Vec, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamAllAliases", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamAllAliases(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec);
   }
 
@@ -908,9 +973,11 @@ namespace cross_call_worker {
    * @param aVec2Vec (vec2[]&)
    * @param aVec3Vec (vec3[]&)
    * @param aVec4Vec (vec4[]&)
+   * @param aaMat4x4Vec (mat4x4[]&)
    * @return int64
    */
-  inline int64_t ParamAllRefAliases(AliasBool& aBool, AliasChar8& aChar8, AliasChar16& aChar16, AliasInt8& aInt8, AliasInt16& aInt16, AliasInt32& aInt32, AliasInt64& aInt64, AliasPtr& aPtr, AliasFloat& aFloat, AliasDouble& aDouble, AliasString& aString, AliasAny& aAny, AliasVec2& aVec2, AliasVec3& aVec3, AliasVec4& aVec4, AliasMat4x4& aMat4x4, AliasBoolVector& aBoolVec, AliasChar8Vector& aChar8Vec, AliasChar16Vector& aChar16Vec, AliasInt8Vector& aInt8Vec, AliasInt16Vector& aInt16Vec, AliasInt32Vector& aInt32Vec, AliasInt64Vector& aInt64Vec, AliasPtrVector& aPtrVec, AliasFloatVector& aFloatVec, AliasDoubleVector& aDoubleVec, AliasStringVector& aStringVec, AliasAnyVector& aAnyVec, AliasVec2Vector& aVec2Vec, AliasVec3Vector& aVec3Vec, AliasVec4Vector& aVec4Vec) {
+  inline int64_t ParamAllRefAliases(AliasBool& aBool, AliasChar8& aChar8, AliasChar16& aChar16, AliasInt8& aInt8, AliasInt16& aInt16, AliasInt32& aInt32, AliasInt64& aInt64, AliasPtr& aPtr, AliasFloat& aFloat, AliasDouble& aDouble, AliasString& aString, AliasAny& aAny, AliasVec2& aVec2, AliasVec3& aVec3, AliasVec4& aVec4, AliasMat4x4& aMat4x4, AliasBoolVector& aBoolVec, AliasChar8Vector& aChar8Vec, AliasChar16Vector& aChar16Vec, AliasInt8Vector& aInt8Vec, AliasInt16Vector& aInt16Vec, AliasInt32Vector& aInt32Vec, AliasInt64Vector& aInt64Vec, AliasPtrVector& aPtrVec, AliasFloatVector& aFloatVec, AliasDoubleVector& aDoubleVec, AliasStringVector& aStringVec, AliasAnyVector& aAnyVec, AliasVec2Vector& aVec2Vec, AliasVec3Vector& aVec3Vec, AliasVec4Vector& aVec4Vec, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamAllRefAliases", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamAllRefAliases(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec);
   }
 
@@ -922,7 +989,8 @@ namespace cross_call_worker {
    * @param p1 (any)
    * @param p2 (any[])
    */
-  inline void ParamVariant(const plg::any& p1, const plg::vector<plg::any>& p2) {
+  inline void ParamVariant(const plg::any& p1, const plg::vector<plg::any>& p2, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamVariant", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamVariant(p1, p2);
   }
 
@@ -935,7 +1003,8 @@ namespace cross_call_worker {
    * @param p2 (int32[])
    * @return int32
    */
-  inline int32_t ParamEnum(Example p1, const plg::vector<Example>& p2) {
+  inline int32_t ParamEnum(Example p1, const plg::vector<Example>& p2, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamEnum", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamEnum(p1, p2);
   }
 
@@ -948,7 +1017,8 @@ namespace cross_call_worker {
    * @param p2 (int32[]&)
    * @return int32
    */
-  inline int32_t ParamEnumRef(Example& p1, plg::vector<Example>& p2) {
+  inline int32_t ParamEnumRef(Example& p1, plg::vector<Example>& p2, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamEnumRef", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamEnumRef(p1, p2);
   }
 
@@ -960,7 +1030,8 @@ namespace cross_call_worker {
    * @param p1 (any&)
    * @param p2 (any[]&)
    */
-  inline void ParamVariantRef(plg::any& p1, plg::vector<plg::any>& p2) {
+  inline void ParamVariantRef(plg::any& p1, plg::vector<plg::any>& p2, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ParamVariantRef", plg::Severity::Trace, __location);
     return __cross_call_worker_ParamVariantRef(p1, p2);
   }
 
@@ -971,7 +1042,8 @@ namespace cross_call_worker {
   /**
    * @param func (function)
    */
-  inline void CallFuncVoid(FuncVoid func) {
+  inline void CallFuncVoid(FuncVoid func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncVoid", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncVoid(func);
   }
 
@@ -983,7 +1055,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return bool
    */
-  inline bool CallFuncBool(FuncBool func) {
+  inline bool CallFuncBool(FuncBool func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncBool", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncBool(func);
   }
 
@@ -995,7 +1068,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return char8
    */
-  inline char CallFuncChar8(FuncChar8 func) {
+  inline char CallFuncChar8(FuncChar8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncChar8", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncChar8(func);
   }
 
@@ -1007,7 +1081,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return char16
    */
-  inline char16_t CallFuncChar16(FuncChar16 func) {
+  inline char16_t CallFuncChar16(FuncChar16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncChar16", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncChar16(func);
   }
 
@@ -1019,7 +1094,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int8
    */
-  inline int8_t CallFuncInt8(FuncInt8 func) {
+  inline int8_t CallFuncInt8(FuncInt8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncInt8", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncInt8(func);
   }
 
@@ -1031,7 +1107,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int16
    */
-  inline int16_t CallFuncInt16(FuncInt16 func) {
+  inline int16_t CallFuncInt16(FuncInt16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncInt16", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncInt16(func);
   }
 
@@ -1043,7 +1120,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int32
    */
-  inline int32_t CallFuncInt32(FuncInt32 func) {
+  inline int32_t CallFuncInt32(FuncInt32 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncInt32", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncInt32(func);
   }
 
@@ -1055,7 +1133,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int64
    */
-  inline int64_t CallFuncInt64(FuncInt64 func) {
+  inline int64_t CallFuncInt64(FuncInt64 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncInt64", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncInt64(func);
   }
 
@@ -1067,7 +1146,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint8
    */
-  inline uint8_t CallFuncUInt8(FuncUInt8 func) {
+  inline uint8_t CallFuncUInt8(FuncUInt8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncUInt8", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncUInt8(func);
   }
 
@@ -1079,7 +1159,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint16
    */
-  inline uint16_t CallFuncUInt16(FuncUInt16 func) {
+  inline uint16_t CallFuncUInt16(FuncUInt16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncUInt16", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncUInt16(func);
   }
 
@@ -1091,7 +1172,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint32
    */
-  inline uint32_t CallFuncUInt32(FuncUInt32 func) {
+  inline uint32_t CallFuncUInt32(FuncUInt32 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncUInt32", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncUInt32(func);
   }
 
@@ -1103,7 +1185,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint64
    */
-  inline uint64_t CallFuncUInt64(FuncUInt64 func) {
+  inline uint64_t CallFuncUInt64(FuncUInt64 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncUInt64", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncUInt64(func);
   }
 
@@ -1115,7 +1198,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return ptr64
    */
-  inline void* CallFuncPtr(FuncPtr func) {
+  inline void* CallFuncPtr(FuncPtr func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncPtr", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncPtr(func);
   }
 
@@ -1127,7 +1211,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return float
    */
-  inline float CallFuncFloat(FuncFloat func) {
+  inline float CallFuncFloat(FuncFloat func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncFloat", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncFloat(func);
   }
 
@@ -1139,7 +1224,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return double
    */
-  inline double CallFuncDouble(FuncDouble func) {
+  inline double CallFuncDouble(FuncDouble func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncDouble", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncDouble(func);
   }
 
@@ -1151,7 +1237,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFuncString(FuncString func) {
+  inline plg::string CallFuncString(FuncString func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncString", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncString(func);
   }
 
@@ -1163,7 +1250,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return any
    */
-  inline plg::any CallFuncAny(FuncAny func) {
+  inline plg::any CallFuncAny(FuncAny func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAny", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAny(func);
   }
 
@@ -1175,7 +1263,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return ptr64
    */
-  inline void* CallFuncFunction(FuncFunction func) {
+  inline void* CallFuncFunction(FuncFunction func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncFunction", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncFunction(func);
   }
 
@@ -1187,7 +1276,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return bool[]
    */
-  inline plg::vector<bool> CallFuncBoolVector(FuncBoolVector func) {
+  inline plg::vector<bool> CallFuncBoolVector(FuncBoolVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncBoolVector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncBoolVector(func);
   }
 
@@ -1199,7 +1289,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return char8[]
    */
-  inline plg::vector<char> CallFuncChar8Vector(FuncChar8Vector func) {
+  inline plg::vector<char> CallFuncChar8Vector(FuncChar8Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncChar8Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncChar8Vector(func);
   }
 
@@ -1211,7 +1302,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return char16[]
    */
-  inline plg::vector<char16_t> CallFuncChar16Vector(FuncChar16Vector func) {
+  inline plg::vector<char16_t> CallFuncChar16Vector(FuncChar16Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncChar16Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncChar16Vector(func);
   }
 
@@ -1223,7 +1315,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int8[]
    */
-  inline plg::vector<int8_t> CallFuncInt8Vector(FuncInt8Vector func) {
+  inline plg::vector<int8_t> CallFuncInt8Vector(FuncInt8Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncInt8Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncInt8Vector(func);
   }
 
@@ -1235,7 +1328,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int16[]
    */
-  inline plg::vector<int16_t> CallFuncInt16Vector(FuncInt16Vector func) {
+  inline plg::vector<int16_t> CallFuncInt16Vector(FuncInt16Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncInt16Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncInt16Vector(func);
   }
 
@@ -1247,7 +1341,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int32[]
    */
-  inline plg::vector<int32_t> CallFuncInt32Vector(FuncInt32Vector func) {
+  inline plg::vector<int32_t> CallFuncInt32Vector(FuncInt32Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncInt32Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncInt32Vector(func);
   }
 
@@ -1259,7 +1354,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int64[]
    */
-  inline plg::vector<int64_t> CallFuncInt64Vector(FuncInt64Vector func) {
+  inline plg::vector<int64_t> CallFuncInt64Vector(FuncInt64Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncInt64Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncInt64Vector(func);
   }
 
@@ -1271,7 +1367,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint8[]
    */
-  inline plg::vector<uint8_t> CallFuncUInt8Vector(FuncUInt8Vector func) {
+  inline plg::vector<uint8_t> CallFuncUInt8Vector(FuncUInt8Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncUInt8Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncUInt8Vector(func);
   }
 
@@ -1283,7 +1380,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint16[]
    */
-  inline plg::vector<uint16_t> CallFuncUInt16Vector(FuncUInt16Vector func) {
+  inline plg::vector<uint16_t> CallFuncUInt16Vector(FuncUInt16Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncUInt16Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncUInt16Vector(func);
   }
 
@@ -1295,7 +1393,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint32[]
    */
-  inline plg::vector<uint32_t> CallFuncUInt32Vector(FuncUInt32Vector func) {
+  inline plg::vector<uint32_t> CallFuncUInt32Vector(FuncUInt32Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncUInt32Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncUInt32Vector(func);
   }
 
@@ -1307,7 +1406,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint64[]
    */
-  inline plg::vector<uint64_t> CallFuncUInt64Vector(FuncUInt64Vector func) {
+  inline plg::vector<uint64_t> CallFuncUInt64Vector(FuncUInt64Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncUInt64Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncUInt64Vector(func);
   }
 
@@ -1319,7 +1419,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return ptr64[]
    */
-  inline plg::vector<void*> CallFuncPtrVector(FuncPtrVector func) {
+  inline plg::vector<void*> CallFuncPtrVector(FuncPtrVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncPtrVector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncPtrVector(func);
   }
 
@@ -1331,7 +1432,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return float[]
    */
-  inline plg::vector<float> CallFuncFloatVector(FuncFloatVector func) {
+  inline plg::vector<float> CallFuncFloatVector(FuncFloatVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncFloatVector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncFloatVector(func);
   }
 
@@ -1343,7 +1445,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return double[]
    */
-  inline plg::vector<double> CallFuncDoubleVector(FuncDoubleVector func) {
+  inline plg::vector<double> CallFuncDoubleVector(FuncDoubleVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncDoubleVector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncDoubleVector(func);
   }
 
@@ -1355,7 +1458,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string[]
    */
-  inline plg::vector<plg::string> CallFuncStringVector(FuncStringVector func) {
+  inline plg::vector<plg::string> CallFuncStringVector(FuncStringVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncStringVector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncStringVector(func);
   }
 
@@ -1367,7 +1471,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return any[]
    */
-  inline plg::vector<plg::any> CallFuncAnyVector(FuncAnyVector func) {
+  inline plg::vector<plg::any> CallFuncAnyVector(FuncAnyVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAnyVector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAnyVector(func);
   }
 
@@ -1379,7 +1484,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return vec2[]
    */
-  inline plg::vector<plg::vec2> CallFuncVec2Vector(FuncVec2Vector func) {
+  inline plg::vector<plg::vec2> CallFuncVec2Vector(FuncVec2Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncVec2Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncVec2Vector(func);
   }
 
@@ -1391,7 +1497,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return vec3[]
    */
-  inline plg::vector<plg::vec3> CallFuncVec3Vector(FuncVec3Vector func) {
+  inline plg::vector<plg::vec3> CallFuncVec3Vector(FuncVec3Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncVec3Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncVec3Vector(func);
   }
 
@@ -1403,7 +1510,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return vec4[]
    */
-  inline plg::vector<plg::vec4> CallFuncVec4Vector(FuncVec4Vector func) {
+  inline plg::vector<plg::vec4> CallFuncVec4Vector(FuncVec4Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncVec4Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncVec4Vector(func);
   }
 
@@ -1415,7 +1523,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return mat4x4[]
    */
-  inline plg::vector<plg::mat4x4> CallFuncMat4x4Vector(FuncMat4x4Vector func) {
+  inline plg::vector<plg::mat4x4> CallFuncMat4x4Vector(FuncMat4x4Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncMat4x4Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncMat4x4Vector(func);
   }
 
@@ -1427,7 +1536,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return vec2
    */
-  inline plg::vec2 CallFuncVec2(FuncVec2 func) {
+  inline plg::vec2 CallFuncVec2(FuncVec2 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncVec2", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncVec2(func);
   }
 
@@ -1439,7 +1549,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return vec3
    */
-  inline plg::vec3 CallFuncVec3(FuncVec3 func) {
+  inline plg::vec3 CallFuncVec3(FuncVec3 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncVec3", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncVec3(func);
   }
 
@@ -1451,7 +1562,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return vec4
    */
-  inline plg::vec4 CallFuncVec4(FuncVec4 func) {
+  inline plg::vec4 CallFuncVec4(FuncVec4 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncVec4", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncVec4(func);
   }
 
@@ -1463,7 +1575,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return mat4x4
    */
-  inline plg::mat4x4 CallFuncMat4x4(FuncMat4x4 func) {
+  inline plg::mat4x4 CallFuncMat4x4(FuncMat4x4 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncMat4x4", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncMat4x4(func);
   }
 
@@ -1475,7 +1588,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return bool
    */
-  inline AliasBool CallFuncAliasBool(FuncAliasBool func) {
+  inline AliasBool CallFuncAliasBool(FuncAliasBool func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasBool", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasBool(func);
   }
 
@@ -1487,7 +1601,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return char8
    */
-  inline AliasChar8 CallFuncAliasChar8(FuncAliasChar8 func) {
+  inline AliasChar8 CallFuncAliasChar8(FuncAliasChar8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasChar8", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasChar8(func);
   }
 
@@ -1499,7 +1614,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return char16
    */
-  inline AliasChar16 CallFuncAliasChar16(FuncAliasChar16 func) {
+  inline AliasChar16 CallFuncAliasChar16(FuncAliasChar16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasChar16", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasChar16(func);
   }
 
@@ -1511,7 +1627,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int8
    */
-  inline AliasInt8 CallFuncAliasInt8(FuncAliasInt8 func) {
+  inline AliasInt8 CallFuncAliasInt8(FuncAliasInt8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasInt8", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasInt8(func);
   }
 
@@ -1523,7 +1640,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int16
    */
-  inline AliasInt16 CallFuncAliasInt16(FuncAliasInt16 func) {
+  inline AliasInt16 CallFuncAliasInt16(FuncAliasInt16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasInt16", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasInt16(func);
   }
 
@@ -1535,7 +1653,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int32
    */
-  inline AliasInt32 CallFuncAliasInt32(FuncAliasInt32 func) {
+  inline AliasInt32 CallFuncAliasInt32(FuncAliasInt32 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasInt32", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasInt32(func);
   }
 
@@ -1547,7 +1666,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int64
    */
-  inline AliasInt64 CallFuncAliasInt64(FuncAliasInt64 func) {
+  inline AliasInt64 CallFuncAliasInt64(FuncAliasInt64 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasInt64", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasInt64(func);
   }
 
@@ -1559,7 +1679,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint8
    */
-  inline AliasUInt8 CallFuncAliasUInt8(FuncAliasUInt8 func) {
+  inline AliasUInt8 CallFuncAliasUInt8(FuncAliasUInt8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasUInt8", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasUInt8(func);
   }
 
@@ -1571,7 +1692,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint16
    */
-  inline AliasUInt16 CallFuncAliasUInt16(FuncAliasUInt16 func) {
+  inline AliasUInt16 CallFuncAliasUInt16(FuncAliasUInt16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasUInt16", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasUInt16(func);
   }
 
@@ -1583,7 +1705,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint32
    */
-  inline AliasUInt32 CallFuncAliasUInt32(FuncAliasUInt32 func) {
+  inline AliasUInt32 CallFuncAliasUInt32(FuncAliasUInt32 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasUInt32", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasUInt32(func);
   }
 
@@ -1595,7 +1718,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint64
    */
-  inline AliasUInt64 CallFuncAliasUInt64(FuncAliasUInt64 func) {
+  inline AliasUInt64 CallFuncAliasUInt64(FuncAliasUInt64 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasUInt64", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasUInt64(func);
   }
 
@@ -1607,7 +1731,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return ptr64
    */
-  inline AliasPtr CallFuncAliasPtr(FuncAliasPtr func) {
+  inline AliasPtr CallFuncAliasPtr(FuncAliasPtr func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasPtr", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasPtr(func);
   }
 
@@ -1619,7 +1744,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return float
    */
-  inline AliasFloat CallFuncAliasFloat(FuncAliasFloat func) {
+  inline AliasFloat CallFuncAliasFloat(FuncAliasFloat func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasFloat", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasFloat(func);
   }
 
@@ -1631,7 +1757,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return double
    */
-  inline AliasDouble CallFuncAliasDouble(FuncAliasDouble func) {
+  inline AliasDouble CallFuncAliasDouble(FuncAliasDouble func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasDouble", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasDouble(func);
   }
 
@@ -1643,7 +1770,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline AliasString CallFuncAliasString(FuncAliasString func) {
+  inline AliasString CallFuncAliasString(FuncAliasString func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasString", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasString(func);
   }
 
@@ -1655,7 +1783,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return any
    */
-  inline AliasAny CallFuncAliasAny(FuncAliasAny func) {
+  inline AliasAny CallFuncAliasAny(FuncAliasAny func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasAny", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasAny(func);
   }
 
@@ -1667,7 +1796,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return ptr64
    */
-  inline void* CallFuncAliasFunction(FuncAliasFunction func) {
+  inline void* CallFuncAliasFunction(FuncAliasFunction func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasFunction", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasFunction(func);
   }
 
@@ -1679,7 +1809,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return bool[]
    */
-  inline AliasBoolVector CallFuncAliasBoolVector(FuncAliasBoolVector func) {
+  inline AliasBoolVector CallFuncAliasBoolVector(FuncAliasBoolVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasBoolVector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasBoolVector(func);
   }
 
@@ -1691,7 +1822,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return char8[]
    */
-  inline AliasChar8Vector CallFuncAliasChar8Vector(FuncAliasChar8Vector func) {
+  inline AliasChar8Vector CallFuncAliasChar8Vector(FuncAliasChar8Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasChar8Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasChar8Vector(func);
   }
 
@@ -1703,7 +1835,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return char16[]
    */
-  inline AliasChar16Vector CallFuncAliasChar16Vector(FuncAliasChar16Vector func) {
+  inline AliasChar16Vector CallFuncAliasChar16Vector(FuncAliasChar16Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasChar16Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasChar16Vector(func);
   }
 
@@ -1715,7 +1848,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int8[]
    */
-  inline AliasInt8Vector CallFuncAliasInt8Vector(FuncAliasInt8Vector func) {
+  inline AliasInt8Vector CallFuncAliasInt8Vector(FuncAliasInt8Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasInt8Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasInt8Vector(func);
   }
 
@@ -1727,7 +1861,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int16[]
    */
-  inline AliasInt16Vector CallFuncAliasInt16Vector(FuncAliasInt16Vector func) {
+  inline AliasInt16Vector CallFuncAliasInt16Vector(FuncAliasInt16Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasInt16Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasInt16Vector(func);
   }
 
@@ -1739,7 +1874,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int32[]
    */
-  inline AliasInt32Vector CallFuncAliasInt32Vector(FuncAliasInt32Vector func) {
+  inline AliasInt32Vector CallFuncAliasInt32Vector(FuncAliasInt32Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasInt32Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasInt32Vector(func);
   }
 
@@ -1751,7 +1887,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int64[]
    */
-  inline AliasInt64Vector CallFuncAliasInt64Vector(FuncAliasInt64Vector func) {
+  inline AliasInt64Vector CallFuncAliasInt64Vector(FuncAliasInt64Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasInt64Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasInt64Vector(func);
   }
 
@@ -1763,7 +1900,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint8[]
    */
-  inline AliasUInt8Vector CallFuncAliasUInt8Vector(FuncAliasUInt8Vector func) {
+  inline AliasUInt8Vector CallFuncAliasUInt8Vector(FuncAliasUInt8Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasUInt8Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasUInt8Vector(func);
   }
 
@@ -1775,7 +1913,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint16[]
    */
-  inline AliasUInt16Vector CallFuncAliasUInt16Vector(FuncAliasUInt16Vector func) {
+  inline AliasUInt16Vector CallFuncAliasUInt16Vector(FuncAliasUInt16Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasUInt16Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasUInt16Vector(func);
   }
 
@@ -1787,7 +1926,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint32[]
    */
-  inline AliasUInt32Vector CallFuncAliasUInt32Vector(FuncAliasUInt32Vector func) {
+  inline AliasUInt32Vector CallFuncAliasUInt32Vector(FuncAliasUInt32Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasUInt32Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasUInt32Vector(func);
   }
 
@@ -1799,7 +1939,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint64[]
    */
-  inline AliasUInt64Vector CallFuncAliasUInt64Vector(FuncAliasUInt64Vector func) {
+  inline AliasUInt64Vector CallFuncAliasUInt64Vector(FuncAliasUInt64Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasUInt64Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasUInt64Vector(func);
   }
 
@@ -1811,7 +1952,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return ptr64[]
    */
-  inline AliasPtrVector CallFuncAliasPtrVector(FuncAliasPtrVector func) {
+  inline AliasPtrVector CallFuncAliasPtrVector(FuncAliasPtrVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasPtrVector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasPtrVector(func);
   }
 
@@ -1823,7 +1965,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return float[]
    */
-  inline AliasFloatVector CallFuncAliasFloatVector(FuncAliasFloatVector func) {
+  inline AliasFloatVector CallFuncAliasFloatVector(FuncAliasFloatVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasFloatVector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasFloatVector(func);
   }
 
@@ -1835,7 +1978,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return double[]
    */
-  inline AliasDoubleVector CallFuncAliasDoubleVector(FuncAliasDoubleVector func) {
+  inline AliasDoubleVector CallFuncAliasDoubleVector(FuncAliasDoubleVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasDoubleVector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasDoubleVector(func);
   }
 
@@ -1847,7 +1991,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string[]
    */
-  inline AliasStringVector CallFuncAliasStringVector(FuncAliasStringVector func) {
+  inline AliasStringVector CallFuncAliasStringVector(FuncAliasStringVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasStringVector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasStringVector(func);
   }
 
@@ -1859,7 +2004,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return any[]
    */
-  inline AliasAnyVector CallFuncAliasAnyVector(FuncAliasAnyVector func) {
+  inline AliasAnyVector CallFuncAliasAnyVector(FuncAliasAnyVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasAnyVector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasAnyVector(func);
   }
 
@@ -1871,7 +2017,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return vec2[]
    */
-  inline AliasVec2Vector CallFuncAliasVec2Vector(FuncAliasVec2Vector func) {
+  inline AliasVec2Vector CallFuncAliasVec2Vector(FuncAliasVec2Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasVec2Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasVec2Vector(func);
   }
 
@@ -1883,7 +2030,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return vec3[]
    */
-  inline AliasVec3Vector CallFuncAliasVec3Vector(FuncAliasVec3Vector func) {
+  inline AliasVec3Vector CallFuncAliasVec3Vector(FuncAliasVec3Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasVec3Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasVec3Vector(func);
   }
 
@@ -1895,7 +2043,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return vec4[]
    */
-  inline AliasVec4Vector CallFuncAliasVec4Vector(FuncAliasVec4Vector func) {
+  inline AliasVec4Vector CallFuncAliasVec4Vector(FuncAliasVec4Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasVec4Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasVec4Vector(func);
   }
 
@@ -1907,7 +2056,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return mat4x4[]
    */
-  inline AliasMat4x4Vector CallFuncAliasMat4x4Vector(FuncAliasMat4x4Vector func) {
+  inline AliasMat4x4Vector CallFuncAliasMat4x4Vector(FuncAliasMat4x4Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasMat4x4Vector", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasMat4x4Vector(func);
   }
 
@@ -1919,7 +2069,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return vec2
    */
-  inline AliasVec2 CallFuncAliasVec2(FuncAliasVec2 func) {
+  inline AliasVec2 CallFuncAliasVec2(FuncAliasVec2 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasVec2", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasVec2(func);
   }
 
@@ -1931,7 +2082,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return vec3
    */
-  inline AliasVec3 CallFuncAliasVec3(FuncAliasVec3 func) {
+  inline AliasVec3 CallFuncAliasVec3(FuncAliasVec3 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasVec3", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasVec3(func);
   }
 
@@ -1943,7 +2095,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return vec4
    */
-  inline AliasVec4 CallFuncAliasVec4(FuncAliasVec4 func) {
+  inline AliasVec4 CallFuncAliasVec4(FuncAliasVec4 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasVec4", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasVec4(func);
   }
 
@@ -1955,7 +2108,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return mat4x4
    */
-  inline AliasMat4x4 CallFuncAliasMat4x4(FuncAliasMat4x4 func) {
+  inline AliasMat4x4 CallFuncAliasMat4x4(FuncAliasMat4x4 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasMat4x4", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasMat4x4(func);
   }
 
@@ -1967,7 +2121,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFuncAliasAll(FuncAliasAll func) {
+  inline plg::string CallFuncAliasAll(FuncAliasAll func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncAliasAll", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncAliasAll(func);
   }
 
@@ -1979,7 +2134,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int32
    */
-  inline int32_t CallFunc1(Func1 func) {
+  inline int32_t CallFunc1(Func1 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc1", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc1(func);
   }
 
@@ -1991,7 +2147,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return char8
    */
-  inline char CallFunc2(Func2 func) {
+  inline char CallFunc2(Func2 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc2", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc2(func);
   }
 
@@ -2002,7 +2159,8 @@ namespace cross_call_worker {
   /**
    * @param func (function)
    */
-  inline void CallFunc3(Func3 func) {
+  inline void CallFunc3(Func3 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc3", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc3(func);
   }
 
@@ -2014,7 +2172,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return vec4
    */
-  inline plg::vec4 CallFunc4(Func4 func) {
+  inline plg::vec4 CallFunc4(Func4 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc4", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc4(func);
   }
 
@@ -2026,7 +2185,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return bool
    */
-  inline bool CallFunc5(Func5 func) {
+  inline bool CallFunc5(Func5 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc5", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc5(func);
   }
 
@@ -2038,7 +2198,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int64
    */
-  inline int64_t CallFunc6(Func6 func) {
+  inline int64_t CallFunc6(Func6 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc6", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc6(func);
   }
 
@@ -2050,7 +2211,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return double
    */
-  inline double CallFunc7(Func7 func) {
+  inline double CallFunc7(Func7 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc7", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc7(func);
   }
 
@@ -2062,7 +2224,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return mat4x4
    */
-  inline plg::mat4x4 CallFunc8(Func8 func) {
+  inline plg::mat4x4 CallFunc8(Func8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc8", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc8(func);
   }
 
@@ -2073,7 +2236,8 @@ namespace cross_call_worker {
   /**
    * @param func (function)
    */
-  inline void CallFunc9(Func9 func) {
+  inline void CallFunc9(Func9 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc9", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc9(func);
   }
 
@@ -2085,7 +2249,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return uint32
    */
-  inline uint32_t CallFunc10(Func10 func) {
+  inline uint32_t CallFunc10(Func10 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc10", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc10(func);
   }
 
@@ -2097,7 +2262,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return ptr64
    */
-  inline void* CallFunc11(Func11 func) {
+  inline void* CallFunc11(Func11 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc11", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc11(func);
   }
 
@@ -2109,7 +2275,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return bool
    */
-  inline bool CallFunc12(Func12 func) {
+  inline bool CallFunc12(Func12 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc12", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc12(func);
   }
 
@@ -2121,7 +2288,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc13(Func13 func) {
+  inline plg::string CallFunc13(Func13 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc13", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc13(func);
   }
 
@@ -2133,7 +2301,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string[]
    */
-  inline plg::vector<plg::string> CallFunc14(Func14 func) {
+  inline plg::vector<plg::string> CallFunc14(Func14 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc14", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc14(func);
   }
 
@@ -2145,7 +2314,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return int16
    */
-  inline int16_t CallFunc15(Func15 func) {
+  inline int16_t CallFunc15(Func15 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc15", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc15(func);
   }
 
@@ -2157,7 +2327,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return ptr64
    */
-  inline void* CallFunc16(Func16 func) {
+  inline void* CallFunc16(Func16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc16", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc16(func);
   }
 
@@ -2169,7 +2340,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc17(Func17 func) {
+  inline plg::string CallFunc17(Func17 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc17", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc17(func);
   }
 
@@ -2181,7 +2353,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc18(Func18 func) {
+  inline plg::string CallFunc18(Func18 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc18", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc18(func);
   }
 
@@ -2193,7 +2366,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc19(Func19 func) {
+  inline plg::string CallFunc19(Func19 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc19", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc19(func);
   }
 
@@ -2205,7 +2379,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc20(Func20 func) {
+  inline plg::string CallFunc20(Func20 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc20", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc20(func);
   }
 
@@ -2217,7 +2392,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc21(Func21 func) {
+  inline plg::string CallFunc21(Func21 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc21", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc21(func);
   }
 
@@ -2229,7 +2405,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc22(Func22 func) {
+  inline plg::string CallFunc22(Func22 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc22", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc22(func);
   }
 
@@ -2241,7 +2418,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc23(Func23 func) {
+  inline plg::string CallFunc23(Func23 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc23", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc23(func);
   }
 
@@ -2253,7 +2431,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc24(Func24 func) {
+  inline plg::string CallFunc24(Func24 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc24", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc24(func);
   }
 
@@ -2265,7 +2444,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc25(Func25 func) {
+  inline plg::string CallFunc25(Func25 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc25", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc25(func);
   }
 
@@ -2277,7 +2457,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc26(Func26 func) {
+  inline plg::string CallFunc26(Func26 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc26", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc26(func);
   }
 
@@ -2289,7 +2470,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc27(Func27 func) {
+  inline plg::string CallFunc27(Func27 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc27", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc27(func);
   }
 
@@ -2301,7 +2483,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc28(Func28 func) {
+  inline plg::string CallFunc28(Func28 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc28", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc28(func);
   }
 
@@ -2313,7 +2496,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc29(Func29 func) {
+  inline plg::string CallFunc29(Func29 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc29", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc29(func);
   }
 
@@ -2325,7 +2509,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc30(Func30 func) {
+  inline plg::string CallFunc30(Func30 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc30", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc30(func);
   }
 
@@ -2337,7 +2522,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc31(Func31 func) {
+  inline plg::string CallFunc31(Func31 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc31", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc31(func);
   }
 
@@ -2349,7 +2535,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc32(Func32 func) {
+  inline plg::string CallFunc32(Func32 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc32", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc32(func);
   }
 
@@ -2361,7 +2548,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc33(Func33 func) {
+  inline plg::string CallFunc33(Func33 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFunc33", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFunc33(func);
   }
 
@@ -2373,7 +2561,8 @@ namespace cross_call_worker {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFuncEnum(FuncEnum func) {
+  inline plg::string CallFuncEnum(FuncEnum func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::CallFuncEnum", plg::Severity::Trace, __location);
     return __cross_call_worker_CallFuncEnum(func);
   }
 
@@ -2384,7 +2573,8 @@ namespace cross_call_worker {
   /**
    * @param test (string)
    */
-  inline void ReverseCall(const plg::string& test) {
+  inline void ReverseCall(const plg::string& test, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_worker::ReverseCall", plg::Severity::Trace, __location);
     return __cross_call_worker_ReverseCall(test);
   }
 

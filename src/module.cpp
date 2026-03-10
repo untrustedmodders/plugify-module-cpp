@@ -1,8 +1,5 @@
 #include "module.hpp"
 
-#include <plugify/assembly_loader.hpp>
-#include <plugify/logger.hpp>
-
 #include <plg/format.hpp>
 
 using namespace plugify;
@@ -14,13 +11,17 @@ namespace fs = std::filesystem;
 // ILanguageModule
 Result<InitData> CppLanguageModule::Initialize(const Provider& provider, [[maybe_unused]] const Extension& module) {
 	_provider = std::make_unique<Provider>(provider);
-	_provider->Log(LOG_PREFIX "Inited!", Severity::Debug);
+	_logger = _provider->Resolve<ILogger>();
+	_loader = _provider->Resolve<IAssemblyLoader>();
+	_logger->Log(LOG_PREFIX "Inited!", Severity::Debug);
 
 	return InitData{ { .hasUpdate = false } };
 }
 
 void CppLanguageModule::Shutdown() {
 	_assemblies.clear();
+	_loader.reset();
+	_logger.reset();
 	_provider.reset();
 }
 
@@ -52,7 +53,7 @@ Result<LoadData> CppLanguageModule::OnPluginLoad(const Extension& plugin) {
 		flags |= LoadFlag::DeepBind;
 	}
 
-	auto assemblyResult = _provider->Resolve<IAssemblyLoader>()->Load(assemblyPath, flags);
+	auto assemblyResult = _loader->Load(assemblyPath, flags);
 	if (!assemblyResult) {
 		return MakeError(std::move(assemblyResult.error()));
 	}
@@ -172,6 +173,12 @@ bool IsExtensionLoaded(std::string_view name, std::optional<Constraint> constrai
 	return g_cpplm.GetProvider()->IsExtensionLoaded(name, std::move(constraint));
 }
 
+void Log(std::string_view message, Severity severity, const Location& location) {
+	if (const auto& logger = g_cpplm.GetLogger()) {
+		logger->Log(message, severity, location);
+	}
+}
+
 UniqueId GetPluginId(const Extension& plugin) {
 	return plugin.GetId();
 }
@@ -224,7 +231,7 @@ std::vector<Dependent> GetPluginDependencies(const Extension& plugin) {
 	return deps;
 }
 
-std::array<void*, 16> CppLanguageModule::_pluginApi = {
+std::array<void*, 17> CppLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetBaseDir),
 		reinterpret_cast<void*>(&::GetExtensionsDir),
 		reinterpret_cast<void*>(&::GetConfigsDir),
@@ -232,6 +239,7 @@ std::array<void*, 16> CppLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetLogsDir),
 		reinterpret_cast<void*>(&::GetCacheDir),
 		reinterpret_cast<void*>(&::IsExtensionLoaded),
+		reinterpret_cast<void*>(&::Log),
 		reinterpret_cast<void*>(&::GetPluginId),
 		reinterpret_cast<void*>(&::GetPluginName),
 		reinterpret_cast<void*>(&::GetPluginDescription),

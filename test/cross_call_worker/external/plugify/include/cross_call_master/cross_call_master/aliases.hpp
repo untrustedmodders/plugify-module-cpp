@@ -70,8 +70,6 @@ namespace cross_call_master {
 
   using AliasVec4Vector = plg::vector<plg::vec4>;
 
-  using AliasMat4x4Vector = plg::vector<plg::mat4x4>;
-
   using AliasUInt8 = uint8_t;
 
   using AliasUInt16 = uint16_t;
@@ -89,6 +87,8 @@ namespace cross_call_master {
   using AliasUInt32Vector = plg::vector<uint32_t>;
 
   using AliasUInt64Vector = plg::vector<uint64_t>;
+
+  using AliasMat4x4Vector = plg::vector<plg::mat4x4>;
 
 
 } // namespace cross_call_master

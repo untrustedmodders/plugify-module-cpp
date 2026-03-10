@@ -2,6 +2,8 @@
 
 #include <plugify/assembly.hpp>
 #include <plugify/language_module.hpp>
+#include <plugify/assembly_loader.hpp>
+#include <plugify/logger.hpp>
 #include <plugify/extension.hpp>
 #include <plugify/provider.hpp>
 
@@ -41,12 +43,15 @@ namespace cpplm {
 		bool IsDebugBuild() override;
 
 		const std::unique_ptr<Provider>& GetProvider() const { return _provider; }
+		const std::shared_ptr<ILogger>& GetLogger() const { return _logger; }
 
 	private:
 		std::unique_ptr<Provider> _provider;
+		std::shared_ptr<ILogger> _logger;
+		std::shared_ptr<IAssemblyLoader> _loader;
 		std::vector<std::unique_ptr<AssemblyHolder>> _assemblies;
 
-		static std::array<void*, 16> _pluginApi;
+		static std::array<void*, 17> _pluginApi;
 	};
 
 	extern CppLanguageModule g_cpplm;

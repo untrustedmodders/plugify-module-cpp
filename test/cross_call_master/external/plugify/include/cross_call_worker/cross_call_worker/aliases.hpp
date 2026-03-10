@@ -80,7 +80,7 @@ namespace cross_call_worker {
 
   using AliasUInt64 = uint64_t;
 
-  using AliasFunction = void(*)();
+  using AliasFunction = void*;
 
   using AliasUInt8Vector = plg::vector<uint8_t>;
 

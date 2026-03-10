@@ -19,7 +19,8 @@ namespace cross_call_master {
   /**
    * @param returnString (string)
    */
-  inline void ReverseReturn(const plg::string& returnString) {
+  inline void ReverseReturn(const plg::string& returnString, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ReverseReturn", plg::Severity::Trace, __location);
     return __cross_call_master_ReverseReturn(returnString);
   }
 
@@ -29,7 +30,8 @@ extern "C" PLUGIN_API cross_call_master::_NoParamReturnVoidCallback __cross_call
 namespace cross_call_master {
   /**
    */
-  inline void NoParamReturnVoidCallback() {
+  inline void NoParamReturnVoidCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnVoidCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnVoidCallback();
   }
 
@@ -40,7 +42,8 @@ namespace cross_call_master {
   /**
    * @return bool
    */
-  inline bool NoParamReturnBoolCallback() {
+  inline bool NoParamReturnBoolCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnBoolCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnBoolCallback();
   }
 
@@ -51,7 +54,8 @@ namespace cross_call_master {
   /**
    * @return char8
    */
-  inline char NoParamReturnChar8Callback() {
+  inline char NoParamReturnChar8Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnChar8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnChar8Callback();
   }
 
@@ -62,7 +66,8 @@ namespace cross_call_master {
   /**
    * @return char16
    */
-  inline char16_t NoParamReturnChar16Callback() {
+  inline char16_t NoParamReturnChar16Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnChar16Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnChar16Callback();
   }
 
@@ -73,7 +78,8 @@ namespace cross_call_master {
   /**
    * @return int8
    */
-  inline int8_t NoParamReturnInt8Callback() {
+  inline int8_t NoParamReturnInt8Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnInt8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnInt8Callback();
   }
 
@@ -84,7 +90,8 @@ namespace cross_call_master {
   /**
    * @return int16
    */
-  inline int16_t NoParamReturnInt16Callback() {
+  inline int16_t NoParamReturnInt16Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnInt16Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnInt16Callback();
   }
 
@@ -95,7 +102,8 @@ namespace cross_call_master {
   /**
    * @return int32
    */
-  inline int32_t NoParamReturnInt32Callback() {
+  inline int32_t NoParamReturnInt32Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnInt32Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnInt32Callback();
   }
 
@@ -106,7 +114,8 @@ namespace cross_call_master {
   /**
    * @return int64
    */
-  inline int64_t NoParamReturnInt64Callback() {
+  inline int64_t NoParamReturnInt64Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnInt64Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnInt64Callback();
   }
 
@@ -117,7 +126,8 @@ namespace cross_call_master {
   /**
    * @return uint8
    */
-  inline uint8_t NoParamReturnUInt8Callback() {
+  inline uint8_t NoParamReturnUInt8Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnUInt8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnUInt8Callback();
   }
 
@@ -128,7 +138,8 @@ namespace cross_call_master {
   /**
    * @return uint16
    */
-  inline uint16_t NoParamReturnUInt16Callback() {
+  inline uint16_t NoParamReturnUInt16Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnUInt16Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnUInt16Callback();
   }
 
@@ -139,7 +150,8 @@ namespace cross_call_master {
   /**
    * @return uint32
    */
-  inline uint32_t NoParamReturnUInt32Callback() {
+  inline uint32_t NoParamReturnUInt32Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnUInt32Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnUInt32Callback();
   }
 
@@ -150,7 +162,8 @@ namespace cross_call_master {
   /**
    * @return uint64
    */
-  inline uint64_t NoParamReturnUInt64Callback() {
+  inline uint64_t NoParamReturnUInt64Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnUInt64Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnUInt64Callback();
   }
 
@@ -161,7 +174,8 @@ namespace cross_call_master {
   /**
    * @return ptr64
    */
-  inline void* NoParamReturnPointerCallback() {
+  inline void* NoParamReturnPointerCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnPointerCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnPointerCallback();
   }
 
@@ -172,7 +186,8 @@ namespace cross_call_master {
   /**
    * @return float
    */
-  inline float NoParamReturnFloatCallback() {
+  inline float NoParamReturnFloatCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnFloatCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnFloatCallback();
   }
 
@@ -183,7 +198,8 @@ namespace cross_call_master {
   /**
    * @return double
    */
-  inline double NoParamReturnDoubleCallback() {
+  inline double NoParamReturnDoubleCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnDoubleCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnDoubleCallback();
   }
 
@@ -194,7 +210,8 @@ namespace cross_call_master {
   /**
    * @return function
    */
-  inline NoParamReturnFunctionCallbackFunc NoParamReturnFunctionCallback() {
+  inline NoParamReturnFunctionCallbackFunc NoParamReturnFunctionCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnFunctionCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnFunctionCallback();
   }
 
@@ -205,7 +222,8 @@ namespace cross_call_master {
   /**
    * @return string
    */
-  inline plg::string NoParamReturnStringCallback() {
+  inline plg::string NoParamReturnStringCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnStringCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnStringCallback();
   }
 
@@ -216,7 +234,8 @@ namespace cross_call_master {
   /**
    * @return any
    */
-  inline plg::any NoParamReturnAnyCallback() {
+  inline plg::any NoParamReturnAnyCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnAnyCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnAnyCallback();
   }
 
@@ -227,7 +246,8 @@ namespace cross_call_master {
   /**
    * @return bool[]
    */
-  inline plg::vector<bool> NoParamReturnArrayBoolCallback() {
+  inline plg::vector<bool> NoParamReturnArrayBoolCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayBoolCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayBoolCallback();
   }
 
@@ -238,7 +258,8 @@ namespace cross_call_master {
   /**
    * @return char8[]
    */
-  inline plg::vector<char> NoParamReturnArrayChar8Callback() {
+  inline plg::vector<char> NoParamReturnArrayChar8Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayChar8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayChar8Callback();
   }
 
@@ -249,7 +270,8 @@ namespace cross_call_master {
   /**
    * @return char16[]
    */
-  inline plg::vector<char16_t> NoParamReturnArrayChar16Callback() {
+  inline plg::vector<char16_t> NoParamReturnArrayChar16Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayChar16Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayChar16Callback();
   }
 
@@ -260,7 +282,8 @@ namespace cross_call_master {
   /**
    * @return int8[]
    */
-  inline plg::vector<int8_t> NoParamReturnArrayInt8Callback() {
+  inline plg::vector<int8_t> NoParamReturnArrayInt8Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayInt8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayInt8Callback();
   }
 
@@ -271,7 +294,8 @@ namespace cross_call_master {
   /**
    * @return int16[]
    */
-  inline plg::vector<int16_t> NoParamReturnArrayInt16Callback() {
+  inline plg::vector<int16_t> NoParamReturnArrayInt16Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayInt16Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayInt16Callback();
   }
 
@@ -282,7 +306,8 @@ namespace cross_call_master {
   /**
    * @return int32[]
    */
-  inline plg::vector<int32_t> NoParamReturnArrayInt32Callback() {
+  inline plg::vector<int32_t> NoParamReturnArrayInt32Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayInt32Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayInt32Callback();
   }
 
@@ -293,7 +318,8 @@ namespace cross_call_master {
   /**
    * @return int64[]
    */
-  inline plg::vector<int64_t> NoParamReturnArrayInt64Callback() {
+  inline plg::vector<int64_t> NoParamReturnArrayInt64Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayInt64Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayInt64Callback();
   }
 
@@ -304,7 +330,8 @@ namespace cross_call_master {
   /**
    * @return uint8[]
    */
-  inline plg::vector<uint8_t> NoParamReturnArrayUInt8Callback() {
+  inline plg::vector<uint8_t> NoParamReturnArrayUInt8Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayUInt8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayUInt8Callback();
   }
 
@@ -315,7 +342,8 @@ namespace cross_call_master {
   /**
    * @return uint16[]
    */
-  inline plg::vector<uint16_t> NoParamReturnArrayUInt16Callback() {
+  inline plg::vector<uint16_t> NoParamReturnArrayUInt16Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayUInt16Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayUInt16Callback();
   }
 
@@ -326,7 +354,8 @@ namespace cross_call_master {
   /**
    * @return uint32[]
    */
-  inline plg::vector<uint32_t> NoParamReturnArrayUInt32Callback() {
+  inline plg::vector<uint32_t> NoParamReturnArrayUInt32Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayUInt32Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayUInt32Callback();
   }
 
@@ -337,7 +366,8 @@ namespace cross_call_master {
   /**
    * @return uint64[]
    */
-  inline plg::vector<uint64_t> NoParamReturnArrayUInt64Callback() {
+  inline plg::vector<uint64_t> NoParamReturnArrayUInt64Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayUInt64Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayUInt64Callback();
   }
 
@@ -348,7 +378,8 @@ namespace cross_call_master {
   /**
    * @return ptr64[]
    */
-  inline plg::vector<void*> NoParamReturnArrayPointerCallback() {
+  inline plg::vector<void*> NoParamReturnArrayPointerCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayPointerCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayPointerCallback();
   }
 
@@ -359,7 +390,8 @@ namespace cross_call_master {
   /**
    * @return float[]
    */
-  inline plg::vector<float> NoParamReturnArrayFloatCallback() {
+  inline plg::vector<float> NoParamReturnArrayFloatCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayFloatCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayFloatCallback();
   }
 
@@ -370,7 +402,8 @@ namespace cross_call_master {
   /**
    * @return double[]
    */
-  inline plg::vector<double> NoParamReturnArrayDoubleCallback() {
+  inline plg::vector<double> NoParamReturnArrayDoubleCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayDoubleCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayDoubleCallback();
   }
 
@@ -381,7 +414,8 @@ namespace cross_call_master {
   /**
    * @return string[]
    */
-  inline plg::vector<plg::string> NoParamReturnArrayStringCallback() {
+  inline plg::vector<plg::string> NoParamReturnArrayStringCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayStringCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayStringCallback();
   }
 
@@ -392,7 +426,8 @@ namespace cross_call_master {
   /**
    * @return any[]
    */
-  inline plg::vector<plg::any> NoParamReturnArrayAnyCallback() {
+  inline plg::vector<plg::any> NoParamReturnArrayAnyCallback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayAnyCallback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayAnyCallback();
   }
 
@@ -403,7 +438,8 @@ namespace cross_call_master {
   /**
    * @return vec2[]
    */
-  inline plg::vector<plg::vec2> NoParamReturnArrayVector2Callback() {
+  inline plg::vector<plg::vec2> NoParamReturnArrayVector2Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayVector2Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayVector2Callback();
   }
 
@@ -414,7 +450,8 @@ namespace cross_call_master {
   /**
    * @return vec3[]
    */
-  inline plg::vector<plg::vec3> NoParamReturnArrayVector3Callback() {
+  inline plg::vector<plg::vec3> NoParamReturnArrayVector3Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayVector3Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayVector3Callback();
   }
 
@@ -425,7 +462,8 @@ namespace cross_call_master {
   /**
    * @return vec4[]
    */
-  inline plg::vector<plg::vec4> NoParamReturnArrayVector4Callback() {
+  inline plg::vector<plg::vec4> NoParamReturnArrayVector4Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayVector4Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayVector4Callback();
   }
 
@@ -436,7 +474,8 @@ namespace cross_call_master {
   /**
    * @return mat4x4[]
    */
-  inline plg::vector<plg::mat4x4> NoParamReturnArrayMatrix4x4Callback() {
+  inline plg::vector<plg::mat4x4> NoParamReturnArrayMatrix4x4Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnArrayMatrix4x4Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnArrayMatrix4x4Callback();
   }
 
@@ -447,7 +486,8 @@ namespace cross_call_master {
   /**
    * @return vec2
    */
-  inline plg::vec2 NoParamReturnVector2Callback() {
+  inline plg::vec2 NoParamReturnVector2Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnVector2Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnVector2Callback();
   }
 
@@ -458,7 +498,8 @@ namespace cross_call_master {
   /**
    * @return vec3
    */
-  inline plg::vec3 NoParamReturnVector3Callback() {
+  inline plg::vec3 NoParamReturnVector3Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnVector3Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnVector3Callback();
   }
 
@@ -469,7 +510,8 @@ namespace cross_call_master {
   /**
    * @return vec4
    */
-  inline plg::vec4 NoParamReturnVector4Callback() {
+  inline plg::vec4 NoParamReturnVector4Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnVector4Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnVector4Callback();
   }
 
@@ -480,7 +522,8 @@ namespace cross_call_master {
   /**
    * @return mat4x4
    */
-  inline plg::mat4x4 NoParamReturnMatrix4x4Callback() {
+  inline plg::mat4x4 NoParamReturnMatrix4x4Callback(plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::NoParamReturnMatrix4x4Callback", plg::Severity::Trace, __location);
     return __cross_call_master_NoParamReturnMatrix4x4Callback();
   }
 
@@ -491,7 +534,8 @@ namespace cross_call_master {
   /**
    * @param a (int32)
    */
-  inline void Param1Callback(int32_t a) {
+  inline void Param1Callback(int32_t a, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::Param1Callback", plg::Severity::Trace, __location);
     return __cross_call_master_Param1Callback(a);
   }
 
@@ -503,7 +547,8 @@ namespace cross_call_master {
    * @param a (int32)
    * @param b (float)
    */
-  inline void Param2Callback(int32_t a, float b) {
+  inline void Param2Callback(int32_t a, float b, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::Param2Callback", plg::Severity::Trace, __location);
     return __cross_call_master_Param2Callback(a, b);
   }
 
@@ -516,7 +561,8 @@ namespace cross_call_master {
    * @param b (float)
    * @param c (double)
    */
-  inline void Param3Callback(int32_t a, float b, double c) {
+  inline void Param3Callback(int32_t a, float b, double c, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::Param3Callback", plg::Severity::Trace, __location);
     return __cross_call_master_Param3Callback(a, b, c);
   }
 
@@ -530,7 +576,8 @@ namespace cross_call_master {
    * @param c (double)
    * @param d (vec4)
    */
-  inline void Param4Callback(int32_t a, float b, double c, const plg::vec4& d) {
+  inline void Param4Callback(int32_t a, float b, double c, const plg::vec4& d, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::Param4Callback", plg::Severity::Trace, __location);
     return __cross_call_master_Param4Callback(a, b, c, d);
   }
 
@@ -545,7 +592,8 @@ namespace cross_call_master {
    * @param d (vec4)
    * @param e (int64[])
    */
-  inline void Param5Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e) {
+  inline void Param5Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::Param5Callback", plg::Severity::Trace, __location);
     return __cross_call_master_Param5Callback(a, b, c, d, e);
   }
 
@@ -561,7 +609,8 @@ namespace cross_call_master {
    * @param e (int64[])
    * @param f (char8)
    */
-  inline void Param6Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f) {
+  inline void Param6Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::Param6Callback", plg::Severity::Trace, __location);
     return __cross_call_master_Param6Callback(a, b, c, d, e, f);
   }
 
@@ -578,7 +627,8 @@ namespace cross_call_master {
    * @param f (char8)
    * @param g (string)
    */
-  inline void Param7Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g) {
+  inline void Param7Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::Param7Callback", plg::Severity::Trace, __location);
     return __cross_call_master_Param7Callback(a, b, c, d, e, f, g);
   }
 
@@ -596,7 +646,8 @@ namespace cross_call_master {
    * @param g (string)
    * @param h (char16)
    */
-  inline void Param8Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h) {
+  inline void Param8Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::Param8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_Param8Callback(a, b, c, d, e, f, g, h);
   }
 
@@ -615,7 +666,8 @@ namespace cross_call_master {
    * @param h (char16)
    * @param k (int16)
    */
-  inline void Param9Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k) {
+  inline void Param9Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::Param9Callback", plg::Severity::Trace, __location);
     return __cross_call_master_Param9Callback(a, b, c, d, e, f, g, h, k);
   }
 
@@ -635,7 +687,8 @@ namespace cross_call_master {
    * @param k (int16)
    * @param l (ptr64)
    */
-  inline void Param10Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k, void* l) {
+  inline void Param10Callback(int32_t a, float b, double c, const plg::vec4& d, const plg::vector<int64_t>& e, char f, const plg::string& g, char16_t h, int16_t k, void* l, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::Param10Callback", plg::Severity::Trace, __location);
     return __cross_call_master_Param10Callback(a, b, c, d, e, f, g, h, k, l);
   }
 
@@ -646,7 +699,8 @@ namespace cross_call_master {
   /**
    * @param a (int32&)
    */
-  inline void ParamRef1Callback(int32_t& a) {
+  inline void ParamRef1Callback(int32_t& a, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamRef1Callback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamRef1Callback(a);
   }
 
@@ -658,7 +712,8 @@ namespace cross_call_master {
    * @param a (int32&)
    * @param b (float&)
    */
-  inline void ParamRef2Callback(int32_t& a, float& b) {
+  inline void ParamRef2Callback(int32_t& a, float& b, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamRef2Callback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamRef2Callback(a, b);
   }
 
@@ -671,7 +726,8 @@ namespace cross_call_master {
    * @param b (float&)
    * @param c (double&)
    */
-  inline void ParamRef3Callback(int32_t& a, float& b, double& c) {
+  inline void ParamRef3Callback(int32_t& a, float& b, double& c, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamRef3Callback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamRef3Callback(a, b, c);
   }
 
@@ -685,7 +741,8 @@ namespace cross_call_master {
    * @param c (double&)
    * @param d (vec4&)
    */
-  inline void ParamRef4Callback(int32_t& a, float& b, double& c, plg::vec4& d) {
+  inline void ParamRef4Callback(int32_t& a, float& b, double& c, plg::vec4& d, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamRef4Callback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamRef4Callback(a, b, c, d);
   }
 
@@ -700,7 +757,8 @@ namespace cross_call_master {
    * @param d (vec4&)
    * @param e (int64[]&)
    */
-  inline void ParamRef5Callback(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e) {
+  inline void ParamRef5Callback(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamRef5Callback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamRef5Callback(a, b, c, d, e);
   }
 
@@ -716,7 +774,8 @@ namespace cross_call_master {
    * @param e (int64[]&)
    * @param f (char8&)
    */
-  inline void ParamRef6Callback(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f) {
+  inline void ParamRef6Callback(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamRef6Callback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamRef6Callback(a, b, c, d, e, f);
   }
 
@@ -733,7 +792,8 @@ namespace cross_call_master {
    * @param f (char8&)
    * @param g (string&)
    */
-  inline void ParamRef7Callback(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g) {
+  inline void ParamRef7Callback(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamRef7Callback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamRef7Callback(a, b, c, d, e, f, g);
   }
 
@@ -751,7 +811,8 @@ namespace cross_call_master {
    * @param g (string&)
    * @param h (char16&)
    */
-  inline void ParamRef8Callback(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h) {
+  inline void ParamRef8Callback(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamRef8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamRef8Callback(a, b, c, d, e, f, g, h);
   }
 
@@ -770,7 +831,8 @@ namespace cross_call_master {
    * @param h (char16&)
    * @param k (int16&)
    */
-  inline void ParamRef9Callback(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k) {
+  inline void ParamRef9Callback(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamRef9Callback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamRef9Callback(a, b, c, d, e, f, g, h, k);
   }
 
@@ -790,7 +852,8 @@ namespace cross_call_master {
    * @param k (int16&)
    * @param l (ptr64&)
    */
-  inline void ParamRef10Callback(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k, void*& l) {
+  inline void ParamRef10Callback(int32_t& a, float& b, double& c, plg::vec4& d, plg::vector<int64_t>& e, char& f, plg::string& g, char16_t& h, int16_t& k, void*& l, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamRef10Callback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamRef10Callback(a, b, c, d, e, f, g, h, k, l);
   }
 
@@ -815,7 +878,8 @@ namespace cross_call_master {
    * @param p14 (double[]&)
    * @param p15 (string[]&)
    */
-  inline void ParamRefVectorsCallback(plg::vector<bool>& p1, plg::vector<char>& p2, plg::vector<char16_t>& p3, plg::vector<int8_t>& p4, plg::vector<int16_t>& p5, plg::vector<int32_t>& p6, plg::vector<int64_t>& p7, plg::vector<uint8_t>& p8, plg::vector<uint16_t>& p9, plg::vector<uint32_t>& p10, plg::vector<uint64_t>& p11, plg::vector<void*>& p12, plg::vector<float>& p13, plg::vector<double>& p14, plg::vector<plg::string>& p15) {
+  inline void ParamRefVectorsCallback(plg::vector<bool>& p1, plg::vector<char>& p2, plg::vector<char16_t>& p3, plg::vector<int8_t>& p4, plg::vector<int16_t>& p5, plg::vector<int32_t>& p6, plg::vector<int64_t>& p7, plg::vector<uint8_t>& p8, plg::vector<uint16_t>& p9, plg::vector<uint32_t>& p10, plg::vector<uint64_t>& p11, plg::vector<void*>& p12, plg::vector<float>& p13, plg::vector<double>& p14, plg::vector<plg::string>& p15, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamRefVectorsCallback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamRefVectorsCallback(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15);
   }
 
@@ -840,7 +904,8 @@ namespace cross_call_master {
    * @param p14 (double)
    * @return int64
    */
-  inline int64_t ParamAllPrimitivesCallback(bool p1, char p2, char16_t p3, int8_t p4, int16_t p5, int32_t p6, int64_t p7, uint8_t p8, uint16_t p9, uint32_t p10, uint64_t p11, void* p12, float p13, double p14) {
+  inline int64_t ParamAllPrimitivesCallback(bool p1, char p2, char16_t p3, int8_t p4, int16_t p5, int32_t p6, int64_t p7, uint8_t p8, uint16_t p9, uint32_t p10, uint64_t p11, void* p12, float p13, double p14, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamAllPrimitivesCallback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamAllPrimitivesCallback(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
   }
 
@@ -882,7 +947,8 @@ namespace cross_call_master {
    * @param aVec4Vec (vec4[])
    * @return int32
    */
-  inline int32_t ParamAllAliasesCallback(AliasBool aBool, AliasChar8 aChar8, AliasChar16 aChar16, AliasInt8 aInt8, AliasInt16 aInt16, AliasInt32 aInt32, AliasInt64 aInt64, AliasPtr aPtr, AliasFloat aFloat, AliasDouble aDouble, const AliasString& aString, const AliasAny& aAny, const AliasVec2& aVec2, const AliasVec3& aVec3, const AliasVec4& aVec4, const AliasMat4x4& aMat4x4, const AliasBoolVector& aBoolVec, const AliasChar8Vector& aChar8Vec, const AliasChar16Vector& aChar16Vec, const AliasInt8Vector& aInt8Vec, const AliasInt16Vector& aInt16Vec, const AliasInt32Vector& aInt32Vec, const AliasInt64Vector& aInt64Vec, const AliasPtrVector& aPtrVec, const AliasFloatVector& aFloatVec, const AliasDoubleVector& aDoubleVec, const AliasStringVector& aStringVec, const AliasAnyVector& aAnyVec, const AliasVec2Vector& aVec2Vec, const AliasVec3Vector& aVec3Vec, const AliasVec4Vector& aVec4Vec) {
+  inline int32_t ParamAllAliasesCallback(AliasBool aBool, AliasChar8 aChar8, AliasChar16 aChar16, AliasInt8 aInt8, AliasInt16 aInt16, AliasInt32 aInt32, AliasInt64 aInt64, AliasPtr aPtr, AliasFloat aFloat, AliasDouble aDouble, const AliasString& aString, const AliasAny& aAny, const AliasVec2& aVec2, const AliasVec3& aVec3, const AliasVec4& aVec4, const AliasMat4x4& aMat4x4, const AliasBoolVector& aBoolVec, const AliasChar8Vector& aChar8Vec, const AliasChar16Vector& aChar16Vec, const AliasInt8Vector& aInt8Vec, const AliasInt16Vector& aInt16Vec, const AliasInt32Vector& aInt32Vec, const AliasInt64Vector& aInt64Vec, const AliasPtrVector& aPtrVec, const AliasFloatVector& aFloatVec, const AliasDoubleVector& aDoubleVec, const AliasStringVector& aStringVec, const AliasAnyVector& aAnyVec, const AliasVec2Vector& aVec2Vec, const AliasVec3Vector& aVec3Vec, const AliasVec4Vector& aVec4Vec, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamAllAliasesCallback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamAllAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec);
   }
 
@@ -924,7 +990,8 @@ namespace cross_call_master {
    * @param aVec4Vec (vec4[]&)
    * @return int64
    */
-  inline int64_t ParamAllRefAliasesCallback(AliasBool& aBool, AliasChar8& aChar8, AliasChar16& aChar16, AliasInt8& aInt8, AliasInt16& aInt16, AliasInt32& aInt32, AliasInt64& aInt64, AliasPtr& aPtr, AliasFloat& aFloat, AliasDouble& aDouble, AliasString& aString, AliasAny& aAny, AliasVec2& aVec2, AliasVec3& aVec3, AliasVec4& aVec4, AliasMat4x4& aMat4x4, AliasBoolVector& aBoolVec, AliasChar8Vector& aChar8Vec, AliasChar16Vector& aChar16Vec, AliasInt8Vector& aInt8Vec, AliasInt16Vector& aInt16Vec, AliasInt32Vector& aInt32Vec, AliasInt64Vector& aInt64Vec, AliasPtrVector& aPtrVec, AliasFloatVector& aFloatVec, AliasDoubleVector& aDoubleVec, AliasStringVector& aStringVec, AliasAnyVector& aAnyVec, AliasVec2Vector& aVec2Vec, AliasVec3Vector& aVec3Vec, AliasVec4Vector& aVec4Vec) {
+  inline int64_t ParamAllRefAliasesCallback(AliasBool& aBool, AliasChar8& aChar8, AliasChar16& aChar16, AliasInt8& aInt8, AliasInt16& aInt16, AliasInt32& aInt32, AliasInt64& aInt64, AliasPtr& aPtr, AliasFloat& aFloat, AliasDouble& aDouble, AliasString& aString, AliasAny& aAny, AliasVec2& aVec2, AliasVec3& aVec3, AliasVec4& aVec4, AliasMat4x4& aMat4x4, AliasBoolVector& aBoolVec, AliasChar8Vector& aChar8Vec, AliasChar16Vector& aChar16Vec, AliasInt8Vector& aInt8Vec, AliasInt16Vector& aInt16Vec, AliasInt32Vector& aInt32Vec, AliasInt64Vector& aInt64Vec, AliasPtrVector& aPtrVec, AliasFloatVector& aFloatVec, AliasDoubleVector& aDoubleVec, AliasStringVector& aStringVec, AliasAnyVector& aAnyVec, AliasVec2Vector& aVec2Vec, AliasVec3Vector& aVec3Vec, AliasVec4Vector& aVec4Vec, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamAllRefAliasesCallback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamAllRefAliasesCallback(aBool, aChar8, aChar16, aInt8, aInt16, aInt32, aInt64, aPtr, aFloat, aDouble, aString, aAny, aVec2, aVec3, aVec4, aMat4x4, aBoolVec, aChar8Vec, aChar16Vec, aInt8Vec, aInt16Vec, aInt32Vec, aInt64Vec, aPtrVec, aFloatVec, aDoubleVec, aStringVec, aAnyVec, aVec2Vec, aVec3Vec, aVec4Vec);
   }
 
@@ -937,7 +1004,8 @@ namespace cross_call_master {
    * @param p2 (int32[])
    * @return int32
    */
-  inline int32_t ParamEnumCallback(Example p1, const plg::vector<Example>& p2) {
+  inline int32_t ParamEnumCallback(Example p1, const plg::vector<Example>& p2, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamEnumCallback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamEnumCallback(p1, p2);
   }
 
@@ -950,7 +1018,8 @@ namespace cross_call_master {
    * @param p2 (int32[]&)
    * @return int32
    */
-  inline int32_t ParamEnumRefCallback(Example& p1, plg::vector<Example>& p2) {
+  inline int32_t ParamEnumRefCallback(Example& p1, plg::vector<Example>& p2, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamEnumRefCallback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamEnumRefCallback(p1, p2);
   }
 
@@ -962,7 +1031,8 @@ namespace cross_call_master {
    * @param p1 (any)
    * @param p2 (any[])
    */
-  inline void ParamVariantCallback(const plg::any& p1, const plg::vector<plg::any>& p2) {
+  inline void ParamVariantCallback(const plg::any& p1, const plg::vector<plg::any>& p2, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamVariantCallback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamVariantCallback(p1, p2);
   }
 
@@ -974,7 +1044,8 @@ namespace cross_call_master {
    * @param p1 (any&)
    * @param p2 (any[]&)
    */
-  inline void ParamVariantRefCallback(plg::any& p1, plg::vector<plg::any>& p2) {
+  inline void ParamVariantRefCallback(plg::any& p1, plg::vector<plg::any>& p2, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::ParamVariantRefCallback", plg::Severity::Trace, __location);
     return __cross_call_master_ParamVariantRefCallback(p1, p2);
   }
 
@@ -985,7 +1056,8 @@ namespace cross_call_master {
   /**
    * @param func (function)
    */
-  inline void CallFuncVoidCallback(FuncVoid func) {
+  inline void CallFuncVoidCallback(FuncVoid func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncVoidCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncVoidCallback(func);
   }
 
@@ -997,7 +1069,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return bool
    */
-  inline bool CallFuncBoolCallback(FuncBool func) {
+  inline bool CallFuncBoolCallback(FuncBool func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncBoolCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncBoolCallback(func);
   }
 
@@ -1009,7 +1082,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return char8
    */
-  inline char CallFuncChar8Callback(FuncChar8 func) {
+  inline char CallFuncChar8Callback(FuncChar8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncChar8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncChar8Callback(func);
   }
 
@@ -1021,7 +1095,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return char16
    */
-  inline char16_t CallFuncChar16Callback(FuncChar16 func) {
+  inline char16_t CallFuncChar16Callback(FuncChar16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncChar16Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncChar16Callback(func);
   }
 
@@ -1033,7 +1108,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int8
    */
-  inline int8_t CallFuncInt8Callback(FuncInt8 func) {
+  inline int8_t CallFuncInt8Callback(FuncInt8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncInt8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncInt8Callback(func);
   }
 
@@ -1045,7 +1121,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int16
    */
-  inline int16_t CallFuncInt16Callback(FuncInt16 func) {
+  inline int16_t CallFuncInt16Callback(FuncInt16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncInt16Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncInt16Callback(func);
   }
 
@@ -1057,7 +1134,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int32
    */
-  inline int32_t CallFuncInt32Callback(FuncInt32 func) {
+  inline int32_t CallFuncInt32Callback(FuncInt32 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncInt32Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncInt32Callback(func);
   }
 
@@ -1069,7 +1147,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int64
    */
-  inline int64_t CallFuncInt64Callback(FuncInt64 func) {
+  inline int64_t CallFuncInt64Callback(FuncInt64 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncInt64Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncInt64Callback(func);
   }
 
@@ -1081,7 +1160,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint8
    */
-  inline uint8_t CallFuncUInt8Callback(FuncUInt8 func) {
+  inline uint8_t CallFuncUInt8Callback(FuncUInt8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncUInt8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncUInt8Callback(func);
   }
 
@@ -1093,7 +1173,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint16
    */
-  inline uint16_t CallFuncUInt16Callback(FuncUInt16 func) {
+  inline uint16_t CallFuncUInt16Callback(FuncUInt16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncUInt16Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncUInt16Callback(func);
   }
 
@@ -1105,7 +1186,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint32
    */
-  inline uint32_t CallFuncUInt32Callback(FuncUInt32 func) {
+  inline uint32_t CallFuncUInt32Callback(FuncUInt32 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncUInt32Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncUInt32Callback(func);
   }
 
@@ -1117,7 +1199,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint64
    */
-  inline uint64_t CallFuncUInt64Callback(FuncUInt64 func) {
+  inline uint64_t CallFuncUInt64Callback(FuncUInt64 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncUInt64Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncUInt64Callback(func);
   }
 
@@ -1129,7 +1212,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return ptr64
    */
-  inline void* CallFuncPtrCallback(FuncPtr func) {
+  inline void* CallFuncPtrCallback(FuncPtr func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncPtrCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncPtrCallback(func);
   }
 
@@ -1141,7 +1225,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return float
    */
-  inline float CallFuncFloatCallback(FuncFloat func) {
+  inline float CallFuncFloatCallback(FuncFloat func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncFloatCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncFloatCallback(func);
   }
 
@@ -1153,7 +1238,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return double
    */
-  inline double CallFuncDoubleCallback(FuncDouble func) {
+  inline double CallFuncDoubleCallback(FuncDouble func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncDoubleCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncDoubleCallback(func);
   }
 
@@ -1165,7 +1251,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFuncStringCallback(FuncString func) {
+  inline plg::string CallFuncStringCallback(FuncString func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncStringCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncStringCallback(func);
   }
 
@@ -1177,7 +1264,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return any
    */
-  inline plg::any CallFuncAnyCallback(FuncAny func) {
+  inline plg::any CallFuncAnyCallback(FuncAny func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAnyCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAnyCallback(func);
   }
 
@@ -1189,7 +1277,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return ptr64
    */
-  inline void* CallFuncFunctionCallback(FuncFunction func) {
+  inline void* CallFuncFunctionCallback(FuncFunction func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncFunctionCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncFunctionCallback(func);
   }
 
@@ -1201,7 +1290,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return bool[]
    */
-  inline plg::vector<bool> CallFuncBoolVectorCallback(FuncBoolVector func) {
+  inline plg::vector<bool> CallFuncBoolVectorCallback(FuncBoolVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncBoolVectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncBoolVectorCallback(func);
   }
 
@@ -1213,7 +1303,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return char8[]
    */
-  inline plg::vector<char> CallFuncChar8VectorCallback(FuncChar8Vector func) {
+  inline plg::vector<char> CallFuncChar8VectorCallback(FuncChar8Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncChar8VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncChar8VectorCallback(func);
   }
 
@@ -1225,7 +1316,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return char16[]
    */
-  inline plg::vector<char16_t> CallFuncChar16VectorCallback(FuncChar16Vector func) {
+  inline plg::vector<char16_t> CallFuncChar16VectorCallback(FuncChar16Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncChar16VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncChar16VectorCallback(func);
   }
 
@@ -1237,7 +1329,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int8[]
    */
-  inline plg::vector<int8_t> CallFuncInt8VectorCallback(FuncInt8Vector func) {
+  inline plg::vector<int8_t> CallFuncInt8VectorCallback(FuncInt8Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncInt8VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncInt8VectorCallback(func);
   }
 
@@ -1249,7 +1342,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int16[]
    */
-  inline plg::vector<int16_t> CallFuncInt16VectorCallback(FuncInt16Vector func) {
+  inline plg::vector<int16_t> CallFuncInt16VectorCallback(FuncInt16Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncInt16VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncInt16VectorCallback(func);
   }
 
@@ -1261,7 +1355,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int32[]
    */
-  inline plg::vector<int32_t> CallFuncInt32VectorCallback(FuncInt32Vector func) {
+  inline plg::vector<int32_t> CallFuncInt32VectorCallback(FuncInt32Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncInt32VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncInt32VectorCallback(func);
   }
 
@@ -1273,7 +1368,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int64[]
    */
-  inline plg::vector<int64_t> CallFuncInt64VectorCallback(FuncInt64Vector func) {
+  inline plg::vector<int64_t> CallFuncInt64VectorCallback(FuncInt64Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncInt64VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncInt64VectorCallback(func);
   }
 
@@ -1285,7 +1381,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint8[]
    */
-  inline plg::vector<uint8_t> CallFuncUInt8VectorCallback(FuncUInt8Vector func) {
+  inline plg::vector<uint8_t> CallFuncUInt8VectorCallback(FuncUInt8Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncUInt8VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncUInt8VectorCallback(func);
   }
 
@@ -1297,7 +1394,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint16[]
    */
-  inline plg::vector<uint16_t> CallFuncUInt16VectorCallback(FuncUInt16Vector func) {
+  inline plg::vector<uint16_t> CallFuncUInt16VectorCallback(FuncUInt16Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncUInt16VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncUInt16VectorCallback(func);
   }
 
@@ -1309,7 +1407,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint32[]
    */
-  inline plg::vector<uint32_t> CallFuncUInt32VectorCallback(FuncUInt32Vector func) {
+  inline plg::vector<uint32_t> CallFuncUInt32VectorCallback(FuncUInt32Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncUInt32VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncUInt32VectorCallback(func);
   }
 
@@ -1321,7 +1420,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint64[]
    */
-  inline plg::vector<uint64_t> CallFuncUInt64VectorCallback(FuncUInt64Vector func) {
+  inline plg::vector<uint64_t> CallFuncUInt64VectorCallback(FuncUInt64Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncUInt64VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncUInt64VectorCallback(func);
   }
 
@@ -1333,7 +1433,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return ptr64[]
    */
-  inline plg::vector<void*> CallFuncPtrVectorCallback(FuncPtrVector func) {
+  inline plg::vector<void*> CallFuncPtrVectorCallback(FuncPtrVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncPtrVectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncPtrVectorCallback(func);
   }
 
@@ -1345,7 +1446,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return float[]
    */
-  inline plg::vector<float> CallFuncFloatVectorCallback(FuncFloatVector func) {
+  inline plg::vector<float> CallFuncFloatVectorCallback(FuncFloatVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncFloatVectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncFloatVectorCallback(func);
   }
 
@@ -1357,7 +1459,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return double[]
    */
-  inline plg::vector<double> CallFuncDoubleVectorCallback(FuncDoubleVector func) {
+  inline plg::vector<double> CallFuncDoubleVectorCallback(FuncDoubleVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncDoubleVectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncDoubleVectorCallback(func);
   }
 
@@ -1369,7 +1472,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string[]
    */
-  inline plg::vector<plg::string> CallFuncStringVectorCallback(FuncStringVector func) {
+  inline plg::vector<plg::string> CallFuncStringVectorCallback(FuncStringVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncStringVectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncStringVectorCallback(func);
   }
 
@@ -1381,7 +1485,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return any[]
    */
-  inline plg::vector<plg::any> CallFuncAnyVectorCallback(FuncAnyVector func) {
+  inline plg::vector<plg::any> CallFuncAnyVectorCallback(FuncAnyVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAnyVectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAnyVectorCallback(func);
   }
 
@@ -1393,7 +1498,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return vec2[]
    */
-  inline plg::vector<plg::vec2> CallFuncVec2VectorCallback(FuncVec2Vector func) {
+  inline plg::vector<plg::vec2> CallFuncVec2VectorCallback(FuncVec2Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncVec2VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncVec2VectorCallback(func);
   }
 
@@ -1405,7 +1511,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return vec3[]
    */
-  inline plg::vector<plg::vec3> CallFuncVec3VectorCallback(FuncVec3Vector func) {
+  inline plg::vector<plg::vec3> CallFuncVec3VectorCallback(FuncVec3Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncVec3VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncVec3VectorCallback(func);
   }
 
@@ -1417,7 +1524,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return vec4[]
    */
-  inline plg::vector<plg::vec4> CallFuncVec4VectorCallback(FuncVec4Vector func) {
+  inline plg::vector<plg::vec4> CallFuncVec4VectorCallback(FuncVec4Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncVec4VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncVec4VectorCallback(func);
   }
 
@@ -1429,7 +1537,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return mat4x4[]
    */
-  inline plg::vector<plg::mat4x4> CallFuncMat4x4VectorCallback(FuncMat4x4Vector func) {
+  inline plg::vector<plg::mat4x4> CallFuncMat4x4VectorCallback(FuncMat4x4Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncMat4x4VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncMat4x4VectorCallback(func);
   }
 
@@ -1441,7 +1550,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return vec2
    */
-  inline plg::vec2 CallFuncVec2Callback(FuncVec2 func) {
+  inline plg::vec2 CallFuncVec2Callback(FuncVec2 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncVec2Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncVec2Callback(func);
   }
 
@@ -1453,7 +1563,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return vec3
    */
-  inline plg::vec3 CallFuncVec3Callback(FuncVec3 func) {
+  inline plg::vec3 CallFuncVec3Callback(FuncVec3 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncVec3Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncVec3Callback(func);
   }
 
@@ -1465,7 +1576,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return vec4
    */
-  inline plg::vec4 CallFuncVec4Callback(FuncVec4 func) {
+  inline plg::vec4 CallFuncVec4Callback(FuncVec4 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncVec4Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncVec4Callback(func);
   }
 
@@ -1477,7 +1589,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return mat4x4
    */
-  inline plg::mat4x4 CallFuncMat4x4Callback(FuncMat4x4 func) {
+  inline plg::mat4x4 CallFuncMat4x4Callback(FuncMat4x4 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncMat4x4Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncMat4x4Callback(func);
   }
 
@@ -1489,7 +1602,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return bool
    */
-  inline AliasBool CallFuncAliasBoolCallback(FuncAliasBool func) {
+  inline AliasBool CallFuncAliasBoolCallback(FuncAliasBool func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasBoolCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasBoolCallback(func);
   }
 
@@ -1501,7 +1615,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return char8
    */
-  inline AliasChar8 CallFuncAliasChar8Callback(FuncAliasChar8 func) {
+  inline AliasChar8 CallFuncAliasChar8Callback(FuncAliasChar8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasChar8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasChar8Callback(func);
   }
 
@@ -1513,7 +1628,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return char16
    */
-  inline AliasChar16 CallFuncAliasChar16Callback(FuncAliasChar16 func) {
+  inline AliasChar16 CallFuncAliasChar16Callback(FuncAliasChar16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasChar16Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasChar16Callback(func);
   }
 
@@ -1525,7 +1641,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int8
    */
-  inline AliasInt8 CallFuncAliasInt8Callback(FuncAliasInt8 func) {
+  inline AliasInt8 CallFuncAliasInt8Callback(FuncAliasInt8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasInt8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasInt8Callback(func);
   }
 
@@ -1537,7 +1654,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int16
    */
-  inline AliasInt16 CallFuncAliasInt16Callback(FuncAliasInt16 func) {
+  inline AliasInt16 CallFuncAliasInt16Callback(FuncAliasInt16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasInt16Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasInt16Callback(func);
   }
 
@@ -1549,7 +1667,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int32
    */
-  inline AliasInt32 CallFuncAliasInt32Callback(FuncAliasInt32 func) {
+  inline AliasInt32 CallFuncAliasInt32Callback(FuncAliasInt32 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasInt32Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasInt32Callback(func);
   }
 
@@ -1561,7 +1680,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int64
    */
-  inline AliasInt64 CallFuncAliasInt64Callback(FuncAliasInt64 func) {
+  inline AliasInt64 CallFuncAliasInt64Callback(FuncAliasInt64 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasInt64Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasInt64Callback(func);
   }
 
@@ -1573,7 +1693,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint8
    */
-  inline AliasUInt8 CallFuncAliasUInt8Callback(FuncAliasUInt8 func) {
+  inline AliasUInt8 CallFuncAliasUInt8Callback(FuncAliasUInt8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasUInt8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasUInt8Callback(func);
   }
 
@@ -1585,7 +1706,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint16
    */
-  inline AliasUInt16 CallFuncAliasUInt16Callback(FuncAliasUInt16 func) {
+  inline AliasUInt16 CallFuncAliasUInt16Callback(FuncAliasUInt16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasUInt16Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasUInt16Callback(func);
   }
 
@@ -1597,7 +1719,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint32
    */
-  inline AliasUInt32 CallFuncAliasUInt32Callback(FuncAliasUInt32 func) {
+  inline AliasUInt32 CallFuncAliasUInt32Callback(FuncAliasUInt32 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasUInt32Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasUInt32Callback(func);
   }
 
@@ -1609,7 +1732,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint64
    */
-  inline AliasUInt64 CallFuncAliasUInt64Callback(FuncAliasUInt64 func) {
+  inline AliasUInt64 CallFuncAliasUInt64Callback(FuncAliasUInt64 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasUInt64Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasUInt64Callback(func);
   }
 
@@ -1621,7 +1745,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return ptr64
    */
-  inline AliasPtr CallFuncAliasPtrCallback(FuncAliasPtr func) {
+  inline AliasPtr CallFuncAliasPtrCallback(FuncAliasPtr func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasPtrCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasPtrCallback(func);
   }
 
@@ -1633,7 +1758,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return float
    */
-  inline AliasFloat CallFuncAliasFloatCallback(FuncAliasFloat func) {
+  inline AliasFloat CallFuncAliasFloatCallback(FuncAliasFloat func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasFloatCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasFloatCallback(func);
   }
 
@@ -1645,7 +1771,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return double
    */
-  inline AliasDouble CallFuncAliasDoubleCallback(FuncAliasDouble func) {
+  inline AliasDouble CallFuncAliasDoubleCallback(FuncAliasDouble func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasDoubleCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasDoubleCallback(func);
   }
 
@@ -1657,7 +1784,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline AliasString CallFuncAliasStringCallback(FuncAliasString func) {
+  inline AliasString CallFuncAliasStringCallback(FuncAliasString func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasStringCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasStringCallback(func);
   }
 
@@ -1669,7 +1797,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return any
    */
-  inline AliasAny CallFuncAliasAnyCallback(FuncAliasAny func) {
+  inline AliasAny CallFuncAliasAnyCallback(FuncAliasAny func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasAnyCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasAnyCallback(func);
   }
 
@@ -1681,7 +1810,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return ptr64
    */
-  inline AliasFunction CallFuncAliasFunctionCallback(FuncAliasFunction func) {
+  inline AliasFunction CallFuncAliasFunctionCallback(FuncAliasFunction func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasFunctionCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasFunctionCallback(func);
   }
 
@@ -1693,7 +1823,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return bool[]
    */
-  inline AliasBoolVector CallFuncAliasBoolVectorCallback(FuncAliasBoolVector func) {
+  inline AliasBoolVector CallFuncAliasBoolVectorCallback(FuncAliasBoolVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasBoolVectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasBoolVectorCallback(func);
   }
 
@@ -1705,7 +1836,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return char8[]
    */
-  inline AliasChar8Vector CallFuncAliasChar8VectorCallback(FuncAliasChar8Vector func) {
+  inline AliasChar8Vector CallFuncAliasChar8VectorCallback(FuncAliasChar8Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasChar8VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasChar8VectorCallback(func);
   }
 
@@ -1717,7 +1849,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return char16[]
    */
-  inline AliasChar16Vector CallFuncAliasChar16VectorCallback(FuncAliasChar16Vector func) {
+  inline AliasChar16Vector CallFuncAliasChar16VectorCallback(FuncAliasChar16Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasChar16VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasChar16VectorCallback(func);
   }
 
@@ -1729,7 +1862,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int8[]
    */
-  inline AliasInt8Vector CallFuncAliasInt8VectorCallback(FuncAliasInt8Vector func) {
+  inline AliasInt8Vector CallFuncAliasInt8VectorCallback(FuncAliasInt8Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasInt8VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasInt8VectorCallback(func);
   }
 
@@ -1741,7 +1875,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int16[]
    */
-  inline AliasInt16Vector CallFuncAliasInt16VectorCallback(FuncAliasInt16Vector func) {
+  inline AliasInt16Vector CallFuncAliasInt16VectorCallback(FuncAliasInt16Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasInt16VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasInt16VectorCallback(func);
   }
 
@@ -1753,7 +1888,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int32[]
    */
-  inline AliasInt32Vector CallFuncAliasInt32VectorCallback(FuncAliasInt32Vector func) {
+  inline AliasInt32Vector CallFuncAliasInt32VectorCallback(FuncAliasInt32Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasInt32VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasInt32VectorCallback(func);
   }
 
@@ -1765,7 +1901,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int64[]
    */
-  inline AliasInt64Vector CallFuncAliasInt64VectorCallback(FuncAliasInt64Vector func) {
+  inline AliasInt64Vector CallFuncAliasInt64VectorCallback(FuncAliasInt64Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasInt64VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasInt64VectorCallback(func);
   }
 
@@ -1777,7 +1914,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint8[]
    */
-  inline AliasUInt8Vector CallFuncAliasUInt8VectorCallback(FuncAliasUInt8Vector func) {
+  inline AliasUInt8Vector CallFuncAliasUInt8VectorCallback(FuncAliasUInt8Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasUInt8VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasUInt8VectorCallback(func);
   }
 
@@ -1789,7 +1927,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint16[]
    */
-  inline AliasUInt16Vector CallFuncAliasUInt16VectorCallback(FuncAliasUInt16Vector func) {
+  inline AliasUInt16Vector CallFuncAliasUInt16VectorCallback(FuncAliasUInt16Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasUInt16VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasUInt16VectorCallback(func);
   }
 
@@ -1801,7 +1940,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint32[]
    */
-  inline AliasUInt32Vector CallFuncAliasUInt32VectorCallback(FuncAliasUInt32Vector func) {
+  inline AliasUInt32Vector CallFuncAliasUInt32VectorCallback(FuncAliasUInt32Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasUInt32VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasUInt32VectorCallback(func);
   }
 
@@ -1813,7 +1953,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint64[]
    */
-  inline AliasUInt64Vector CallFuncAliasUInt64VectorCallback(FuncAliasUInt64Vector func) {
+  inline AliasUInt64Vector CallFuncAliasUInt64VectorCallback(FuncAliasUInt64Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasUInt64VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasUInt64VectorCallback(func);
   }
 
@@ -1825,7 +1966,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return ptr64[]
    */
-  inline AliasPtrVector CallFuncAliasPtrVectorCallback(FuncAliasPtrVector func) {
+  inline AliasPtrVector CallFuncAliasPtrVectorCallback(FuncAliasPtrVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasPtrVectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasPtrVectorCallback(func);
   }
 
@@ -1837,7 +1979,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return float[]
    */
-  inline AliasFloatVector CallFuncAliasFloatVectorCallback(FuncAliasFloatVector func) {
+  inline AliasFloatVector CallFuncAliasFloatVectorCallback(FuncAliasFloatVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasFloatVectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasFloatVectorCallback(func);
   }
 
@@ -1849,7 +1992,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return double[]
    */
-  inline AliasDoubleVector CallFuncAliasDoubleVectorCallback(FuncAliasDoubleVector func) {
+  inline AliasDoubleVector CallFuncAliasDoubleVectorCallback(FuncAliasDoubleVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasDoubleVectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasDoubleVectorCallback(func);
   }
 
@@ -1861,7 +2005,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string[]
    */
-  inline AliasStringVector CallFuncAliasStringVectorCallback(FuncAliasStringVector func) {
+  inline AliasStringVector CallFuncAliasStringVectorCallback(FuncAliasStringVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasStringVectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasStringVectorCallback(func);
   }
 
@@ -1873,7 +2018,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return any[]
    */
-  inline AliasAnyVector CallFuncAliasAnyVectorCallback(FuncAliasAnyVector func) {
+  inline AliasAnyVector CallFuncAliasAnyVectorCallback(FuncAliasAnyVector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasAnyVectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasAnyVectorCallback(func);
   }
 
@@ -1885,7 +2031,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return vec2[]
    */
-  inline AliasVec2Vector CallFuncAliasVec2VectorCallback(FuncAliasVec2Vector func) {
+  inline AliasVec2Vector CallFuncAliasVec2VectorCallback(FuncAliasVec2Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasVec2VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasVec2VectorCallback(func);
   }
 
@@ -1897,7 +2044,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return vec3[]
    */
-  inline AliasVec3Vector CallFuncAliasVec3VectorCallback(FuncAliasVec3Vector func) {
+  inline AliasVec3Vector CallFuncAliasVec3VectorCallback(FuncAliasVec3Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasVec3VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasVec3VectorCallback(func);
   }
 
@@ -1909,7 +2057,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return vec4[]
    */
-  inline AliasVec4Vector CallFuncAliasVec4VectorCallback(FuncAliasVec4Vector func) {
+  inline AliasVec4Vector CallFuncAliasVec4VectorCallback(FuncAliasVec4Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasVec4VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasVec4VectorCallback(func);
   }
 
@@ -1921,7 +2070,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return mat4x4[]
    */
-  inline AliasMat4x4Vector CallFuncAliasMat4x4VectorCallback(FuncAliasMat4x4Vector func) {
+  inline AliasMat4x4Vector CallFuncAliasMat4x4VectorCallback(FuncAliasMat4x4Vector func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasMat4x4VectorCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasMat4x4VectorCallback(func);
   }
 
@@ -1933,7 +2083,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return vec2
    */
-  inline AliasVec2 CallFuncAliasVec2Callback(FuncAliasVec2 func) {
+  inline AliasVec2 CallFuncAliasVec2Callback(FuncAliasVec2 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasVec2Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasVec2Callback(func);
   }
 
@@ -1945,7 +2096,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return vec3
    */
-  inline AliasVec3 CallFuncAliasVec3Callback(FuncAliasVec3 func) {
+  inline AliasVec3 CallFuncAliasVec3Callback(FuncAliasVec3 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasVec3Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasVec3Callback(func);
   }
 
@@ -1957,7 +2109,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return vec4
    */
-  inline AliasVec4 CallFuncAliasVec4Callback(FuncAliasVec4 func) {
+  inline AliasVec4 CallFuncAliasVec4Callback(FuncAliasVec4 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasVec4Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasVec4Callback(func);
   }
 
@@ -1969,7 +2122,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return mat4x4
    */
-  inline AliasMat4x4 CallFuncAliasMat4x4Callback(FuncAliasMat4x4 func) {
+  inline AliasMat4x4 CallFuncAliasMat4x4Callback(FuncAliasMat4x4 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasMat4x4Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasMat4x4Callback(func);
   }
 
@@ -1981,7 +2135,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFuncAliasAllCallback(FuncAliasAll func) {
+  inline plg::string CallFuncAliasAllCallback(FuncAliasAll func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncAliasAllCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncAliasAllCallback(func);
   }
 
@@ -1993,7 +2148,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int32
    */
-  inline int32_t CallFunc1Callback(Func1 func) {
+  inline int32_t CallFunc1Callback(Func1 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc1Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc1Callback(func);
   }
 
@@ -2005,7 +2161,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return char8
    */
-  inline char CallFunc2Callback(Func2 func) {
+  inline char CallFunc2Callback(Func2 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc2Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc2Callback(func);
   }
 
@@ -2016,7 +2173,8 @@ namespace cross_call_master {
   /**
    * @param func (function)
    */
-  inline void CallFunc3Callback(Func3 func) {
+  inline void CallFunc3Callback(Func3 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc3Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc3Callback(func);
   }
 
@@ -2028,7 +2186,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return vec4
    */
-  inline plg::vec4 CallFunc4Callback(Func4 func) {
+  inline plg::vec4 CallFunc4Callback(Func4 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc4Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc4Callback(func);
   }
 
@@ -2040,7 +2199,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return bool
    */
-  inline bool CallFunc5Callback(Func5 func) {
+  inline bool CallFunc5Callback(Func5 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc5Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc5Callback(func);
   }
 
@@ -2052,7 +2212,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int64
    */
-  inline int64_t CallFunc6Callback(Func6 func) {
+  inline int64_t CallFunc6Callback(Func6 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc6Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc6Callback(func);
   }
 
@@ -2064,7 +2225,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return double
    */
-  inline double CallFunc7Callback(Func7 func) {
+  inline double CallFunc7Callback(Func7 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc7Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc7Callback(func);
   }
 
@@ -2076,7 +2238,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return mat4x4
    */
-  inline plg::mat4x4 CallFunc8Callback(Func8 func) {
+  inline plg::mat4x4 CallFunc8Callback(Func8 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc8Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc8Callback(func);
   }
 
@@ -2087,7 +2250,8 @@ namespace cross_call_master {
   /**
    * @param func (function)
    */
-  inline void CallFunc9Callback(Func9 func) {
+  inline void CallFunc9Callback(Func9 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc9Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc9Callback(func);
   }
 
@@ -2099,7 +2263,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return uint32
    */
-  inline uint32_t CallFunc10Callback(Func10 func) {
+  inline uint32_t CallFunc10Callback(Func10 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc10Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc10Callback(func);
   }
 
@@ -2111,7 +2276,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return ptr64
    */
-  inline void* CallFunc11Callback(Func11 func) {
+  inline void* CallFunc11Callback(Func11 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc11Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc11Callback(func);
   }
 
@@ -2123,7 +2289,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return bool
    */
-  inline bool CallFunc12Callback(Func12 func) {
+  inline bool CallFunc12Callback(Func12 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc12Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc12Callback(func);
   }
 
@@ -2135,7 +2302,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc13Callback(Func13 func) {
+  inline plg::string CallFunc13Callback(Func13 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc13Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc13Callback(func);
   }
 
@@ -2147,7 +2315,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string[]
    */
-  inline plg::vector<plg::string> CallFunc14Callback(Func14 func) {
+  inline plg::vector<plg::string> CallFunc14Callback(Func14 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc14Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc14Callback(func);
   }
 
@@ -2159,7 +2328,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return int16
    */
-  inline int16_t CallFunc15Callback(Func15 func) {
+  inline int16_t CallFunc15Callback(Func15 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc15Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc15Callback(func);
   }
 
@@ -2171,7 +2341,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return ptr64
    */
-  inline void* CallFunc16Callback(Func16 func) {
+  inline void* CallFunc16Callback(Func16 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc16Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc16Callback(func);
   }
 
@@ -2183,7 +2354,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc17Callback(Func17 func) {
+  inline plg::string CallFunc17Callback(Func17 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc17Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc17Callback(func);
   }
 
@@ -2195,7 +2367,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc18Callback(Func18 func) {
+  inline plg::string CallFunc18Callback(Func18 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc18Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc18Callback(func);
   }
 
@@ -2207,7 +2380,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc19Callback(Func19 func) {
+  inline plg::string CallFunc19Callback(Func19 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc19Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc19Callback(func);
   }
 
@@ -2219,7 +2393,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc20Callback(Func20 func) {
+  inline plg::string CallFunc20Callback(Func20 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc20Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc20Callback(func);
   }
 
@@ -2231,7 +2406,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc21Callback(Func21 func) {
+  inline plg::string CallFunc21Callback(Func21 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc21Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc21Callback(func);
   }
 
@@ -2243,7 +2419,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc22Callback(Func22 func) {
+  inline plg::string CallFunc22Callback(Func22 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc22Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc22Callback(func);
   }
 
@@ -2255,7 +2432,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc23Callback(Func23 func) {
+  inline plg::string CallFunc23Callback(Func23 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc23Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc23Callback(func);
   }
 
@@ -2267,7 +2445,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc24Callback(Func24 func) {
+  inline plg::string CallFunc24Callback(Func24 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc24Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc24Callback(func);
   }
 
@@ -2279,7 +2458,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc25Callback(Func25 func) {
+  inline plg::string CallFunc25Callback(Func25 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc25Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc25Callback(func);
   }
 
@@ -2291,7 +2471,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc26Callback(Func26 func) {
+  inline plg::string CallFunc26Callback(Func26 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc26Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc26Callback(func);
   }
 
@@ -2303,7 +2484,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc27Callback(Func27 func) {
+  inline plg::string CallFunc27Callback(Func27 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc27Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc27Callback(func);
   }
 
@@ -2315,7 +2497,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc28Callback(Func28 func) {
+  inline plg::string CallFunc28Callback(Func28 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc28Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc28Callback(func);
   }
 
@@ -2327,7 +2510,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc29Callback(Func29 func) {
+  inline plg::string CallFunc29Callback(Func29 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc29Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc29Callback(func);
   }
 
@@ -2339,7 +2523,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc30Callback(Func30 func) {
+  inline plg::string CallFunc30Callback(Func30 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc30Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc30Callback(func);
   }
 
@@ -2351,7 +2536,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc31Callback(Func31 func) {
+  inline plg::string CallFunc31Callback(Func31 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc31Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc31Callback(func);
   }
 
@@ -2363,7 +2549,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc32Callback(Func32 func) {
+  inline plg::string CallFunc32Callback(Func32 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc32Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc32Callback(func);
   }
 
@@ -2375,7 +2562,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFunc33Callback(Func33 func) {
+  inline plg::string CallFunc33Callback(Func33 func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFunc33Callback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFunc33Callback(func);
   }
 
@@ -2387,7 +2575,8 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFuncEnumCallback(FuncEnum func) {
+  inline plg::string CallFuncEnumCallback(FuncEnum func, plg::source_location __location = plg::source_location::current()) {
+    plg::Log("cross_call_master::CallFuncEnumCallback", plg::Severity::Trace, __location);
     return __cross_call_master_CallFuncEnumCallback(func);
   }
 

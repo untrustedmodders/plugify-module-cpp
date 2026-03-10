@@ -52,6 +52,12 @@ namespace plg {
 	std::abort();
 #endif
 
+#ifndef NDEBUG
+#define PLUGIFY_DEBUG(e) e
+#else
+#define PLUGIFY_DEBUG(e)
+#endif
+
 #if __has_feature(address_sanitizer) || defined(__SANITIZE_ADDRESS__)
 #  define PLUGIFY_INSTRUMENTED_WITH_ASAN 1
 #  include <sanitizer/asan_interface.h>
@@ -268,10 +274,13 @@ namespace plg {
 
 #if PLUGIFY_COMPILER_GCC || PLUGIFY_COMPILER_CLANG
 #  define PLUGIFY_RESTRICT __restrict__
+#  define PLUGIFY_USED __attribute__((used))
 #elif PLUGIFY_COMPILER_MSVC
 #  define PLUGIFY_RESTRICT __restrict
+#  define PLUGIFY_USED __declspec(dllexport)
 #else
 #  define PLUGIFY_RESTRICT
+#  define PLUGIFY_USED
 #endif
 
 #ifndef PLUGIFY_PLATFORM_WINDOWS
@@ -337,5 +346,5 @@ namespace plg {
 	!defined(PLUGIFY_PLATFORM_SWITCH)  && \
 	!defined(PLUGIFY_PLATFORM_BSD)     && \
 	!defined(PLUGIFY_PLATFORM_UNIX)
-#  error "Unsupported platform! Please extend macro.hpp"
+#  error "Unsupported platform! Please extend config.hpp"
 #endif
