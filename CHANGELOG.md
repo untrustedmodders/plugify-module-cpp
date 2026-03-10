@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.3.0](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.2.1...v2.3.0) (2026-03-10)
+
+
+### Features
+
+* add new call logging ([49e8c51](https://github.com/untrustedmodders/plugify-module-cpp/commit/49e8c512e62709f693daac95fd638af411a98d0f))
+
+
+### Bug Fixes
+
+* add new alias tests ([964943e](https://github.com/untrustedmodders/plugify-module-cpp/commit/964943ece4eeef8667958f377e90c116973c73a3))
+* reduce amount of parameters to 32 ([5fb91f9](https://github.com/untrustedmodders/plugify-module-cpp/commit/5fb91f90e2b3a9ca20f9830035bf7a089b5bebda))
+* update deps ([80c7a4f](https://github.com/untrustedmodders/plugify-module-cpp/commit/80c7a4f79626952e7a3ceb8370afaa8a3ac2a3c9))
+
 ## [2.2.1](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.2.0...v2.2.1) (2026-01-03)
 
 
