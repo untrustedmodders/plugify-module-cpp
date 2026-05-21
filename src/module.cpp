@@ -13,6 +13,8 @@ Result<InitData> CppLanguageModule::Initialize(const Provider& provider, [[maybe
 	_provider = std::make_unique<Provider>(provider);
 	_logger = _provider->Resolve<ILogger>();
 	_loader = _provider->Resolve<IAssemblyLoader>();
+	_profiler = _provider->TryResolve<IProfiler>();
+
 	_logger->Log(LOG_PREFIX "Inited!", Severity::Debug);
 
 	return InitData{ { .hasUpdate = false } };
@@ -20,6 +22,7 @@ Result<InitData> CppLanguageModule::Initialize(const Provider& provider, [[maybe
 
 void CppLanguageModule::Shutdown() {
 	_assemblies.clear();
+	_profiler.reset();
 	_loader.reset();
 	_logger.reset();
 	_provider.reset();
@@ -169,13 +172,26 @@ plg::string GetCacheDir() {
 	return plg::as_string(g_cpplm.GetProvider()->GetCacheDir());
 }
 
-bool IsExtensionLoaded(std::string_view name, std::optional<Constraint> constraint) {
+bool IsLoaded(std::string_view name, std::optional<Constraint> constraint) {
 	return g_cpplm.GetProvider()->IsExtensionLoaded(name, std::move(constraint));
 }
 
 void Log(std::string_view message, Severity severity, const Location& location) {
 	if (const auto& logger = g_cpplm.GetLogger()) {
 		logger->Log(message, severity, location);
+	}
+}
+
+ZoneHandle BeginZone(std::string_view name, const Location& location) {
+	if (const auto& profiler = g_cpplm.GetProfiler()) {
+		return profiler->BeginZone(ZoneInfo{name, location.function_name(), location.file_name(), location.line(), 0});
+	}
+	return {};
+}
+
+void EndZone(ZoneHandle handle) {
+	if (const auto& profiler = g_cpplm.GetProfiler()) {
+		profiler->EndZone(handle);
 	}
 }
 
@@ -231,15 +247,17 @@ std::vector<Dependent> GetPluginDependencies(const Extension& plugin) {
 	return deps;
 }
 
-std::array<void*, 17> CppLanguageModule::_pluginApi = {
+std::array<void*, 19> CppLanguageModule::_pluginApi = {
 		reinterpret_cast<void*>(&::GetBaseDir),
 		reinterpret_cast<void*>(&::GetExtensionsDir),
 		reinterpret_cast<void*>(&::GetConfigsDir),
 		reinterpret_cast<void*>(&::GetDataDir),
 		reinterpret_cast<void*>(&::GetLogsDir),
 		reinterpret_cast<void*>(&::GetCacheDir),
-		reinterpret_cast<void*>(&::IsExtensionLoaded),
+		reinterpret_cast<void*>(&::IsLoaded),
 		reinterpret_cast<void*>(&::Log),
+		reinterpret_cast<void*>(&::BeginZone),
+		reinterpret_cast<void*>(&::EndZone),
 		reinterpret_cast<void*>(&::GetPluginId),
 		reinterpret_cast<void*>(&::GetPluginName),
 		reinterpret_cast<void*>(&::GetPluginDescription),

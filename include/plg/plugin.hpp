@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <string>
 #include <optional>
+#include <concepts>
 #include <filesystem>
 #include <utility>
 #include <vector>
@@ -16,6 +17,10 @@
 #include "plg/api.hpp"
 
 namespace plg {
+	using hndl = void*;
+	using uuid = ptrdiff_t;
+	using zone = uint64_t;
+
 	enum class Severity { Unknown, Trace, Debug, Info, Warning, Error, Fatal };
 
 	using GetBaseDirFn = plg::string (*)();
@@ -24,8 +29,10 @@ namespace plg {
 	using GetDataDirFn = plg::string (*)();
 	using GetLogsDirFn = plg::string (*)();
 	using GetCacheDirFn = plg::string (*)();
-	using IsExtensionLoadedFn = bool (*)(std::string_view name, std::optional<plg::range_set<>> constraints);
+	using IsLoadedFn = bool (*)(std::string_view name, std::optional<plg::range_set<>> constraints);
 	using LogFn = void (*)(std::string_view message, Severity severity, const plg::source_location& location);
+	using BeginZoneFn = plg::zone (*)(std::string_view name, const plg::source_location& location);
+	using EndZoneFn = void (*)(plg::zone handle);
 
 	extern GetBaseDirFn GetBaseDir;
 	extern GetExtensionsDirFn GetExtensionsDir;
@@ -33,8 +40,10 @@ namespace plg {
 	extern GetDataDirFn GetDataDir;
 	extern GetLogsDirFn GetLogsDir;
 	extern GetCacheDirFn GetCacheDir;
-	extern IsExtensionLoadedFn IsExtensionLoaded;
+	extern IsLoadedFn IsLoaded;
 	extern LogFn Log;
+	extern BeginZoneFn BeginZone;
+	extern EndZoneFn EndZone;
 
 	struct Dependency {
 		plg::string name;
@@ -42,19 +51,29 @@ namespace plg {
 		bool optional;
 	};
 
-	using uuid = std::ptrdiff_t;
+	struct Scope {
+		explicit Scope(std::string_view name, const plg::source_location& location = plg::source_location::current()) : handle(BeginZone(name, location)) {
+			Log(name, Severity::Trace, location);
+		}
+
+		~Scope() {
+			EndZone(handle);
+		}
+
+	private:
+		plg::zone handle;
+	};
 
 	namespace plugin {
-		using GetIdFn = plg::uuid (*)(void*);
-		using GetNameFn = plg::string (*)(void*);
-		using GetLicenseFn = plg::string (*)(void*);
-		using GetDescriptionFn = plg::string (*)(void*);
-		using GetVersionFn = plg::version<> (*)(void*);
-		using GetAuthorFn = plg::string (*)(void*);
-		using GetWebsiteFn = plg::string (*)(void*);
-		using GetLocationFn = plg::string (*)(void*);
-		using GetDependenciesFn = plg::vector<plg::Dependency> (*)(void*);
-		extern void* handle;
+		using GetIdFn = plg::uuid (*)(plg::hndl plugin);
+		using GetNameFn = plg::string (*)(plg::hndl plugin);
+		using GetLicenseFn = plg::string (*)(plg::hndl plugin);
+		using GetDescriptionFn = plg::string (*)(plg::hndl plugin);
+		using GetVersionFn = plg::version<> (*)(plg::hndl plugin);
+		using GetAuthorFn = plg::string (*)(plg::hndl plugin);
+		using GetWebsiteFn = plg::string (*)(plg::hndl plugin);
+		using GetLocationFn = plg::string (*)(plg::hndl plugin);
+		using GetDependenciesFn = plg::vector<plg::Dependency> (*)(plg::hndl plugin);
 		extern GetIdFn GetId;
 		extern GetNameFn GetName;
 		extern GetDescriptionFn GetDescription;
@@ -64,6 +83,8 @@ namespace plg {
 		extern GetLicenseFn GetLicense;
 		extern GetLocationFn GetLocation;
 		extern GetDependenciesFn GetDependencies;
+
+		extern plg::hndl handle;
 	}
 
 	class IPluginEntry {
@@ -98,10 +119,12 @@ namespace plg {
 		GetDataDirFn GetDataDir{nullptr}; \
 		GetLogsDirFn GetLogsDir{nullptr}; \
 		GetCacheDirFn GetCacheDir{nullptr}; \
-        IsExtensionLoadedFn IsExtensionLoaded{nullptr}; \
+        IsLoadedFn IsLoaded{nullptr}; \
         LogFn Log{nullptr}; \
+        BeginZoneFn BeginZone{nullptr}; \
+        EndZoneFn EndZone{nullptr}; \
         namespace plugin { \
-            void* handle{nullptr}; \
+            plg::hndl handle{nullptr}; \
             GetIdFn GetId{nullptr}; \
             GetNameFn GetName{nullptr}; \
             GetDescriptionFn GetDescription{nullptr}; \
@@ -124,8 +147,10 @@ namespace plg {
             GetDataDir = reinterpret_cast<GetDataDirFn>(api[i++]); \
             GetLogsDir = reinterpret_cast<GetLogsDirFn>(api[i++]); \
             GetCacheDir = reinterpret_cast<GetCacheDirFn>(api[i++]); \
-            IsExtensionLoaded = reinterpret_cast<IsExtensionLoadedFn>(api[i++]); \
+            IsLoaded = reinterpret_cast<IsLoadedFn>(api[i++]); \
             Log = reinterpret_cast<LogFn>(api[i++]); \
+            BeginZone = reinterpret_cast<BeginZoneFn>(api[i++]); \
+            EndZone = reinterpret_cast<EndZoneFn>(api[i++]); \
             plugin::GetId = reinterpret_cast<plugin::GetIdFn>(api[i++]); \
             plugin::GetName = reinterpret_cast<plugin::GetNameFn>(api[i++]); \
             plugin::GetDescription = reinterpret_cast<plugin::GetDescriptionFn>(api[i++]); \
@@ -141,24 +166,18 @@ namespace plg {
         plg::IPluginEntry* GetPluginEntry() { \
             return plugin_addr; \
         } \
-        template<typename T, typename = void> \
-        struct has_overridden_OnPluginStart : std::false_type {}; \
         template<typename T> \
-        struct has_overridden_OnPluginStart<T, std::void_t<decltype(std::declval<T>().OnPluginStart())>> \
-            : std::bool_constant<!std::is_same_v<decltype(&T::OnPluginStart), \
-                                                 decltype(&IPluginEntry::OnPluginStart)>> {}; \
-        template<typename T, typename = void> \
-        struct has_overridden_OnPluginUpdate : std::false_type {}; \
-        template<typename T> \
-        struct has_overridden_OnPluginUpdate<T, std::void_t<decltype(std::declval<T>().OnPluginUpdate(std::chrono::milliseconds{0}))>> \
-            : std::bool_constant<!std::is_same_v<decltype(&T::OnPluginUpdate), \
-                                                 decltype(&IPluginEntry::OnPluginUpdate)>> {}; \
-        template<typename T, typename = void> \
-        struct has_overridden_OnPluginEnd : std::false_type {}; \
-        template<typename T> \
-        struct has_overridden_OnPluginEnd<T, std::void_t<decltype(std::declval<T>().OnPluginEnd())>> \
-            : std::bool_constant<!std::is_same_v<decltype(&T::OnPluginEnd), \
-                                                 decltype(&IPluginEntry::OnPluginEnd)>> {}; \
+		constexpr bool has_overridden_OnPluginStart = requires { \
+			{ std::declval<T>().OnPluginStart() }; \
+		} && !std::is_same_v<decltype(&T::OnPluginStart), decltype(&IPluginEntry::OnPluginStart)>; \
+		template<typename T> \
+		constexpr bool has_overridden_OnPluginUpdate = requires { \
+			{ std::declval<T>().OnPluginUpdate(std::chrono::milliseconds{0}) }; \
+		} && !std::is_same_v<decltype(&T::OnPluginUpdate), decltype(&IPluginEntry::OnPluginUpdate)>; \
+		template<typename T> \
+		constexpr bool has_overridden_OnPluginEnd = requires { \
+			{ std::declval<T>().OnPluginEnd() }; \
+		} && !std::is_same_v<decltype(&T::OnPluginEnd), decltype(&IPluginEntry::OnPluginEnd)>; \
         extern "C" plugin_api void Plugify_PluginStart() { \
             GetPluginEntry()->OnPluginStart(); \
         } \
@@ -170,9 +189,9 @@ namespace plg {
         } \
         extern "C" plugin_api PluginContext* Plugify_PluginContext() { \
             static PluginContext context = { \
-                .hasUpdate = has_overridden_OnPluginUpdate<plugin_class>::value, \
-                .hasStart = has_overridden_OnPluginStart<plugin_class>::value, \
-                .hasEnd = has_overridden_OnPluginEnd<plugin_class>::value, \
+                .hasUpdate = has_overridden_OnPluginUpdate<plugin_class>, \
+                .hasStart = has_overridden_OnPluginStart<plugin_class>, \
+                .hasEnd = has_overridden_OnPluginEnd<plugin_class>, \
                 .hasDebug = PLUGIFY_IS_DEBUG \
             }; \
             return &context; \

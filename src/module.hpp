@@ -4,6 +4,7 @@
 #include <plugify/language_module.hpp>
 #include <plugify/assembly_loader.hpp>
 #include <plugify/logger.hpp>
+#include <plugify/profiler.hpp>
 #include <plugify/extension.hpp>
 #include <plugify/provider.hpp>
 
@@ -44,14 +45,16 @@ namespace cpplm {
 
 		const std::unique_ptr<Provider>& GetProvider() const { return _provider; }
 		const std::shared_ptr<ILogger>& GetLogger() const { return _logger; }
+		const std::shared_ptr<IProfiler>& GetProfiler() const { return _profiler; }
 
 	private:
 		std::unique_ptr<Provider> _provider;
 		std::shared_ptr<ILogger> _logger;
 		std::shared_ptr<IAssemblyLoader> _loader;
+		std::shared_ptr<IProfiler> _profiler;
 		std::vector<std::unique_ptr<AssemblyHolder>> _assemblies;
 
-		static std::array<void*, 17> _pluginApi;
+		static std::array<void*, 19> _pluginApi;
 	};
 
 	extern CppLanguageModule g_cpplm;
