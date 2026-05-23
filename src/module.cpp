@@ -20,23 +20,25 @@ Result<InitData> CppLanguageModule::Initialize(const Provider& provider, [[maybe
 	return InitData{ { .hasUpdate = false } };
 }
 
-void CppLanguageModule::Shutdown() {
+Result<void> CppLanguageModule::Shutdown() {
 	_assemblies.clear();
 	_profiler.reset();
 	_loader.reset();
 	_logger.reset();
 	_provider.reset();
+
+	return {};
 }
 
-void CppLanguageModule::OnUpdate([[maybe_unused]] std::chrono::milliseconds dt) {
-	
+Result<void> CppLanguageModule::OnUpdate([[maybe_unused]] std::chrono::milliseconds dt) {
+	return {};
 }
 
-bool CppLanguageModule::IsDebugBuild() {
+bool CppLanguageModule::IsDebugBuild() const noexcept {
 	return CPPLM_IS_DEBUG;
 }
 
-void CppLanguageModule::OnMethodExport(const Extension& plugin) {
+Result<void> CppLanguageModule::OnMethodExport(const Extension& plugin) {
 	for (const auto& [method, addr] : plugin.GetMethodsData()) {
 		auto variableName = std::format("__{}_{}", plugin.GetName(), method.GetName());
 		for (const auto& assembly : _assemblies) {
@@ -45,6 +47,8 @@ void CppLanguageModule::OnMethodExport(const Extension& plugin) {
 			}
 		}
 	}
+
+	return {};
 }
 
 Result<LoadData> CppLanguageModule::OnPluginLoad(const Extension& plugin) {
@@ -63,7 +67,7 @@ Result<LoadData> CppLanguageModule::OnPluginLoad(const Extension& plugin) {
 
 	auto& assembly = *assemblyResult;
 
-	auto initResult = assembly->GetSymbol("Plugify_Init");
+	auto initResult = assembly->GetSymbol("Plugify_PluginInit");
 	if (!initResult) {
 		return MakeError(std::move(initResult.error()));
 	}
@@ -132,16 +136,31 @@ Result<LoadData> CppLanguageModule::OnPluginLoad(const Extension& plugin) {
 	return LoadData{ std::move(methods), data, { hasUpdate, hasStart, hasEnd, !exportedMethods.empty() } };
 }
 
-void CppLanguageModule::OnPluginStart(const Extension& plugin) {
-	plugin.GetUserData().RCast<AssemblyHolder*>()->startFunc();
+Result<void> CppLanguageModule::OnPluginStart(const Extension& plugin) {
+	auto result = plugin.GetUserData().RCast<AssemblyHolder*>()->startFunc();
+	if (!result) {
+		_logger->Log(std::format(LOG_PREFIX "{}: call of 'OnPluginStart' failed\n{}", plugin.GetName(), result.GetMessage()), Severity::Error);
+		return MakeError(std::string(result));
+	}
+	return {};
 }
 
-void CppLanguageModule::OnPluginUpdate(const Extension& plugin, std::chrono::milliseconds dt) {
-	plugin.GetUserData().RCast<AssemblyHolder*>()->updateFunc(dt);
+Result<void> CppLanguageModule::OnPluginUpdate(const Extension& plugin, std::chrono::milliseconds dt) {
+	auto result = plugin.GetUserData().RCast<AssemblyHolder*>()->updateFunc(dt);
+	if (!result) {
+		_logger->Log(std::format(LOG_PREFIX "{}: call of 'OnPluginUpdate' failed\n{}", plugin.GetName(), result.GetMessage()), Severity::Error);
+		return MakeError(std::string(result));
+	}
+	return {};
 }
 
-void CppLanguageModule::OnPluginEnd(const Extension& plugin) {
-	plugin.GetUserData().RCast<AssemblyHolder*>()->endFunc();
+Result<void> CppLanguageModule::OnPluginEnd(const Extension& plugin) {
+	auto result = plugin.GetUserData().RCast<AssemblyHolder*>()->endFunc();
+	if (!result) {
+		_logger->Log(std::format(LOG_PREFIX "{}: call of 'OnPluginEnd' failed\n{}", plugin.GetName(), result.GetMessage()), Severity::Error);
+		return MakeError(std::string(result));
+	}
+	return {};
 }
 
 namespace cpplm {

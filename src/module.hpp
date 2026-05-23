@@ -15,9 +15,9 @@ using namespace plugify;
 
 namespace cpplm {
 	using InitFunc = int (*)(void**, size_t, int, const void*);
-	using StartFunc = void (*)();
-	using UpdateFunc = void (*)(std::chrono::milliseconds);
-	using EndFunc = void (*)();
+	using StartFunc = plg::PluginResult (*)();
+	using UpdateFunc = plg::PluginResult (*)(std::chrono::milliseconds);
+	using EndFunc = plg::PluginResult (*)();
 	using ContextFunc = plg::PluginContext* (*)();
 
 	struct AssemblyHolder {
@@ -34,14 +34,16 @@ namespace cpplm {
 
 		// ILanguageModule
 		Result<InitData> Initialize(const Provider& provider, const Extension& module) override;
-		void Shutdown() override;
-		void OnUpdate(std::chrono::milliseconds dt) override;
-		void OnMethodExport(const Extension& plugin) override;
+		Result<void> Shutdown() override;
+		Result<void> OnUpdate(std::chrono::milliseconds dt) override;
+
 		Result<LoadData> OnPluginLoad(const Extension& plugin) override;
-		void OnPluginStart(const Extension& plugin) override;
-		void OnPluginUpdate(const Extension& plugin, std::chrono::milliseconds dt) override;
-		void OnPluginEnd(const Extension& plugin) override;
-		bool IsDebugBuild() override;
+		Result<void> OnPluginStart(const Extension& plugin) override;
+		Result<void> OnPluginUpdate(const Extension& plugin, std::chrono::milliseconds dt) override;
+		Result<void> OnPluginEnd(const Extension& plugin) override;
+		Result<void> OnMethodExport(const Extension& plugin) override;
+
+		bool IsDebugBuild() const noexcept override;
 
 		const std::unique_ptr<Provider>& GetProvider() const { return _provider; }
 		const std::shared_ptr<ILogger>& GetLogger() const { return _logger; }

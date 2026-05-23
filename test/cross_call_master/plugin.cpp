@@ -729,9 +729,9 @@ plg::string MockFuncAliasAll(
     );
 }
 
-class CrossCallMaster final : public plg::IPluginEntry {
+class CrossCallMaster final : public plg::Plugin {
 public:
-    void OnPluginStart() final {
+    plg::PluginResult OnPluginStart() final {
         NoParamOnlyReturn();
         ParamsNoRefs();
         ParamsWithRefs();
@@ -748,10 +748,12 @@ public:
         ReverseParamsFunctions();
         ReverseClassesWrappers();
         _tests.Run();
+        return {};
     }
 
-    void OnPluginEnd() final {
+    plg::PluginResult OnPluginEnd() final {
         _tests.Reset();
+        return {};
     };
 
     void NoParamOnlyReturn() {
@@ -4398,7 +4400,7 @@ private:
 };
 
 CrossCallMaster g_plugin;
-EXPOSE_PLUGIN(PLUGIN_API, CrossCallMaster, &g_plugin)
+PLUGIFY_PLUGIN(PLUGIN_API, &g_plugin)
 
 PLUGIFY_WARN_PUSH()
 

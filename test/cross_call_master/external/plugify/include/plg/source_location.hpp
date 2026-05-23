@@ -5,8 +5,8 @@
 
 #include "plg/config.hpp"
 
-#ifndef PLUGIFY_MODULE_NAME
-#define PLUGIFY_MODULE_NAME ""
+#ifndef PLUGIFY_MODULE
+#define PLUGIFY_MODULE ""
 #endif
 
 namespace plg {
@@ -38,7 +38,7 @@ namespace plg {
 			const std::size_t column = __builtin_COLUMN(),
 			const std::string_view file_name = __builtin_FILE(),
 			const std::string_view function_name = __builtin_FUNCTION(),
-			const std::string_view module_name = PLUGIFY_MODULE_NAME
+			const std::string_view module_name = PLUGIFY_MODULE
 		) noexcept
 #elif defined(__GNUC__) and (__GNUC__ > 4 or (__GNUC__ == 4 and __GNUC_MINOR__ >= 8))
 		inline static constexpr source_location current(

@@ -81,22 +81,25 @@ mamba install -n your_env_name -c https://untrustedmodders.github.io/plugify-mod
 ## Пример
 
 ```c++
-#include <plugify/cpp_plugin.hpp>
+#include <plg/plugin.hpp>
 #include <plugin_export.h>
 #include <iostream>
 
-class ExamplePlugin : public plugify::IPluginEntry {
+class ExamplePlugin : public plg::Plugin {
 public:
-	void OnPluginStart() override {
+	plg::PluginResult OnPluginStart() override {
 		std::cout << "Example Start!" << std::endl;
+	    return {};
 	}
 
-	void OnPluginUpdate() override {
+	plg::PluginResult OnPluginUpdate(std::chrono::milliseconds dt) override {
 		std::cout << "Example Update!" << std::endl;
+	    return {};
 	}
 
-	void OnPluginEnd() override {
+	plg::PluginResult OnPluginEnd() override {
 		std::cout << "Example End!" << std::endl;
+	    return {};
 	}
 } g_examplePlugin;
 

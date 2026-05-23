@@ -18,7 +18,7 @@ namespace cross_call_master {
    * @return ptr64
    */
   inline void* CounterCreate(int64_t initialValue, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::CounterCreate", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::CounterCreate", __location);
     return __cross_call_master_CounterCreate(initialValue);
   }
 
@@ -30,7 +30,7 @@ namespace cross_call_master {
    * @return ptr64
    */
   inline void* CounterCreateZero(plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::CounterCreateZero", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::CounterCreateZero", __location);
     return __cross_call_master_CounterCreateZero();
   }
 
@@ -43,7 +43,7 @@ namespace cross_call_master {
    * @return int64
    */
   inline int64_t CounterGetValue(void* counter, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::CounterGetValue", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::CounterGetValue", __location);
     return __cross_call_master_CounterGetValue(counter);
   }
 
@@ -56,7 +56,7 @@ namespace cross_call_master {
    * @param value (int64)
    */
   inline void CounterSetValue(void* counter, int64_t value, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::CounterSetValue", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::CounterSetValue", __location);
     return __cross_call_master_CounterSetValue(counter, value);
   }
 
@@ -68,7 +68,7 @@ namespace cross_call_master {
    * @param counter (ptr64)
    */
   inline void CounterIncrement(void* counter, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::CounterIncrement", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::CounterIncrement", __location);
     return __cross_call_master_CounterIncrement(counter);
   }
 
@@ -80,7 +80,7 @@ namespace cross_call_master {
    * @param counter (ptr64)
    */
   inline void CounterDecrement(void* counter, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::CounterDecrement", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::CounterDecrement", __location);
     return __cross_call_master_CounterDecrement(counter);
   }
 
@@ -93,7 +93,7 @@ namespace cross_call_master {
    * @param amount (int64)
    */
   inline void CounterAdd(void* counter, int64_t amount, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::CounterAdd", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::CounterAdd", __location);
     return __cross_call_master_CounterAdd(counter, amount);
   }
 
@@ -105,7 +105,7 @@ namespace cross_call_master {
    * @param counter (ptr64)
    */
   inline void CounterReset(void* counter, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::CounterReset", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::CounterReset", __location);
     return __cross_call_master_CounterReset(counter);
   }
 
@@ -118,7 +118,7 @@ namespace cross_call_master {
    * @return bool
    */
   inline bool CounterIsPositive(void* counter, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::CounterIsPositive", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::CounterIsPositive", __location);
     return __cross_call_master_CounterIsPositive(counter);
   }
 
@@ -132,7 +132,7 @@ namespace cross_call_master {
    * @return int32
    */
   inline int32_t CounterCompare(int64_t value1, int64_t value2, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::CounterCompare", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::CounterCompare", __location);
     return __cross_call_master_CounterCompare(value1, value2);
   }
 
@@ -145,7 +145,7 @@ namespace cross_call_master {
    * @return int64
    */
   inline int64_t CounterSum(const plg::vector<int64_t>& values, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::CounterSum", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::CounterSum", __location);
     return __cross_call_master_CounterSum(values);
   }
 

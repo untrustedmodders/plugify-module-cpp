@@ -19,7 +19,7 @@ namespace cross_call_master {
    * @return ptr64
    */
   inline void* ResourceHandleCreate(int32_t id, const plg::string& name, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::ResourceHandleCreate", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::ResourceHandleCreate", __location);
     return __cross_call_master_ResourceHandleCreate(id, name);
   }
 
@@ -31,7 +31,7 @@ namespace cross_call_master {
    * @return ptr64
    */
   inline void* ResourceHandleCreateDefault(plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::ResourceHandleCreateDefault", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::ResourceHandleCreateDefault", __location);
     return __cross_call_master_ResourceHandleCreateDefault();
   }
 
@@ -43,7 +43,7 @@ namespace cross_call_master {
    * @param handle (ptr64)
    */
   inline void ResourceHandleDestroy(void* handle, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::ResourceHandleDestroy", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::ResourceHandleDestroy", __location);
     return __cross_call_master_ResourceHandleDestroy(handle);
   }
 
@@ -56,7 +56,7 @@ namespace cross_call_master {
    * @return int32
    */
   inline int32_t ResourceHandleGetId(void* handle, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::ResourceHandleGetId", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::ResourceHandleGetId", __location);
     return __cross_call_master_ResourceHandleGetId(handle);
   }
 
@@ -69,7 +69,7 @@ namespace cross_call_master {
    * @return string
    */
   inline plg::string ResourceHandleGetName(void* handle, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::ResourceHandleGetName", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::ResourceHandleGetName", __location);
     return __cross_call_master_ResourceHandleGetName(handle);
   }
 
@@ -82,7 +82,7 @@ namespace cross_call_master {
    * @param name (string)
    */
   inline void ResourceHandleSetName(void* handle, const plg::string& name, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::ResourceHandleSetName", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::ResourceHandleSetName", __location);
     return __cross_call_master_ResourceHandleSetName(handle, name);
   }
 
@@ -94,7 +94,7 @@ namespace cross_call_master {
    * @param handle (ptr64)
    */
   inline void ResourceHandleIncrementCounter(void* handle, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::ResourceHandleIncrementCounter", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::ResourceHandleIncrementCounter", __location);
     return __cross_call_master_ResourceHandleIncrementCounter(handle);
   }
 
@@ -107,7 +107,7 @@ namespace cross_call_master {
    * @return int32
    */
   inline int32_t ResourceHandleGetCounter(void* handle, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::ResourceHandleGetCounter", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::ResourceHandleGetCounter", __location);
     return __cross_call_master_ResourceHandleGetCounter(handle);
   }
 
@@ -120,7 +120,7 @@ namespace cross_call_master {
    * @param value (float)
    */
   inline void ResourceHandleAddData(void* handle, float value, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::ResourceHandleAddData", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::ResourceHandleAddData", __location);
     return __cross_call_master_ResourceHandleAddData(handle, value);
   }
 
@@ -133,7 +133,7 @@ namespace cross_call_master {
    * @return float[]
    */
   inline plg::vector<float> ResourceHandleGetData(void* handle, plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::ResourceHandleGetData", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::ResourceHandleGetData", __location);
     return __cross_call_master_ResourceHandleGetData(handle);
   }
 
@@ -145,7 +145,7 @@ namespace cross_call_master {
    * @return int32
    */
   inline int32_t ResourceHandleGetAliveCount(plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::ResourceHandleGetAliveCount", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::ResourceHandleGetAliveCount", __location);
     return __cross_call_master_ResourceHandleGetAliveCount();
   }
 
@@ -157,7 +157,7 @@ namespace cross_call_master {
    * @return int32
    */
   inline int32_t ResourceHandleGetTotalCreated(plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::ResourceHandleGetTotalCreated", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::ResourceHandleGetTotalCreated", __location);
     return __cross_call_master_ResourceHandleGetTotalCreated();
   }
 
@@ -169,7 +169,7 @@ namespace cross_call_master {
    * @return int32
    */
   inline int32_t ResourceHandleGetTotalDestroyed(plg::source_location __location = plg::source_location::current()) {
-    plg::Log("cross_call_master::ResourceHandleGetTotalDestroyed", plg::Severity::Trace, __location);
+    [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::ResourceHandleGetTotalDestroyed", __location);
     return __cross_call_master_ResourceHandleGetTotalDestroyed();
   }
 

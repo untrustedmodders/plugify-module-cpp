@@ -1,20 +1,19 @@
 #pragma once
 
 #include <cstdint>
-#include <string>
+#include <string_view>
 #include <optional>
-#include <concepts>
-#include <filesystem>
-#include <utility>
-#include <vector>
-#include <chrono>
 #include <span>
+#include <concepts>
+#include <utility>
+#include <chrono>
 #include <type_traits>
 
 #include "plg/any.hpp"
 #include "plg/version.hpp"
+#include "plg/expected.hpp"
 #include "plg/source_location.hpp"
-#include "plg/api.hpp"
+#include "api.hpp"
 
 namespace plg {
 	using hndl = void*;
@@ -45,23 +44,22 @@ namespace plg {
 	extern BeginZoneFn BeginZone;
 	extern EndZoneFn EndZone;
 
-	struct Dependency {
-		plg::string name;
-		plg::range_set<> constraints;
-		bool optional;
-	};
-
 	struct Scope {
 		explicit Scope(std::string_view name, const plg::source_location& location = plg::source_location::current()) : handle(BeginZone(name, location)) {
 			Log(name, Severity::Trace, location);
 		}
-
 		~Scope() {
 			EndZone(handle);
 		}
 
 	private:
 		plg::zone handle;
+	};
+
+	struct Dependency {
+		plg::string name;
+		plg::range_set<> constraints;
+		bool optional;
 	};
 
 	namespace plugin {
@@ -87,10 +85,10 @@ namespace plg {
 		extern plg::hndl handle;
 	}
 
-	class IPluginEntry {
+	class Plugin {
 	protected:
-		IPluginEntry() = default;
-		~IPluginEntry() = default;
+		Plugin() = default;
+		~Plugin() = default;
 
 	public:
 		plg::uuid GetId() const { return plugin::GetId(plugin::handle); }
@@ -103,100 +101,112 @@ namespace plg {
 		plg::string GetLocation() const { return plugin::GetLocation(plugin::handle); }
 		plg::vector<plg::Dependency> GetDependencies() const { return plugin::GetDependencies(plugin::handle); }
 
-		virtual void OnPluginStart() {};
-		virtual void OnPluginUpdate(std::chrono::milliseconds) {};
-		virtual void OnPluginEnd() {};
+		virtual plg::PluginResult OnPluginStart() { return {}; }
+		virtual plg::PluginResult OnPluginUpdate(std::chrono::milliseconds) { return {}; }
+		virtual plg::PluginResult OnPluginEnd() { return {}; }
 	};
 
-	IPluginEntry* GetPluginEntry();
+	Plugin* GetPlugin();
 } // namespace plg
 
-#define EXPOSE_PLUGIN(plugin_api, plugin_class, plugin_addr) \
-    namespace plg { \
+#if PLUGIFY_COMPILER_CLANG
+#define PLUGIFY_LINKAGE() PLUGIFY_WARN_IGNORE("-Wreturn-type-c-linkage")
+#elif PLUGIFY_COMPILER_MSVC
+#define PLUGIFY_LINKAGE() PLUGIFY_WARN_IGNORE(4190)
+#else
+#define PLUGIFY_LINKAGE()
+#endif
+
+#define PLUGIFY_PLUGIN(plugin_api, plugin_addr) \
+PLUGIFY_WARN_PUSH() \
+PLUGIFY_LINKAGE() \
+	namespace plg { \
 		GetBaseDirFn GetBaseDir{nullptr}; \
 		GetExtensionsDirFn GetExtensionsDir{nullptr}; \
 		GetConfigsDirFn GetConfigsDir{nullptr}; \
 		GetDataDirFn GetDataDir{nullptr}; \
 		GetLogsDirFn GetLogsDir{nullptr}; \
 		GetCacheDirFn GetCacheDir{nullptr}; \
-        IsLoadedFn IsLoaded{nullptr}; \
-        LogFn Log{nullptr}; \
-        BeginZoneFn BeginZone{nullptr}; \
-        EndZoneFn EndZone{nullptr}; \
-        namespace plugin { \
-            plg::hndl handle{nullptr}; \
-            GetIdFn GetId{nullptr}; \
-            GetNameFn GetName{nullptr}; \
-            GetDescriptionFn GetDescription{nullptr}; \
-            GetVersionFn GetVersion{nullptr}; \
-            GetAuthorFn GetAuthor{nullptr}; \
-            GetWebsiteFn GetWebsite{nullptr}; \
-            GetLicenseFn GetLicense{nullptr}; \
-            GetLocationFn GetLocation{nullptr}; \
-            GetDependenciesFn GetDependencies{nullptr}; \
-        } \
-        extern "C" plugin_api int Plugify_Init(void** data, size_t len, int version, void* handle) { \
-            if (version < kApiVersion) { \
-                return kApiVersion; \
-            } \
-            std::span<void*> api(data, len); \
-            size_t i = 0; \
-            GetBaseDir = reinterpret_cast<GetBaseDirFn>(api[i++]); \
-            GetExtensionsDir = reinterpret_cast<GetExtensionsDirFn>(api[i++]); \
-            GetConfigsDir = reinterpret_cast<GetConfigsDirFn>(api[i++]); \
-            GetDataDir = reinterpret_cast<GetDataDirFn>(api[i++]); \
-            GetLogsDir = reinterpret_cast<GetLogsDirFn>(api[i++]); \
-            GetCacheDir = reinterpret_cast<GetCacheDirFn>(api[i++]); \
-            IsLoaded = reinterpret_cast<IsLoadedFn>(api[i++]); \
-            Log = reinterpret_cast<LogFn>(api[i++]); \
-            BeginZone = reinterpret_cast<BeginZoneFn>(api[i++]); \
-            EndZone = reinterpret_cast<EndZoneFn>(api[i++]); \
-            plugin::GetId = reinterpret_cast<plugin::GetIdFn>(api[i++]); \
-            plugin::GetName = reinterpret_cast<plugin::GetNameFn>(api[i++]); \
-            plugin::GetDescription = reinterpret_cast<plugin::GetDescriptionFn>(api[i++]); \
-            plugin::GetVersion = reinterpret_cast<plugin::GetVersionFn>(api[i++]); \
-            plugin::GetAuthor = reinterpret_cast<plugin::GetAuthorFn>(api[i++]); \
-            plugin::GetWebsite = reinterpret_cast<plugin::GetWebsiteFn>(api[i++]); \
-            plugin::GetLicense = reinterpret_cast<plugin::GetLicenseFn>(api[i++]); \
-            plugin::GetLocation = reinterpret_cast<plugin::GetLocationFn>(api[i++]); \
-            plugin::GetDependencies = reinterpret_cast<plugin::GetDependenciesFn>(api[i++]); \
-            plugin::handle = handle; \
-            return 0; \
-        } \
-        plg::IPluginEntry* GetPluginEntry() { \
-            return plugin_addr; \
-        } \
-        template<typename T> \
+		IsLoadedFn IsLoaded{nullptr}; \
+		LogFn Log{nullptr}; \
+		BeginZoneFn BeginZone{nullptr}; \
+		EndZoneFn EndZone{nullptr}; \
+		namespace plugin { \
+			plg::hndl handle{nullptr}; \
+			GetIdFn GetId{nullptr}; \
+			GetNameFn GetName{nullptr}; \
+			GetDescriptionFn GetDescription{nullptr}; \
+			GetVersionFn GetVersion{nullptr}; \
+			GetAuthorFn GetAuthor{nullptr}; \
+			GetWebsiteFn GetWebsite{nullptr}; \
+			GetLicenseFn GetLicense{nullptr}; \
+			GetLocationFn GetLocation{nullptr}; \
+			GetDependenciesFn GetDependencies{nullptr}; \
+		} \
+		extern "C" plugin_api int Plugify_PluginInit(void** data, size_t len, int version, void* handle) { \
+			if (version < kApiVersion) { \
+				return kApiVersion; \
+			} \
+			std::span<void*> api(data, len); \
+			size_t i = 0; \
+			GetBaseDir = reinterpret_cast<GetBaseDirFn>(api[i++]); \
+			GetExtensionsDir = reinterpret_cast<GetExtensionsDirFn>(api[i++]); \
+			GetConfigsDir = reinterpret_cast<GetConfigsDirFn>(api[i++]); \
+			GetDataDir = reinterpret_cast<GetDataDirFn>(api[i++]); \
+			GetLogsDir = reinterpret_cast<GetLogsDirFn>(api[i++]); \
+			GetCacheDir = reinterpret_cast<GetCacheDirFn>(api[i++]); \
+			IsLoaded = reinterpret_cast<IsLoadedFn>(api[i++]); \
+			Log = reinterpret_cast<LogFn>(api[i++]); \
+			BeginZone = reinterpret_cast<BeginZoneFn>(api[i++]); \
+			EndZone = reinterpret_cast<EndZoneFn>(api[i++]); \
+			plugin::GetId = reinterpret_cast<plugin::GetIdFn>(api[i++]); \
+			plugin::GetName = reinterpret_cast<plugin::GetNameFn>(api[i++]); \
+			plugin::GetDescription = reinterpret_cast<plugin::GetDescriptionFn>(api[i++]); \
+			plugin::GetVersion = reinterpret_cast<plugin::GetVersionFn>(api[i++]); \
+			plugin::GetAuthor = reinterpret_cast<plugin::GetAuthorFn>(api[i++]); \
+			plugin::GetWebsite = reinterpret_cast<plugin::GetWebsiteFn>(api[i++]); \
+			plugin::GetLicense = reinterpret_cast<plugin::GetLicenseFn>(api[i++]); \
+			plugin::GetLocation = reinterpret_cast<plugin::GetLocationFn>(api[i++]); \
+			plugin::GetDependencies = reinterpret_cast<plugin::GetDependenciesFn>(api[i++]); \
+			plugin::handle = handle; \
+			return 0; \
+		} \
+		plg::Plugin* GetPlugin() { \
+			return plugin_addr; \
+		} \
+		template<typename T> \
 		constexpr bool has_overridden_OnPluginStart = requires { \
 			{ std::declval<T>().OnPluginStart() }; \
-		} && !std::is_same_v<decltype(&T::OnPluginStart), decltype(&IPluginEntry::OnPluginStart)>; \
+		} && !std::is_same_v<decltype(&T::OnPluginStart), decltype(&Plugin::OnPluginStart)>; \
 		template<typename T> \
 		constexpr bool has_overridden_OnPluginUpdate = requires { \
 			{ std::declval<T>().OnPluginUpdate(std::chrono::milliseconds{0}) }; \
-		} && !std::is_same_v<decltype(&T::OnPluginUpdate), decltype(&IPluginEntry::OnPluginUpdate)>; \
+		} && !std::is_same_v<decltype(&T::OnPluginUpdate), decltype(&Plugin::OnPluginUpdate)>; \
 		template<typename T> \
 		constexpr bool has_overridden_OnPluginEnd = requires { \
 			{ std::declval<T>().OnPluginEnd() }; \
-		} && !std::is_same_v<decltype(&T::OnPluginEnd), decltype(&IPluginEntry::OnPluginEnd)>; \
-        extern "C" plugin_api void Plugify_PluginStart() { \
-            GetPluginEntry()->OnPluginStart(); \
-        } \
-        extern "C" plugin_api void Plugify_PluginUpdate(std::chrono::milliseconds dt) { \
-            GetPluginEntry()->OnPluginUpdate(dt); \
-        } \
-        extern "C" plugin_api void Plugify_PluginEnd() { \
-            GetPluginEntry()->OnPluginEnd(); \
-        } \
-        extern "C" plugin_api PluginContext* Plugify_PluginContext() { \
-            static PluginContext context = { \
-                .hasUpdate = has_overridden_OnPluginUpdate<plugin_class>, \
-                .hasStart = has_overridden_OnPluginStart<plugin_class>, \
-                .hasEnd = has_overridden_OnPluginEnd<plugin_class>, \
-                .hasDebug = PLUGIFY_IS_DEBUG \
-            }; \
-            return &context; \
-        } \
-    }
+		} && !std::is_same_v<decltype(&T::OnPluginEnd), decltype(&Plugin::OnPluginEnd)>; \
+		extern "C" plugin_api PluginResult Plugify_PluginStart() { \
+			return GetPlugin()->OnPluginStart(); \
+		} \
+		extern "C" plugin_api PluginResult Plugify_PluginUpdate(std::chrono::milliseconds dt) { \
+			return GetPlugin()->OnPluginUpdate(dt); \
+		} \
+		extern "C" plugin_api PluginResult Plugify_PluginEnd() { \
+			return GetPlugin()->OnPluginEnd(); \
+		} \
+		extern "C" plugin_api PluginContext* Plugify_PluginContext() { \
+			using plugin_type = std::remove_cvref_t<decltype(*plugin_addr)>; \
+			static PluginContext context = { \
+				.hasUpdate = has_overridden_OnPluginUpdate<plugin_type>, \
+				.hasStart = has_overridden_OnPluginStart<plugin_type>, \
+				.hasEnd = has_overridden_OnPluginEnd<plugin_type>, \
+				.hasDebug = PLUGIFY_IS_DEBUG \
+			}; \
+			return &context; \
+		} \
+	} \
+PLUGIFY_WARN_POP()
 
 namespace plg {
 	namespace raw {

@@ -3,14 +3,16 @@
 #include <plg/string.hpp>
 #include <plugin_export.h>
 
-class ExamplePlugin final : public plg::IPluginEntry {
+class ExamplePlugin final : public plg::Plugin {
 public:
-    void OnPluginStart() final {
+    plg::PluginResult OnPluginStart() final {
         std::cout << "Example Start!" << std::endl;
+        return {};
     }
 
-    void OnPluginEnd() final {
+    plg::PluginResult OnPluginEnd() final {
         std::cout << "Example End!" << std::endl;
+        return {};
     }
 
     void MakePrint(int count, const plg::string &message) {
@@ -20,7 +22,7 @@ public:
     }
 } g_examplePlugin;
 
-EXPOSE_PLUGIN(PLUGIN_API, ExamplePlugin, &g_examplePlugin)
+PLUGIFY_PLUGIN(PLUGIN_API, &g_examplePlugin)
 
 extern "C"
 PLUGIN_API void MakePrint(int count, const plg::string &message) {
