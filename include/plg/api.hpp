@@ -10,7 +10,7 @@ namespace plg {
 	public:
 		PluginResult() noexcept = default;
 
-		PluginResult(std::string_view message, PluginCode code = PluginCode::Failed)
+		explicit PluginResult(std::string_view message, PluginCode code = PluginCode::Failed)
 			: _code{code}, _message{message} {}
 
 		explicit operator bool() const noexcept { return _code == PluginCode::Ok; }
