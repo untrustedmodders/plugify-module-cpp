@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.4.0](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.3.0...v2.4.0) (2026-05-24)
+
+
+### Features
+
+* add new error handling ([ced8de5](https://github.com/untrustedmodders/plugify-module-cpp/commit/ced8de572a33fc1e0f8ffbf82d9dc8ae5f1cf890))
+
+
+### Bug Fixes
+
+* add profiler ([dade9f3](https://github.com/untrustedmodders/plugify-module-cpp/commit/dade9f36c495b00c0a70ac54796b19a081784645))
+
 ## [2.3.0](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.2.1...v2.3.0) (2026-03-10)
 
 
