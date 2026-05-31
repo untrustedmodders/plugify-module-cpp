@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.4.2](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.4.1...v2.4.2) (2026-05-31)
+
+
+### Bug Fixes
+
+* add scopes check ([00ab1ab](https://github.com/untrustedmodders/plugify-module-cpp/commit/00ab1ab182390b44ed6ebb6b21efa521cf35a0a8))
+* update plugify ([b35ad56](https://github.com/untrustedmodders/plugify-module-cpp/commit/b35ad5666e9d7a868992ef6ae39f935cc86e6890))
+* update plugify ([96d99fb](https://github.com/untrustedmodders/plugify-module-cpp/commit/96d99fb9a7088423319cf48ad5ea73e0cc16d2e9))
+* update some includes ([434e8a7](https://github.com/untrustedmodders/plugify-module-cpp/commit/434e8a733b94caf06a4f2e7724818ed4ceea0c12))
+
 ## [2.4.1](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.4.0...v2.4.1) (2026-05-24)
 
 
