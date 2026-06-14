@@ -2135,7 +2135,7 @@ namespace cross_call_master {
    * @param func (function)
    * @return string
    */
-  inline plg::string CallFuncAliasAllCallback(FuncAliasAll func, plg::source_location __location = plg::source_location::current()) {
+  inline AliasString CallFuncAliasAllCallback(FuncAliasAll func, plg::source_location __location = plg::source_location::current()) {
     [[maybe_unused]] auto __scope = plg::Scope("cross_call_master::CallFuncAliasAllCallback", __location);
     return __cross_call_master_CallFuncAliasAllCallback(func);
   }

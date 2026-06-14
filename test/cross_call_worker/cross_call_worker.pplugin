@@ -3516,13 +3516,19 @@
 							{ "name": "aVec4Vec",   "type": "vec4[]",      "ref": false, "alias": { "name": "AliasVec4Vector" } }
 						],
 						"retType": {
-							"type": "string"
+							"type": "string",
+							"alias": {
+								"name": "AliasString"
+							}
 						}
 					}
 				}
 			],
 			"retType": {
-				"type": "string"
+				"type": "string",
+				"alias": {
+					"name": "AliasString"
+				}
 			}
 		},
 		{

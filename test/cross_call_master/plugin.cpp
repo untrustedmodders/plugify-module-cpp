@@ -4404,13 +4404,7 @@ PLUGIFY_PLUGIN(PLUGIN_API, &g_plugin)
 
 PLUGIFY_WARN_PUSH()
 
-#if defined(__clang__)
-PLUGIFY_WARN_IGNORE ("-Wreturn-type-c-linkage")
-#elif defined(_MSC_VER)
-PLUGIFY_WARN_IGNORE (
-4190
-)
-#endif
+PLUGIFY_LINKAGE()
 
 extern "C"
 PLUGIN_API void ReverseReturn(const plg::string &returnString) {
@@ -5554,7 +5548,7 @@ PLUGIN_API cross_call_worker::AliasMat4x4 CallFuncAliasMat4x4Callback(cross_call
 }
 
 extern "C"
-PLUGIN_API plg::string CallFuncAliasAllCallback(cross_call_worker::FuncAliasAll func) {
+PLUGIN_API cross_call_worker::AliasString CallFuncAliasAllCallback(cross_call_worker::FuncAliasAll func) {
 	cross_call_worker::AliasBool aBool{true};
 	cross_call_worker::AliasChar8 aChar8{'A'};
 	cross_call_worker::AliasChar16 aChar16{u'0'};
