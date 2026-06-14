@@ -4,7 +4,6 @@
 
 using namespace plugify;
 using namespace cpplm;
-namespace fs = std::filesystem;
 
 #define LOG_PREFIX "[CPPLM] "
 
@@ -52,8 +51,9 @@ Result<void> CppLanguageModule::OnMethodExport(const Extension& plugin) {
 }
 
 Result<LoadData> CppLanguageModule::OnPluginLoad(const Extension& plugin) {
-	fs::path entryPoint(plugin.GetEntry());
-	fs::path assemblyPath(plugin.GetLocation() / entryPoint.parent_path() / std::format(CPPLM_LIBRARY_PREFIX "{}" CPPLM_LIBRARY_SUFFIX, plg::as_string(entryPoint.filename())));
+	std::filesystem::path entryPoint(plugin.GetEntry());
+	entryPoint.replace_filename(std::format(PLUGIFY_PATH_LITERAL("" CPPLM_LIBRARY_PREFIX "{}" CPPLM_LIBRARY_SUFFIX), entryPoint.stem().native()));
+	std::filesystem::path assemblyPath(plugin.GetLocation() / entryPoint);
 
 	LoadFlag flags = LoadFlag::LazyBinding;
 	if (_provider->IsPreferOwnSymbols()) {
