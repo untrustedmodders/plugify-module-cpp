@@ -116,9 +116,9 @@ Result<LoadData> CppLanguageModule::OnPluginLoad(const Extension& plugin) {
 		return MakeError("Invalid methods:\n{}", plg::join(errors, "\n"));
 	}
 
-	const int requiredVersion = initFunc(_pluginApi.data(), _pluginApi.size(), plg::kApiVersion, static_cast<const void *>(&plugin));
+	const int requiredVersion = initFunc(_pluginApi.data(), _pluginApi.size(), plg::ApiVersion, &plugin);
 	if (requiredVersion != 0) {
-		return MakeError("Not supported plugin api {}, max supported {}", requiredVersion, plg::kApiVersion);
+		return MakeError("Not supported plugin api {}, max supported {}", requiredVersion, plg::ApiVersion);
 	}
 
 	const auto& [hasUpdate, hasStart, hasEnd, hasDebug] = contextFunc ? *(contextFunc()) : plg::PluginContext{};
@@ -132,7 +132,7 @@ Result<LoadData> CppLanguageModule::OnPluginLoad(const Extension& plugin) {
 	}
 #endif
 
-	auto data = _assemblies.emplace_back(std::make_unique<AssemblyHolder>(std::move(assembly), updateFunc, startFunc, endFunc, contextFunc)).get();
+	auto data = _assemblies.emplace_back(std::make_unique<AssemblyHolder>(std::move(assembly), updateFunc, startFunc, endFunc)).get();
 	return LoadData{ std::move(methods), data, { hasUpdate, hasStart, hasEnd, !exportedMethods.empty() } };
 }
 

@@ -4904,7 +4904,7 @@
 								"ref": true
 							},
 							{
-								"name": "vectorptr64Ref",
+								"name": "vectorptr64RefV2",
 								"type": "ptr64[]",
 								"ref": true
 							}
@@ -5575,12 +5575,12 @@
 								"ref": true
 							},
 							{
-								"name": "p14",
+								"name": "p15",
 								"type": "uint8",
 								"ref": true
 							},
 							{
-								"name": "p15",
+								"name": "p16",
 								"type": "char16[]",
 								"ref": true
 							}

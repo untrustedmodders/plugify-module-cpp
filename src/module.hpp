@@ -14,7 +14,7 @@
 using namespace plugify;
 
 namespace cpplm {
-	using InitFunc = int (*)(void**, size_t, int, const void*);
+	using InitFunc = int (*)(void**, size_t, int, const Extension*);
 	using StartFunc = plg::PluginResult (*)();
 	using UpdateFunc = plg::PluginResult (*)(std::chrono::milliseconds);
 	using EndFunc = plg::PluginResult (*)();
@@ -22,10 +22,9 @@ namespace cpplm {
 
 	struct AssemblyHolder {
 		std::shared_ptr<IAssembly> assembly;
-		UpdateFunc updateFunc;
-		StartFunc startFunc;
-		EndFunc endFunc;
-		ContextFunc contextFunc;
+		UpdateFunc updateFunc{};
+		StartFunc startFunc{};
+		EndFunc endFunc{};
 	};
 
 	class CppLanguageModule final : public ILanguageModule {

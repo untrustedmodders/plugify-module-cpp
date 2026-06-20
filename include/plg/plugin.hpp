@@ -146,8 +146,8 @@ PLUGIFY_LINKAGE() \
 			GetDependenciesFn GetDependencies{nullptr}; \
 		} \
 		extern "C" plugin_api int Plugify_PluginInit(void** data, size_t len, int version, void* handle) { \
-			if (version < kApiVersion) { \
-				return kApiVersion; \
+			if (version < ApiVersion) { \
+				return ApiVersion; \
 			} \
 			std::span<void*> api(data, len); \
 			size_t i = 0; \

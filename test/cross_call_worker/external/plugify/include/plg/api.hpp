@@ -2,7 +2,7 @@
 #include <string_view>
 
 namespace plg {
-	constexpr int kApiVersion = 3;
+	constexpr int ApiVersion = 3;
 
 	enum class PluginCode { Ok, Failed };
 
