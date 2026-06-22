@@ -763,8 +763,8 @@ PLUGIN_API double CallFuncDouble(cross_call_master::FuncDouble func) {
 }
 
 extern "C"
-PLUGIN_API void *CallFuncFunction(cross_call_master::FuncFunction func) {
-    void *result = func();
+PLUGIN_API cross_call_master::FuncFunctionInner CallFuncFunction(cross_call_master::FuncFunction func) {
+    cross_call_master::FuncFunctionInner result = func();
     return result;
 }
 

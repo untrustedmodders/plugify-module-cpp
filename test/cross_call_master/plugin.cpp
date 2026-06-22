@@ -5135,8 +5135,8 @@ PLUGIN_API double CallFuncDoubleCallback(cross_call_worker::FuncDouble func) {
 }
 
 extern "C"
-PLUGIN_API void *CallFuncFunctionCallback(cross_call_worker::FuncFunction func) {
-    void *result = func();
+PLUGIN_API FuncFunctionInner CallFuncFunctionCallback(cross_call_worker::FuncFunction func) {
+    FuncFunctionInner result = func();
     return result;
 }
 
@@ -6125,8 +6125,8 @@ public:
     static std::atomic<int32_t> s_totalDestroyed;
     static std::mutex s_mutex;
 
-    ResourceHandle(int32_t id, const plg::string& name)
-        : id(id), name(name), counter(0) {
+    ResourceHandle(int32_t id_, const plg::string& name_)
+        : id(id_), name(name_), counter(0) {
 		++s_aliveCount;
         ++s_totalCreated;
         std::lock_guard<std::mutex> lock(s_mutex);

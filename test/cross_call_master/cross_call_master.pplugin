@@ -1849,7 +1849,15 @@
 				}
 			],
 			"retType": {
-				"type": "ptr64"
+				"type": "function",
+				"prototype": {
+					"name": "FuncFunctionInner",
+					"paramTypes": [
+					],
+					"retType": {
+						"type": "void"
+					}
+				}
 			}
 		},
 		{
@@ -2835,7 +2843,15 @@
                 }
             ],
             "retType": {
-                "type": "ptr64",
+				"type": "function",
+				"prototype": {
+					"name": "FuncAliasFunctionInner",
+					"paramTypes": [
+					],
+					"retType": {
+						"type": "void"
+					}
+				},
                 "alias": {
                     "name": "AliasFunction"
                 }
