@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.4.2](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.4.1...v2.4.2) (2026-06-29)
+
+
+### Bug Fixes
+
+* add protos to return in parser ([55d0b51](https://github.com/untrustedmodders/plugify-module-cpp/commit/55d0b516023172ff8ebf81e0bdba71485145d8e7))
+* add scopes check ([00ab1ab](https://github.com/untrustedmodders/plugify-module-cpp/commit/00ab1ab182390b44ed6ebb6b21efa521cf35a0a8))
+* improve name extraction from path ([efe8eb0](https://github.com/untrustedmodders/plugify-module-cpp/commit/efe8eb0352eb7f2cd9c456d496201dab8a62dd4b))
+* typo in tests ([17ac09f](https://github.com/untrustedmodders/plugify-module-cpp/commit/17ac09f0dd58b372b3f9dcdc3e3af1393bf30b0f))
+* update plugify ([b35ad56](https://github.com/untrustedmodders/plugify-module-cpp/commit/b35ad5666e9d7a868992ef6ae39f935cc86e6890))
+* update plugify ([96d99fb](https://github.com/untrustedmodders/plugify-module-cpp/commit/96d99fb9a7088423319cf48ad5ea73e0cc16d2e9))
+* update profiler ([99f6d33](https://github.com/untrustedmodders/plugify-module-cpp/commit/99f6d3336d70c42e23770fd1152d6ca8c13a632c))
+* update some includes ([434e8a7](https://github.com/untrustedmodders/plugify-module-cpp/commit/434e8a733b94caf06a4f2e7724818ed4ceea0c12))
+* update tests ([000b063](https://github.com/untrustedmodders/plugify-module-cpp/commit/000b063e02ef2e20bae4219eda65fa04e9f77114))
+
 ## [2.4.1](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.4.0...v2.4.1) (2026-05-24)
 
 
