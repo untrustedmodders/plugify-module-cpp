@@ -42,7 +42,7 @@ Result<void> CppLanguageModule::OnMethodExport(const Extension& plugin) {
 		auto variableName = std::format("__{}_{}", plugin.GetName(), method.GetName());
 		for (const auto& assembly : _assemblies) {
 			if (auto function = assembly->assembly->GetSymbol(variableName)) {
-				*function->RCast<MemAddr*>() = addr;
+				*function->As<Address*>() = addr;
 			}
 		}
 	}
@@ -88,11 +88,11 @@ Result<LoadData> CppLanguageModule::OnPluginLoad(const Extension& plugin) {
 		return MakeError(std::move(contextResult.error()));
 	}
 
-	auto* initFunc = initResult->RCast<InitFunc>();
-	auto* startFunc = startResult->RCast<StartFunc>();
-	auto* updateFunc = updateResult->RCast<UpdateFunc>();
-	auto* endFunc = endResult->RCast<EndFunc>();
-	auto* contextFunc = contextResult->RCast<ContextFunc>();
+	auto* initFunc = initResult->As<InitFunc>();
+	auto* startFunc = startResult->As<StartFunc>();
+	auto* updateFunc = updateResult->As<UpdateFunc>();
+	auto* endFunc = endResult->As<EndFunc>();
+	auto* contextFunc = contextResult->As<ContextFunc>();
 
 	std::vector<std::string> errors;
 
@@ -137,7 +137,7 @@ Result<LoadData> CppLanguageModule::OnPluginLoad(const Extension& plugin) {
 }
 
 Result<void> CppLanguageModule::OnPluginStart(const Extension& plugin) {
-	auto result = plugin.GetUserData().RCast<AssemblyHolder*>()->startFunc();
+	auto result = plugin.GetUserData().As<AssemblyHolder*>()->startFunc();
 	if (!result) {
 		_logger->Log(std::format(LOG_PREFIX "{}: call of 'OnPluginStart' failed\n{}", plugin.GetName(), result.GetMessage()), Severity::Error);
 		return MakeError(std::string(result));
@@ -146,16 +146,16 @@ Result<void> CppLanguageModule::OnPluginStart(const Extension& plugin) {
 }
 
 Result<void> CppLanguageModule::OnPluginUpdate(const Extension& plugin, std::chrono::milliseconds dt) {
-	auto result = plugin.GetUserData().RCast<AssemblyHolder*>()->updateFunc(dt);
+	auto result = plugin.GetUserData().As<AssemblyHolder*>()->updateFunc(dt);
 	if (!result) {
 		_logger->Log(std::format(LOG_PREFIX "{}: call of 'OnPluginUpdate' failed\n{}", plugin.GetName(), result.GetMessage()), Severity::Error);
 		return MakeError(std::string(result));
 	}
-	return {};
+ 	return {};
 }
 
 Result<void> CppLanguageModule::OnPluginEnd(const Extension& plugin) {
-	auto result = plugin.GetUserData().RCast<AssemblyHolder*>()->endFunc();
+	auto result = plugin.GetUserData().As<AssemblyHolder*>()->endFunc();
 	if (!result) {
 		_logger->Log(std::format(LOG_PREFIX "{}: call of 'OnPluginEnd' failed\n{}", plugin.GetName(), result.GetMessage()), Severity::Error);
 		return MakeError(std::string(result));
@@ -203,7 +203,7 @@ void Log(std::string_view message, Severity severity, const Location& location) 
 
 ZoneHandle BeginZone(std::string_view name, const Location& location) {
 	if (const auto& profiler = g_cpplm.GetProfiler()) {
-		return profiler->BeginZone(ZoneInfo{name, location.function_name(), location.file_name(), location.line(), 0});
+		return profiler->BeginZone(name, location);
 	}
 	return {};
 }
