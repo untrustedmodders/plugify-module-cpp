@@ -149,13 +149,34 @@ def map_type(t: str):
     return switch_dict.get(t, '?')
 
 
-def convert_type(type_str: str, enums_map: dict, typedefs_map: dict):
+def resolve_typedef_base(t: str, enums_map: dict, typedefs_map: dict, seen: set):
+    """
+    Resolve t as a plain (non-function-pointer) typedef name to its underlying
+    mapped type, following typedef chains recursively. Function-pointer typedefs
+    are left alone here - callers handle those separately by emitting a
+    "function" type with a prototype. Returns (mapped_type, True) if t is such a
+    typedef, or (None, False) otherwise.
+    """
+    typedef_info = typedefs_map.get(t)
+    if not typedef_info or typedef_info.get('IsFunctionPointer'):
+        return None, False
+    if t in seen:
+        return '?', True
+    seen.add(t)
+    mapped, _ = convert_type(typedef_info.get('Underlying', ''), enums_map, typedefs_map, seen)
+    return mapped, True
+
+
+def convert_type(type_str: str, enums_map: dict, typedefs_map: dict, seen: set = None):
     """
     Convert type string into its mapped type and reference flag.
     Returns (mapped_type, is_reference)
     """
     if not type_str:
         return '?', False
+
+    if seen is None:
+        seen = set()
 
     const = False
     t = type_str.strip()
@@ -181,9 +202,10 @@ def convert_type(type_str: str, enums_map: dict, typedefs_map: dict):
             mapped = enums_map[base_type].get('BaseType', '?')
             return mapped, not const
 
-        # Check if it's a typedef
-        #if base_type in typedefs_map:
-        #    return '?', not const  # Typedefs usually stay as '?'
+        # Check if it's a typedef; resolve to its underlying type
+        mapped, is_typedef = resolve_typedef_base(base_type, enums_map, typedefs_map, seen)
+        if is_typedef:
+            return mapped, not const
 
         return map_type(base_type), not const
 
@@ -191,9 +213,10 @@ def convert_type(type_str: str, enums_map: dict, typedefs_map: dict):
     if t in enums_map:
         return enums_map[t].get('BaseType', '?'), False
 
-    # Check if it's a typedef
-    #if t in typedefs_map:
-    #    return '?', False  # Typedefs usually stay as '?'
+    # Check if it's a typedef; resolve to its underlying type
+    mapped, is_typedef = resolve_typedef_base(t, enums_map, typedefs_map, seen)
+    if is_typedef:
+        return mapped, False
 
     return map_type(t), False
 
@@ -506,6 +529,19 @@ def build_enum_structure(enum_name: str, enums_map: dict, filter_sentinel_values
     return enum_struct
 
 
+def build_alias_structure(typedef_name: str, typedefs_map: dict):
+    """Build alias structure for a resolved, non-function-pointer typedef."""
+    typedef_info = typedefs_map.get(typedef_name)
+    if not typedef_info or typedef_info.get('IsFunctionPointer'):
+        return None
+
+    alias_struct = {'name': typedef_name}
+    if typedef_info.get('Description'):
+        alias_struct['description'] = typedef_info['Description']
+
+    return alias_struct
+
+
 def build_function_prototype(typedef_name: str, typedefs_map: dict, enums_map: dict):
     """Build function prototype structure for function pointer typedefs."""
     if typedef_name not in typedefs_map:
@@ -549,6 +585,10 @@ def build_function_prototype(typedef_name: str, typedefs_map: dict, enums_map: d
             enum_struct = build_enum_structure(base_type_name, enums_map)
             if enum_struct:
                 param_data['enum'] = enum_struct
+        else:
+            alias_struct = build_alias_structure(base_type_name, typedefs_map)
+            if alias_struct:
+                param_data['alias'] = alias_struct
 
         param_types_list.append(param_data)
 
@@ -575,6 +615,12 @@ def build_function_prototype(typedef_name: str, typedefs_map: dict, enums_map: d
         prototype = build_function_prototype(base_return_type, typedefs_map, enums_map)
         if prototype:
             ret_type['prototype'] = prototype
+
+    # Check if return type is a plain typedef and add alias structure
+    elif base_return_type in typedefs_map:
+        alias_struct = build_alias_structure(base_return_type, typedefs_map)
+        if alias_struct:
+            ret_type['alias'] = alias_struct
 
     prototype['retType'] = ret_type
 
@@ -645,6 +691,12 @@ def process_function(function, enums_map, typedefs_map, group_name=None):
             if prototype:
                 param_data['prototype'] = prototype
 
+        # Check if parameter is a plain typedef and add alias structure
+        elif base_type_name in typedefs_map:
+            alias_struct = build_alias_structure(base_type_name, typedefs_map)
+            if alias_struct:
+                param_data['alias'] = alias_struct
+
         param_types.append(param_data)
 
     # Process return type
@@ -672,6 +724,12 @@ def process_function(function, enums_map, typedefs_map, group_name=None):
         prototype = build_function_prototype(base_return_type, typedefs_map, enums_map)
         if prototype:
             ret_type['prototype'] = prototype
+
+    # Check if return type is a plain typedef and add alias structure
+    elif base_return_type in typedefs_map:
+        alias_struct = build_alias_structure(base_return_type, typedefs_map)
+        if alias_struct:
+            ret_type['alias'] = alias_struct
 
     # Build final function data
     function_data = {

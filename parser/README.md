@@ -216,6 +216,20 @@ When a parameter is a function pointer typedef, the complete function signature 
 }
 ```
 
+### Parameter or Return Type with Typedef Alias
+
+When a parameter or return type is named via a plain (non-function-pointer) typedef, such as `using MenuId = uint32_t;`, the resolved type is used and the original typedef name (plus its Doxygen description, if any) is preserved in an `alias` structure:
+
+```json
+{
+    "type": "uint32",
+    "description": "A handle to the created menu.",
+    "alias": {
+        "name": "MenuId"
+    }
+}
+```
+
 ### Field Descriptions
 
 - `name`: Function name
@@ -228,11 +242,13 @@ When a parameter is a function pointer typedef, the complete function signature 
   - `ref`: Boolean indicating if it's a reference parameter
   - `description`: Parameter description from Doxygen comments (if available)
   - `enum`: (Optional) Full enum structure if parameter is an enum type
+  - `alias`: (Optional) `{name, description}` of the typedef if the parameter is named via a plain typedef (e.g. `MenuId`)
   - `prototype`: (Optional) Full function signature if parameter is a function pointer typedef
 - `retType`: Return type object:
   - `type`: Mapped return type
   - `description`: Return description from Doxygen comments (if available)
   - `enum`: (Optional) Full enum structure if return type is an enum
+  - `alias`: (Optional) `{name, description}` of the typedef if the return type is named via a plain typedef
 
 ## Advanced Features
 
@@ -282,7 +298,7 @@ The script maps C++ types to simplified types:
 | `Vector`, `QAngle`, `plg::vec3` | `vec3` |
 | Enums | Base type (e.g., `uint8`, `int32`) + enum structure |
 | Function pointer typedefs | `function` + prototype structure |
-| Other typedefs | `?` |
+| Other typedefs (e.g. `using MenuId = uint32_t;`) | Underlying type (e.g. `uint32`), resolved recursively through typedef chains + alias structure |
 
 Pointers (except `void*`) are mapped to `ptr64`, and unknown types default to `?`.
 

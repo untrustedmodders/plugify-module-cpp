@@ -12,6 +12,7 @@ type Param struct {
 	Ref         bool               `json:"ref"`
 	Description string             `json:"description,omitempty"`
 	Enum        *EnumStruct        `json:"enum,omitempty"`
+	Alias       *AliasStruct       `json:"alias,omitempty"`
 	Prototype   *FunctionPrototype `json:"prototype,omitempty"`
 }
 
@@ -20,6 +21,7 @@ type RetType struct {
 	Type        string             `json:"type"`
 	Description string             `json:"description,omitempty"`
 	Enum        *EnumStruct        `json:"enum,omitempty"`
+	Alias       *AliasStruct       `json:"alias,omitempty"`
 	Prototype   *FunctionPrototype `json:"prototype,omitempty"`
 }
 
@@ -104,10 +106,14 @@ func processFunction(function map[string]interface{}, enumsMap map[string]EnumIn
 			if es := buildEnumStructure(baseTypeName, enumsMap); es != nil {
 				paramData.Enum = es
 			}
-		} else if td, ok := typedefsMap[baseTypeName]; ok && td.IsFunctionPointer {
-			paramData.Type = "function"
-			if proto := buildFunctionPrototype(baseTypeName, typedefsMap, enumsMap); proto != nil {
-				paramData.Prototype = proto
+		} else if td, ok := typedefsMap[baseTypeName]; ok {
+			if td.IsFunctionPointer {
+				paramData.Type = "function"
+				if proto := buildFunctionPrototype(baseTypeName, typedefsMap, enumsMap); proto != nil {
+					paramData.Prototype = proto
+				}
+			} else if alias := buildAliasStructure(baseTypeName, typedefsMap); alias != nil {
+				paramData.Alias = alias
 			}
 		}
 
@@ -132,10 +138,14 @@ func processFunction(function map[string]interface{}, enumsMap map[string]EnumIn
 		if es := buildEnumStructure(baseReturnType, enumsMap); es != nil {
 			retType.Enum = es
 		}
-	} else if td, ok := typedefsMap[baseReturnType]; ok && td.IsFunctionPointer {
-		retType.Type = "function"
-		if proto := buildFunctionPrototype(baseReturnType, typedefsMap, enumsMap); proto != nil {
-			retType.Prototype = proto
+	} else if td, ok := typedefsMap[baseReturnType]; ok {
+		if td.IsFunctionPointer {
+			retType.Type = "function"
+			if proto := buildFunctionPrototype(baseReturnType, typedefsMap, enumsMap); proto != nil {
+				retType.Prototype = proto
+			}
+		} else if alias := buildAliasStructure(baseReturnType, typedefsMap); alias != nil {
+			retType.Alias = alias
 		}
 	}
 

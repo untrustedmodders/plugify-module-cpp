@@ -16,6 +16,26 @@ type TypedefInfo struct {
 	ParamTypes        []string
 }
 
+// AliasStruct records that a parameter/return type was named via a plain
+// (non-function-pointer) typedef, embedded into a Param or RetType.
+type AliasStruct struct {
+	Name        string `json:"name"`
+	Description string `json:"description,omitempty"`
+}
+
+// buildAliasStructure builds an alias structure for a resolved, non-function-pointer typedef.
+func buildAliasStructure(typedefName string, typedefsMap map[string]TypedefInfo) *AliasStruct {
+	td, ok := typedefsMap[typedefName]
+	if !ok || td.IsFunctionPointer {
+		return nil
+	}
+	alias := &AliasStruct{Name: typedefName}
+	if td.Description != "" {
+		alias.Description = td.Description
+	}
+	return alias
+}
+
 var fnPtrReturnTypeRe = regexp.MustCompile(`^\s*(.+?)\s*\(\*\)`)
 
 // parseFunctionPointerSignature parses a function pointer signature string, e.g.
@@ -139,6 +159,8 @@ func buildFunctionPrototype(typedefName string, typedefsMap map[string]TypedefIn
 			if es := buildEnumStructure(baseTypeName, enumsMap); es != nil {
 				paramData.Enum = es
 			}
+		} else if alias := buildAliasStructure(baseTypeName, typedefsMap); alias != nil {
+			paramData.Alias = alias
 		}
 
 		paramTypesList = append(paramTypesList, paramData)
@@ -155,10 +177,14 @@ func buildFunctionPrototype(typedefName string, typedefsMap map[string]TypedefIn
 		if es := buildEnumStructure(baseReturnType, enumsMap); es != nil {
 			retType.Enum = es
 		}
-	} else if td, ok := typedefsMap[baseReturnType]; ok && td.IsFunctionPointer {
-		retType.Type = "function"
-		if p := buildFunctionPrototype(baseReturnType, typedefsMap, enumsMap); p != nil {
-			retType.Prototype = p
+	} else if td, ok := typedefsMap[baseReturnType]; ok {
+		if td.IsFunctionPointer {
+			retType.Type = "function"
+			if p := buildFunctionPrototype(baseReturnType, typedefsMap, enumsMap); p != nil {
+				retType.Prototype = p
+			}
+		} else if alias := buildAliasStructure(baseReturnType, typedefsMap); alias != nil {
+			retType.Alias = alias
 		}
 	}
 	proto.RetType = retType

@@ -5,6 +5,10 @@ import "strings"
 // convertType converts a type string into its mapped type and reference flag.
 // Returns (mappedType, isReference), mirroring parser.py's convert_type().
 func convertType(typeStr string, enumsMap map[string]EnumInfo, typedefsMap map[string]TypedefInfo) (string, bool) {
+	return convertTypeSeen(typeStr, enumsMap, typedefsMap, map[string]bool{})
+}
+
+func convertTypeSeen(typeStr string, enumsMap map[string]EnumInfo, typedefsMap map[string]TypedefInfo, seen map[string]bool) (string, bool) {
 	if typeStr == "" {
 		return "?", false
 	}
@@ -40,6 +44,11 @@ func convertType(typeStr string, enumsMap map[string]EnumInfo, typedefsMap map[s
 			return mapped, !constFlag
 		}
 
+		// Check if it's a (non-function-pointer) typedef; resolve to its underlying type
+		if mapped, ok := resolveTypedefBase(baseType, enumsMap, typedefsMap, seen); ok {
+			return mapped, !constFlag
+		}
+
 		return mapType(baseType), !constFlag
 	}
 
@@ -52,7 +61,29 @@ func convertType(typeStr string, enumsMap map[string]EnumInfo, typedefsMap map[s
 		return mapped, false
 	}
 
+	// Check if it's a (non-function-pointer) typedef; resolve to its underlying type
+	if mapped, ok := resolveTypedefBase(t, enumsMap, typedefsMap, seen); ok {
+		return mapped, false
+	}
+
 	return mapType(t), false
+}
+
+// resolveTypedefBase resolves t as a plain (non-function-pointer) typedef name to
+// its underlying mapped type, following typedef chains recursively. Function-pointer
+// typedefs are left alone here - callers handle those separately by emitting a
+// "function" type with a prototype. ok is false when t is not such a typedef.
+func resolveTypedefBase(t string, enumsMap map[string]EnumInfo, typedefsMap map[string]TypedefInfo, seen map[string]bool) (string, bool) {
+	td, ok := typedefsMap[t]
+	if !ok || td.IsFunctionPointer {
+		return "", false
+	}
+	if seen[t] {
+		return "?", true
+	}
+	seen[t] = true
+	mapped, _ := convertTypeSeen(td.Underlying, enumsMap, typedefsMap, seen)
+	return mapped, true
 }
 
 // stripTypeQualifiers strips const/&/* substrings from a type name, mirroring
