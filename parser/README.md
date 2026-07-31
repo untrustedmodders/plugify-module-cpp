@@ -1,10 +1,10 @@
 # Clang-Doc YAML to JSON Parser
 
-A Python script that parses clang-doc's YAML output and converts it into a structured JSON format suitable for the Plugify project.
+A Go tool that parses clang-doc's YAML output and converts it into a structured JSON format suitable for the Plugify project. A Python implementation (`parser.py`) is also kept in this directory for reference, but the Go version is a drop-in replacement and considerably faster on large doc sets.
 
 ## Overview
 
-This script replaces the previous parser that used cxxheaderparser to directly parse C++ files with Doxygen comments. The new approach leverages clang-doc's YAML output, which provides more accurate and complete information about functions, enums, and typedefs.
+This tool replaces the previous parser that used cxxheaderparser to directly parse C++ files with Doxygen comments. The new approach leverages clang-doc's YAML output, which provides more accurate and complete information about functions, enums, and typedefs.
 
 ## Features
 
@@ -21,12 +21,11 @@ This script replaces the previous parser that used cxxheaderparser to directly p
 
 ## Requirements
 
-- Python 3.6+
-- PyYAML
+- Go 1.21+ (only [gopkg.in/yaml.v3](https://pkg.go.dev/gopkg.in/yaml.v3) as a dependency)
 
-Install dependencies:
+Build the tool:
 ```bash
-pip install pyyaml
+go build -o parser .
 ```
 
 ## Usage
@@ -34,7 +33,12 @@ pip install pyyaml
 ### Basic Usage
 
 ```bash
-python3 clang_doc_parser.py <input_path> <output_file>
+./parser <input_path> <output_file>
+```
+
+Or without a separate build step:
+```bash
+go run . <input_path> <output_file>
 ```
 
 **Arguments:**
@@ -45,29 +49,29 @@ python3 clang_doc_parser.py <input_path> <output_file>
 
 1. **Process a single YAML file:**
    ```bash
-   python3 clang_doc_parser.py index.yaml output.json
+   ./parser index.yaml output.json
    ```
 
 2. **Process all YAML files in a directory:**
    ```bash
-   python3 clang_doc_parser.py ./docs output.json
+   ./parser ./docs output.json
    ```
 
 3. **Filter by function name:**
    ```bash
-   python3 clang_doc_parser.py index.yaml output.json --name-filter "Command"
+   ./parser index.yaml output.json --name-filter "Command"
    ```
    This will only include functions with "Command" in their name.
 
 4. **Filter by source file prefix:**
    ```bash
-   python3 clang_doc_parser.py index.yaml output.json --file-filter "commands"
+   ./parser index.yaml output.json --file-filter "commands"
    ```
    This will only include functions from files starting with "commands" (e.g., `commands.cpp`).
 
 5. **Combine filters:**
    ```bash
-   python3 clang_doc_parser.py index.yaml output.json --name-filter "Add" --file-filter "commands"
+   ./parser index.yaml output.json --name-filter "Add" --file-filter "commands"
    ```
 
 ### Command-Line Options
@@ -100,8 +104,12 @@ endif()
 Then run:
 ```bash
 cmake --build . --target docs
-python3 clang_doc_parser.py docs/index.yaml exported_functions.json
+./parser docs/index.yaml exported_functions.json
 ```
+
+## Python Version
+
+`parser.py` implements the same logic and is kept for reference; it requires Python 3.6+ and PyYAML (`pip install pyyaml`). It accepts identical arguments (`python3 parser.py <input_path> <output_file> [--name-filter NAME] [--file-filter FILE]`) and produces byte-for-byte equivalent JSON output (field order aside), but is meaningfully slower on large clang-doc output directories.
 
 ## Output Format
 
