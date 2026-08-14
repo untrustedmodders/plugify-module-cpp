@@ -17,7 +17,7 @@ type TypedefInfo struct {
 }
 
 // AliasStruct records that a parameter/return type was named via a plain
-// (non-function-pointer) typedef, embedded into a Param or RetType.
+// (non-function-pointer) typedef, embedded into a ParamType or RetType.
 type AliasStruct struct {
 	Name        string `json:"name"`
 	Description string `json:"description,omitempty"`
@@ -135,30 +135,28 @@ func buildTypedefsMap(yamlData map[string]interface{}) map[string]TypedefInfo {
 	return typedefsMap
 }
 
-// buildFunctionPrototype builds a function prototype structure for a function pointer typedef.
-func buildFunctionPrototype(typedefName string, typedefsMap map[string]TypedefInfo, enumsMap map[string]EnumInfo) *FunctionPrototype {
+// buildPrototype builds a function prototype structure for a function pointer typedef.
+func buildPrototype(typedefName string, typedefsMap map[string]TypedefInfo, enumsMap map[string]EnumInfo, tables *typeTables) *Prototype {
 	info, ok := typedefsMap[typedefName]
 	if !ok || !info.IsFunctionPointer {
 		return nil
 	}
 
-	proto := &FunctionPrototype{Name: typedefName, FuncName: typedefName}
+	proto := &Prototype{Name: typedefName, FuncName: typedefName}
 	if info.Description != "" {
 		proto.Description = info.Description
 	}
 
-	paramTypesList := make([]Param, 0, len(info.ParamTypes))
+	paramTypesList := make([]ParamType, 0, len(info.ParamTypes))
 	for i, paramTypeStr := range info.ParamTypes {
 		paramName := fmt.Sprintf("param%d", i+1)
 		mappedType, isRef := convertType(paramTypeStr, enumsMap, typedefsMap)
 
-		paramData := Param{Name: paramName, Type: mappedType, Ref: isRef}
+		paramData := ParamType{Name: paramName, Type: mappedType, Ref: isRef}
 
 		baseTypeName := stripTypeQualifiers(paramTypeStr)
 		if _, ok := enumsMap[baseTypeName]; ok {
-			if es := buildEnumStructure(baseTypeName, enumsMap); es != nil {
-				paramData.Enum = es
-			}
+			paramData.Enum = tables.addEnum(buildEnumStructure(baseTypeName, enumsMap))
 		} else if alias := buildAliasStructure(baseTypeName, typedefsMap); alias != nil {
 			paramData.Alias = alias
 		}
@@ -174,15 +172,12 @@ func buildFunctionPrototype(typedefName string, typedefsMap map[string]TypedefIn
 
 	baseReturnType := stripTypeQualifiers(returnTypeStr)
 	if _, ok := enumsMap[baseReturnType]; ok {
-		if es := buildEnumStructure(baseReturnType, enumsMap); es != nil {
-			retType.Enum = es
-		}
+		retType.Enum = tables.addEnum(buildEnumStructure(baseReturnType, enumsMap))
 	} else if td, ok := typedefsMap[baseReturnType]; ok {
 		if td.IsFunctionPointer {
 			retType.Type = "function"
-			if p := buildFunctionPrototype(baseReturnType, typedefsMap, enumsMap); p != nil {
-				retType.Prototype = p
-			}
+			retType.Prototype = tables.addPrototype(
+				buildPrototype(baseReturnType, typedefsMap, enumsMap, tables))
 		} else if alias := buildAliasStructure(baseReturnType, typedefsMap); alias != nil {
 			retType.Alias = alias
 		}

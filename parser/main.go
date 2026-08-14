@@ -4,6 +4,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -80,7 +81,7 @@ func parseArgs(argv []string) (inputPath, outputFile, nameFilter, fileFilter str
 }
 
 // processYamlFile processes a single YAML file and extracts functions.
-func processYamlFile(yamlFile, nameFilter, fileFilter string) ([]FunctionData, error) {
+func processYamlFile(yamlFile, nameFilter, fileFilter string, tables *typeTables) ([]Method, error) {
 	raw, err := os.ReadFile(yamlFile)
 	if err != nil {
 		return nil, err
@@ -98,7 +99,7 @@ func processYamlFile(yamlFile, nameFilter, fileFilter string) ([]FunctionData, e
 	enumsMap := buildEnumsMap(yamlData)
 	typedefsMap := buildTypedefsMap(yamlData)
 
-	var allFunctions []FunctionData
+	var allFunctions []Method
 
 	childFunctions := asSlice(yamlData["ChildFunctions"])
 	for _, fn := range childFunctions {
@@ -118,7 +119,7 @@ func processYamlFile(yamlFile, nameFilter, fileFilter string) ([]FunctionData, e
 			continue
 		}
 
-		funcData := processFunction(fm, enumsMap, typedefsMap, "")
+		funcData := processFunction(fm, enumsMap, typedefsMap, "", tables)
 		allFunctions = append(allFunctions, funcData)
 		fmt.Printf("Processed: %s\n", funcName)
 	}
@@ -132,7 +133,11 @@ func run(inputPath, outputFile, nameFilter, fileFilter string) error {
 		return fmt.Errorf("%s is neither a file nor a directory", inputPath)
 	}
 
-	var allFunctions []FunctionData
+	// One set of tables across every file, so a type used by several headers is
+	// described once rather than once per header.
+	tables := newTypeTables()
+
+	var methods []Method
 
 	if info.IsDir() {
 		matches, err := filepath.Glob(filepath.Join(inputPath, "*.yaml"))
@@ -143,25 +148,39 @@ func run(inputPath, outputFile, nameFilter, fileFilter string) error {
 
 		for _, yamlFile := range matches {
 			fmt.Printf("\nProcessing: %s\n", yamlFile)
-			functions, err := processYamlFile(yamlFile, nameFilter, fileFilter)
+			functions, err := processYamlFile(yamlFile, nameFilter, fileFilter, tables)
 			if err != nil {
 				return err
 			}
-			allFunctions = append(allFunctions, functions...)
+			methods = append(methods, functions...)
 		}
 	} else {
-		functions, err := processYamlFile(inputPath, nameFilter, fileFilter)
+		functions, err := processYamlFile(inputPath, nameFilter, fileFilter, tables)
 		if err != nil {
 			return err
 		}
-		allFunctions = functions
+		methods = functions
 	}
 
-	if allFunctions == nil {
-		allFunctions = []FunctionData{}
+	if methods == nil {
+		methods = []Method{}
 	}
 
-	data, err := json.MarshalIndent(allFunctions, "", "    ")
+	if err := errors.Join(tables.err(), duplicateExports(methods)); err != nil {
+		return err
+	}
+
+	// Sorted by name so the output reads the same however the headers are
+	// arranged, and so re-running over a reordered doc set produces no diff.
+	sort.Slice(methods, func(i, j int) bool { return methods[i].Name < methods[j].Name })
+
+	output := Output{
+		Methods:    methods,
+		Prototypes: tables.sortedPrototypes(),
+		Enums:      tables.sortedEnums(),
+	}
+
+	data, err := json.MarshalIndent(output, "", "    ")
 	if err != nil {
 		return err
 	}
@@ -169,7 +188,8 @@ func run(inputPath, outputFile, nameFilter, fileFilter string) error {
 		return err
 	}
 
-	fmt.Printf("\nTotal functions exported: %d\n", len(allFunctions))
+	fmt.Printf("\nTotal functions exported: %d (%d prototypes, %d enums)\n",
+		len(methods), len(output.Prototypes), len(output.Enums))
 	fmt.Printf("Output written to: %s\n", outputFile)
 
 	return nil

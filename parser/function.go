@@ -5,44 +5,49 @@ import (
 	"strings"
 )
 
-// Param is a function/prototype parameter in the output JSON.
-type Param struct {
-	Name        string             `json:"name"`
-	Type        string             `json:"type"`
-	Ref         bool               `json:"ref"`
-	Description string             `json:"description,omitempty"`
-	Enum        *EnumStruct        `json:"enum,omitempty"`
-	Alias       *AliasStruct       `json:"alias,omitempty"`
-	Prototype   *FunctionPrototype `json:"prototype,omitempty"`
+// ParamType is a function/prototype parameter in the output JSON.
+//
+// Enum and Prototype name an entry in the output's shared tables rather than
+// carrying the definition, so a type used by many functions is described once.
+// AliasStruct stays inline: it renames a type at one use site rather than describing
+// a type others can share.
+type ParamType struct {
+	Name        string       `json:"name"`
+	Type        string       `json:"type"`
+	Ref         bool         `json:"ref"`
+	Description string       `json:"description,omitempty"`
+	Enum        string       `json:"enum,omitempty"`
+	Alias       *AliasStruct `json:"alias,omitempty"`
+	Prototype   string       `json:"prototype,omitempty"`
 }
 
 // RetType is a function/prototype return type in the output JSON.
 type RetType struct {
-	Type        string             `json:"type"`
-	Description string             `json:"description,omitempty"`
-	Enum        *EnumStruct        `json:"enum,omitempty"`
-	Alias       *AliasStruct       `json:"alias,omitempty"`
-	Prototype   *FunctionPrototype `json:"prototype,omitempty"`
+	Type        string       `json:"type"`
+	Description string       `json:"description,omitempty"`
+	Enum        string       `json:"enum,omitempty"`
+	Alias       *AliasStruct `json:"alias,omitempty"`
+	Prototype   string       `json:"prototype,omitempty"`
 }
 
-// FunctionPrototype is the signature of a function-pointer typedef, embedded
-// into a Param or RetType.
-type FunctionPrototype struct {
-	Name        string  `json:"name"`
-	FuncName    string  `json:"funcName"`
-	Description string  `json:"description,omitempty"`
-	ParamTypes  []Param `json:"paramTypes"`
-	RetType     RetType `json:"retType"`
+// Prototype is the signature of a function-pointer typedef, embedded
+// into a ParamType or RetType.
+type Prototype struct {
+	Name        string      `json:"name"`
+	FuncName    string      `json:"funcName"`
+	Description string      `json:"description,omitempty"`
+	ParamTypes  []ParamType `json:"paramTypes"`
+	RetType     RetType     `json:"retType"`
 }
 
-// FunctionData is a top-level exported function entry in the output JSON.
-type FunctionData struct {
-	Name        string  `json:"name"`
-	FuncName    string  `json:"funcName"`
-	ParamTypes  []Param `json:"paramTypes"`
-	RetType     RetType `json:"retType"`
-	Group       string  `json:"group,omitempty"`
-	Description string  `json:"description,omitempty"`
+// Method is a top-level exported function entry in the output JSON.
+type Method struct {
+	Name        string      `json:"name"`
+	FuncName    string      `json:"funcName"`
+	ParamTypes  []ParamType `json:"paramTypes"`
+	RetType     RetType     `json:"retType"`
+	Group       string      `json:"group,omitempty"`
+	Description string      `json:"description,omitempty"`
 }
 
 // deriveGroupName mirrors os.path.splitext(os.path.basename(filename))[0].lower().capitalize().
@@ -57,7 +62,7 @@ func deriveGroupName(filename string) string {
 }
 
 // processFunction processes a single function and converts it to the desired JSON format.
-func processFunction(function map[string]interface{}, enumsMap map[string]EnumInfo, typedefsMap map[string]TypedefInfo, groupName string) FunctionData {
+func processFunction(function map[string]interface{}, enumsMap map[string]EnumInfo, typedefsMap map[string]TypedefInfo, groupName string, tables *typeTables) Method {
 	funcName := getStrDefault(function, "Name", "Unknown")
 
 	defLocation := asMap(function["DefLocation"])
@@ -82,7 +87,7 @@ func processFunction(function map[string]interface{}, enumsMap map[string]EnumIn
 
 	// Process parameters.
 	params := asSlice(function["Params"])
-	paramTypes := make([]Param, 0, len(params))
+	paramTypes := make([]ParamType, 0, len(params))
 
 	for _, p := range params {
 		pm := asMap(p)
@@ -96,22 +101,18 @@ func processFunction(function map[string]interface{}, enumsMap map[string]EnumIn
 		mappedType, isRef := convertType(paramTypeName, enumsMap, typedefsMap)
 		baseTypeName := stripTypeQualifiers(paramTypeName)
 
-		paramData := Param{Name: paramName, Type: mappedType, Ref: isRef}
+		paramData := ParamType{Name: paramName, Type: mappedType, Ref: isRef}
 
 		if desc, ok := paramDescriptions[paramName]; ok {
 			paramData.Description = desc
 		}
 
 		if _, ok := enumsMap[baseTypeName]; ok {
-			if es := buildEnumStructure(baseTypeName, enumsMap); es != nil {
-				paramData.Enum = es
-			}
+			paramData.Enum = tables.addEnum(buildEnumStructure(baseTypeName, enumsMap))
 		} else if td, ok := typedefsMap[baseTypeName]; ok {
 			if td.IsFunctionPointer {
 				paramData.Type = "function"
-				if proto := buildFunctionPrototype(baseTypeName, typedefsMap, enumsMap); proto != nil {
-					paramData.Prototype = proto
-				}
+				paramData.Prototype = tables.addPrototype(buildPrototype(baseTypeName, typedefsMap, enumsMap, tables))
 			} else if alias := buildAliasStructure(baseTypeName, typedefsMap); alias != nil {
 				paramData.Alias = alias
 			}
@@ -135,21 +136,17 @@ func processFunction(function map[string]interface{}, enumsMap map[string]EnumIn
 
 	baseReturnType := stripTypeQualifiers(returnTypeName)
 	if _, ok := enumsMap[baseReturnType]; ok {
-		if es := buildEnumStructure(baseReturnType, enumsMap); es != nil {
-			retType.Enum = es
-		}
+		retType.Enum = tables.addEnum(buildEnumStructure(baseReturnType, enumsMap))
 	} else if td, ok := typedefsMap[baseReturnType]; ok {
 		if td.IsFunctionPointer {
 			retType.Type = "function"
-			if proto := buildFunctionPrototype(baseReturnType, typedefsMap, enumsMap); proto != nil {
-				retType.Prototype = proto
-			}
+			retType.Prototype = tables.addPrototype(buildPrototype(baseReturnType, typedefsMap, enumsMap, tables))
 		} else if alias := buildAliasStructure(baseReturnType, typedefsMap); alias != nil {
 			retType.Alias = alias
 		}
 	}
 
-	functionData := FunctionData{
+	functionData := Method{
 		Name:       funcName,
 		FuncName:   funcName,
 		ParamTypes: paramTypes,
@@ -164,4 +161,13 @@ func processFunction(function map[string]interface{}, enumsMap map[string]EnumIn
 	}
 
 	return functionData
+}
+
+// Output is the document this tool writes: the exported functions, plus the
+// prototype and enum tables they refer to by name. Merged into a .pplugin by
+// whatever assembles the manifest.
+type Output struct {
+	Methods    []Method      `json:"methods"`
+	Prototypes []*Prototype  `json:"prototypes,omitempty"`
+	Enums      []*EnumStruct `json:"enums,omitempty"`
 }
