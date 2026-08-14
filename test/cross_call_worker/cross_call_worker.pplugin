@@ -1380,9 +1380,7 @@
 					"name": "p2",
 					"type": "int32[]",
 					"ref": false,
-					"enum": {
-						"name": "Example"
-					}
+					"enum": "Example"
 				}
 			],
 			"retType": {
@@ -1397,17 +1395,13 @@
 					"name": "p1",
 					"type": "int32",
 					"ref": true,
-					"enum": {
-						"name": "Example"
-					}
+					"enum": "Example"
 				},
 				{
 					"name": "p2",
 					"type": "int32[]",
 					"ref": true,
-					"enum": {
-						"name": "Example"
-					}
+					"enum": "Example"
 				}
 			],
 			"retType": {
@@ -5656,24 +5650,18 @@
 								"name": "p1",
 								"type": "int32",
 								"ref": false,
-								"enum": {
-									"name": "Example"
-								}
+								"enum": "Example"
 							},
 							{
 								"name": "p2",
 								"type": "int32[]",
 								"ref": true,
-								"enum": {
-									"name": "Example"
-								}
+								"enum": "Example"
 							}
 						],
 						"retType": {
 							"type": "int32[]",
-							"enum": {
-								"name": "Example"
-							}
+							"enum": "Example"
 						}
 					}
 				}
