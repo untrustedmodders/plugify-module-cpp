@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"path/filepath"
 	"strings"
 )
@@ -89,14 +90,14 @@ func processMethodStruct(function map[string]interface{}, enumsMap map[string]En
 	params := asSlice(function["Params"])
 	paramTypes := make([]ParamType, 0, len(params))
 
-	for _, p := range params {
+	for i, p := range params {
 		pm := asMap(p)
 		paramTypeInfo := asMap(pm["Type"])
 		paramTypeName := getStr(paramTypeInfo, "QualName")
 		if paramTypeName == "" {
 			paramTypeName = getStrDefault(paramTypeInfo, "Name", "?")
 		}
-		paramName := getStrDefault(pm, "Name", "unknown")
+		paramName := getStrDefault(pm, "Name", fmt.Sprintf("param%d", i+1))
 
 		mappedType, isRef := convertType(paramTypeName, enumsMap, typedefsMap)
 		baseTypeName := stripTypeQualifiers(paramTypeName)
