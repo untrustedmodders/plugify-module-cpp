@@ -103,9 +103,7 @@ func processFunction(function map[string]interface{}, enumsMap map[string]EnumIn
 
 		paramData := ParamType{Name: paramName, Type: mappedType, Ref: isRef}
 
-		if desc, ok := paramDescriptions[paramName]; ok {
-			paramData.Description = desc
-		}
+		paramData.Description = paramDescriptions[paramName]
 
 		if _, ok := enumsMap[baseTypeName]; ok {
 			paramData.Enum = tables.addEnum(buildEnumStructure(baseTypeName, enumsMap))
@@ -129,10 +127,7 @@ func processFunction(function map[string]interface{}, enumsMap map[string]EnumIn
 	}
 	mappedReturnType, _ := convertType(returnTypeName, enumsMap, typedefsMap)
 
-	retType := RetType{Type: mappedReturnType}
-	if returnDesc != "" {
-		retType.Description = returnDesc
-	}
+	retType := RetType{Type: mappedReturnType, Description: returnDesc}
 
 	baseReturnType := stripTypeQualifiers(returnTypeName)
 	if _, ok := enumsMap[baseReturnType]; ok {
@@ -146,21 +141,14 @@ func processFunction(function map[string]interface{}, enumsMap map[string]EnumIn
 		}
 	}
 
-	functionData := Method{
-		Name:       funcName,
-		FuncName:   funcName,
-		ParamTypes: paramTypes,
-		RetType:    retType,
+	return Method{
+		Name:        funcName,
+		FuncName:    funcName,
+		ParamTypes:  paramTypes,
+		RetType:     retType,
+		Group:       groupName,
+		Description: briefDesc,
 	}
-
-	if groupName != "" {
-		functionData.Group = groupName
-	}
-	if briefDesc != "" {
-		functionData.Description = briefDesc
-	}
-
-	return functionData
 }
 
 // Output is the document this tool writes: the exported functions, plus the

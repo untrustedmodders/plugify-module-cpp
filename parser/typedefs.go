@@ -29,11 +29,7 @@ func buildAliasStructure(typedefName string, typedefsMap map[string]TypedefInfo)
 	if !ok || td.IsFunctionPointer {
 		return nil
 	}
-	alias := &AliasStruct{Name: typedefName}
-	if td.Description != "" {
-		alias.Description = td.Description
-	}
-	return alias
+	return &AliasStruct{Name: typedefName, Description: td.Description}
 }
 
 var fnPtrReturnTypeRe = regexp.MustCompile(`^\s*(.+?)\s*\(\*\)`)
@@ -142,10 +138,7 @@ func buildPrototype(typedefName string, typedefsMap map[string]TypedefInfo, enum
 		return nil
 	}
 
-	proto := &Prototype{Name: typedefName, FuncName: typedefName}
-	if info.Description != "" {
-		proto.Description = info.Description
-	}
+	proto := &Prototype{Name: typedefName, FuncName: typedefName, Description: info.Description}
 
 	paramTypesList := make([]ParamType, 0, len(info.ParamTypes))
 	for i, paramTypeStr := range info.ParamTypes {

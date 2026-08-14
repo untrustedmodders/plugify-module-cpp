@@ -76,10 +76,7 @@ func buildEnumsMap(yamlData map[string]interface{}) map[string]EnumInfo {
 			memberValue := normalizeEnumValue(mm["Value"])
 			memberDesc := extractTextFromDescription(mm["Description"])
 
-			valueEntry := EnumValue{Name: memberName, Value: memberValue}
-			if memberDesc != "" {
-				valueEntry.Description = memberDesc
-			}
+			valueEntry := EnumValue{Name: memberName, Value: memberValue, Description: memberDesc}
 			enumValues = append(enumValues, valueEntry)
 		}
 
@@ -103,24 +100,15 @@ func buildEnumStructure(enumName string, enumsMap map[string]EnumInfo) *EnumStru
 		return nil
 	}
 
-	es := &EnumStruct{Name: info.Name}
-	if info.Description != "" {
-		es.Description = info.Description
-	}
+	es := &EnumStruct{Name: info.Name, Description: info.Description}
 
 	var values []EnumValue
 	for _, v := range info.Values {
 		if v.Name != "" && !sentinelNames[v.Name] {
-			ve := EnumValue{Name: v.Name, Value: v.Value}
-			if v.Description != "" {
-				ve.Description = v.Description
-			}
-			values = append(values, ve)
+			values = append(values, EnumValue{Name: v.Name, Value: v.Value, Description: v.Description})
 		}
 	}
-	if len(values) > 0 {
-		es.Values = values
-	}
+	es.Values = values
 
 	return es
 }
