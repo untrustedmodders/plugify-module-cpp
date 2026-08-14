@@ -15,20 +15,20 @@ import (
 // reference resolves on, so a clash is recorded rather than letting one
 // definition silently stand in for the other.
 type typeTables struct {
-	prototypes map[string]*Prototype
+	prototypes map[string]*PrototypeStruct
 	enums      map[string]*EnumStruct
 	clashes    []string
 }
 
 func newTypeTables() *typeTables {
 	return &typeTables{
-		prototypes: map[string]*Prototype{},
+		prototypes: map[string]*PrototypeStruct{},
 		enums:      map[string]*EnumStruct{},
 	}
 }
 
 // addPrototype files a signature and returns the name to refer to it by.
-func (t *typeTables) addPrototype(prototype *Prototype) string {
+func (t *typeTables) addPrototype(prototype *PrototypeStruct) string {
 	if prototype == nil || prototype.Name == "" {
 		return ""
 	}
@@ -80,11 +80,11 @@ func (t *typeTables) err() error {
 		strings.Join(t.clashes, ", "))
 }
 
-func (t *typeTables) sortedPrototypes() []*Prototype {
+func (t *typeTables) sortedPrototypes() []*PrototypeStruct {
 	if len(t.prototypes) == 0 {
 		return nil
 	}
-	out := make([]*Prototype, 0, len(t.prototypes))
+	out := make([]*PrototypeStruct, 0, len(t.prototypes))
 	for _, p := range t.prototypes {
 		out = append(out, p)
 	}
@@ -129,7 +129,7 @@ func sameEnum(a, b *EnumStruct) bool {
 	return true
 }
 
-func samePrototype(a, b *Prototype) bool {
+func samePrototype(a, b *PrototypeStruct) bool {
 	if len(a.ParamTypes) != len(b.ParamTypes) {
 		return false
 	}
@@ -147,7 +147,7 @@ func samePrototype(a, b *Prototype) bool {
 // duplicateExports reports an exported name or symbol used more than once.
 // Plugify refuses such a manifest at load, but naming them here puts the problem
 // next to the header that declared it.
-func duplicateExports(functions []Method) error {
+func duplicateExports(functions []MethodStruct) error {
 	var problems []string
 	seenName := make(map[string]bool, len(functions))
 	seenSymbol := make(map[string]bool, len(functions))

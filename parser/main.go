@@ -81,7 +81,7 @@ func parseArgs(argv []string) (inputPath, outputFile, nameFilter, fileFilter str
 }
 
 // processYamlFile processes a single YAML file and extracts functions.
-func processYamlFile(yamlFile, nameFilter, fileFilter string, tables *typeTables) ([]Method, error) {
+func processYamlFile(yamlFile, nameFilter, fileFilter string, tables *typeTables) ([]MethodStruct, error) {
 	raw, err := os.ReadFile(yamlFile)
 	if err != nil {
 		return nil, err
@@ -99,7 +99,7 @@ func processYamlFile(yamlFile, nameFilter, fileFilter string, tables *typeTables
 	enumsMap := buildEnumsMap(yamlData)
 	typedefsMap := buildTypedefsMap(yamlData)
 
-	var allFunctions []Method
+	var methods []MethodStruct
 
 	childFunctions := asSlice(yamlData["ChildFunctions"])
 	for _, fn := range childFunctions {
@@ -119,12 +119,12 @@ func processYamlFile(yamlFile, nameFilter, fileFilter string, tables *typeTables
 			continue
 		}
 
-		funcData := processFunction(fm, enumsMap, typedefsMap, "", tables)
-		allFunctions = append(allFunctions, funcData)
+		method := processMethodStruct(fm, enumsMap, typedefsMap, "", tables)
+		methods = append(methods, method)
 		fmt.Printf("Processed: %s\n", funcName)
 	}
 
-	return allFunctions, nil
+	return methods, nil
 }
 
 func run(inputPath, outputFile, nameFilter, fileFilter string) error {
@@ -137,7 +137,7 @@ func run(inputPath, outputFile, nameFilter, fileFilter string) error {
 	// described once rather than once per header.
 	tables := newTypeTables()
 
-	var methods []Method
+	var allMethods []MethodStruct
 
 	if info.IsDir() {
 		matches, err := filepath.Glob(filepath.Join(inputPath, "*.yaml"))
@@ -148,34 +148,34 @@ func run(inputPath, outputFile, nameFilter, fileFilter string) error {
 
 		for _, yamlFile := range matches {
 			fmt.Printf("\nProcessing: %s\n", yamlFile)
-			functions, err := processYamlFile(yamlFile, nameFilter, fileFilter, tables)
+			methods, err := processYamlFile(yamlFile, nameFilter, fileFilter, tables)
 			if err != nil {
 				return err
 			}
-			methods = append(methods, functions...)
+			allMethods = append(allMethods, methods...)
 		}
 	} else {
-		functions, err := processYamlFile(inputPath, nameFilter, fileFilter, tables)
+		methods, err := processYamlFile(inputPath, nameFilter, fileFilter, tables)
 		if err != nil {
 			return err
 		}
-		methods = functions
+		allMethods = methods
 	}
 
-	if methods == nil {
-		methods = []Method{}
+	if allMethods == nil {
+		allMethods = []MethodStruct{}
 	}
 
-	if err := errors.Join(tables.err(), duplicateExports(methods)); err != nil {
+	if err := errors.Join(tables.err(), duplicateExports(allMethods)); err != nil {
 		return err
 	}
 
 	// Sorted by name so the output reads the same however the headers are
 	// arranged, and so re-running over a reordered doc set produces no diff.
-	sort.Slice(methods, func(i, j int) bool { return methods[i].Name < methods[j].Name })
+	sort.Slice(allMethods, func(i, j int) bool { return allMethods[i].Name < allMethods[j].Name })
 
 	output := Output{
-		Methods:    methods,
+		Methods:    allMethods,
 		Prototypes: tables.sortedPrototypes(),
 		Enums:      tables.sortedEnums(),
 	}
@@ -189,7 +189,7 @@ func run(inputPath, outputFile, nameFilter, fileFilter string) error {
 	}
 
 	fmt.Printf("\nTotal functions exported: %d (%d prototypes, %d enums)\n",
-		len(methods), len(output.Prototypes), len(output.Enums))
+		len(allMethods), len(output.Prototypes), len(output.Enums))
 	fmt.Printf("Output written to: %s\n", outputFile)
 
 	return nil

@@ -131,14 +131,14 @@ func buildTypedefsMap(yamlData map[string]interface{}) map[string]TypedefInfo {
 	return typedefsMap
 }
 
-// buildPrototype builds a function prototype structure for a function pointer typedef.
-func buildPrototype(typedefName string, typedefsMap map[string]TypedefInfo, enumsMap map[string]EnumInfo, tables *typeTables) *Prototype {
+// buildPrototypeStruct builds a function prototype structure for a function pointer typedef.
+func buildPrototypeStruct(typedefName string, typedefsMap map[string]TypedefInfo, enumsMap map[string]EnumInfo, tables *typeTables) *PrototypeStruct {
 	info, ok := typedefsMap[typedefName]
 	if !ok || !info.IsFunctionPointer {
 		return nil
 	}
 
-	proto := &Prototype{Name: typedefName, FuncName: typedefName, Description: info.Description}
+	proto := &PrototypeStruct{Name: typedefName, FuncName: typedefName, Description: info.Description}
 
 	paramTypesList := make([]ParamType, 0, len(info.ParamTypes))
 	for i, paramTypeStr := range info.ParamTypes {
@@ -170,7 +170,7 @@ func buildPrototype(typedefName string, typedefsMap map[string]TypedefInfo, enum
 		if td.IsFunctionPointer {
 			retType.Type = "function"
 			retType.Prototype = tables.addPrototype(
-				buildPrototype(baseReturnType, typedefsMap, enumsMap, tables))
+				buildPrototypeStruct(baseReturnType, typedefsMap, enumsMap, tables))
 		} else if alias := buildAliasStructure(baseReturnType, typedefsMap); alias != nil {
 			retType.Alias = alias
 		}
