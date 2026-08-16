@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.4](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.4.3...v2.4.4) (2026-08-16)
+
+
+### Bug Fixes
+
+* update plugify ([9634a5a](https://github.com/untrustedmodders/plugify-module-cpp/commit/9634a5a00c1c7a4e893be46b0d252dc894d55758))
+
 ## [2.4.3](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.4.2...v2.4.3) (2026-08-16)
 
 
