@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.4.3](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.4.2...v2.4.3) (2026-08-16)
+
+
+### Bug Fixes
+
+* add default param name ([87bbb55](https://github.com/untrustedmodders/plugify-module-cpp/commit/87bbb55ec6e1adf2d4837e8b827b63a0299a572d))
+* change schema path ([524d3f9](https://github.com/untrustedmodders/plugify-module-cpp/commit/524d3f9a94c8ad47049cab3df7b0655c8bffbd01))
+* improve manifest generator ([1550b07](https://github.com/untrustedmodders/plugify-module-cpp/commit/1550b075758f1f26f07b60604a9b7980183ad7c8))
+* inline description ([5fb5f82](https://github.com/untrustedmodders/plugify-module-cpp/commit/5fb5f82f5ac5ab8aacfbff51825aeceaa4850c0b))
+* remove headers ([08af79a](https://github.com/untrustedmodders/plugify-module-cpp/commit/08af79a873531e7bddfc11addf11cf7e52da70d6))
+* update plugify and manifests ([2a3ffaf](https://github.com/untrustedmodders/plugify-module-cpp/commit/2a3ffaf5e6c232ba70cf02b3491f57dbcd7001cb))
+
 ## [2.4.2](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.4.1...v2.4.2) (2026-06-29)
 
 
