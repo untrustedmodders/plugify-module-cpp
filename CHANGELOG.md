@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.5](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.4.4...v2.4.5) (2026-08-17)
+
+
+### Bug Fixes
+
+* update plg includes ([8b9b860](https://github.com/untrustedmodders/plugify-module-cpp/commit/8b9b860532ae000909cb8cf97d06ec234bd429a4))
+
 ## [2.4.4](https://github.com/untrustedmodders/plugify-module-cpp/compare/v2.4.3...v2.4.4) (2026-08-16)
 
 
