@@ -113,10 +113,33 @@ namespace plg {
 		return seed;
 	}
 
-	template <typename T1, typename T2>
 	struct pair_hash {
+		using is_transparent = void;
+
+		template <typename T1, typename T2>
 		std::size_t operator()(const std::pair<T1, T2>& p) const {
 			return hash_combine_all(p.first, p.second);
+		}
+	};
+
+	struct tuple_hash {
+		using is_transparent = void;
+
+		template <typename T>
+		std::size_t operator()(const T& t) const {
+			return std::apply([](const auto&... elems) {
+				return hash_combine_all(elems...);
+			}, t);
+		}
+	};
+
+	template <typename T, typename Alloc = std::allocator<T>>
+	struct vector_hash {
+		std::size_t operator()(const std::vector<T, Alloc>& v) const {
+			std::size_t seed = 0;
+			for (const auto& e : v)
+				hash_combine(seed, e);
+			return seed;
 		}
 	};
 }
