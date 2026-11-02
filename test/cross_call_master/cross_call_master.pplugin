@@ -5907,6 +5907,7 @@
 			"name": "ResourceHandle",
 			"description": "RAII wrapper for ResourceHandle pointer",
 			"handleType": "ptr64",
+			"invalidValue": "0",
 			"constructors": [
 				"ResourceHandleCreate",
 				"ResourceHandleCreateDefault"
@@ -5928,6 +5929,7 @@
 		{
 			"name": "Counter",
 			"handleType": "ptr64",
+			"invalidValue": "0",
 			"constructors": [
 				"CounterCreate",
 				"CounterCreateZero"
