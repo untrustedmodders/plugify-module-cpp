@@ -5135,8 +5135,8 @@ PLUGIN_API double CallFuncDoubleCallback(cross_call_worker::FuncDouble func) {
 }
 
 extern "C"
-PLUGIN_API FuncFunctionInner CallFuncFunctionCallback(cross_call_worker::FuncFunction func) {
-    FuncFunctionInner result = func();
+PLUGIN_API cross_call_worker::FuncFunctionInner CallFuncFunctionCallback(cross_call_worker::FuncFunction func) {
+    cross_call_worker::FuncFunctionInner result = func();
     return result;
 }
 
